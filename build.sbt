@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
     libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.4.0",
     libraryDependencies += "io.circe" %% "circe-yaml-v12" % "0.16.0",
     libraryDependencies += "io.circe" %% "circe-generic" % "0.14.10",
+    libraryDependencies += "io.circe" %% "circe-parser" % "0.14.10",
     libraryDependencies ++= Seq(
       "fundamentals-platform",
       "fundamentals-functional",

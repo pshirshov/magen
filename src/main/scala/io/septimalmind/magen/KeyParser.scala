@@ -28,29 +28,30 @@ object ShortcutParser extends RegexParsers {
 
   def modifier: Parser[Modifier] =
     ("ctrl" | "alt" | "shift" | "meta") ^^ {
-      case "ctrl"  => Ctrl
-      case "alt"   => Alt
+      case "ctrl" => Ctrl
+      case "alt" => Alt
       case "shift" => Shift
-      case "meta"  => Meta
+      case "meta" => Meta
     }
 
   def key: Parser[NamedKey] =
-    ("""[a-zA-Z0-9\[\]]+""".r) ^^ { s =>
-      NamedKey(s)
+    ("""[a-zA-Z0-9\[\]]+""".r) ^^ {
+      s =>
+        NamedKey(s)
     }
 
   def chord: Parser[KeyCombo] =
-    rep(modifier <~ "-") ~ key ^^ { case mods ~ k => KeyCombo(mods, k) }
+    rep(modifier <~ ("-" | "+")) ~ key ^^ { case mods ~ k => KeyCombo(mods, k) }
 
   def sequence: Parser[List[KeyCombo]] =
     rep1sep(chord, """\s+""".r)
 
   def parseShortcuts(input: String): Either[String, List[KeyCombo]] =
     parseAll(sequence, input) match {
-      case Success(result, _)   => Right(result)
+      case Success(result, _) => Right(result)
       case NoSuccess(msg, next) => Left(s"Failed to parse at ${next.pos}: $msg")
-      case Error(msg, next)     => Left(s"Failed to parse at ${next.pos}: $msg")
-      case Failure(msg, next)   => Left(s"Failed to parse at ${next.pos}: $msg")
+      case Error(msg, next) => Left(s"Failed to parse at ${next.pos}: $msg")
+      case Failure(msg, next) => Left(s"Failed to parse at ${next.pos}: $msg")
     }
 
   def parseUnsafe(input: String): List[KeyCombo] = {

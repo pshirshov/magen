@@ -8,9 +8,23 @@ import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.file.Paths
 
-case class Impl(target: String, action: String, context: Option[List[String]])
+case class IdeaAction(action: String)
+case class VSCodeAction(action: String, context: Option[List[String]])
+case class ZedAction(action: String, context: Option[List[String]])
 
-case class Concept(id: String, binding: String, mappings: List[Impl])
+case class Impl(
+  target: String,
+  action: String,
+  context: Option[List[String]],
+)
+
+case class Concept(
+  id: String,
+  binding: String,
+  idea: Option[IdeaAction],
+  vscode: Option[VSCodeAction],
+  zed: Option[ZedAction],
+)
 
 case class Mapping(mapping: List[Concept])
 
@@ -26,11 +40,12 @@ object Magen {
       .valueOr(throw _)
 
 //    val renderers = List(VSCodeRenderer, ZedRenderer, IdeaRenderer)
-    val renderers = List(IdeaRenderer)
+    val renderers = List(IdeaRenderer, VSCodeRenderer)
 
-    renderers.foreach { r =>
-      val rendered = r.render(mapping)
-      println(rendered)
+    renderers.foreach {
+      r =>
+        val rendered = r.render(mapping)
+        println(rendered)
     }
   }
 }
