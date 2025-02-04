@@ -15,6 +15,15 @@ object Modifier {
 sealed trait Key
 object Key {
   case class NamedKey(name: String) extends Key
+  object NamedKey {
+    def make(s: String) = {
+      if (s.startsWith("[Key")) {
+        new NamedKey(s.substring(4, 5))
+      } else {
+        new NamedKey(s)
+      }
+    }
+  }
   case class KeyCombo(modifiers: List[Modifier], key: NamedKey) {
     def dropMods: KeyCombo = this.copy(modifiers = List.empty)
   }
@@ -37,7 +46,7 @@ object ShortcutParser extends RegexParsers {
   def key: Parser[NamedKey] =
     ("""[a-zA-Z0-9\[\]]+""".r) ^^ {
       s =>
-        NamedKey(s)
+        NamedKey.make(s)
     }
 
   def chord: Parser[KeyCombo] =

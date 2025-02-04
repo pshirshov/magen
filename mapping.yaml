@@ -1,6 +1,6 @@
 mapping:
   - id: "select-all"
-    binding: "ctrl-k ctrl-a"
+    binding: "ctrl-k ctrl-[Keya]"
     vscode:
       action: "editor.action.selectAll"
     zed:
