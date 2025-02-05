@@ -1,0 +1,62 @@
+mapping:
+  - id: "workbench.action.debug.run"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.run'
+    idea:
+      action: 'Run'
+  - id: "workbench.action.debug.stepOut"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.stepOut'
+    idea:
+      action: 'StepOut'
+  - id: "editor.debug.action.toggleBreakpoint"
+    binding: []
+    vscode:
+      action: 'editor.debug.action.toggleBreakpoint'
+    idea:
+      action: 'ToggleLineBreakpoint'      
+  - id: "workbench.action.debug.continue"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.continue'
+    idea:
+      action: 'Resume'
+  - id: "workbench.action.debug.stop"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.stop'
+    idea:
+      action: 'Stop'
+  - id: "workbench.action.debug.restart"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.restart'
+    idea:
+      action: 'Rerun'
+  - id: "workbench.view.debug"
+    binding: []
+    vscode:
+      action: 'workbench.view.debug'
+    idea:
+      action: 'ActivateDebugToolWindow'
+  - id: "workbench.action.debug.stepOver"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.stepOver'
+    idea:
+      action: 'StepOver'
+  - id: "workbench.action.debug.start"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.start'
+    idea:
+      action: 'Debug'
+  - id: "workbench.action.debug.stepInto"
+    binding: []
+    vscode:
+      action: 'workbench.action.debug.stepInto'
+    idea:
+      action: 'StepInto'
+        

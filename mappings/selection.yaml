@@ -1,4 +1,10 @@
 mapping:
+#  - id: "editor.action.smartSelect.expand"
+#    binding: []
+#    vscode:
+#      action: 'editor.action.smartSelect.expand'
+#    idea:
+#      action: 'EditorSelectWord'
   - id: "select-all"
     binding: 
       - "ctrl-k ctrl-a"

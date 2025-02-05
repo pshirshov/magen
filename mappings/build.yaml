@@ -1,0 +1,24 @@
+mapping:
+  - id: "workbench.action.tasks.build"
+    binding:
+      - "ctrl+[KeyB] ctrl+[KeyB]"
+    vscode:
+      action: 'workbench.action.tasks.build'
+    idea:
+      action: 'CompileDirty'
+
+  - id: "build.rebuild"
+    binding:
+      - "ctrl+[KeyB] ctrl+[KeyR]"
+    vscode:
+      missing: true
+    idea:
+      action: 'CompileProject'
+
+  - id: "build.file"
+    binding:
+      - "ctrl+[KeyB] ctrl+[KeyF]"
+    vscode:
+      missing: true
+    idea:
+      action: 'Compile'

@@ -12,6 +12,7 @@ mapping:
       - "meta+shift+[KeyW]"
       - "ctrl+shift+[KeyW]"
     vscode:
+#      action: 'workbench.action.closeFolder' # keeps window open
       action: 'workbench.action.closeWindow'
     idea:
       action: 'CloseProject'

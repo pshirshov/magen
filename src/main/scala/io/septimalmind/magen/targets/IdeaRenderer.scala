@@ -1,16 +1,12 @@
 package io.septimalmind.magen.targets
 
 import io.circe.parser
-import io.septimalmind.magen.{Mapping, Renderer}
-import io.septimalmind.magen.model.*
+import io.septimalmind.magen.Renderer
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
-import io.septimalmind.magen.targets.VSCodeRenderer.renderCombo
-import io.septimalmind.magen.tools.VscodeMapping
+import io.septimalmind.magen.model.*
 import io.septimalmind.magen.util.{Aliases, ShortcutParser}
-import izumi.fundamentals.platform.files.IzFiles
 import izumi.fundamentals.platform.resources.IzResources
 
-import java.nio.file.Paths
 import scala.annotation.tailrec
 import scala.xml.PrettyPrinter
 
@@ -29,16 +25,37 @@ object IdeaRenderer extends Renderer {
 
   // TODO: index by commands/resolve dupes
   override def render(mapping: Mapping): String = {
-    val mappings = for {
-      c <- mapping.mapping
-      a <- c.idea.toList.filterNot(_.action.isEmpty)
-
+    val mappings = (for {
+      m <- mapping.mapping
+      i <- m.idea.toList
     } yield {
-      val bbs = c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend).map(b => renderChord(b)) ++
-        c.idea.get.mouse.toList.flatten.map(m => <mouse-shortcut keystroke={m}/>)
-      <action id={a.action.get}>
-        {bbs}
-      </action>
+      (i, m)
+    }).groupBy(_._1.action).view.map {
+      case (a, pairs) =>
+        val mouseBbs = pairs
+          .filterNot(_._1.mouse.isEmpty)
+          .flatMap {
+            case (i, c) =>
+              Seq(scala.xml.Comment(c.id)) ++ i.mouse.map {
+                m =>
+                  <mouse-shortcut keystroke={m}/>
+              }
+
+          }
+
+        val bbs = pairs
+          .flatMap {
+            case (_, c) =>
+              c.binding.map(b => (ShortcutParser.parseUnsafe(b), c.id))
+          }
+          .groupBy(_._1).map {
+            case (chord, cs) =>
+              Seq(scala.xml.Comment(cs.map(_._2).mkString(", "))) ++
+              Aliases.extend(chord).map(renderChord)
+          }
+        <action id={a}>
+          {bbs ++ mouseBbs}
+        </action>
     }
 
     val full = <keymap version="1" name="Magen" parent="Empty">

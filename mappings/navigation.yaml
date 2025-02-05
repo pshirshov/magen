@@ -9,26 +9,55 @@ mapping:
       action: 'EditorMatchBrace'
   - id: "workbench.action.gotoLine"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyL]"
+      - "ctrl+[KeyN] ctrl+[KeyL]" 
     vscode:
       action: 'workbench.action.gotoLine'
     idea:
       action: 'GotoLine'
   #
   - id: "workbench.action.openNextRecentlyUsedEditor"
-    binding:
-      - "meta+[BracketRight]"
+    binding: []
     vscode:
       action: 'workbench.action.openNextRecentlyUsedEditor'
     idea:
-      action: 'Forward'
+      action: 'JumpToNextChange'
   - id: "workbench.action.openPreviousRecentlyUsedEditor"
-    binding:
-      - "meta+[BracketLeft]"
+    binding: []
     vscode:
       action: 'workbench.action.openPreviousRecentlyUsedEditor'
     idea:
+      action: 'JumpToLastChange'
+      
+  - id: "workbench.action.navigateForward"
+    binding:
+      - "ctrl+[BracketRight]"
+    vscode:
+      action: 'workbench.action.navigateForward'
+    idea:
+      action: 'Forward'  
+  - id: "workbench.action.navigateBack"
+    binding:
+      - "ctrl+[BracketLeft]"
+    vscode:
+      action: 'workbench.action.navigateBack'
+    idea:
       action: 'Back'
+
+  - id: "workbench.action.nextEditor"
+    binding:
+      - "meta+[BracketRight]"
+    vscode:
+      action: 'workbench.action.nextEditor'
+    idea:
+      action: 'NextTab'
+  - id: "workbench.action.previousEditor"
+    binding:
+      - "meta+[BracketLeft]"
+    vscode:
+      action: 'workbench.action.previousEditor'
+    idea:
+      action: 'PreviousTab'
+      
   #      
   - id: "workbench.action.quickOpen"
     binding:
@@ -92,6 +121,15 @@ mapping:
       action: 'GotoDeclaration'
       mouse:
         - "ctrl button1"
+  - id: "editor.action.revealDefinition"
+    binding:
+      - "ctrl+[KeyN] ctrl+[KeyD]"
+    vscode:
+      action: 'editor.action.revealDefinition'
+      context: [ "editorHasDefinitionProvider && editorTextFocus" ]
+    idea:
+      missing: true
+      
   - id: "editor.action.goToTypeDefinition"
     binding:
       - "ctrl+[KeyN] ctrl+[KeyT]"
@@ -119,14 +157,17 @@ mapping:
       context: [ "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" ]
     idea:
       action: 'ShowUsages'
-  - id: "editor.action.revealDefinition"
+      
+
+      
+  - id: "editor.action.peekDefinition"
     binding:
       - "ctrl+[KeyN] ctrl+[KeyD]"
     vscode:
-      action: 'editor.action.revealDefinition'
-      context: [ "editorHasDefinitionProvider && editorTextFocus" ]
+      action: 'editor.action.peekDefinition'
     idea:
       action: 'QuickImplementations'
+      
   - id: "editor.action.revealDefinitionAside"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyD]"

@@ -39,3 +39,10 @@ mapping:
       action: 'editor.action.toggleOvertypeInsertMode'
     idea:
       action: 'EditorToggleInsertState'  
+  - id: "editor.action.organizeImports"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyI]"
+    vscode:
+      action: 'editor.action.organizeImports'
+    idea:
+      action: 'OptimizeImports'

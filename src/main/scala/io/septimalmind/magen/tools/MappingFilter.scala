@@ -1,15 +1,13 @@
 package io.septimalmind.magen.tools
 
+import io.circe.*
+import io.circe.generic.auto.*
+import io.circe.syntax.*
+import io.septimalmind.magen.targets.IdeaRenderer
 import izumi.fundamentals.platform.files.IzFiles
 
-import java.nio.file.{Files, Paths}
-import io.circe.*
-import io.circe.syntax.*
-import io.circe.parser.*
-import io.circe.generic.auto.*
-import io.septimalmind.magen.targets.IdeaRenderer
-
 import java.nio.charset.StandardCharsets
+import java.nio.file.{Files, Paths}
 
 case class VscodeMapping(
   command: String,
@@ -47,5 +45,6 @@ object MappingFilter {
     val safeMapping = sortKeys(all.toMap.asJsonObject).asJson.spaces2
 
     Files.write(Paths.get("./junk/idea-vscode-mapping-filtered.json"), safeMapping.getBytes(StandardCharsets.UTF_8))
+    ()
   }
 }

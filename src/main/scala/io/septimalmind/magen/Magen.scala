@@ -4,21 +4,24 @@ import cats.syntax.either.*
 import io.circe.*
 import io.circe.generic.auto.*
 import io.circe.yaml
-import io.septimalmind.magen.model.Concept
+import io.septimalmind.magen.model.*
 import io.septimalmind.magen.targets.{IdeaRenderer, VSCodeRenderer}
 import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Path, Paths}
-
-case class Mapping(mapping: List[Concept])
+import izumi.fundamentals.collections.IzCollections.*
+import izumi.fundamentals.collections.nonempty.NEList
+import izumi.fundamentals.platform.strings.IzString.*
 
 object Magen {
   def main(args: Array[String]): Unit = {
     val mapping = List(
+      "mappings/build.yaml",
       "mappings/clipboard.yaml",
       "mappings/commands.yaml",
       "mappings/cursor.yaml",
+      "mappings/debug.yaml",
       "mappings/edit.yaml",
       "mappings/intellisense.yaml",
       "mappings/navigation.yaml",
@@ -26,45 +29,65 @@ object Magen {
       "mappings/selection.yaml",
       "mappings/transform.yaml",
       "mappings/ui.yaml",
+      "mappings/unset.yaml",
       "mappings/vscode-column.yaml",
       "mappings/vscode-files.yaml",
       "mappings/vscode-list.yaml",
-      "mappings/vscode-quickinput.yaml",
       "mappings/vscode-other.yaml",
+      "mappings/vscode-quickinput.yaml",
 
 //      "mappings/todo/vscode-idea-imported.yaml",
     )
       .map(f => Paths.get(f))
       .filter(_.toFile.exists())
       .map(f => readMapping(f))
-      .flatMap(_.mapping)
 
     //    val renderers = List(VSCodeRenderer, ZedRenderer, IdeaRenderer)
     val renderers = List(IdeaRenderer, VSCodeRenderer)
 
-    import izumi.fundamentals.collections.IzCollections.*
-    import izumi.fundamentals.platform.strings.IzString.*
-    val bad = mapping.map(m => (m.id, m)).toMultimap.filter(_._2.size > 1)
-    if (bad.nonEmpty) {
-      println(s"Conflicts: ${bad.niceList()}")
-      ???
-    }
-
-    mapping.foreach {
-      c =>
-        if (c.idea.isEmpty || (c.idea.get.action.isEmpty && !c.idea.get.missing.contains(true))) {
-          println(s"${c.id}: not defined for IDEA")
-        }
-    }
-
+    val converted = convert(mapping)
     renderers.foreach {
       r =>
-        val rendered = r.render(Mapping(mapping.sortBy(_.id)))
+        val rendered = r.render(converted) // Mapping(mapping.sortBy(_.id)))
         Files.write(Paths.get("target", r.id), rendered.getBytes(StandardCharsets.UTF_8))
     }
   }
 
-  private def readMapping(path: Path): Mapping = {
+  private def convert(mapping: List[RawMapping]): Mapping = {
+    val allConcepts = mapping.flatMap(_.mapping)
+    val bad = allConcepts.map(m => (m.id, m)).toMultimap.filter(_._2.size > 1)
+    if (bad.nonEmpty) {
+      println(s"Conflicts: ${bad.niceList()}")
+    }
+
+    val concepts = allConcepts.flatMap {
+      c =>
+        val i = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
+        val v = c.vscode.flatMap(i => i.action.map(a => VSCodeAction(a, i.context.toList.flatten)))
+        val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
+
+        if (i.isEmpty && !c.idea.exists(_.missing.contains(true))) {
+          println(s"${c.id}: not defined for IDEA")
+        }
+        if (v.isEmpty && !c.vscode.exists(_.missing.contains(true))) {
+          println(s"${c.id}: not defined for VSCode")
+        }
+        if (z.isEmpty && !c.zed.exists(_.missing.contains(true)) && false) {
+          println(s"${c.id}: not defined for Zed")
+        }
+
+        if (Seq(i, v, z).exists(_.nonEmpty) && c.binding.nonEmpty) {
+          Seq(Concept(c.id, NEList.unsafeFrom(c.binding), i, v, z))
+        } else {
+          println(s"Incomplete definition: ${c.id}")
+          Seq.empty
+        }
+    }
+
+    Mapping(concepts.sortBy(_.id))
+  }
+
+  private def readMapping(path: Path): RawMapping = {
     println(s"Reading $path")
     val input = IzFiles.readString(path)
 
@@ -72,7 +95,7 @@ object Magen {
 
     val mapping = json
       .leftMap(err => err: Error)
-      .flatMap(_.as[Mapping])
+      .flatMap(_.as[RawMapping])
       .valueOr(throw _)
     mapping
   }
