@@ -1,6 +1,10 @@
-package io.septimalmind.magen
+package io.septimalmind.magen.targets
 
-import io.septimalmind.magen.Key.{KeyCombo, NamedKey}
+import io.septimalmind.magen.{Mapping, Renderer}
+import io.septimalmind.magen.model.*
+import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
+import io.septimalmind.magen.targets.VSCodeRenderer.renderCombo
+import io.septimalmind.magen.util.{Aliases, ShortcutParser}
 
 import scala.annotation.tailrec
 import scala.xml.PrettyPrinter
@@ -15,7 +19,7 @@ object IdeaRenderer extends Renderer {
       a <- c.idea.toList
 
     } yield {
-      val bbs = c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend).map(b => format(b))
+      val bbs = c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend).map(b => renderChord(b))
       <action id={a.action}>
         {bbs}
       </action>
@@ -29,7 +33,7 @@ object IdeaRenderer extends Renderer {
     prettyXml
   }
 
-  private def format(binding: Chord) = {
+  private def renderChord(binding: Chord) = {
     binding.combos match {
       case f :: s :: Nil =>
         val fs = renderCombo(f)

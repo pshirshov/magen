@@ -1,5 +1,7 @@
-package io.septimalmind.magen
+package io.septimalmind.magen.tools
 
+import io.septimalmind.magen.targets.{IdeaRenderer, VSCodeRenderer}
+import io.septimalmind.magen.util.{Aliases, ShortcutParser}
 import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.charset.StandardCharsets
@@ -89,7 +91,6 @@ object VscodeImporter {
       .filterNot(a => processed.contains(a._1))
       .foreach {
       case (k, v) =>
-//        val w = contexts.get(k).toSeq.flatten.map(s => s"\"$s\"")
         val ccs = contexts.get(k).map(_.flatMap(_.context)).getOrElse(Set.empty)
         
         val ccsString = ccs.flatten.map(s => s"\"$s\"").mkString("[ ", ", ", " ]")

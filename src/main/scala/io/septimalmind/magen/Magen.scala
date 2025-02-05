@@ -4,28 +4,16 @@ import cats.syntax.either.*
 import io.circe.*
 import io.circe.generic.auto.*
 import io.circe.yaml
+import io.septimalmind.magen.model.Concept
+import io.septimalmind.magen.targets.{IdeaRenderer, VSCodeRenderer}
 import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Path, Paths}
 
-case class IdeaAction(action: String)
-case class VSCodeAction(action: String, context: Option[List[String]])
-case class ZedAction(action: String, context: Option[List[String]])
 
-case class Impl(
-  target: String,
-  action: String,
-  context: Option[List[String]],
-)
 
-case class Concept(
-  id: String,
-  binding: List[String],
-  idea: Option[IdeaAction],
-  vscode: Option[VSCodeAction],
-  zed: Option[ZedAction],
-)
+
 
 case class Mapping(mapping: List[Concept])
 

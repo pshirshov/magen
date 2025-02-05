@@ -1,4 +1,6 @@
-package io.septimalmind.magen
+package io.septimalmind.magen.util
+
+import io.septimalmind.magen.model.Chord
 
 object Aliases {
   def extend(binding: Chord): List[Chord] = {
