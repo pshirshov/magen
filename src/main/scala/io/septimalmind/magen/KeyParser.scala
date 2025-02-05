@@ -44,7 +44,7 @@ object ShortcutParser extends RegexParsers {
     }
 
   def key: Parser[NamedKey] =
-    ("""[a-zA-Z0-9\[\]]+""".r) ^^ {
+    ("""[a-zA-Z0-9\[\],.=`/-]+""".r) ^^ {
       s =>
         NamedKey.make(s)
     }
@@ -64,7 +64,12 @@ object ShortcutParser extends RegexParsers {
     }
 
   def parseUnsafe(input: String): List[KeyCombo] = {
-    parseShortcuts(input).toOption.get
+    parseShortcuts(input).toOption match {
+      case Some(value) => value
+      case None =>
+        println(s"Can't parse $input")
+        ???
+    }
   }
 }
 

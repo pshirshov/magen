@@ -1,11 +1,7 @@
 package io.septimalmind.magen
 
-import io.circe.Json
 import io.septimalmind.magen.Key.{KeyCombo, NamedKey}
-import izumi.fundamentals.platform.files.IzFiles
 
-import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Paths}
 import scala.xml.PrettyPrinter
 
 object IdeaRenderer extends Renderer {
@@ -16,9 +12,11 @@ object IdeaRenderer extends Renderer {
     val mappings = for {
       c <- mapping.mapping
       a <- c.idea.toList
+
     } yield {
+      val bbs = c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend).map(b => format(b))
       <action id={a.action}>
-        {format(ShortcutParser.parseUnsafe(c.binding))}
+        {bbs}
       </action>
     }
 
@@ -32,16 +30,6 @@ object IdeaRenderer extends Renderer {
 
   private def format(binding: List[KeyCombo]) = {
     binding match {
-      case f :: s :: Nil if f.modifiers == s.modifiers && f.modifiers.size == 1 =>
-        val fs = renderCombo(f)
-        val ss = renderCombo(s)
-        val ssShort = renderCombo(s.dropMods)
-
-        Seq(
-          <keyboard-shortcut first-keystroke={fs} second-keystroke={ss} />,
-          <keyboard-shortcut first-keystroke={fs} second-keystroke={ssShort} />,
-        )
-
       case f :: s :: Nil =>
         val fs = renderCombo(f)
         val ss = renderCombo(s)
@@ -69,10 +57,6 @@ object IdeaRenderer extends Renderer {
   private def renderKey(f: NamedKey): String = {
     shortcutMap(f.name)
   }
-
-//  def camelToUnderscore(s: String): String = {
-//    s.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase
-//  }
 
   def shortcutMap(shortcut: String): String = shortcut.toUpperCase match {
     case "SHIFT" => "shift"
@@ -185,45 +169,4 @@ object IdeaRenderer extends Renderer {
     "workbench.view.extensions" -> "WelcomeScreen.Plugins",
     "workbench.view.scm" -> "ActivateVersionControlToolWindow",
   )
-}
-
-object IdeaGen {
-  def main(args: Array[String]): Unit = {
-    import izumi.fundamentals.collections.IzCollections.*
-    val index = io.circe.parser.parse(IzFiles.readString(Paths.get("linux.keybindings.raw.json"))).toOption.get
-    val contexts = index.asArray.get
-      .map(_.asObject.get.toMap).map {
-        o =>
-          val a = o("command").asString.get
-          a -> o.getOrElse("when", Json.fromString("true")).asString.get
-//          o.getOrElse("when", "true").map {
-//            w =>
-//              
-//          }
-      }.toMultimap
-
-    val sb = new StringBuilder()
-    IdeaRenderer.basicMappings.foreach {
-      case (k, v) =>
-        val w = contexts.get(k).toSeq.flatten.map(s => s"\"$s\"")
-        if (w.size > 1 || !w.contains("\"true\"")) {
-          sb.append(s"""  - id: "$k"
-                     |    binding: 'ctrl-1'
-                     |    vscode:
-                     |      action: '$k'
-                     |      context: ${w.mkString("[ ", ", ", " ]")}
-                     |    idea:
-                     |      action: '$v'""".stripMargin)
-        } else {
-          sb.append(s"""  - id: "$k"
-                     |    binding: 'ctrl-1'
-                     |    vscode:
-                     |      action: '$k'
-                     |    idea:
-                     |      action: '$v'""".stripMargin)
-        }
-      sb.append('\n');
-    }
-    Files.write(Paths.get("tmp.yaml"), sb.toString().getBytes(StandardCharsets.UTF_8))
-  }
 }

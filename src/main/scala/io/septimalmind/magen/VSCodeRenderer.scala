@@ -2,7 +2,6 @@ package io.septimalmind.magen
 
 import io.circe.*
 import io.circe.syntax.*
-import io.septimalmind.magen.IdeaRenderer.{format, renderCombo, shortcutMap}
 import io.septimalmind.magen.Key.{KeyCombo, NamedKey}
 
 object VSCodeRenderer extends Renderer {
@@ -12,8 +11,9 @@ object VSCodeRenderer extends Renderer {
     val mappings = for {
       c <- mapping.mapping
       a <- c.vscode.toList
+      b <- c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend)
     } yield {
-      format(a, ShortcutParser.parseUnsafe(c.binding))
+      format(a, b)
     }
 
     val full = mappings.flatten.asJson
@@ -28,36 +28,19 @@ object VSCodeRenderer extends Renderer {
       "command" -> Json.fromString(a.action),
     )
 
-    val bindings = binding match {
-      case f :: s :: Nil if f.modifiers == s.modifiers && f.modifiers.size == 1 =>
-        val fs = renderCombo(f)
-        val ssShort = renderCombo(s.dropMods)
-
-        Seq(
-          main,
-          JsonObject(
-            "key" -> Json.fromString(List(fs, ssShort).mkString(" ")),
-            "command" -> Json.fromString(a.action),
-          ),
-        )
-
-      case o =>
-        Seq(main)
-    }
-
     a.context match {
       case Some(value) =>
-        value.flatMap {
+        value.map {
           ctx =>
-            bindings.map(o => o.deepMerge(JsonObject("when" -> Json.fromString(ctx))))
+            main.deepMerge(JsonObject("when" -> Json.fromString(ctx)))
         }
 
       case None =>
-        bindings
+        Seq(main)
     }
   }
 
-  private def renderCombo(f: KeyCombo): String = {
+  def renderCombo(f: KeyCombo): String = {
     val modsStr = f.modifiers.map {
       case Modifier.Ctrl => "ctrl"
       case Modifier.Alt => "alt"
