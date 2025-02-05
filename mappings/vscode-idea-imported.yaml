@@ -1,0 +1,1575 @@
+mapping:
+  - id: "filesExplorer.copy"
+    binding:      
+      - "ctrl+c"
+    vscode:
+      action: 'filesExplorer.copy'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !inputFocus" ]
+  - id: "workbench.files.action.compareWithClipboard"
+    binding:      
+      - "ctrl+[KeyT] ctrl+[KeyC]"
+    vscode:
+      action: 'workbench.files.action.compareWithClipboard'
+  - id: "renameFile"
+    binding:      
+      - "ctrl+[KeyT] ctrl+[KeyR]"
+    vscode:
+      action: 'renameFile'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" ]
+  - id: "filesExplorer.findInFolder"
+    binding:      
+      - "alt+[KeyF]"
+    vscode:
+      action: 'filesExplorer.findInFolder'
+      context: [ "explorerResourceIsFolder && filesExplorerFocus && foldersViewVisible && !inputFocus" ]
+  - id: "editor.action.marker.next"
+    binding:      
+      - "alt+[KeyN]"
+    vscode:
+      action: 'editor.action.marker.next'
+      context: [ "editorFocus" ]
+  - id: "explorer.openAndPassFocus"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'explorer.openAndPassFocus'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus" ]
+  - id: "editor.action.toggleWordWrap"
+    binding:      
+      - "ctrl+[KeyM] ctrl+[KeyW]"
+    vscode:
+      action: 'editor.action.toggleWordWrap'
+  - id: "editor.action.insertCursorBelow"
+    binding:      
+      - "ctrl+shift+down"
+    vscode:
+      action: 'editor.action.insertCursorBelow'
+      context: [ "editorTextFocus" ]
+    idea:
+      action: 'EditorCloneCaretBelow'
+  - id: "repl.action.acceptInput"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'repl.action.acceptInput'
+      context: [ "inDebugRepl && textInputFocus" ]
+  - id: "filesExplorer.paste"
+    binding:      
+      - "ctrl+v"
+    vscode:
+      action: 'filesExplorer.paste'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus" ]
+  - id: "copyFilePath"
+    binding:      
+      - "alt+[KeyC] alt+[KeyP]"
+    vscode:
+      action: 'copyFilePath'
+  - id: "workbench.action.zoomReset"
+    binding:      
+      - "ctrl+[Key0]"
+    vscode:
+      action: 'workbench.action.zoomReset'
+    idea:
+      action: 'EditorResetFontSize'
+  - id: "workbench.action.navigateToLastEditLocation"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.navigateToLastEditLocation'
+  - id: "editor.action.blockComment"
+    binding:      
+      - "meta+shift+[Slash]"
+      - "ctrl+shift+[Slash]"
+    vscode:
+      action: 'editor.action.blockComment'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'CommentByBlockComment'
+  - id: "previousCompressedFolder"
+    binding:      
+      - "left"
+    vscode:
+      action: 'previousCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedFirstFocus && !inputFocus" ]
+  - id: "workbench.action.findInFiles"
+    binding:      
+      - "ctrl+shift+[KeyF]"
+    vscode:
+      action: 'workbench.action.findInFiles'
+  - id: "closeReferenceSearch"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'closeReferenceSearch'
+      context: [ "editorTextFocus && referenceSearchVisible && !config.editor.stablePeek || referenceSearchVisible && !config.editor.stablePeek && !inputFocus" ]
+  - id: "list.collapseAll"
+    binding:      
+      - "ctrl+left"
+    vscode:
+      action: 'list.collapseAll'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "selectPrevPageSuggestion"
+    binding:      
+      - "pageup"
+    vscode:
+      action: 'selectPrevPageSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+  - id: "list.expand"
+    binding:      
+      - "right"
+    vscode:
+      action: 'list.expand'
+      context: [ "listFocus && treeElementCanExpand && !inputFocus && !treestickyScrollFocused || listFocus && treeElementHasChild && !inputFocus && !treestickyScrollFocused" ]
+  - id: "toggleFindInSelection"
+    binding:      
+      - "alt+[KeyO] alt+[KeyL]"
+    vscode:
+      action: 'toggleFindInSelection'
+      context: [ "editorFocus" ]
+  - id: "widgetNavigation.focusPrevious"
+    binding:      
+      - "ctrl+up"
+    vscode:
+      action: 'widgetNavigation.focusPrevious'
+      context: [ "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'top'" ]
+  - id: "jumpToPrevSnippetPlaceholder"
+    binding:      
+      - "shift+tab"
+    vscode:
+      action: 'jumpToPrevSnippetPlaceholder'
+      context: [ "hasPrevTabstop && inSnippetMode && textInputFocus" ]
+  - id: "editor.action.goToTypeDefinition"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyT]"
+    vscode:
+      action: 'editor.action.goToTypeDefinition'
+  - id: "cursorColumnSelectRight"
+    binding:      
+      - "shift+right"
+    vscode:
+      action: 'cursorColumnSelectRight'
+      context: [ "editorColumnSelection && textInputFocus" ]
+  - id: "editor.action.goToImplementation"
+    binding:      
+      - "ctrl+[KeyI] ctrl+[KeyI]"
+    vscode:
+      action: 'editor.action.goToImplementation'
+      context: [ "editorHasImplementationProvider && editorTextFocus" ]
+  - id: "editor.action.marker.nextInFiles"
+    binding:      
+      - "alt+shift+[KeyN]"
+    vscode:
+      action: 'editor.action.marker.nextInFiles'
+      context: [ "editorFocus" ]
+    idea:
+      action: 'GotoNextError'
+  - id: "cursorDown"
+    binding:      
+      - "down"
+    vscode:
+      action: 'cursorDown'
+      context: [ "textInputFocus" ]
+  - id: "quickInput.last"
+    binding:      
+      - "end"
+      - "meta+[ArrowRight]"
+    vscode:
+      action: 'quickInput.last'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+  - id: "cursorBottom"
+    binding:      
+      - "ctrl+end"
+    vscode:
+      action: 'cursorBottom'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorTextEnd'
+  - id: "cursorLeftSelect"
+    binding:      
+      - "shift+left"
+    vscode:
+      action: 'cursorLeftSelect'
+      context: [ "textInputFocus" ]
+  - id: "nextCompressedFolder"
+    binding:      
+      - "right"
+    vscode:
+      action: 'nextCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedLastFocus && !inputFocus" ]
+  - id: "workbench.action.openSettings"
+    binding:      
+      - "ctrl+,"
+    vscode:
+      action: 'workbench.action.openSettings'
+    idea:
+      action: 'ShowSettings'
+  - id: "jumpToNextSnippetPlaceholder"
+    binding:      
+      - "tab"
+    vscode:
+      action: 'jumpToNextSnippetPlaceholder'
+      context: [ "hasNextTabstop && inSnippetMode && textInputFocus" ]
+  - id: "revealReference"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'revealReference'
+      context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
+  - id: "undo"
+    binding:      
+      - "ctrl+[KeyZ]"
+    vscode:
+      action: 'undo'
+    idea:
+      action: '\$Undo'
+  - id: "quickInput.previous"
+    binding:      
+      - "up"
+    vscode:
+      action: 'quickInput.previous'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+  - id: "editor.action.nextMatchFindAction"
+    binding:      
+      - "alt+[KeyM]"
+      - "enter"
+    vscode:
+      action: 'editor.action.nextMatchFindAction'
+      context: [ "editorFocus", "editorFocus && findInputFocussed" ]
+  - id: "editor.action.replaceAll"
+    binding:      
+      - "alt+shift+[KeyR]"
+    vscode:
+      action: 'editor.action.replaceAll'
+      context: [ "editorFocus && findWidgetVisible" ]
+  - id: "list.toggleExpand"
+    binding:      
+      - "space"
+    vscode:
+      action: 'list.toggleExpand'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "cursorColumnSelectLeft"
+    binding:      
+      - "shift+left"
+    vscode:
+      action: 'cursorColumnSelectLeft'
+      context: [ "editorColumnSelection && textInputFocus" ]
+  - id: "cursorTop"
+    binding:      
+      - "ctrl+home"
+    vscode:
+      action: 'cursorTop'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorTextStart'
+  - id: "list.focusUp"
+    binding:      
+      - "up"
+    vscode:
+      action: 'list.focusUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "editor.action.moveLinesDownAction"
+    binding:      
+      - "shift+alt+down"
+    vscode:
+      action: 'editor.action.moveLinesDownAction'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'MoveLineDown'
+  - id: "editor.action.insertLineBefore"
+    binding:      
+      - "ctrl+shift+enter"
+    vscode:
+      action: 'editor.action.insertLineBefore'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorStartNewLineBefore'
+  - id: "list.scrollDown"
+    binding:      
+      - "ctrl+down"
+    vscode:
+      action: 'list.scrollDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused && listScrollAtBoundary != 'both' && listScrollAtBoundary != 'bottom'" ]
+  - id: "cursorEndSelect"
+    binding:      
+      - "shift+end"
+    vscode:
+      action: 'cursorEndSelect'
+      context: [ "textInputFocus" ]
+  - id: "workbench.action.terminal.toggleTerminal"
+    binding:      
+      - "ctrl+[KeyM] ctrl+[KeyT]"
+      - "ctrl+`"
+    vscode:
+      action: 'workbench.action.terminal.toggleTerminal'
+    idea:
+      action: 'ActivateTerminalToolWindow'
+  - id: "cursorColumnSelectPageDown"
+    binding:      
+      - "shift+pagedown"
+    vscode:
+      action: 'cursorColumnSelectPageDown'
+      context: [ "editorColumnSelection && textInputFocus" ]
+  - id: "toggleFindRegex"
+    binding:      
+      - "alt+[KeyO] alt+[KeyR]"
+    vscode:
+      action: 'toggleFindRegex'
+      context: [ "editorFocus" ]
+  - id: "workbench.action.showAllSymbols"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyG]"
+    vscode:
+      action: 'workbench.action.showAllSymbols'
+    idea:
+      action: 'GotoSymbol'
+  - id: "workbench.action.togglePanel"
+    binding:      
+      - "ctrl+[KeyM] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.togglePanel'
+  - id: "editor.action.clipboardPasteAction"
+    binding:      
+      - "ctrl+[KeyV]"
+    vscode:
+      action: 'editor.action.clipboardPasteAction'
+    idea:
+      action: '\$Paste'
+  - id: "closeMarkersNavigation"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'closeMarkersNavigation'
+      context: [ "editorFocus && markersNavigationVisible" ]
+  - id: "filesExplorer.cancelCut"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'filesExplorer.cancelCut'
+      context: [ "explorerResourceCut && filesExplorerFocus && foldersViewVisible && !inputFocus" ]
+  - id: "openReferenceToSide"
+    binding:      
+      - "ctrl+enter"
+    vscode:
+      action: 'openReferenceToSide'
+      context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
+  - id: "cursorHome"
+    binding:      
+      - "ctrl+[KeyA]"
+      - "home"
+    vscode:
+      action: 'cursorHome'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLineStart'
+  - id: "editor.action.extensioneditor.findNext"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'editor.action.extensioneditor.findNext'
+      context: [ "webviewFindWidgetFocused && !editorFocus && activeEditor == 'workbench.editor.extension'" ]
+  - id: "cursorWordEndRight"
+    binding:      
+      - "ctrl+right"
+      - "alt+right"
+    vscode:
+      action: 'cursorWordEndRight'
+      context: [ "textInputFocus" ]
+  - id: "editor.action.commentLine"
+    binding:      
+      - "ctrl+/"
+      - "meta+[Slash]"
+    vscode:
+      action: 'editor.action.commentLine'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'CommentByLineComment'
+  - id: "list.focusPageUp"
+    binding:      
+      - "pageup"
+    vscode:
+      action: 'list.focusPageUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "cursorColumnSelectDown"
+    binding:      
+      - "shift+down"
+    vscode:
+      action: 'cursorColumnSelectDown'
+      context: [ "editorColumnSelection && textInputFocus" ]
+  - id: "list.focusAnyLast"
+    binding:      
+      - "alt+end"
+    vscode:
+      action: 'list.focusAnyLast'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "workbench.action.openRecent"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyR]"
+    vscode:
+      action: 'workbench.action.openRecent'
+  - id: "editor.action.jumpToBracket"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyB]"
+    vscode:
+      action: 'editor.action.jumpToBracket'
+      context: [ "editorTextFocus" ]
+    idea:
+      action: 'EditorMatchBrace'
+  - id: "refactorPreview.toggleCheckedState"
+    binding:      
+      - "space"
+    vscode:
+      action: 'refactorPreview.toggleCheckedState'
+      context: [ "listFocus && refactorPreview.enabled && !inputFocus && !treestickyScrollFocused" ]
+  - id: "cursorPageDownSelect"
+    binding:      
+      - "meta+shift+down"
+      - "shift+pagedown"
+    vscode:
+      action: 'cursorPageDownSelect'
+      context: [ "textInputFocus" ]
+  - id: "showPrevParameterHint"
+    binding:      
+      - "up"
+    vscode:
+      action: 'showPrevParameterHint'
+      context: [ "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible" ]
+  - id: "repl.action.filter"
+    binding:      
+      - "ctrl+[KeyF]"
+    vscode:
+      action: 'repl.action.filter'
+      context: [ "inDebugRepl && textInputFocus" ]
+  - id: "showNextParameterHint"
+    binding:      
+      - "down"
+    vscode:
+      action: 'showNextParameterHint'
+      context: [ "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible" ]
+  - id: "cancelRenameInput"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'cancelRenameInput'
+      context: [ "editorFocus && renameInputVisible" ]
+  - id: "workbench.action.openPreviousRecentlyUsedEditor"
+    binding:      
+      - "meta+[BracketLeft]"
+    vscode:
+      action: 'workbench.action.openPreviousRecentlyUsedEditor'
+  - id: "editor.action.formatDocument"
+    binding:      
+      - "ctrl+[KeyT] ctrl+[KeyF]"
+    vscode:
+      action: 'editor.action.formatDocument'
+      context: [ "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor" ]
+    idea:
+      action: 'ReformatCode'
+  - id: "editor.action.duplicateSelection"
+    binding:      
+      - "ctrl+[KeyD]"
+      - "meta+[KeyD]"
+    vscode:
+      action: 'editor.action.duplicateSelection'
+      context: [ "editorTextFocus && !editorReadonly" ]
+  - id: "revealFileInOS"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyF]"
+    vscode:
+      action: 'revealFileInOS'
+  - id: "redo"
+    binding:      
+      - "ctrl+shift+z"
+      - "ctrl+[KeyY]"
+    vscode:
+      action: 'redo'
+    idea:
+      action: '\$Redo'
+  - id: "filesExplorer.openFilePreserveFocus"
+    binding:      
+      - "space"
+    vscode:
+      action: 'filesExplorer.openFilePreserveFocus'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus" ]
+  - id: "quickInput.next"
+    binding:      
+      - "down"
+    vscode:
+      action: 'quickInput.next'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+  - id: "editor.action.startFindReplaceAction"
+    binding:      
+      - "ctrl+[KeyR]"
+    vscode:
+      action: 'editor.action.startFindReplaceAction'
+      context: [ "editorFocus || editorIsOpen" ]
+    idea:
+      action: 'Replace'
+  - id: "closeBreakpointWidget"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'closeBreakpointWidget'
+      context: [ "breakpointWidgetVisible && textInputFocus" ]
+  - id: "list.focusPageDown"
+    binding:      
+      - "pagedown"
+    vscode:
+      action: 'list.focusPageDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "list.focusAnyFirst"
+    binding:      
+      - "alt+home"
+    vscode:
+      action: 'list.focusAnyFirst'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "workbench.action.pinEditor"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.pinEditor'
+      context: [ "!activeEditorIsPinned" ]
+  - id: "closeParameterHints"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'closeParameterHints'
+      context: [ "editorFocus && parameterHintsVisible" ]
+  - id: "actions.find"
+    binding:      
+      - "ctrl+[KeyF]"
+    vscode:
+      action: 'actions.find'
+      context: [ "editorFocus || editorIsOpen" ]
+    idea:
+      action: 'Find'
+  - id: "editor.action.marker.prev"
+    binding:      
+      - "alt+[KeyP]"
+    vscode:
+      action: 'editor.action.marker.prev'
+      context: [ "editorFocus" ]
+  - id: "list.find"
+    binding:      
+      - "ctrl+f"
+    vscode:
+      action: 'list.find'
+      context: [ "listFocus && listSupportsFind" ]
+  - id: "editor.action.revealDefinition"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyD]"
+    vscode:
+      action: 'editor.action.revealDefinition'
+      context: [ "editorHasDefinitionProvider && editorTextFocus" ]
+    idea:
+      action: 'GotoDeclaration'
+  - id: "workbench.action.quit"
+    binding:      
+      - "ctrl+[KeyQ]"
+    vscode:
+      action: 'workbench.action.quit'
+  - id: "cursorHomeSelect"
+    binding:      
+      - "shift+home"
+    vscode:
+      action: 'cursorHomeSelect'
+      context: [ "textInputFocus" ]
+  - id: "cursorColumnSelectPageUp"
+    binding:      
+      - "shift+pageup"
+    vscode:
+      action: 'cursorColumnSelectPageUp'
+      context: [ "editorColumnSelection && textInputFocus" ]
+  - id: "editor.action.replaceOne"
+    binding:      
+      - "enter"
+      - "alt+[KeyR]"
+    vscode:
+      action: 'editor.action.replaceOne'
+      context: [ "editorFocus && findWidgetVisible && replaceInputFocussed", "editorFocus && findWidgetVisible" ]
+  - id: "list.selectAll"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyA]"
+    vscode:
+      action: 'list.selectAll'
+      context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]
+  - id: "workbench.action.files.save"
+    binding:      
+      - "ctrl+[KeyS]"
+    vscode:
+      action: 'workbench.action.files.save'
+    idea:
+      action: 'SaveAll'
+  - id: "hideSuggestWidget"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'hideSuggestWidget'
+      context: [ "suggestWidgetVisible && textInputFocus" ]
+  - id: "workbench.action.quickOpen"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyF]"
+    vscode:
+      action: 'workbench.action.quickOpen'
+    idea:
+      action: 'GotoFile'
+  - id: "acceptRenameInput"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'acceptRenameInput'
+      context: [ "editorFocus && renameInputVisible && !isComposing" ]
+  - id: "editor.action.previousMatchFindAction"
+    binding:      
+      - "shift+enter"
+      - "alt+shift+[KeyM]"
+    vscode:
+      action: 'editor.action.previousMatchFindAction'
+      context: [ "editorFocus && findInputFocussed", "editorFocus" ]
+  - id: "workbench.action.files.newUntitledFile"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyN]"
+    vscode:
+      action: 'workbench.action.files.newUntitledFile'
+    idea:
+      action: 'FileChooser.NewFile'
+  - id: "workbench.action.replaceInFiles"
+    binding:      
+      - "ctrl+shift+[KeyR]"
+    vscode:
+      action: 'workbench.action.replaceInFiles'
+    idea:
+      action: 'ReplaceInPath'
+  - id: "editor.action.selectAllMatches"
+    binding:      
+      - "alt+enter"
+    vscode:
+      action: 'editor.action.selectAllMatches'
+      context: [ "editorFocus && findWidgetVisible" ]
+  - id: "editor.action.quickFix"
+    binding:      
+      - "ctrl+."
+    vscode:
+      action: 'editor.action.quickFix'
+      context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'ShowIntentionActions'
+  - id: "removeSecondaryCursors"
+    binding:      
+      - "shift+escape"
+      - "escape"
+    vscode:
+      action: 'removeSecondaryCursors'
+      context: [ "editorHasMultipleSelections && textInputFocus" ]
+  - id: "editor.action.clipboardCutAction"
+    binding:      
+      - "ctrl+[KeyX]"
+    vscode:
+      action: 'editor.action.clipboardCutAction'
+    idea:
+      action: '\$Cut'
+  - id: "closeFindWidget"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'closeFindWidget'
+      context: [ "editorFocus && findWidgetVisible && !isComposing" ]
+  - id: "cursorEnd"
+    binding:      
+      - "end"
+      - "ctrl+[KeyE]"
+    vscode:
+      action: 'cursorEnd'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLineEnd'
+  - id: "search.action.cancel"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'search.action.cancel'
+      context: [ "listFocus && searchViewletVisible && !inputFocus && !treestickyScrollFocused && searchState != '0'" ]
+  - id: "cursorPageDown"
+    binding:      
+      - "meta+[ArrowDown]"
+      - "pagedown"
+    vscode:
+      action: 'cursorPageDown'
+      context: [ "textInputFocus" ]
+  - id: "workbench.action.splitEditorRight"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyV]"
+    vscode:
+      action: 'workbench.action.splitEditorRight'
+  - id: "focusSuggestion"
+    binding:      
+      - "ctrl+space"
+    vscode:
+      action: 'focusSuggestion'
+      context: [ "suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+  - id: "selectNextSuggestion"
+    binding:      
+      - "down"
+    vscode:
+      action: 'selectNextSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+  - id: "workbench.action.openNextRecentlyUsedEditor"
+    binding:      
+      - "meta+[BracketRight]"
+    vscode:
+      action: 'workbench.action.openNextRecentlyUsedEditor'
+  - id: "cursorWordEndRightSelect"
+    binding:      
+      - "shift+alt+right"
+      - "shift+ctrl+right"
+    vscode:
+      action: 'cursorWordEndRightSelect'
+      context: [ "textInputFocus" ]
+  - id: "cancelSelection"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'cancelSelection'
+      context: [ "editorHasSelection && textInputFocus" ]
+  - id: "workbench.action.closeWindow"
+    binding:      
+      - "meta+shift+[KeyW]"
+      - "ctrl+shift+[KeyW]"
+    vscode:
+      action: 'workbench.action.closeWindow'
+  - id: "cursorLeft"
+    binding:      
+      - "left"
+    vscode:
+      action: 'cursorLeft'
+      context: [ "textInputFocus" ]
+  - id: "deleteLeft"
+    binding:      
+      - "shift+backspace"
+      - "backspace"
+    vscode:
+      action: 'deleteLeft'
+      context: [ "textInputFocus" ]
+  - id: "editor.action.insertCursorAbove"
+    binding:      
+      - "ctrl+shift+up"
+    vscode:
+      action: 'editor.action.insertCursorAbove'
+      context: [ "editorTextFocus" ]
+    idea:
+      action: 'EditorCloneCaretAbove'
+  - id: "cursorRight"
+    binding:      
+      - "right"
+    vscode:
+      action: 'cursorRight'
+      context: [ "textInputFocus" ]
+  - id: "editor.action.triggerParameterHints"
+    binding:      
+      - "ctrl+[KeyI] ctrl+[KeyP]"
+    vscode:
+      action: 'editor.action.triggerParameterHints'
+      context: [ "editorHasSignatureHelpProvider && editorTextFocus" ]
+    idea:
+      action: 'ParameterInfo'
+  - id: "editor.action.rename"
+    binding:      
+      - "ctrl+[KeyT] ctrl+[KeyR]"
+    vscode:
+      action: 'editor.action.rename'
+      context: [ "editorHasRenameProvider && editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'RenameElement'
+  - id: "cursorUpSelect"
+    binding:      
+      - "shift+up"
+    vscode:
+      action: 'cursorUpSelect'
+      context: [ "textInputFocus" ]
+  - id: "cursorUp"
+    binding:      
+      - "up"
+    vscode:
+      action: 'cursorUp'
+      context: [ "textInputFocus" ]
+  - id: "cursorColumnSelectUp"
+    binding:      
+      - "shift+up"
+    vscode:
+      action: 'cursorColumnSelectUp'
+      context: [ "editorColumnSelection && textInputFocus" ]
+  - id: "toggleFindCaseSensitive"
+    binding:      
+      - "alt+[KeyO] alt+[KeyC]"
+    vscode:
+      action: 'toggleFindCaseSensitive'
+      context: [ "editorFocus" ]
+  - id: "list.collapse"
+    binding:      
+      - "left"
+    vscode:
+      action: 'list.collapse'
+      context: [ "listFocus && treeElementCanCollapse && !inputFocus && !treestickyScrollFocused || listFocus && treeElementHasParent && !inputFocus && !treestickyScrollFocused" ]
+  - id: "editor.action.goToReferences"
+    binding:      
+      - "ctrl+[KeyI] ctrl+[KeyR]"
+    vscode:
+      action: 'editor.action.goToReferences'
+      context: [ "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" ]
+    idea:
+      action: 'ShowUsages'
+  - id: "cursorPageUpSelect"
+    binding:      
+      - "meta+shift+up"
+      - "shift+pageup"
+    vscode:
+      action: 'cursorPageUpSelect'
+      context: [ "textInputFocus" ]
+  - id: "workbench.action.toggleSidebarVisibility"
+    binding:      
+      - "ctrl+[KeyM] ctrl+[KeyS]"
+    vscode:
+      action: 'workbench.action.toggleSidebarVisibility'
+    idea:
+      action: 'HideSideWindows'
+  - id: "editor.action.selectAll"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyA]"
+    vscode:
+      action: 'editor.action.selectAll'
+  - id: "list.focusDown"
+    binding:      
+      - "down"
+    vscode:
+      action: 'list.focusDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "workbench.action.showCommands"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyN]"
+      - "ctrl+shift+p"
+    vscode:
+      action: 'workbench.action.showCommands'
+  - id: "editor.action.clipboardCopyAction"
+    binding:      
+      - "ctrl+[KeyC]"
+    vscode:
+      action: 'editor.action.clipboardCopyAction'
+    idea:
+      action: '\$Copy'
+  - id: "editor.action.triggerSuggest"
+    binding:      
+      - "ctrl+space"
+    vscode:
+      action: 'editor.action.triggerSuggest'
+      context: [ "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" ]
+  - id: "list.clear"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'list.clear'
+      context: [ "listFocus && listHasSelectionOrFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "workbench.action.showAllEditors"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyE]"
+    vscode:
+      action: 'workbench.action.showAllEditors'
+  - id: "list.toggleSelection"
+    binding:      
+      - "ctrl+shift+enter"
+    vscode:
+      action: 'list.toggleSelection'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "editor.action.insertLineAfter"
+    binding:      
+      - "ctrl+enter"
+    vscode:
+      action: 'editor.action.insertLineAfter'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorStartNewLine'
+  - id: "deleteWordLeft"
+    binding:      
+      - "alt+backspace"
+    vscode:
+      action: 'deleteWordLeft'
+      context: [ "textInputFocus && !editorReadonly" ]
+  - id: "cursorDownSelect"
+    binding:      
+      - "shift+down"
+    vscode:
+      action: 'cursorDownSelect'
+      context: [ "textInputFocus" ]
+  - id: "workbench.action.newWindow"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyC]"
+    vscode:
+      action: 'workbench.action.newWindow'
+  - id: "list.expandSelectionDown"
+    binding:      
+      - "shift+down"
+    vscode:
+      action: 'list.expandSelectionDown'
+      context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]
+  - id: "cursorTopSelect"
+    binding:      
+      - "ctrl+shift+home"
+    vscode:
+      action: 'cursorTopSelect'
+      context: [ "textInputFocus" ]
+  - id: "deleteFile"
+    binding:      
+      - "shift+delete"
+      - "delete"
+    vscode:
+      action: 'deleteFile'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus", "filesExplorerFocus && foldersViewVisible && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus" ]
+  - id: "list.expandSelectionUp"
+    binding:      
+      - "shift+up"
+    vscode:
+      action: 'list.expandSelectionUp'
+      context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]
+  - id: "list.closeFind"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'list.closeFind'
+      context: [ "listFocus && treeFindOpen" ]
+  - id: "editor.action.outdentLines"
+    binding:      
+      - "shift+tab"
+    vscode:
+      action: 'editor.action.outdentLines'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorUnindentSelection'
+  - id: "cursorWordLeftSelect"
+    binding:      
+      - "shift+ctrl+left"
+      - "shift+alt+left"
+    vscode:
+      action: 'cursorWordLeftSelect'
+      context: [ "textInputFocus" ]
+  - id: "deleteRight"
+    binding:      
+      - "delete"
+    vscode:
+      action: 'deleteRight'
+      context: [ "textInputFocus" ]
+  - id: "outdent"
+    binding:      
+      - "shift+tab"
+    vscode:
+      action: 'outdent'
+      context: [ "editorTextFocus && !editorReadonly && !editorTabMovesFocus" ]
+  - id: "workbench.action.zoomIn"
+    binding:      
+      - "ctrl+="
+    vscode:
+      action: 'workbench.action.zoomIn'
+    idea:
+      action: 'EditorIncreaseFontSize'
+  - id: "toggleSuggestionDetails"
+    binding:      
+      - "ctrl+space"
+    vscode:
+      action: 'toggleSuggestionDetails'
+      context: [ "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" ]
+  - id: "editor.action.indentLines"
+    binding:      
+      - "tab"
+    vscode:
+      action: 'editor.action.indentLines'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorIndentLineOrSelection'
+  - id: "editor.action.extensioneditor.findPrevious"
+    binding:      
+      - "shift+enter"
+    vscode:
+      action: 'editor.action.extensioneditor.findPrevious'
+      context: [ "webviewFindWidgetFocused && !editorFocus && activeEditor == 'workbench.editor.extension'" ]
+  - id: "editor.action.formatDocument.none"
+    binding:      
+      - "ctrl+[KeyT] ctrl+[KeyF]"
+    vscode:
+      action: 'editor.action.formatDocument.none'
+      context: [ "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly" ]
+  - id: "editor.action.cancelSelectionAnchor"
+    binding:      
+      - "escape"
+    vscode:
+      action: 'editor.action.cancelSelectionAnchor'
+      context: [ "editorTextFocus && selectionAnchorSet" ]
+  - id: "list.focusFirst"
+    binding:      
+      - "home"
+    vscode:
+      action: 'list.focusFirst'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "list.focusAnyUp"
+    binding:      
+      - "alt+up"
+    vscode:
+      action: 'list.focusAnyUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "cursorWordLeft"
+    binding:      
+      - "ctrl+left"
+      - "alt+left"
+    vscode:
+      action: 'cursorWordLeft'
+      context: [ "textInputFocus" ]
+  - id: "selectNextPageSuggestion"
+    binding:      
+      - "pagedown"
+    vscode:
+      action: 'selectNextPageSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+  - id: "workbench.action.reopenClosedEditor"
+    binding:      
+      - "ctrl+shift+t"
+    vscode:
+      action: 'workbench.action.reopenClosedEditor'
+    idea:
+      action: 'ReopenClosedTab'
+  - id: "quickInput.first"
+    binding:      
+      - "home"
+      - "meta+[ArrowLeft]"
+    vscode:
+      action: 'quickInput.first'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+  - id: "workbench.action.unpinEditor"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.unpinEditor'
+      context: [ "activeEditorIsPinned" ]
+  - id: "lastCompressedFolder"
+    binding:      
+      - "end"
+    vscode:
+      action: 'lastCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedLastFocus && !inputFocus" ]
+  - id: "workbench.action.closeOtherEditors"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyW]"
+    vscode:
+      action: 'workbench.action.closeOtherEditors'
+  - id: "selectPrevSuggestion"
+    binding:      
+      - "up"
+    vscode:
+      action: 'selectPrevSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+  - id: "list.focusAnyDown"
+    binding:      
+      - "alt+down"
+    vscode:
+      action: 'list.focusAnyDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "cursorPageUp"
+    binding:      
+      - "meta+[ArrowUp]"
+      - "pageup"
+    vscode:
+      action: 'cursorPageUp'
+      context: [ "textInputFocus" ]
+  - id: "editor.action.revealDefinitionAside"
+    binding:      
+      - "ctrl+[KeyK] ctrl+[KeyD]"
+    vscode:
+      action: 'editor.action.revealDefinitionAside'
+      context: [ "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor" ]
+  - id: "widgetNavigation.focusNext"
+    binding:      
+      - "ctrl+down"
+    vscode:
+      action: 'widgetNavigation.focusNext'
+      context: [ "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'bottom'" ]
+  - id: "editor.action.marker.prevInFiles"
+    binding:      
+      - "alt+shift+[KeyP]"
+    vscode:
+      action: 'editor.action.marker.prevInFiles'
+      context: [ "editorFocus" ]
+    idea:
+      action: 'GotoPreviousError'
+  - id: "editor.action.moveLinesUpAction"
+    binding:      
+      - "shift+alt+up"
+    vscode:
+      action: 'editor.action.moveLinesUpAction'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'MoveLineUp'
+  - id: "cursorRightSelect"
+    binding:      
+      - "shift+right"
+    vscode:
+      action: 'cursorRightSelect'
+      context: [ "textInputFocus" ]
+  - id: "editor.action.toggleOvertypeInsertMode"
+    binding:      
+      - "ctrl+[KeyM] ctrl+[KeyO]"
+      - "insert"
+    vscode:
+      action: 'editor.action.toggleOvertypeInsertMode'
+  - id: "copyRelativeFilePath"
+    binding:      
+      - "alt+[KeyC] alt+[KeyR]"
+    vscode:
+      action: 'copyRelativeFilePath'
+  - id: "editor.action.refactor"
+    binding:      
+      - "ctrl+[KeyT] ctrl+[KeyT]"
+    vscode:
+      action: 'editor.action.refactor'
+      context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
+  - id: "editor.action.autoFix"
+    binding:      
+      - "ctrl+shift+."
+    vscode:
+      action: 'editor.action.autoFix'
+      context: [ "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/" ]
+  - id: "workbench.action.zoomOut"
+    binding:      
+      - "ctrl+-"
+    vscode:
+      action: 'workbench.action.zoomOut'
+    idea:
+      action: 'EditorDecreaseFontSize'
+  - id: "quickInput.acceptInBackground"
+    binding:      
+      - "right"
+    vscode:
+      action: 'quickInput.acceptInBackground'
+      context: [ "cursorAtEndOfQuickInputBox && inQuickInput && quickInputType == 'quickPick' || inQuickInput && !inputFocus && quickInputType == 'quickPick'" ]
+  - id: "leaveSnippet"
+    binding:      
+      - "escape"
+      - "shift+escape"
+    vscode:
+      action: 'leaveSnippet'
+      context: [ "inSnippetMode && textInputFocus" ]
+  - id: "editor.action.goToDeclaration"
+    binding:      
+      - "ctrl+[KeyN] shift+[KeyD]"
+    vscode:
+      action: 'editor.action.goToDeclaration'
+  - id: "moveFileToTrash"
+    binding:      
+      - "delete"
+    vscode:
+      action: 'moveFileToTrash'
+      context: [ "explorerResourceMoveableToTrash && filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus" ]
+  - id: "workbench.action.gotoLine"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyL]"
+    vscode:
+      action: 'workbench.action.gotoLine'
+    idea:
+      action: 'GotoLine'
+  - id: "list.scrollUp"
+    binding:      
+      - "ctrl+up"
+    vscode:
+      action: 'list.scrollUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused && listScrollAtBoundary != 'both' && listScrollAtBoundary != 'top'" ]
+  - id: "firstCompressedFolder"
+    binding:      
+      - "home"
+    vscode:
+      action: 'firstCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedFirstFocus && !inputFocus" ]
+  - id: "acceptSelectedSuggestion"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'acceptSelectedSuggestion'
+      context: [ "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus" ]
+  - id: "acceptRenameInputWithPreview"
+    binding:      
+      - "ctrl+enter"
+    vscode:
+      action: 'acceptRenameInputWithPreview'
+      context: [ "config.editor.rename.enablePreview && editorFocus && renameInputVisible && !isComposing" ]
+  - id: "list.focusLast"
+    binding:      
+      - "end"
+    vscode:
+      action: 'list.focusLast'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "filesExplorer.cut"
+    binding:      
+      - "ctrl+x"
+    vscode:
+      action: 'filesExplorer.cut'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" ]
+  - id: "editor.action.extensioneditor.showfind"
+    binding:      
+      - "ctrl+[KeyF]"
+    vscode:
+      action: 'editor.action.extensioneditor.showfind'
+      context: [ "!editorFocus && activeEditor == 'workbench.editor.extension'" ]
+  - id: "cursorBottomSelect"
+    binding:      
+      - "ctrl+shift+end"
+    vscode:
+      action: 'cursorBottomSelect'
+      context: [ "textInputFocus" ]
+  - id: "quickInput.pageNext"
+    binding:      
+      - "pagedown"
+      - "meta+[ArrowDown]"
+    vscode:
+      action: 'quickInput.pageNext'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+  - id: "togglePreserveCase"
+    binding:      
+      - "alt+[KeyO] alt+[KeyP]"
+    vscode:
+      action: 'togglePreserveCase'
+      context: [ "editorFocus" ]
+  - id: "editor.action.deleteLines"
+    binding:      
+      - "meta+backspace"
+      - "ctrl+backspace"
+    vscode:
+      action: 'editor.action.deleteLines'
+      context: [ "textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorDeleteLine'
+  - id: "workbench.action.gotoSymbol"
+    binding:      
+      - "ctrl+[KeyN] ctrl+[KeyS]"
+    vscode:
+      action: 'workbench.action.gotoSymbol'
+  - id: "list.select"
+    binding:      
+      - "enter"
+    vscode:
+      action: 'list.select'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+  - id: "toggleFindWholeWord"
+    binding:      
+      - "alt+[KeyO] alt+[KeyW]"
+    vscode:
+      action: 'toggleFindWholeWord'
+      context: [ "editorFocus" ]
+  - id: "workbench.action.closeActiveEditor"
+    binding:      
+      - "ctrl+[KeyW]"
+    vscode:
+      action: 'workbench.action.closeActiveEditor'
+    idea:
+      action: 'CloseContent'
+  - id: "editor.action.selectHighlights"
+    binding:      
+      - "alt+[KeyH]"
+    vscode:
+      action: 'editor.action.selectHighlights'
+      context: [ "editorFocus" ]
+    idea:
+      action: 'SelectAllOccurrences'
+  - id: "quickInput.pagePrevious"
+    binding:      
+      - "meta+[ArrowUp]"
+      - "pageup"
+    vscode:
+      action: 'quickInput.pagePrevious'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+  - id: "scrollPageDown"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'scrollPageDown'
+    idea:
+      action: 'ScrollPane-scrollDown'
+  - id: "scrollLineUp"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'scrollLineUp'
+    idea:
+      action: 'EditorScrollUp'
+  - id: "workbench.action.output.toggleOutput"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.output.toggleOutput'
+    idea:
+      action: 'ActivateRunToolWindow'
+  - id: "editor.unfoldRecursively"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.unfoldRecursively'
+    idea:
+      action: 'ExpandRegionRecursively'
+  - id: "editor.action.copyLinesDownAction"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.copyLinesDownAction'
+    idea:
+      action: 'EditorDuplicate'
+  - id: "workbench.action.toggleZenMode"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.toggleZenMode'
+    idea:
+      action: 'ToggleDistractionFreeMode'
+  - id: "workbench.action.debug.run"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.debug.run'
+    idea:
+      action: 'Run'
+  - id: "editor.action.addCommentLine"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.addCommentLine'
+    idea:
+      action: 'CommentByLineComment'
+  - id: "workbench.action.navigateForward"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.navigateForward'
+    idea:
+      action: 'Forward'
+  - id: "editor.debug.action.toggleBreakpoint"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.debug.action.toggleBreakpoint'
+    idea:
+      action: 'ToggleLineBreakpoint'
+  - id: "workbench.action.debug.stepOver"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.debug.stepOver'
+    idea:
+      action: 'StepOver'
+  - id: "workbench.action.files.revealActiveFileInWindows"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.files.revealActiveFileInWindows'
+    idea:
+      action: 'RevealIn'
+  - id: "editor.fold"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.fold'
+    idea:
+      action: 'CollapseRegion'
+  - id: "editor.action.addSelectionToNextFindMatch"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.addSelectionToNextFindMatch'
+    idea:
+      action: 'SelectNextOccurrence'
+  - id: "workbench.action.debug.stepOut"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.debug.stepOut'
+    idea:
+      action: 'StepOut'
+  - id: "editor.unfoldAll"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.unfoldAll'
+    idea:
+      action: 'ExpandAllRegions'
+  - id: "editor.action.changeAll"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.changeAll'
+    idea:
+      action: 'SelectAllOccurrences'
+  - id: "workbench.action.selectTheme"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.selectTheme'
+    idea:
+      action: 'QuickChangeScheme'
+  - id: "markdown.showPreview"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'markdown.showPreview'
+    idea:
+      action: 'org.intellij.plugins.markdown.ui.actions.editorLayout.PreviewOnlyLayoutChangeAction'
+  - id: "editor.foldRecursively"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.foldRecursively'
+    idea:
+      action: 'CollapseRegionRecursively'
+  - id: "scrollPageUp"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'scrollPageUp'
+    idea:
+      action: 'ScrollPane-scrollUp'
+  - id: "workbench.action.closeAllEditors"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.closeAllEditors'
+    idea:
+      action: 'CloseAllEditors'
+  - id: "workbench.view.explorer"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.view.explorer'
+    idea:
+      action: 'ActivateProjectToolWindow'
+  - id: "workbench.view.scm"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.view.scm'
+    idea:
+      action: 'ActivateVersionControlToolWindow'
+  - id: "workbench.view.extensions"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.view.extensions'
+    idea:
+      action: 'WelcomeScreen.Plugins'
+  - id: "workbench.action.navigateBack"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.navigateBack'
+    idea:
+      action: 'Back'
+  - id: "scrollLineDown"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'scrollLineDown'
+    idea:
+      action: 'EditorScrollDown'
+  - id: "editor.action.insertCursorAtEndOfEachLineSelected"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.insertCursorAtEndOfEachLineSelected'
+    idea:
+      action: 'EditorToggleColumnMode'
+  - id: "workbench.action.debug.start"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.debug.start'
+    idea:
+      action: 'Debug'
+  - id: "workbench.action.closeFolder"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.closeFolder'
+    idea:
+      action: 'CloseProject'
+  - id: "workbench.view.debug"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.view.debug'
+    idea:
+      action: 'ActivateDebugToolWindow'
+  - id: "workbench.action.files.showOpenedFileInNewWindow"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.files.showOpenedFileInNewWindow'
+    idea:
+      action: 'EditSourceInNewWindow'
+  - id: "editor.action.removeCommentLine"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.removeCommentLine'
+    idea:
+      action: 'CommentByLineComment'
+  - id: "workbench.action.splitEditor"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.splitEditor'
+    idea:
+      action: 'SplitVertically'
+  - id: "editor.action.peekDefinition"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.action.peekDefinition'
+    idea:
+      action: 'QuickImplementations'
+  - id: "workbench.action.files.saveAll"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.files.saveAll'
+    idea:
+      action: 'SaveAll'
+  - id: "editor.foldAll"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.foldAll'
+    idea:
+      action: 'CollapseAllRegions'
+  - id: "markdown.showPreviewToSide"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'markdown.showPreviewToSide'
+    idea:
+      action: 'org.intellij.plugins.markdown.ui.actions.editorLayout.EditorAndPreviewLayoutChangeAction'
+  - id: "editor.unfold"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'editor.unfold'
+    idea:
+      action: 'ExpandRegion'
+  - id: "workbench.action.files.openFileFolder"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.files.openFileFolder'
+    idea:
+      action: 'OpenFile'
+  - id: "workbench.action.debug.stepInto"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.debug.stepInto'
+    idea:
+      action: 'StepInto'
+  - id: "workbench.action.tasks.build"
+    binding: 
+      - 'unset'
+    vscode:
+      action: 'workbench.action.tasks.build'
+    idea:
+      action: 'CompileDirty'
