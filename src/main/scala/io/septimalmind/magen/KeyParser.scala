@@ -1,6 +1,5 @@
 package io.septimalmind.magen
 
-import scala.util.matching.Regex
 import scala.util.parsing.combinator.RegexParsers
 
 sealed trait Modifier
@@ -29,11 +28,13 @@ object Key {
   }
 }
 
+case class Chord(combos: List[Key.KeyCombo])
+
 object ShortcutParser extends RegexParsers {
   override def skipWhitespace: Boolean = false
 
-  import Modifier.*
   import Key.*
+  import Modifier.*
 
   def modifier: Parser[Modifier] =
     ("ctrl" | "alt" | "shift" | "meta") ^^ {
@@ -52,10 +53,10 @@ object ShortcutParser extends RegexParsers {
   def chord: Parser[KeyCombo] =
     rep(modifier <~ ("-" | "+")) ~ key ^^ { case mods ~ k => KeyCombo(mods, k) }
 
-  def sequence: Parser[List[KeyCombo]] =
-    rep1sep(chord, """\s+""".r)
+  def sequence: Parser[Chord] =
+    rep1sep(chord, """\s+""".r).map(combos => Chord(combos))
 
-  def parseShortcuts(input: String): Either[String, List[KeyCombo]] =
+  def parseShortcuts(input: String): Either[String, Chord] =
     parseAll(sequence, input) match {
       case Success(result, _) => Right(result)
       case NoSuccess(msg, next) => Left(s"Failed to parse at ${next.pos}: $msg")
@@ -63,7 +64,7 @@ object ShortcutParser extends RegexParsers {
       case Failure(msg, next) => Left(s"Failed to parse at ${next.pos}: $msg")
     }
 
-  def parseUnsafe(input: String): List[KeyCombo] = {
+  def parseUnsafe(input: String): Chord = {
     parseShortcuts(input).toOption match {
       case Some(value) => value
       case None =>
@@ -80,7 +81,7 @@ object TestParser extends App {
   ShortcutParser.parseShortcuts(input) match {
     case Right(chords) =>
       println("Parsed shortcut sequence:")
-      chords.foreach(println)
+      chords.combos.foreach(println)
     case Left(error) =>
       println(s"Error parsing input: $error")
   }

@@ -20,8 +20,8 @@ object VSCodeRenderer extends Renderer {
     full.printWith(Printer.spaces2)
   }
 
-  private def format(a: VSCodeAction, binding: List[KeyCombo]): Seq[JsonObject] = {
-    val combo = binding.map(renderCombo).mkString(" ")
+  private def format(a: VSCodeAction, binding: Chord): Seq[JsonObject] = {
+    val combo = binding.combos.map(renderCombo).mkString(" ")
 
     val main = JsonObject(
       "key" -> Json.fromString(combo),
@@ -40,6 +40,9 @@ object VSCodeRenderer extends Renderer {
     }
   }
 
+  def renderChord(c: Chord): String = {
+    c.combos.map(renderCombo).mkString(" ")
+  }
   def renderCombo(f: KeyCombo): String = {
     val modsStr = f.modifiers.map {
       case Modifier.Ctrl => "ctrl"

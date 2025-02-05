@@ -2,6 +2,7 @@ package io.septimalmind.magen
 
 import io.septimalmind.magen.Key.{KeyCombo, NamedKey}
 
+import scala.annotation.tailrec
 import scala.xml.PrettyPrinter
 
 object IdeaRenderer extends Renderer {
@@ -28,8 +29,8 @@ object IdeaRenderer extends Renderer {
     prettyXml
   }
 
-  private def format(binding: List[KeyCombo]) = {
-    binding match {
+  private def format(binding: Chord) = {
+    binding.combos match {
       case f :: s :: Nil =>
         val fs = renderCombo(f)
         val ss = renderCombo(s)
@@ -58,25 +59,32 @@ object IdeaRenderer extends Renderer {
     shortcutMap(f.name)
   }
 
-  def shortcutMap(shortcut: String): String = shortcut.toUpperCase match {
-    case "SHIFT" => "shift"
-    case "ALT" => "alt"
-    case "CMD" => "meta"
-    case "CTRL" => "ctrl"
-    case "-" => "MINUS"
-    case "=" => "EQUALS"
-    case "BACKSPACE" => "BACK_SPACE"
-    case "," => "COMMA"
-    case ";" => "SEMICOLON"
-    case "." => "PERIOD"
-    case "/" => "SLASH"
-    case "\\" => "BACK_SLASH"
-    case "PAGEDOWN" => "PAGE_DOWN"
-    case "PAGEUP" => "PAGE_UP"
-    case "[" => "OPEN_BRACKET"
-    case "]" => "CLOSE_BRACKET"
-    case "'" => "AMPERSAND"
-    case _ => shortcut
+  @tailrec
+  def shortcutMap(shortcut: String): String = {
+    if (shortcut.startsWith("[") && shortcut.endsWith("]")) {
+      shortcutMap(shortcut.substring(1, shortcut.length - 1))
+    } else {
+      shortcut.toUpperCase match {
+        case "SHIFT" => "shift"
+        case "ALT" => "alt"
+        case "CMD" => "meta"
+        case "CTRL" => "ctrl"
+        case "-" => "MINUS"
+        case "=" => "EQUALS"
+        case "BACKSPACE" => "BACK_SPACE"
+        case "," => "COMMA"
+        case ";" => "SEMICOLON"
+        case "." => "PERIOD"
+        case "/" => "SLASH"
+        case "\\" => "BACK_SLASH"
+        case "PAGEDOWN" => "PAGE_DOWN"
+        case "PAGEUP" => "PAGE_UP"
+        case "[" => "OPEN_BRACKET"
+        case "]" => "CLOSE_BRACKET"
+        case "'" => "AMPERSAND"
+        case _ => shortcut
+      }
+    }
   }
 
   val basicMappings = Map(

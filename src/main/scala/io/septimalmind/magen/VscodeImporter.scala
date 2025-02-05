@@ -1,6 +1,5 @@
 package io.septimalmind.magen
 
-import io.circe.Json
 import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.charset.StandardCharsets
@@ -37,7 +36,7 @@ object VscodeImporter {
               val parsed = ShortcutParser.parseUnsafe(b)
               val extended = Aliases.extend(parsed)
               
-              val all = extended.map(_.map(VSCodeRenderer.renderCombo).mkString(" ")).sortBy(_.length)
+              val all = extended.map(VSCodeRenderer.renderChord).sortBy(_.length)
               val secs = all.init
               secs
           }.toSet
@@ -45,7 +44,7 @@ object VscodeImporter {
           val filtered = allbbs.filterNot {
             b =>
               val parsed = ShortcutParser.parseUnsafe(b)
-              secs.contains(parsed.map(VSCodeRenderer.renderCombo).mkString(" "))
+              secs.contains(VSCodeRenderer.renderChord(parsed))
           }
           
           import izumi.fundamentals.platform.strings.IzString.*
@@ -126,5 +125,6 @@ object VscodeImporter {
     }
 
     Files.write(Paths.get("mappings", "vscode-idea-imported.yaml"), sb.toString().getBytes(StandardCharsets.UTF_8))
+    ()
   }
 }
