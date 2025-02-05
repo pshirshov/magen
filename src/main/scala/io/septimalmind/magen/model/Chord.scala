@@ -12,10 +12,12 @@ object Modifier {
 }
 
 sealed trait Key
+
 object Key {
   case class NamedKey(name: String) extends Key
+
   object NamedKey {
-    def make(s: String) = {
+    def make(s: String): NamedKey = {
       if (s.startsWith("[Key")) {
         new NamedKey(s.substring(4, 5))
       } else {
@@ -23,6 +25,7 @@ object Key {
       }
     }
   }
+
   case class KeyCombo(modifiers: List[Modifier], key: NamedKey) {
     def dropMods: KeyCombo = this.copy(modifiers = List.empty)
   }
