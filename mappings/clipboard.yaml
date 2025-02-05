@@ -1,0 +1,37 @@
+mapping:
+  - id: "copyFilePath"
+    binding:
+      - "alt+[KeyC] alt+[KeyP]"
+    vscode:
+      action: 'copyFilePath'
+    idea:
+      action: 'CopyPaths'
+  - id: "copyRelativeFilePath"
+    binding:
+      - "alt+[KeyC] alt+[KeyR]"
+    vscode:
+      action: 'copyRelativeFilePath'
+    idea: 
+      missing: true
+  # basic    
+  - id: "editor.action.clipboardCopyAction"
+    binding:
+      - "ctrl+[KeyC]"
+    vscode:
+      action: 'editor.action.clipboardCopyAction'
+    idea:
+      action: '\$Copy'
+  - id: "editor.action.clipboardCutAction"
+    binding:
+      - "ctrl+[KeyX]"
+    vscode:
+      action: 'editor.action.clipboardCutAction'
+    idea:
+      action: '\$Cut'
+  - id: "editor.action.clipboardPasteAction"
+    binding:
+      - "ctrl+[KeyV]"
+    vscode:
+      action: 'editor.action.clipboardPasteAction'
+    idea:
+      action: '\$Paste'      

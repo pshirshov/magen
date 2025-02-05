@@ -1,26 +1,41 @@
 package io.septimalmind.magen.targets
 
+import io.circe.parser
 import io.septimalmind.magen.{Mapping, Renderer}
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.targets.VSCodeRenderer.renderCombo
+import io.septimalmind.magen.tools.VscodeMapping
 import io.septimalmind.magen.util.{Aliases, ShortcutParser}
+import izumi.fundamentals.platform.files.IzFiles
+import izumi.fundamentals.platform.resources.IzResources
 
+import java.nio.file.Paths
 import scala.annotation.tailrec
 import scala.xml.PrettyPrinter
 
 object IdeaRenderer extends Renderer {
-  // useful: https://github.com/JetBrains/intellij-community/blob/ed982b658a0688970a7773fbb81fce3723ab5416/plugins/ide-startup/importSettings/src/com/intellij/ide/startup/importSettings/transfer/backend/providers/vscode/mappings/KeyBindingsMappings.kt#L115
+  // useful:
+  // https://github.com/JetBrains/intellij-community/blob/ed982b658a0688970a7773fbb81fce3723ab5416/plugins/ide-startup/importSettings/src/com/intellij/ide/startup/importSettings/transfer/backend/providers/vscode/mappings/KeyBindingsMappings.kt#L115
+  // https://github.com/JetBrains/intellij-community/tree/b78007c38cd6213fe0cb5ca2cb6fddfd257dbc31/platform/platform-resources/src/keymaps
+
+  // ❯ unzip -l /nix/store/g9hxdkvqp0001bqli059ap0jwvacdnsm-idea-ultimate-2024.3.2/idea-ultimate/lib/app-client.jar | grep default.xml
+  //    46078  00-00-1980 00:00   keymaps/$default.xml
+
+  // nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' -n './junk/$default.xml'
+
+  // unzip -p "$(dirname $(readlink -f `which idea-ultimate`))/../idea-ultimate/lib/app-client.jar" 'keymaps/$default.xml' | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id'
   override def id: String = "idea.xml"
 
   override def render(mapping: Mapping): String = {
     val mappings = for {
       c <- mapping.mapping
-      a <- c.idea.toList
+      a <- c.idea.toList.filterNot(_.action.isEmpty)
 
     } yield {
-      val bbs = c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend).map(b => renderChord(b))
-      <action id={a.action}>
+      val bbs = c.binding.map(ShortcutParser.parseUnsafe).flatMap(Aliases.extend).map(b => renderChord(b)) ++
+        c.idea.get.mouse.toList.flatten.map(m => <mouse-shortcut keystroke={m}/>)
+      <action id={a.action.get}>
         {bbs}
       </action>
     }
@@ -91,94 +106,10 @@ object IdeaRenderer extends Renderer {
     }
   }
 
-  val basicMappings = Map(
-    "actions.find" -> "Find",
-    "cursorBottom" -> "EditorTextEnd",
-    "cursorEnd" -> "EditorLineEnd",
-    "cursorHome" -> "EditorLineStart",
-    "cursorTop" -> "EditorTextStart",
-    "editor.action.addCommentLine" -> "CommentByLineComment",
-    "editor.action.addSelectionToNextFindMatch" -> "SelectNextOccurrence",
-    "editor.action.blockComment" -> "CommentByBlockComment",
-    "editor.action.changeAll" -> "SelectAllOccurrences",
-    "editor.action.clipboardCopyAction" -> "\\$Copy",
-    "editor.action.clipboardCutAction" -> "\\$Cut",
-    "editor.action.clipboardPasteAction" -> "\\$Paste",
-    "editor.action.commentLine" -> "CommentByLineComment",
-    "editor.action.copyLinesDownAction" -> "EditorDuplicate",
-    "editor.action.deleteLines" -> "EditorDeleteLine",
-    "editor.action.formatDocument" -> "ReformatCode",
-    "editor.action.goToReferences" -> "ShowUsages",
-    "editor.action.indentLines" -> "EditorIndentLineOrSelection",
-    "editor.action.insertCursorAbove" -> "EditorCloneCaretAbove",
-    "editor.action.insertCursorAtEndOfEachLineSelected" -> "EditorToggleColumnMode",
-    "editor.action.insertCursorBelow" -> "EditorCloneCaretBelow",
-    "editor.action.insertLineAfter" -> "EditorStartNewLine",
-    "editor.action.insertLineBefore" -> "EditorStartNewLineBefore",
-    "editor.action.jumpToBracket" -> "EditorMatchBrace",
-    "editor.action.marker.nextInFiles" -> "GotoNextError",
-    "editor.action.marker.prevInFiles" -> "GotoPreviousError",
-    "editor.action.moveLinesDownAction" -> "MoveLineDown",
-    "editor.action.moveLinesUpAction" -> "MoveLineUp",
-    "editor.action.outdentLines" -> "EditorUnindentSelection",
-    "editor.action.peekDefinition" -> "QuickImplementations",
-    "editor.action.quickFix" -> "ShowIntentionActions",
-    "editor.action.removeCommentLine" -> "CommentByLineComment",
-    "editor.action.rename" -> "RenameElement",
-    "editor.action.revealDefinition" -> "GotoDeclaration",
-    "editor.action.selectHighlights" -> "SelectAllOccurrences",
-    "editor.action.startFindReplaceAction" -> "Replace",
-    "editor.action.triggerParameterHints" -> "ParameterInfo",
-    "editor.debug.action.toggleBreakpoint" -> "ToggleLineBreakpoint",
-    "editor.fold" -> "CollapseRegion",
-    "editor.foldAll" -> "CollapseAllRegions",
-    "editor.foldRecursively" -> "CollapseRegionRecursively",
-    "editor.unfold" -> "ExpandRegion",
-    "editor.unfoldAll" -> "ExpandAllRegions",
-    "editor.unfoldRecursively" -> "ExpandRegionRecursively",
-    "markdown.showPreview" -> "org.intellij.plugins.markdown.ui.actions.editorLayout.PreviewOnlyLayoutChangeAction",
-    "markdown.showPreviewToSide" -> "org.intellij.plugins.markdown.ui.actions.editorLayout.EditorAndPreviewLayoutChangeAction",
-    "redo" -> "\\$Redo",
-    "scrollLineDown" -> "EditorScrollDown",
-    "scrollLineUp" -> "EditorScrollUp",
-    "scrollPageDown" -> "ScrollPane-scrollDown",
-    "scrollPageUp" -> "ScrollPane-scrollUp",
-    "undo" -> "\\$Undo",
-    "workbench.action.closeActiveEditor" -> "CloseContent",
-    "workbench.action.closeAllEditors" -> "CloseAllEditors",
-    "workbench.action.closeFolder" -> "CloseProject",
-    "workbench.action.debug.run" -> "Run",
-    "workbench.action.debug.start" -> "Debug",
-    "workbench.action.debug.stepInto" -> "StepInto",
-    "workbench.action.debug.stepOut" -> "StepOut",
-    "workbench.action.debug.stepOver" -> "StepOver",
-    "workbench.action.files.newUntitledFile" -> "FileChooser.NewFile",
-    "workbench.action.files.openFileFolder" -> "OpenFile",
-    "workbench.action.files.revealActiveFileInWindows" -> "RevealIn",
-    "workbench.action.files.save" -> "SaveAll",
-    "workbench.action.files.saveAll" -> "SaveAll",
-    "workbench.action.files.showOpenedFileInNewWindow" -> "EditSourceInNewWindow",
-    "workbench.action.gotoLine" -> "GotoLine",
-    "workbench.action.navigateBack" -> "Back",
-    "workbench.action.navigateForward" -> "Forward",
-    "workbench.action.openSettings" -> "ShowSettings",
-    "workbench.action.output.toggleOutput" -> "ActivateRunToolWindow",
-    "workbench.action.quickOpen" -> "GotoFile",
-    "workbench.action.reopenClosedEditor" -> "ReopenClosedTab",
-    "workbench.action.replaceInFiles" -> "ReplaceInPath",
-    "workbench.action.selectTheme" -> "QuickChangeScheme",
-    "workbench.action.showAllSymbols" -> "GotoSymbol",
-    "workbench.action.splitEditor" -> "SplitVertically",
-    "workbench.action.tasks.build" -> "CompileDirty",
-    "workbench.action.terminal.toggleTerminal" -> "ActivateTerminalToolWindow",
-    "workbench.action.toggleSidebarVisibility" -> "HideSideWindows",
-    "workbench.action.toggleZenMode" -> "ToggleDistractionFreeMode",
-    "workbench.action.zoomIn" -> "EditorIncreaseFontSize",
-    "workbench.action.zoomOut" -> "EditorDecreaseFontSize",
-    "workbench.action.zoomReset" -> "EditorResetFontSize",
-    "workbench.view.debug" -> "ActivateDebugToolWindow",
-    "workbench.view.explorer" -> "ActivateProjectToolWindow",
-    "workbench.view.extensions" -> "WelcomeScreen.Plugins",
-    "workbench.view.scm" -> "ActivateVersionControlToolWindow",
-  )
+  val basicMappings: Map[String, String] = {
+    val fv = IzResources.readAsString("idea-vscode-mapping.json").get
+    val pv = parser.parse(fv)
+    val jv = pv.flatMap(_.as[Map[String, String]]).toOption.get.map(_.swap).toMap
+    jv
+  }
 }

@@ -1,0 +1,17 @@
+mapping:
+  - id: "editor.action.autoFix"
+    binding:
+      - "ctrl+shift+."
+    vscode:
+      action: 'editor.action.autoFix'
+      context: [ "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/" ]
+    idea:
+      missing: true
+  - id: "editor.action.quickFix"
+    binding:
+      - "ctrl+."
+    vscode:
+      action: 'editor.action.quickFix'
+      context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'QuickActionPopup'        

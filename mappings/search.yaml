@@ -1,0 +1,9 @@
+mapping:
+  - id: "actions.find"
+    binding:
+      - "ctrl+[KeyF]"
+    vscode:
+      action: 'actions.find'
+      context: [ "editorFocus || editorIsOpen" ]
+    idea:
+      action: 'Find'      

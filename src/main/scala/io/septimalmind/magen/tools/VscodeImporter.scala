@@ -29,6 +29,8 @@ object VscodeImporter {
     sb.append("mapping:\n");
     contexts
       .filterNot(_._1.startsWith("-"))
+      .toList
+      .sortBy(_._1)
       .foreach {
         case (cmd, bbs) =>
           val allbbs = bbs.map(_.key).toList

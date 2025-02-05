@@ -1,0 +1,193 @@
+mapping:
+  - id: "list.clear"
+    binding:
+      - "escape"
+    vscode:
+      action: 'list.clear'
+      context: [ "listFocus && listHasSelectionOrFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true
+  - id: "list.closeFind"
+    binding:
+      - "escape"
+    vscode:
+      action: 'list.closeFind'
+      context: [ "listFocus && treeFindOpen" ]
+    idea:
+      missing: true      
+  - id: "list.collapse"
+    binding:
+      - "left"
+    vscode:
+      action: 'list.collapse'
+      context: [ "listFocus && treeElementCanCollapse && !inputFocus && !treestickyScrollFocused || listFocus && treeElementHasParent && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.collapseAll"
+    binding:
+      - "ctrl+left"
+    vscode:
+      action: 'list.collapseAll'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.expand"
+    binding:
+      - "right"
+    vscode:
+      action: 'list.expand'
+      context: [ "listFocus && treeElementCanExpand && !inputFocus && !treestickyScrollFocused || listFocus && treeElementHasChild && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.expandSelectionDown"
+    binding:
+      - "shift+down"
+    vscode:
+      action: 'list.expandSelectionDown'
+      context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.expandSelectionUp"
+    binding:
+      - "shift+up"
+    vscode:
+      action: 'list.expandSelectionUp'
+      context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.find"
+    binding:
+      - "ctrl+f"
+    vscode:
+      action: 'list.find'
+      context: [ "listFocus && listSupportsFind" ]
+    idea:
+      missing: true      
+  - id: "list.focusAnyDown"
+    binding:
+      - "alt+down"
+    vscode:
+      action: 'list.focusAnyDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusAnyFirst"
+    binding:
+      - "alt+home"
+    vscode:
+      action: 'list.focusAnyFirst'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusAnyLast"
+    binding:
+      - "alt+end"
+    vscode:
+      action: 'list.focusAnyLast'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusAnyUp"
+    binding:
+      - "alt+up"
+    vscode:
+      action: 'list.focusAnyUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusDown"
+    binding:
+      - "down"
+    vscode:
+      action: 'list.focusDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusFirst"
+    binding:
+      - "home"
+    vscode:
+      action: 'list.focusFirst'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusLast"
+    binding:
+      - "end"
+    vscode:
+      action: 'list.focusLast'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusPageDown"
+    binding:
+      - "pagedown"
+    vscode:
+      action: 'list.focusPageDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusPageUp"
+    binding:
+      - "pageup"
+    vscode:
+      action: 'list.focusPageUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.focusUp"
+    binding:
+      - "up"
+    vscode:
+      action: 'list.focusUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.scrollDown"
+    binding:
+      - "ctrl+down"
+    vscode:
+      action: 'list.scrollDown'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused && listScrollAtBoundary != 'both' && listScrollAtBoundary != 'bottom'" ]
+    idea:
+      missing: true      
+  - id: "list.scrollUp"
+    binding:
+      - "ctrl+up"
+    vscode:
+      action: 'list.scrollUp'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused && listScrollAtBoundary != 'both' && listScrollAtBoundary != 'top'" ]
+    idea:
+      missing: true      
+  - id: "list.select"
+    binding:
+      - "enter"
+    vscode:
+      action: 'list.select'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.selectAll"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyA]"
+    vscode:
+      action: 'list.selectAll'
+      context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.toggleExpand"
+    binding:
+      - "space"
+    vscode:
+      action: 'list.toggleExpand'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "list.toggleSelection"
+    binding:
+      - "ctrl+shift+enter"
+    vscode:
+      action: 'list.toggleSelection'
+      context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true

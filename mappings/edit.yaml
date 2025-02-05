@@ -1,0 +1,147 @@
+mapping:
+  - id: "undo"
+    binding:
+      - "ctrl+[KeyZ]"
+    vscode:
+      action: 'undo'
+    idea:
+      action: '$Undo'
+  - id: "redo"
+    binding:
+      - "ctrl+shift+z"
+      - "ctrl+[KeyY]"
+    vscode:
+      action: 'redo'
+    idea:
+      action: '\$Redo'
+
+  - id: "deleteLeft"
+    binding:
+      - "shift+backspace"
+      - "backspace"
+    vscode:
+      action: 'deleteLeft'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorBackSpace'
+  - id: "deleteRight"
+    binding:
+      - "delete"
+    vscode:
+      action: 'deleteRight'
+      context: [ "textInputFocus" ]
+    idea:
+      action: '$Delete'
+  - id: "deleteWordLeft"
+    binding:
+      - "alt+backspace"
+    vscode:
+      action: 'deleteWordLeft'
+      context: [ "textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorDeleteToWordStart'
+  - id: "editor.action.deleteLines"
+    binding:
+      - "meta+backspace"
+      - "ctrl+backspace"
+    vscode:
+      action: 'editor.action.deleteLines'
+      context: [ "textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorDeleteLine'
+  - id: "editor.action.duplicateSelection"
+    binding:
+      - "ctrl+[KeyD]"
+      - "meta+[KeyD]"
+    vscode:
+      action: 'editor.action.duplicateSelection'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorDuplicate'
+  # new lines
+  - id: "editor.action.insertLineAfter"
+    binding:
+      - "ctrl+enter"
+    vscode:
+      action: 'editor.action.insertLineAfter'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorStartNewLine'
+  - id: "editor.action.insertLineBefore"
+    binding:
+      - "ctrl+shift+enter"
+    vscode:
+      action: 'editor.action.insertLineBefore'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorStartNewLineBefore'      
+  # move
+  - id: "editor.action.moveLinesDownAction"
+    binding:
+      - "shift+alt+down"
+    vscode:
+      action: 'editor.action.moveLinesDownAction'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'MoveStatementDown'
+  - id: "editor.action.moveLinesUpAction"
+    binding:
+      - "shift+alt+up"
+    vscode:
+      action: 'editor.action.moveLinesUpAction'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'MoveStatementUp'
+  # comments
+  - id: "editor.action.blockComment"
+    binding:
+      - "meta+shift+[Slash]"
+      - "ctrl+shift+[Slash]"
+    vscode:
+      action: 'editor.action.blockComment'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'CommentByBlockComment'
+  - id: "editor.action.commentLine"
+    binding:
+      - "ctrl+/"
+      - "meta+[Slash]"
+    vscode:
+      action: 'editor.action.commentLine'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'CommentByLineComment'
+  # formatting
+  - id: "editor.action.formatDocument"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyF]"
+    vscode:
+      action: 'editor.action.formatDocument'
+      context: [ "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor" ]
+    idea:
+      action: 'ReformatCode'
+  - id: "editor.action.formatDocument.none"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyF]"
+    vscode:
+      action: 'editor.action.formatDocument.none'
+      context: [ "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly" ]
+    idea:
+      missing: true
+  - id: "editor.action.indentLines"
+    binding:
+      - "tab"
+    vscode:
+      action: 'editor.action.indentLines'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorIndentSelection'
+  - id: "editor.action.outdentLines"
+    binding:
+      - "shift+tab"
+    vscode:
+      action: 'editor.action.outdentLines'
+      context: [ "editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'EditorUnindentSelection'
+    

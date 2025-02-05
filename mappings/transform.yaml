@@ -1,0 +1,41 @@
+mapping:
+  - id: "workbench.files.action.compareWithClipboard"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyC]"
+    vscode:
+      action: 'workbench.files.action.compareWithClipboard'
+    idea:
+      action: 'CompareClipboardWithSelection'
+  - id: "editor.action.refactor"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyT]"
+    vscode:
+      action: 'editor.action.refactor'
+      context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'Refactorings.QuickListPopupAction'
+  - id: "renameFile"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyR]"
+    vscode:
+      action: 'renameFile'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" ]
+    idea:
+      comment: "in idea: it's combined with RenameElement"
+      missing: true
+  - id: "editor.action.rename"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyR]"
+    vscode:
+      action: 'editor.action.rename'
+      context: [ "editorHasRenameProvider && editorTextFocus && !editorReadonly" ]
+    idea:
+      action: 'RenameElement'
+  - id: "editor.action.toggleOvertypeInsertMode"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyO]"
+      - "insert"
+    vscode:
+      action: 'editor.action.toggleOvertypeInsertMode'
+    idea:
+      action: 'EditorToggleInsertState'  

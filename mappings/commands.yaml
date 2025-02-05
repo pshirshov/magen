@@ -1,0 +1,128 @@
+mapping:
+  - id: "workbench.action.closeActiveEditor"
+    binding:
+      - "ctrl+[KeyW]"
+      - "meta+[KeyW]"
+    vscode:
+      action: 'workbench.action.closeActiveEditor'
+    idea:
+      action: 'CloseContent'
+  - id: "workbench.action.closeWindow"
+    binding:
+      - "meta+shift+[KeyW]"
+      - "ctrl+shift+[KeyW]"
+    vscode:
+      action: 'workbench.action.closeWindow'
+    idea:
+      action: 'CloseProject'
+      
+  - id: "workbench.action.files.save"
+    binding:
+      - "ctrl+[KeyS]"
+      - "meta+[KeyS]"
+    vscode:
+      action: 'workbench.action.files.save'
+      # action: 'workbench.action.files.saveAll'
+    idea:
+      comment: 'Idea has no Save All '
+      action: 'SaveAll'
+      
+  - id: "workbench.action.files.saveAll"
+    binding:
+      - "ctrl+shift+[KeyS]"
+      - "meta+shift+[KeyS]"
+    vscode:
+      action: 'workbench.action.files.saveAll'
+    idea:
+      action: 'SaveAll'
+      
+  - id: "workbench.action.findInFiles"
+    binding:
+      - "ctrl+shift+[KeyF]"
+    vscode:
+      action: 'workbench.action.findInFiles'
+    idea:
+      action: 'FindInPath'
+
+
+  - id: "workbench.action.quit"
+    binding:
+      - "ctrl+[KeyQ]"
+      - "meta+[KeyQ]" 
+    vscode:
+      action: 'workbench.action.quit'
+    idea:
+      action: 'Exit'
+    
+  - id: "workbench.action.reopenClosedEditor"
+    binding:
+      - "ctrl+shift+t"
+    vscode:
+      action: 'workbench.action.reopenClosedEditor'
+    idea:
+      action: 'ReopenClosedTab'
+    
+  - id: "workbench.action.replaceInFiles"
+    binding:
+      - "ctrl+shift+[KeyR]"
+    vscode:
+      action: 'workbench.action.replaceInFiles'
+    idea:
+      action: 'ReplaceInPath'
+
+  - id: "workbench.action.closeOtherEditors"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyW]"
+    vscode:
+      action: 'workbench.action.closeOtherEditors'
+    idea:
+      action: 'Runner.CloseAllUnpinnedViews'
+      
+  - id: "workbench.action.newWindow"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyC]"
+    vscode:
+      action: 'workbench.action.newWindow'
+    idea:
+      missing: true
+  
+  - id: "workbench.action.files.newUntitledFile"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyN]"
+    vscode:
+      action: 'workbench.action.files.newUntitledFile'
+    idea:
+      action: 'FileChooser.NewFile'
+      
+
+  - id: "workbench.action.splitEditorRight"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyV]"
+    vscode:
+      action: 'workbench.action.splitEditorRight'
+    idea:
+      action: 'OpenInRightSplit'
+  - id: "workbench.action.pinEditor"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.pinEditor'
+      context: [ "!activeEditorIsPinned" ]
+    idea:
+      action: 'PinActiveTab'
+  - id: "workbench.action.unpinEditor"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.unpinEditor'
+      context: [ "activeEditorIsPinned" ]
+    idea:
+      comment: "combined with pin"
+      missing: true
+  - id: "revealFileInOS"
+    binding:
+      - "ctrl+[KeyK] ctrl+[KeyF]"
+    vscode:
+      action: 'revealFileInOS'
+    idea:
+      action: 'RevealIn'

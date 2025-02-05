@@ -1,0 +1,60 @@
+mapping:
+  - id: "workbench.action.openSettings"
+    binding:
+      - "ctrl+,"
+    vscode:
+      action: 'workbench.action.openSettings'
+    idea:
+      action: 'ShowSettings'
+  - id: "workbench.action.zoomIn"
+    binding:
+      - "ctrl+="
+    vscode:
+      action: 'workbench.action.zoomIn'
+    idea:
+      action: 'ZoomInIdeAction'
+  - id: "workbench.action.zoomOut"
+    binding:
+      - "ctrl+-"
+    vscode:
+      action: 'workbench.action.zoomOut'
+    idea:
+      action: 'EditorDecreaseFontSize'
+  - id: "workbench.action.zoomReset"
+    binding:
+      - "ctrl+[Key0]"
+    vscode:
+      action: 'workbench.action.zoomReset'
+    idea:
+      action: 'EditorResetFontSize'  
+  - id: "workbench.action.terminal.toggleTerminal"
+    binding:
+      - "ctrl+[KeyM] ctrl+[KeyT]"
+      - "ctrl+`"
+    vscode:
+      action: 'workbench.action.terminal.toggleTerminal'
+    idea:
+      action: 'ActivateTerminalToolWindow'
+  - id: "workbench.action.togglePanel"
+    binding:
+      - "ctrl+[KeyM] ctrl+[KeyP]"
+    vscode:
+      action: 'workbench.action.togglePanel'
+    idea:
+      comment: "idea has independent tool windows"
+      missing: true
+  - id: "workbench.action.toggleSidebarVisibility"
+    binding:
+      - "ctrl+[KeyM] ctrl+[KeyS]"
+    vscode:
+      action: 'workbench.action.toggleSidebarVisibility'
+    idea:
+      action: 'HideSideWindows'
+
+  - id: "editor.action.toggleWordWrap"
+    binding:
+      - "ctrl+[KeyM] ctrl+[KeyW]"
+    vscode:
+      action: 'editor.action.toggleWordWrap'
+    idea:
+      action: 'EditorToggleUseSoftWraps'

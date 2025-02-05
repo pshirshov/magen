@@ -1,0 +1,144 @@
+mapping:
+  # basic movement
+  - id: "cursorLeft"
+    binding:
+      - "left"
+    vscode:
+      action: 'cursorLeft'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLeft'
+  - id: "cursorDown"
+    binding:
+      - "down"
+    vscode:
+      action: 'cursorDown'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorDown'
+  - id: "cursorRight"
+    binding:
+      - "right"
+    vscode:
+      action: 'cursorRight'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorRight'  
+  - id: "cursorUp"
+    binding:
+      - "up"
+    vscode:
+      action: 'cursorUp'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorUp'
+      
+  # jump movement   
+  - id: "cursorWordLeft"
+    binding:
+      - "ctrl+left"
+      - "alt+left"
+    vscode:
+      action: 'cursorWordLeft'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorPreviousWord'  
+  - id: "cursorWordEndRight"
+    binding:
+      - "ctrl+right"
+      - "alt+right"
+    vscode:
+      action: 'cursorWordEndRight'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorNextWord'
+  - id: "cursorHome"
+    binding:
+      - "ctrl+[KeyA]"
+      - "home"
+    vscode:
+      action: 'cursorHome'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLineStart'  
+  - id: "cursorEnd"
+    binding:
+      - "end"
+      - "ctrl+[KeyE]"
+    vscode:
+      action: 'cursorEnd'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLineEnd'
+  - id: "cursorPageDown"
+    binding:
+      - "meta+[ArrowDown]"
+      - "pagedown"
+    vscode:
+      action: 'cursorPageDown'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorPageDown'
+  - id: "cursorPageUp"
+    binding:
+      - "meta+[ArrowUp]"
+      - "pageup"
+    vscode:
+      action: 'cursorPageUp'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorPageUp'
+  - id: "cursorTop"
+    binding:
+      - "ctrl+home"
+    vscode:
+      action: 'cursorTop'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorTextStart'      
+  - id: "cursorBottom"
+    binding:
+      - "ctrl+end"
+    vscode:
+      action: 'cursorBottom'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorTextEnd'
+  # multi-cursors
+  - id: "editor.action.insertCursorAbove"
+    binding:
+      - "ctrl+shift+up"
+    vscode:
+      action: 'editor.action.insertCursorAbove'
+      context: [ "editorTextFocus" ]
+    idea:
+      action: 'EditorCloneCaretAbove'
+  - id: "editor.action.insertCursorBelow"
+    binding:
+      - "ctrl+shift+down"
+    vscode:
+      action: 'editor.action.insertCursorBelow'
+      context: [ "editorTextFocus" ]
+    idea:
+      action: 'EditorCloneCaretBelow'
+  - id: "removeSecondaryCursors"
+    binding:
+      - "shift+escape"
+      - "escape"
+    vscode:
+      action: 'removeSecondaryCursors'
+      context: [ "editorHasMultipleSelections && textInputFocus" ]
+    idea:
+      missing: true
+
+      
+
+      
+
+      
+
+
+
+  
+
+   

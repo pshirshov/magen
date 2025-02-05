@@ -1,0 +1,118 @@
+mapping:
+  - id: "select-all"
+    binding: 
+      - "ctrl-k ctrl-a"
+    vscode:
+      action: "editor.action.selectAll"
+    zed:
+      action: "editor::SelectAll"
+      context:
+        - Editor
+        - Terminal
+    idea:
+      action: "$SelectAll"
+  # movement+selection
+  - id: "cursorRightSelect"
+    binding:
+      - "shift+right"
+    vscode:
+      action: 'cursorRightSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorRightWithSelection'
+  - id: "cursorUpSelect"
+    binding:
+      - "shift+up"
+    vscode:
+      action: 'cursorUpSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorUpWithSelection'
+  - id: "cursorDownSelect"
+    binding:
+      - "shift+down"
+    vscode:
+      action: 'cursorDownSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorDownWithSelection'
+  - id: "cursorLeftSelect"
+    binding:
+      - "shift+left"
+    vscode:
+      action: 'cursorLeftSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLeftWithSelection'  
+  - id: "cursorWordLeftSelect"
+    binding:
+      - "shift+ctrl+left"
+      - "shift+alt+left"
+    vscode:
+      action: 'cursorWordLeftSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorPreviousWordWithSelection'
+  - id: "cursorWordEndRightSelect"
+    binding:
+      - "shift+alt+right"
+      - "shift+ctrl+right"
+    vscode:
+      action: 'cursorWordEndRightSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorNextWordWithSelection'
+  # jump selection      
+  - id: "cursorHomeSelect"
+    binding:
+      - "shift+home"
+    vscode:
+      action: 'cursorHomeSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorTextStartWithSelection'
+  - id: "cursorEndSelect"
+    binding:
+      - "shift+end"
+    vscode:
+      action: 'cursorEndSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorLineEndWithSelection'
+
+  - id: "cursorPageDownSelect"
+    binding:
+      - "meta+shift+down"
+      - "shift+pagedown"
+    vscode:
+      action: 'cursorPageDownSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorPageDownWithSelection'
+  - id: "cursorPageUpSelect"
+    binding:
+      - "meta+shift+up"
+      - "shift+pageup"
+    vscode:
+      action: 'cursorPageUpSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorPageUpWithSelection'
+
+  - id: "cursorTopSelect"
+    binding:
+      - "ctrl+shift+home"
+    vscode:
+      action: 'cursorTopSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: "EditorTextStartWithSelection"
+  - id: "cursorBottomSelect"
+    binding:
+      - "ctrl+shift+end"
+    vscode:
+      action: 'cursorBottomSelect'
+      context: [ "textInputFocus" ]
+    idea:
+      action: 'EditorTextEndWithSelection'
+      
