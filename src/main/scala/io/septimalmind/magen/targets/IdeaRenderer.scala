@@ -27,6 +27,7 @@ object IdeaRenderer extends Renderer {
   // unzip -p "$(dirname $(readlink -f `which idea-ultimate`))/../idea-ultimate/lib/app-client.jar" 'keymaps/$default.xml' | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id'
   override def id: String = "idea.xml"
 
+  // TODO: index by commands/resolve dupes
   override def render(mapping: Mapping): String = {
     val mappings = for {
       c <- mapping.mapping

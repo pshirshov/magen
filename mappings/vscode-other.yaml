@@ -5,184 +5,144 @@ mapping:
     vscode:
       action: 'acceptRenameInput'
       context: [ "editorFocus && renameInputVisible && !isComposing" ]
+    idea:
+      missing: true
   - id: "acceptRenameInputWithPreview"
     binding:
       - "ctrl+enter"
     vscode:
       action: 'acceptRenameInputWithPreview'
       context: [ "config.editor.rename.enablePreview && editorFocus && renameInputVisible && !isComposing" ]
+    idea:
+      missing: true
   - id: "acceptSelectedSuggestion"
     binding:
       - "enter"
     vscode:
       action: 'acceptSelectedSuggestion'
       context: [ "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus" ]
+    idea:
+      missing: true
   - id: "cancelRenameInput"
     binding:
       - "escape"
     vscode:
       action: 'cancelRenameInput'
       context: [ "editorFocus && renameInputVisible" ]
+    idea:
+      missing: true
   - id: "cancelSelection"
     binding:
       - "escape"
     vscode:
       action: 'cancelSelection'
       context: [ "editorHasSelection && textInputFocus" ]
+    idea:
+      missing: true
   - id: "closeBreakpointWidget"
     binding:
       - "escape"
     vscode:
       action: 'closeBreakpointWidget'
       context: [ "breakpointWidgetVisible && textInputFocus" ]
+    idea:
+      missing: true
   - id: "closeFindWidget"
     binding:
       - "escape"
     vscode:
       action: 'closeFindWidget'
       context: [ "editorFocus && findWidgetVisible && !isComposing" ]
+    idea:
+      missing: true
   - id: "closeMarkersNavigation"
     binding:
       - "escape"
     vscode:
       action: 'closeMarkersNavigation'
       context: [ "editorFocus && markersNavigationVisible" ]
+    idea:
+      missing: true
   - id: "closeParameterHints"
     binding:
       - "escape"
     vscode:
       action: 'closeParameterHints'
       context: [ "editorFocus && parameterHintsVisible" ]
+    idea:
+      missing: true
   - id: "closeReferenceSearch"
     binding:
       - "escape"
     vscode:
       action: 'closeReferenceSearch'
       context: [ "editorTextFocus && referenceSearchVisible && !config.editor.stablePeek || referenceSearchVisible && !config.editor.stablePeek && !inputFocus" ]
-
+    idea:
+      missing: true
   - id: "editor.action.cancelSelectionAnchor"
     binding:
       - "escape"
     vscode:
       action: 'editor.action.cancelSelectionAnchor'
       context: [ "editorTextFocus && selectionAnchorSet" ]
-
+    idea:
+      missing: true
   - id: "editor.action.extensioneditor.findNext"
     binding:
       - "enter"
     vscode:
       action: 'editor.action.extensioneditor.findNext'
       context: [ "webviewFindWidgetFocused && !editorFocus && activeEditor == 'workbench.editor.extension'" ]
+    idea:
+      missing: true
   - id: "editor.action.extensioneditor.findPrevious"
     binding:
       - "shift+enter"
     vscode:
       action: 'editor.action.extensioneditor.findPrevious'
       context: [ "webviewFindWidgetFocused && !editorFocus && activeEditor == 'workbench.editor.extension'" ]
+    idea:
+      missing: true
   - id: "editor.action.extensioneditor.showfind"
     binding:
       - "ctrl+[KeyF]"
     vscode:
       action: 'editor.action.extensioneditor.showfind'
       context: [ "!editorFocus && activeEditor == 'workbench.editor.extension'" ]
-
-
-  - id: "editor.action.nextMatchFindAction"
-    binding:
-      - "alt+[KeyM]"
-      - "enter"
-    vscode:
-      action: 'editor.action.nextMatchFindAction'
-      context: [ "editorFocus", "editorFocus && findInputFocussed" ]
     idea:
-      action: 'FindNext'
-  - id: "editor.action.previousMatchFindAction"
-    binding:
-      - "shift+enter"
-      - "alt+shift+[KeyM]"
-    vscode:
-      action: 'editor.action.previousMatchFindAction'
-      context: [ "editorFocus && findInputFocussed", "editorFocus" ]
-    idea:
-      action: 'FindPrevious'
-
-  - id: "editor.action.replaceAll"
-    binding:
-      - "alt+shift+[KeyR]"
-    vscode:
-      action: 'editor.action.replaceAll'
-      context: [ "editorFocus && findWidgetVisible" ]
-  - id: "editor.action.replaceOne"
-    binding:
-      - "enter"
-      - "alt+[KeyR]"
-    vscode:
-      action: 'editor.action.replaceOne'
-      context: [ "editorFocus && findWidgetVisible && replaceInputFocussed", "editorFocus && findWidgetVisible" ]
-
-  - id: "editor.action.selectAllMatches"
-    binding:
-      - "alt+enter"
-    vscode:
-      action: 'editor.action.selectAllMatches'
-      context: [ "editorFocus && findWidgetVisible" ]
-  - id: "editor.action.selectHighlights"
-    binding:
-      - "alt+[KeyH]"
-    vscode:
-      action: 'editor.action.selectHighlights'
-      context: [ "editorFocus" ]
-    idea:
-      action: 'SelectAllOccurrences'
-  - id: "editor.action.startFindReplaceAction"
-    binding:
-      - "ctrl+[KeyR]"
-    vscode:
-      action: 'editor.action.startFindReplaceAction'
-      context: [ "editorFocus || editorIsOpen" ]
-    idea:
-      action: 'Replace'
-
-  - id: "editor.action.triggerParameterHints"
-    binding:
-      - "ctrl+[KeyI] ctrl+[KeyP]"
-    vscode:
-      action: 'editor.action.triggerParameterHints'
-      context: [ "editorHasSignatureHelpProvider && editorTextFocus" ]
-    idea:
-      action: 'ParameterInfo'
-  - id: "editor.action.triggerSuggest"
-    binding:
-      - "ctrl+space"
-    vscode:
-      action: 'editor.action.triggerSuggest'
-      context: [ "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" ]
-    idea:
-      action: 'CodeCompletion'
+      missing: true
   - id: "focusSuggestion"
     binding:
       - "ctrl+space"
     vscode:
       action: 'focusSuggestion'
       context: [ "suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+    idea:
+      missing: true
   - id: "hideSuggestWidget"
     binding:
       - "escape"
     vscode:
       action: 'hideSuggestWidget'
       context: [ "suggestWidgetVisible && textInputFocus" ]
+    idea:
+      missing: true
   - id: "jumpToNextSnippetPlaceholder"
     binding:
       - "tab"
     vscode:
       action: 'jumpToNextSnippetPlaceholder'
       context: [ "hasNextTabstop && inSnippetMode && textInputFocus" ]
+    idea:
+      missing: true
   - id: "jumpToPrevSnippetPlaceholder"
     binding:
       - "shift+tab"
     vscode:
       action: 'jumpToPrevSnippetPlaceholder'
       context: [ "hasPrevTabstop && inSnippetMode && textInputFocus" ]
+    idea:
+      missing: true
   - id: "leaveSnippet"
     binding:
       - "escape"
@@ -190,184 +150,97 @@ mapping:
     vscode:
       action: 'leaveSnippet'
       context: [ "inSnippetMode && textInputFocus" ]
-  - id: "openReferenceToSide"
-    binding:
-      - "ctrl+enter"
-    vscode:
-      action: 'openReferenceToSide'
-      context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
-  - id: "outdent"
-    binding:
-      - "shift+tab"
-    vscode:
-      action: 'outdent'
-      context: [ "editorTextFocus && !editorReadonly && !editorTabMovesFocus" ]
-  - id: "quickInput.acceptInBackground"
-    binding:
-      - "right"
-    vscode:
-      action: 'quickInput.acceptInBackground'
-      context: [ "cursorAtEndOfQuickInputBox && inQuickInput && quickInputType == 'quickPick' || inQuickInput && !inputFocus && quickInputType == 'quickPick'" ]
-  - id: "quickInput.first"
-    binding:
-      - "home"
-      - "meta+[ArrowLeft]"
-    vscode:
-      action: 'quickInput.first'
-      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
-  - id: "quickInput.last"
-    binding:
-      - "end"
-      - "meta+[ArrowRight]"
-    vscode:
-      action: 'quickInput.last'
-      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
-  - id: "quickInput.next"
-    binding:
-      - "down"
-    vscode:
-      action: 'quickInput.next'
-      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
-  - id: "quickInput.pageNext"
-    binding:
-      - "pagedown"
-      - "meta+[ArrowDown]"
-    vscode:
-      action: 'quickInput.pageNext'
-      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
-  - id: "quickInput.pagePrevious"
-    binding:
-      - "meta+[ArrowUp]"
-      - "pageup"
-    vscode:
-      action: 'quickInput.pagePrevious'
-      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
-  - id: "quickInput.previous"
-    binding:
-      - "up"
-    vscode:
-      action: 'quickInput.previous'
-      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
-
-  - id: "refactorPreview.toggleCheckedState"
-    binding:
-      - "space"
-    vscode:
-      action: 'refactorPreview.toggleCheckedState'
-      context: [ "listFocus && refactorPreview.enabled && !inputFocus && !treestickyScrollFocused" ]
-
+    idea:
+      missing: true      
   - id: "repl.action.acceptInput"
     binding:
       - "enter"
     vscode:
       action: 'repl.action.acceptInput'
       context: [ "inDebugRepl && textInputFocus" ]
+    idea:
+      missing: true
   - id: "repl.action.filter"
     binding:
       - "ctrl+[KeyF]"
     vscode:
       action: 'repl.action.filter'
       context: [ "inDebugRepl && textInputFocus" ]
-
-  - id: "revealReference"
-    binding:
-      - "enter"
-    vscode:
-      action: 'revealReference'
-      context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
-  - id: "search.action.cancel"
-    binding:
-      - "escape"
-    vscode:
-      action: 'search.action.cancel'
-      context: [ "listFocus && searchViewletVisible && !inputFocus && !treestickyScrollFocused && searchState != '0'" ]
+    idea:
+      missing: true
   - id: "selectNextPageSuggestion"
     binding:
       - "pagedown"
     vscode:
       action: 'selectNextPageSuggestion'
       context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+    idea:
+      missing: true
   - id: "selectNextSuggestion"
     binding:
       - "down"
     vscode:
       action: 'selectNextSuggestion'
       context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+  #    idea:
+  #      action: 'EditorLookupDown'
     idea:
-      action: 'EditorLookupDown'
-  - id: "selectPrevPageSuggestion"
-    binding:
-      - "pageup"
-    vscode:
-      action: 'selectPrevPageSuggestion'
-      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+      missing: true
   - id: "selectPrevSuggestion"
     binding:
       - "up"
     vscode:
       action: 'selectPrevSuggestion'
       context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+      #    idea:
+      #      action: 'EditorLookupUp'
     idea:
-      action: 'EditorLookupUp'
+      missing: true
+  - id: "selectPrevPageSuggestion"
+    binding:
+      - "pageup"
+    vscode:
+      action: 'selectPrevPageSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+    idea:
+      missing: true
   - id: "showNextParameterHint"
     binding:
       - "down"
     vscode:
       action: 'showNextParameterHint'
       context: [ "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible" ]
+    idea:
+      missing: true
   - id: "showPrevParameterHint"
     binding:
       - "up"
     vscode:
       action: 'showPrevParameterHint'
       context: [ "editorFocus && parameterHintsMultipleSignatures && parameterHintsVisible" ]
-  - id: "toggleFindCaseSensitive"
-    binding:
-      - "alt+[KeyO] alt+[KeyC]"
-    vscode:
-      action: 'toggleFindCaseSensitive'
-      context: [ "editorFocus" ]
-  - id: "toggleFindInSelection"
-    binding:
-      - "alt+[KeyO] alt+[KeyL]"
-    vscode:
-      action: 'toggleFindInSelection'
-      context: [ "editorFocus" ]
-  - id: "toggleFindRegex"
-    binding:
-      - "alt+[KeyO] alt+[KeyR]"
-    vscode:
-      action: 'toggleFindRegex'
-      context: [ "editorFocus" ]
-  - id: "toggleFindWholeWord"
-    binding:
-      - "alt+[KeyO] alt+[KeyW]"
-    vscode:
-      action: 'toggleFindWholeWord'
-      context: [ "editorFocus" ]
-  - id: "togglePreserveCase"
-    binding:
-      - "alt+[KeyO] alt+[KeyP]"
-    vscode:
-      action: 'togglePreserveCase'
-      context: [ "editorFocus" ]
+    idea:
+      missing: true
   - id: "toggleSuggestionDetails"
     binding:
       - "ctrl+space"
     vscode:
       action: 'toggleSuggestionDetails'
       context: [ "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus" ]
+    idea:
+      missing: true
   - id: "widgetNavigation.focusNext"
     binding:
       - "ctrl+down"
     vscode:
       action: 'widgetNavigation.focusNext'
       context: [ "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'bottom'" ]
+    idea:
+      missing: true
   - id: "widgetNavigation.focusPrevious"
     binding:
       - "ctrl+up"
     vscode:
       action: 'widgetNavigation.focusPrevious'
       context: [ "inputFocus && navigableContainerFocused || navigableContainerFocused && treestickyScrollFocused || navigableContainerFocused && !listFocus || navigableContainerFocused && listScrollAtBoundary == 'both' || navigableContainerFocused && listScrollAtBoundary == 'top'" ]
-      
-      
+    idea:
+      missing: true    

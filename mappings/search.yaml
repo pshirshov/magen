@@ -7,3 +7,128 @@ mapping:
       context: [ "editorFocus || editorIsOpen" ]
     idea:
       action: 'Find'      
+  - id: "workbench.action.findInFiles"
+    binding:
+      - "ctrl+shift+[KeyF]"
+    vscode:
+      action: 'workbench.action.findInFiles'
+    idea:
+      action: 'FindInPath'
+  - id: "workbench.action.replaceInFiles"
+    binding:
+      - "ctrl+shift+[KeyR]"
+    vscode:
+      action: 'workbench.action.replaceInFiles'
+    idea:
+      action: 'ReplaceInPath'
+      
+  - id: "editor.action.nextMatchFindAction"
+    binding:
+      - "alt+[KeyM]"
+      - "enter"
+    vscode:
+      action: 'editor.action.nextMatchFindAction'
+      context: [ "editorFocus", "editorFocus && findInputFocussed" ]
+    idea:
+      action: 'FindNext'
+  - id: "editor.action.previousMatchFindAction"
+    binding:
+      - "shift+enter"
+      - "alt+shift+[KeyM]"
+    vscode:
+      action: 'editor.action.previousMatchFindAction'
+      context: [ "editorFocus && findInputFocussed", "editorFocus" ]
+    idea:
+      action: 'FindPrevious'
+
+  - id: "editor.action.replaceAll"
+    binding:
+      - "alt+[KeyA]"
+    vscode:
+      action: 'editor.action.replaceAll'
+      context: [ "editorFocus && findWidgetVisible" ]
+    idea:      
+      missing: true
+      unmodifiable: "alt+[KeyA]"      
+  - id: "editor.action.replaceOne"
+    binding:
+      - "enter"
+      - "alt+[KeyP]"
+    vscode:
+      action: 'editor.action.replaceOne'
+      context: [ "editorFocus && findWidgetVisible && replaceInputFocussed", "editorFocus && findWidgetVisible" ]
+    idea:
+      missing: true
+      unmodifiable: "alt+[KeyP]"
+      
+  - id: "editor.action.startFindReplaceAction"
+    binding:
+      - "ctrl+[KeyR]"
+    vscode:
+      action: 'editor.action.startFindReplaceAction'
+      context: [ "editorFocus || editorIsOpen" ]
+    idea:
+      action: 'Replace'
+        
+  - id: "editor.action.selectHighlights"
+    binding:
+      - "alt+[KeyH]"
+    vscode:
+      action: 'editor.action.selectHighlights'
+      context: [ "editorFocus && !findWidgetVisible" ]
+    idea:
+      action: 'SelectAllOccurrences'        
+  - id: "editor.action.selectAllMatches"
+    binding:
+      - "alt+[KeyH]"
+    vscode:
+      action: 'editor.action.selectAllMatches'
+      context: [ "editorFocus && findWidgetVisible" ]
+    idea:
+      action: 'SelectAllOccurrences'     
+        
+  # options
+  - id: "toggleFindCaseSensitive"
+    binding:
+      - "alt+[KeyO] alt+[KeyC]"
+    vscode:
+      action: 'toggleFindCaseSensitive'
+      context: [ "editorFocus" ]
+    idea:
+      missing: true
+      unmodifiable: "alt+[KeyC]"
+  - id: "toggleFindInSelection"
+    binding:
+      - "alt+[KeyO] alt+[KeyS]"
+    vscode:
+      action: 'toggleFindInSelection'
+      context: [ "editorFocus" ]
+    idea:
+      missing: true
+  - id: "toggleFindRegex"
+    binding:
+      - "alt+[KeyO] alt+[KeyX]"
+    vscode:
+      action: 'toggleFindRegex'
+      context: [ "editorFocus" ]
+    idea:
+      missing: true
+      unmodifiable: "alt+[KeyX]"
+  - id: "toggleFindWholeWord"
+    binding:
+      - "alt+[KeyO] alt+[KeyW]"
+    vscode:
+      action: 'toggleFindWholeWord'
+      context: [ "editorFocus" ]
+    idea:
+      missing: true
+      unmodifiable: "alt+[KeyW]"
+  - id: "togglePreserveCase"
+    binding:
+      - "alt+[KeyO] alt+[KeyC]"
+    vscode:
+      action: 'togglePreserveCase'
+      context: [ "editorFocus" ]
+    idea:
+      missing: true
+      unmodifiable: "alt+[KeyC]"              

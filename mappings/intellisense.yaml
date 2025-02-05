@@ -14,4 +14,20 @@ mapping:
       action: 'editor.action.quickFix'
       context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
     idea:
-      action: 'QuickActionPopup'        
+      action: 'QuickActionPopup'
+  - id: "editor.action.triggerParameterHints"
+    binding:
+      - "ctrl+[KeyI] ctrl+[KeyP]"
+    vscode:
+      action: 'editor.action.triggerParameterHints'
+      context: [ "editorHasSignatureHelpProvider && editorTextFocus" ]
+    idea:
+      action: 'ParameterInfo'
+  - id: "editor.action.triggerSuggest"
+    binding:
+      - "ctrl+space"
+    vscode:
+      action: 'editor.action.triggerSuggest'
+      context: [ "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" ]
+    idea:
+      action: 'CodeCompletion'        

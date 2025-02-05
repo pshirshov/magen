@@ -29,6 +29,8 @@ object Magen {
       "mappings/vscode-column.yaml",
       "mappings/vscode-files.yaml",
       "mappings/vscode-list.yaml",
+      "mappings/vscode-quickinput.yaml",
+      "mappings/vscode-other.yaml",
 
 //      "mappings/todo/vscode-idea-imported.yaml",
     )

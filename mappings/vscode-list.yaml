@@ -1,4 +1,36 @@
 mapping:
+  - id: "openReferenceToSide"
+    binding:
+      - "ctrl+enter"
+    vscode:
+      action: 'openReferenceToSide'
+      context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "refactorPreview.toggleCheckedState"
+    binding:
+      - "space"
+    vscode:
+      action: 'refactorPreview.toggleCheckedState'
+      context: [ "listFocus && refactorPreview.enabled && !inputFocus && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "revealReference"
+    binding:
+      - "enter"
+    vscode:
+      action: 'revealReference'
+      context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
+    idea:
+      missing: true      
+  - id: "search.action.cancel"
+    binding:
+      - "escape"
+    vscode:
+      action: 'search.action.cancel'
+      context: [ "listFocus && searchViewletVisible && !inputFocus && !treestickyScrollFocused && searchState != '0'" ]
+    idea:
+      missing: true  
   - id: "list.clear"
     binding:
       - "escape"

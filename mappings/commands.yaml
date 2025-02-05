@@ -15,7 +15,6 @@ mapping:
       action: 'workbench.action.closeWindow'
     idea:
       action: 'CloseProject'
-      
   - id: "workbench.action.files.save"
     binding:
       - "ctrl+[KeyS]"
@@ -35,16 +34,6 @@ mapping:
       action: 'workbench.action.files.saveAll'
     idea:
       action: 'SaveAll'
-      
-  - id: "workbench.action.findInFiles"
-    binding:
-      - "ctrl+shift+[KeyF]"
-    vscode:
-      action: 'workbench.action.findInFiles'
-    idea:
-      action: 'FindInPath'
-
-
   - id: "workbench.action.quit"
     binding:
       - "ctrl+[KeyQ]"
@@ -53,7 +42,6 @@ mapping:
       action: 'workbench.action.quit'
     idea:
       action: 'Exit'
-    
   - id: "workbench.action.reopenClosedEditor"
     binding:
       - "ctrl+shift+t"
@@ -61,15 +49,6 @@ mapping:
       action: 'workbench.action.reopenClosedEditor'
     idea:
       action: 'ReopenClosedTab'
-    
-  - id: "workbench.action.replaceInFiles"
-    binding:
-      - "ctrl+shift+[KeyR]"
-    vscode:
-      action: 'workbench.action.replaceInFiles'
-    idea:
-      action: 'ReplaceInPath'
-
   - id: "workbench.action.closeOtherEditors"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyW]"
@@ -77,7 +56,6 @@ mapping:
       action: 'workbench.action.closeOtherEditors'
     idea:
       action: 'Runner.CloseAllUnpinnedViews'
-      
   - id: "workbench.action.newWindow"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyC]"
@@ -85,7 +63,6 @@ mapping:
       action: 'workbench.action.newWindow'
     idea:
       missing: true
-  
   - id: "workbench.action.files.newUntitledFile"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyN]"
@@ -93,8 +70,6 @@ mapping:
       action: 'workbench.action.files.newUntitledFile'
     idea:
       action: 'FileChooser.NewFile'
-      
-
   - id: "workbench.action.splitEditorRight"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyV]"
