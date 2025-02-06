@@ -56,7 +56,7 @@ mapping:
     vscode:
       action: 'workbench.action.closeOtherEditors'
     idea:
-      action: 'Runner.CloseAllUnpinnedViews'
+      action: 'CloseAllEditorsButActive'
   - id: "workbench.action.newWindow"
     binding:
       - "${group.command} ctrl+[KeyC]"

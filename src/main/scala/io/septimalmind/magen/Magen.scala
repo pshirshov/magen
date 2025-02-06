@@ -52,7 +52,7 @@ object Magen {
           List(
 //        "/home/pavel/work/safe/nix-gnome-lean/hosts/pavel-am5/vscode-keymap/linux/vscode-magen.json",
             "/home/pavel/.config/VSCodium/User/keybindings.json",
-            "/home/pavel/work/safe/nix-gnome-lean/users/pavel/hm/keymap-vscode.json",
+            "/home/pavel/work/safe/nix-gnome-lean/users/pavel/hm/keymap-vscode-linux.json",
           ).map(p => Paths.get(p))
         )
       ),

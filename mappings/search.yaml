@@ -32,16 +32,26 @@ mapping:
     idea:
       action: 'ReplaceInPath'
       
-  - id: "editor.action.nextMatchFindAction"
+  - id: "editor.action.nextMatchFindAction:editor-focus"
     binding:
       - "alt+[KeyM]"
     vscode:
       action: 'editor.action.nextMatchFindAction'
-      context: [ "editorFocus", "editorFocus && findInputFocussed" ]
+      context: [ "editorFocus" ]        
+    idea:
+      missing: true
+      
+  - id: "editor.action.nextMatchFindAction:find-widget-focused"
+    binding:
+      - "alt+[KeyM]"
+    vscode:
+      action: 'editor.action.nextMatchFindAction'
+      context: [ "editorFocus && findInputFocussed" ]
       binding:
-        - "enter"        
+        - "enter"
     idea:
       action: 'FindNext'
+  
   - id: "editor.action.previousMatchFindAction"
     binding:
       - "shift+enter"
