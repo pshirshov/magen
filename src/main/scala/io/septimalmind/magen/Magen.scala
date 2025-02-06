@@ -14,7 +14,6 @@ import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
 import izumi.fundamentals.platform.strings.IzString.*
 
-// TODO: vcs
 // TODO: key variables
 // TODO: print duplicating key references
 object Magen {
