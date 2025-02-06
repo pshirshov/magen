@@ -6,7 +6,7 @@ mapping:
       action: 'workbench.action.debug.run'
     idea:
       action: 'Run'
-  - id: "workbench.action.debug.run"
+  - id: "workbench.action.tasks.runTask"
     binding:
       - "ctrl+[KeyB] ctrl+[KeyR]"
     vscode:
@@ -21,7 +21,7 @@ mapping:
       action: 'workbench.action.debug.start'
     idea:
       action: 'Debug'    
-  - id: "workbench.action.debug.start"
+  - id: "workbench.action.debug.selectandstart"
     binding:
       - "ctrl+[KeyB] ctrl+[KeyD]"
     vscode:

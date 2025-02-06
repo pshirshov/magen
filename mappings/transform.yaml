@@ -1,11 +1,4 @@
 mapping:
-  - id: "workbench.files.action.compareWithClipboard"
-    binding:
-      - "ctrl+[KeyT] ctrl+[KeyC]"
-    vscode:
-      action: 'workbench.files.action.compareWithClipboard'
-    idea:
-      action: 'CompareClipboardWithSelection'
   - id: "editor.action.refactor"
     binding:
       - "ctrl+[KeyT] ctrl+[KeyT]"
@@ -14,6 +7,13 @@ mapping:
       context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
     idea:
       action: 'Refactorings.QuickListPopupAction'
+  - id: "workbench.files.action.compareWithClipboard"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyC]"
+    vscode:
+      action: 'workbench.files.action.compareWithClipboard'
+    idea:
+      action: 'CompareClipboardWithSelection'
   - id: "renameFile"
     binding:
       - "ctrl+[KeyT] ctrl+[KeyR]"
@@ -46,3 +46,24 @@ mapping:
       action: 'editor.action.organizeImports'
     idea:
       action: 'OptimizeImports'
+  - id: "ExtractMethod"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyM]"
+    vscode:
+      missing: true
+    idea:
+      action: 'ExtractMethod'
+  - id: "IntroduceVariable"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyV]"
+    vscode:
+      missing: true
+    idea:
+      action: 'IntroduceVariable'      
+  - id: "IntroduceParameter"
+    binding:
+      - "ctrl+[KeyT] ctrl+[KeyP]"
+    vscode:
+      missing: true
+    idea:
+      action: 'IntroduceParameter'

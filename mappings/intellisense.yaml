@@ -14,7 +14,7 @@ mapping:
       action: 'editor.action.quickFix'
       context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
     idea:
-      action: 'QuickActionPopup'
+      action: 'ShowIntentionActions' # 'QuickActionPopup'
   - id: "editor.action.triggerParameterHints"
     binding:
       - "ctrl+[KeyI] ctrl+[KeyP]"

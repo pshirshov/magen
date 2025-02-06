@@ -2,24 +2,28 @@ mapping:
   # scrolling
   - id: "scrollPageUp"
     binding: []
+    unset: true
     vscode:
       action: 'scrollPageUp'
     idea:
       action: 'ScrollPane-scrollUp'
   - id: "scrollLineDown"
     binding: []
+    unset: true
     vscode:
       action: 'scrollLineDown'
     idea:
       action: 'EditorScrollDown'
   - id: "scrollPageDown"
     binding: []
+    unset: true
     vscode:
       action: 'scrollPageDown'
     idea:
       action: 'ScrollPane-scrollDown'
   - id: "scrollLineUp"
     binding: []
+    unset: true
     vscode:
       action: 'scrollLineUp'
     idea:
@@ -27,36 +31,42 @@ mapping:
   # folding
   - id: "editor.unfoldRecursively"
     binding: []
+    unset: true
     vscode:
       action: 'editor.unfoldRecursively'
     idea:
       action: 'ExpandRegionRecursively'
   - id: "editor.fold"
     binding: []
+    unset: true
     vscode:
       action: 'editor.fold'
     idea:
       action: 'CollapseBlock'
   - id: "editor.unfoldAll"
     binding: []
+    unset: true
     vscode:
       action: 'editor.unfoldAll'
     idea:
       action: 'ExpandAllRegions'
   - id: "editor.foldRecursively"
     binding: []
+    unset: true
     vscode:
       action: 'editor.foldRecursively'
     idea:
       action: 'CollapseRegionRecursively'
   - id: "editor.foldAll"
     binding: []
+    unset: true
     vscode:
       action: 'editor.foldAll'
     idea:
       action: 'CollapseAll'
   - id: "editor.unfold"
     binding: []
+    unset: true
     vscode:
       action: 'editor.unfold'
     idea:
@@ -66,30 +76,35 @@ mapping:
       
   - id: "editor.action.copyLinesDownAction"
     binding: []
+    unset: true
     vscode:
       action: 'editor.action.copyLinesDownAction'
     idea:
       action: 'EditorDuplicate'
   - id: "tab"
     binding: []
+    unset: true
     vscode:
       action: 'tab'
     idea:
       action: 'EditorTab'
   - id: "deleteWordRight"
     binding: []
+    unset: true
     vscode:
       action: 'deleteWordRight'
     idea:
       action: 'EditorDeleteToWordEnd'
   - id: "editor.action.insertCursorAtEndOfEachLineSelected"
     binding: []
+    unset: true
     vscode:
       action: 'editor.action.insertCursorAtEndOfEachLineSelected'
     idea:
       action: 'EditorToggleColumnMode'
   - id: "editor.action.addSelectionToNextFindMatch"
     binding: []
+    unset: true
     vscode:
       action: 'editor.action.addSelectionToNextFindMatch'
     idea:
@@ -98,72 +113,84 @@ mapping:
   # commands
   - id: "workbench.action.toggleZenMode"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.toggleZenMode'
     idea:
       action: 'ToggleDistractionFreeMode'
   - id: "workbench.action.files.revealActiveFileInWindows"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.files.revealActiveFileInWindows'
     idea:
       action: 'RevealIn'
   - id: "workbench.action.splitEditor"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.splitEditor'
     idea:
       action: 'SplitVertically'
   - id: "workbench.action.output.toggleOutput"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.output.toggleOutput'
     idea:
       action: 'ActivateRunToolWindow'
   - id: "workbench.action.closeAllEditors"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.closeAllEditors'
     idea:
       action: 'CloseAllEditors'
   - id: "workbench.view.explorer"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.view.explorer'
     idea:
       action: 'ActivateProjectToolWindow'
   - id: "workbench.view.scm"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.view.scm'
     idea:
       action: 'ActivateVersionControlToolWindow'
   - id: "workbench.action.compareEditor.previousChange"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.compareEditor.previousChange'
     idea:
       action: 'PreviousDiff'
   - id: "workbench.action.compareEditor.nextChange"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.compareEditor.nextChange'
     idea:
       action: 'Diff.NextChange'
   - id: "workbench.action.files.showOpenedFileInNewWindow"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.action.files.showOpenedFileInNewWindow'
     idea:
       action: 'EditSourceInNewWindow'
   - id: "workbench.actions.view.problems"
     binding: []
+    unset: true
     vscode:
       action: 'workbench.actions.view.problems'
     idea:
       action: 'ActivateProblemsViewToolWindow'
   #  - id: "workbench.view.extensions"
   #    binding: []
+  #  unset: true
   #    vscode:
   #      action: 'workbench.view.extensions'
   #    idea:
@@ -172,24 +199,28 @@ mapping:
   #      
   #  - id: "workbench.action.selectTheme"
   #    binding: []
+  #    unset: true
   #    vscode:
   #      action: 'workbench.action.selectTheme'
   #    idea:
   #      action: 'QuickChangeScheme'
   #  - id: "markdown.showPreview"
   #    binding: []
+  #  unset: true
   #    vscode:
   #      action: 'markdown.showPreview'
   #    idea:
   #      action: 'org.intellij.plugins.markdown.ui.actions.editorLayout.PreviewOnlyLayoutChangeAction'
   #  - id: "markdown.showPreviewToSide"
   #    binding: []
+  #  unset: true
   #    vscode:
   #      action: 'markdown.showPreviewToSide'
   #    idea:
   #      action: 'org.intellij.plugins.markdown.ui.actions.editorLayout.EditorAndPreviewLayoutChangeAction'
   #  - id: "workbench.action.files.openFileFolder"
   #    binding: []
+  #    unset: true
   #    vscode:
   #      action: 'workbench.action.files.openFileFolder'
   #    idea:

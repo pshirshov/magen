@@ -86,8 +86,10 @@ object Magen {
 
         if (Seq(i, v, z).exists(_.nonEmpty) && c.binding.nonEmpty) {
           Seq(Concept(c.id, NEList.unsafeFrom(c.binding), i, v, z))
-        } else {
+        } else if (!c.unset.contains(true)) {
           println(s"Incomplete definition: ${c.id}")
+          Seq.empty
+        } else {
           Seq.empty
         }
     }

@@ -198,7 +198,14 @@ mapping:
       action: 'list.select'
       context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
     idea:
-      action: 'SearchEverywhere.SelectItem'
+      action: 'EditorChooseLookupItem'
+  - id: "list.select.search-everywhere"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    idea:
+      action: 'SearchEverywhere.SelectItem'      
   - id: "list.selectAll"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyA]"

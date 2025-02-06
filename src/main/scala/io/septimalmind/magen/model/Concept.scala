@@ -25,6 +25,7 @@ case class RawConcept(
   idea: Option[RawIdeaAction],
   vscode: Option[RawVSCodeAction],
   zed: Option[RawZedAction],
+  unset: Option[Boolean],
 )
 
 case class RawMapping(mapping: List[RawConcept])
