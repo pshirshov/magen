@@ -30,50 +30,50 @@ mapping:
       action: 'ChooseDebugConfiguration'
       
   - id: "workbench.action.debug.stepOut"
-    binding: []
+    binding: ["shift+f11"]
     vscode:
       action: 'workbench.action.debug.stepOut'
     idea:
       action: 'StepOut'
   - id: "editor.debug.action.toggleBreakpoint"
-    binding: []
+    binding: ["f9"]
     vscode:
       action: 'editor.debug.action.toggleBreakpoint'
     idea:
       action: 'ToggleLineBreakpoint'      
   - id: "workbench.action.debug.continue"
-    binding: []
+    binding: ["f5"]
     vscode:
       action: 'workbench.action.debug.continue'
     idea:
       action: 'Resume'
   - id: "workbench.action.debug.stop"
-    binding: []
+    binding: ["shift+f5"]
     vscode:
       action: 'workbench.action.debug.stop'
     idea:
       action: 'Stop'
   - id: "workbench.action.debug.restart"
-    binding: []
+    binding: ["ctrl+shift+f5"]
     vscode:
       action: 'workbench.action.debug.restart'
     idea:
       action: 'Rerun'
   - id: "workbench.view.debug"
-    binding: []
+    binding: ["ctrl+shift+d"]
     vscode:
       action: 'workbench.view.debug'
     idea:
       action: 'ActivateDebugToolWindow'
   - id: "workbench.action.debug.stepOver"
-    binding: []
+    binding: ["f10"]
     vscode:
       action: 'workbench.action.debug.stepOver'
     idea:
       action: 'StepOver'
 
   - id: "workbench.action.debug.stepInto"
-    binding: []
+    binding: ["ctrl+f11"]
     vscode:
       action: 'workbench.action.debug.stepInto'
     idea:

@@ -17,7 +17,6 @@ import izumi.fundamentals.platform.strings.IzString.*
 
 import scala.util.matching.Regex.quoteReplacement
 
-// TODO: key variables
 // TODO: print duplicating key references
 object Magen {
   def main(args: Array[String]): Unit = {

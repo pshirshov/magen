@@ -119,6 +119,8 @@ object IdeaRenderer extends Renderer {
         case "[" => "OPEN_BRACKET"
         case "]" => "CLOSE_BRACKET"
         case "'" => "AMPERSAND"
+        case "BRACKETLEFT" => "OPEN_BRACKET"
+        case "BRACKETRIGHT" => "CLOSE_BRACKET"
         case _ => shortcut
       }
     }

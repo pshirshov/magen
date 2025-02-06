@@ -15,18 +15,22 @@ mapping:
     idea:
       action: 'GotoLine'
   #
+  #there is also workbench.action.navigateBackInEditLocations, etc
   - id: "workbench.action.openNextRecentlyUsedEditor"
+    unset: true
     binding: []
     vscode:
       action: 'workbench.action.openNextRecentlyUsedEditor'
     idea:
       action: 'JumpToNextChange'
   - id: "workbench.action.openPreviousRecentlyUsedEditor"
+    unset: true
     binding: []
     vscode:
       action: 'workbench.action.openPreviousRecentlyUsedEditor'
     idea:
       action: 'JumpToLastChange'
+  #      
       
   - id: "workbench.action.navigateForward"
     binding:
