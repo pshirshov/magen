@@ -7,7 +7,7 @@ mapping:
 #      action: 'EditorSelectWord'
   - id: "select-all"
     binding: 
-      - "ctrl-k ctrl-a"
+      - "${select.all}"
     vscode:
       action: "editor.action.selectAll"
     zed:

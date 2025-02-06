@@ -149,7 +149,7 @@ mapping:
       action: 'editor.action.indentLines'
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
-      action: 'EditorIndentSelection'
+      action: 'EditorIndentLineOrSelection'
   - id: "editor.action.outdentLines"
     binding:
       - "shift+tab"
@@ -157,7 +157,22 @@ mapping:
       action: 'editor.action.outdentLines'
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
+      action: 'EditorUnindentLineOrSelection'
+  - id: "EditorUnindentSelection"
+    binding:
+      - "shift+tab"
+    vscode:
+      missing: true
+    idea:
       action: 'EditorUnindentSelection'
+  - id: "EditorIndentSelection"
+    binding:
+      - "tab"
+    vscode:
+      missing: true
+    idea:
+      action: 'EditorIndentSelection'
+      
     #- id: "outdent"
     #    binding:
     #      - "shift+tab"

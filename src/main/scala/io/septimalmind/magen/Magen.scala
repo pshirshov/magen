@@ -6,6 +6,7 @@ import io.circe.generic.auto.*
 import io.circe.yaml
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.targets.{IdeaRenderer, VSCodeRenderer}
+import io.septimalmind.magen.util.ShortcutParser
 import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.charset.StandardCharsets
@@ -14,11 +15,14 @@ import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
 import izumi.fundamentals.platform.strings.IzString.*
 
+import scala.util.matching.Regex.quoteReplacement
+
 // TODO: key variables
 // TODO: print duplicating key references
 object Magen {
   def main(args: Array[String]): Unit = {
     val mapping = List(
+      "mappings/generic-keys.yaml",
       "mappings/build.yaml",
       "mappings/clipboard.yaml",
       "mappings/commands.yaml",
@@ -62,16 +66,36 @@ object Magen {
   }
 
   private def convert(mapping: List[RawMapping]): Mapping = {
-    val allConcepts = mapping.flatMap(_.mapping)
+    val allConcepts = mapping.flatMap(_.mapping.toSeq.flatten)
     val bad = allConcepts.map(m => (m.id, m)).toMultimap.filter(_._2.size > 1)
     if (bad.nonEmpty) {
       println(s"Conflicts: ${bad.niceList()}")
+      ???
+    }
+
+    import izumi.fundamentals.collections.IzCollections.*
+    val allKeys = mapping.flatMap(_.keys.map(_.toSeq).toSeq.flatten).toUniqueMap(identity)
+
+    val vars = allKeys match {
+      case Left(value) =>
+        println(s"Conflicts: $value")
+        ???
+      case Right(value) =>
+        value
     }
 
     val concepts = allConcepts.flatMap {
       c =>
         val i = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
-        val v = c.vscode.flatMap(i => i.action.map(a => VSCodeAction(a, i.context.toList.flatten, i.binding.toList.flatten)))
+        val v = c.vscode.flatMap(
+          i =>
+            i.action.map {
+              a =>
+                val bindings = i.binding.toList.flatten.map(expandTemplate(_, vars)).map(ShortcutParser.parseUnsafe)
+
+                VSCodeAction(a, i.context.toList.flatten, bindings)
+            }
+        )
         val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
 
         if (i.isEmpty && !c.idea.exists(_.missing.contains(true))) {
@@ -85,7 +109,11 @@ object Magen {
         }
 
         if (Seq(i, v, z).exists(_.nonEmpty) && c.binding.nonEmpty) {
-          Seq(Concept(c.id, NEList.unsafeFrom(c.binding), i, v, z))
+          val chord = NEList
+            .unsafeFrom(c.binding)
+            .map(expandTemplate(_, vars))
+            .map(ShortcutParser.parseUnsafe)
+          Seq(Concept(c.id, chord, i, v, z))
         } else if (!c.unset.contains(true)) {
           println(s"Incomplete definition: ${c.id}")
           Seq.empty
@@ -95,6 +123,32 @@ object Magen {
     }
 
     Mapping(concepts.sortBy(_.id))
+  }
+
+  def expandTemplate(
+    template: String,
+    values: Map[String, String],
+    maxIterations: Int = 10,
+  ): String = {
+    val pattern = """\$\{([^}]+)\}""".r
+
+    var result = template
+    var iteration = 0
+    var previous = ""
+
+    while (result != previous && iteration < maxIterations) {
+      previous = result
+      result = pattern.replaceAllIn(
+        result,
+        m => {
+          val key = m.group(1)
+          val replacement = values.getOrElse(key, m.matched)
+          quoteReplacement(replacement)
+        },
+      )
+      iteration += 1
+    }
+    result
   }
 
   private def readMapping(path: Path): RawMapping = {

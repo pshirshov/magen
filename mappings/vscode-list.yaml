@@ -208,7 +208,7 @@ mapping:
       action: 'SearchEverywhere.SelectItem'      
   - id: "list.selectAll"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyA]"
+      - "${select.all}"
     vscode:
       action: 'list.selectAll'
       context: [ "listFocus && listSupportsMultiselect && !inputFocus && !treestickyScrollFocused" ]

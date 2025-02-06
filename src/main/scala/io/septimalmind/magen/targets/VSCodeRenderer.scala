@@ -2,10 +2,10 @@ package io.septimalmind.magen.targets
 
 import io.circe.*
 import io.circe.syntax.*
-import io.septimalmind.magen.model.{Mapping, *}
-import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
-import io.septimalmind.magen.util.{Aliases, ShortcutParser}
 import io.septimalmind.magen.Renderer
+import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
+import io.septimalmind.magen.model.*
+import io.septimalmind.magen.util.Aliases
 
 object VSCodeRenderer extends Renderer {
   override def id: String = "vscode.json"
@@ -14,7 +14,7 @@ object VSCodeRenderer extends Renderer {
     val mappings = for {
       c <- mapping.mapping
       a <- c.vscode.toList
-      b <- (c.binding ++ a.binding).map(ShortcutParser.parseUnsafe).toList.flatMap(Aliases.extend)
+      b <- (c.binding ++ a.binding).toList.flatMap(Aliases.extend)
     } yield {
       format(a, b)
     }

@@ -1,7 +1,7 @@
 mapping:
   - id: "editor.action.refactor"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyT]"
+      - "${group.transform} ${group.transform}"
     vscode:
       action: 'editor.action.refactor'
       context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
@@ -9,14 +9,14 @@ mapping:
       action: 'Refactorings.QuickListPopupAction'
   - id: "workbench.files.action.compareWithClipboard"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyC]"
+      - "${group.transform} ctrl+[KeyC]"
     vscode:
       action: 'workbench.files.action.compareWithClipboard'
     idea:
       action: 'CompareClipboardWithSelection'
   - id: "renameFile"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyR]"
+      - "${group.transform} ctrl+[KeyR]"
     vscode:
       action: 'renameFile'
       context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" ]
@@ -25,7 +25,7 @@ mapping:
       missing: true
   - id: "editor.action.rename"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyR]"
+      - "${group.transform} ctrl+[KeyR]"
     vscode:
       action: 'editor.action.rename'
       context: [ "editorHasRenameProvider && editorTextFocus && !editorReadonly" ]
@@ -33,7 +33,7 @@ mapping:
       action: 'RenameElement'
   - id: "editor.action.toggleOvertypeInsertMode"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyO]"
+      - "${group.transform} ctrl+[KeyO]"
       - "insert"
     vscode:
       action: 'editor.action.toggleOvertypeInsertMode'
@@ -41,28 +41,28 @@ mapping:
       action: 'EditorToggleInsertState'  
   - id: "editor.action.organizeImports"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyI]"
+      - "${group.transform} ctrl+[KeyI]"
     vscode:
       action: 'editor.action.organizeImports'
     idea:
       action: 'OptimizeImports'
   - id: "ExtractMethod"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyM]"
+      - "${group.transform} ctrl+[KeyM]"
     vscode:
       missing: true
     idea:
       action: 'ExtractMethod'
   - id: "IntroduceVariable"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyV]"
+      - "${group.transform} ctrl+[KeyV]"
     vscode:
       missing: true
     idea:
       action: 'IntroduceVariable'      
   - id: "IntroduceParameter"
     binding:
-      - "ctrl+[KeyT] ctrl+[KeyP]"
+      - "${group.transform} ctrl+[KeyP]"
     vscode:
       missing: true
     idea:

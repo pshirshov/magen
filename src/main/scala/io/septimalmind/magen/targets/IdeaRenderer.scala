@@ -2,9 +2,9 @@ package io.septimalmind.magen.targets
 
 import io.circe.parser
 import io.septimalmind.magen.Renderer
-import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.*
-import io.septimalmind.magen.util.{Aliases, ShortcutParser}
+import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
+import io.septimalmind.magen.util.Aliases
 import izumi.fundamentals.platform.resources.IzResources
 
 import scala.annotation.tailrec
@@ -45,8 +45,8 @@ object IdeaRenderer extends Renderer {
 
         val bbs = pairs
           .flatMap {
-            case (i, c) =>
-              c.binding.map(b => (ShortcutParser.parseUnsafe(b), c.id))
+            case (_, c) =>
+              c.binding.map(b => (b, c.id))
           }
           .groupBy(_._1).map {
             case (chord, cs) =>

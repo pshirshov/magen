@@ -17,7 +17,7 @@ mapping:
       action: 'ShowIntentionActions' # 'QuickActionPopup'
   - id: "editor.action.triggerParameterHints"
     binding:
-      - "ctrl+[KeyI] ctrl+[KeyP]"
+      - "${group.info} ctrl+[KeyP]"
     vscode:
       action: 'editor.action.triggerParameterHints'
       context: [ "editorHasSignatureHelpProvider && editorTextFocus" ]

@@ -1,0 +1,10 @@
+keys:
+  group.transform: "ctrl-[KeyT]"
+  group.ui.elements: "ctrl-[KeyM]"
+  group.build: "ctrl+[KeyB]"
+  group.debug: "ctrl+[KeyB]"
+  group.command: "ctrl+[KeyK]"
+  group.info: "ctrl+[KeyI]"
+  group.navigate: "ctrl+[KeyN]"
+  
+  select.all: "${group.command} ctrl-[KeyA]"

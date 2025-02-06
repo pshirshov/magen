@@ -1,7 +1,7 @@
 mapping:
   - id: "workbench.action.tasks.build"
     binding:
-      - "ctrl+[KeyB] ctrl+[KeyB]"
+      - "${group.build} ${group.build}"
     vscode:
       action: 'workbench.action.tasks.build'
     idea:
@@ -9,7 +9,7 @@ mapping:
 
   - id: "build.rebuild"
     binding:
-      - "ctrl+[KeyB] ctrl+[KeyR]"
+      - "${group.build} ctrl+[KeyR]"
     vscode:
       missing: true
     idea:
@@ -17,7 +17,7 @@ mapping:
 
   - id: "build.file"
     binding:
-      - "ctrl+[KeyB] ctrl+[KeyF]"
+      - "${group.build} ctrl+[KeyF]"
     vscode:
       missing: true
     idea:

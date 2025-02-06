@@ -1,7 +1,7 @@
 mapping:
   - id: "editor.action.jumpToBracket"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyB]"
+      - "${group.navigate} ctrl+[KeyB]"
     vscode:
       action: 'editor.action.jumpToBracket'
       context: [ "editorTextFocus" ]
@@ -9,7 +9,7 @@ mapping:
       action: 'EditorMatchBrace'
   - id: "workbench.action.gotoLine"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyL]" 
+      - "${group.navigate} ctrl+[KeyL]" 
     vscode:
       action: 'workbench.action.gotoLine'
     idea:
@@ -61,35 +61,35 @@ mapping:
   #      
   - id: "workbench.action.quickOpen"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyF]"
+      - "${group.navigate} ctrl+[KeyF]"
     vscode:
       action: 'workbench.action.quickOpen'
     idea:
       action: 'GotoFile'
   - id: "workbench.action.openRecent"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyR]"
+      - "${group.navigate} ctrl+[KeyR]"
     vscode:
       action: 'workbench.action.openRecent'
     idea:
       action: 'RecentFiles'
   - id: "workbench.action.showAllEditors"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyE]"
+      - "${group.navigate} ctrl+[KeyE]"
     vscode:
       action: 'workbench.action.showAllEditors'
     idea:
       missing: true
   - id: "workbench.action.showAllSymbols"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyG]"
+      - "${group.navigate} ctrl+[KeyG]"
     vscode:
       action: 'workbench.action.showAllSymbols'
     idea:
       action: 'GotoClass'
   - id: "workbench.action.showCommands"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyN]"
+      - "${group.navigate} ctrl+[KeyN]"
       - "ctrl+shift+p"
     vscode:
       action: 'workbench.action.showCommands'
@@ -99,7 +99,7 @@ mapping:
   # structure
   - id: "workbench.action.gotoSymbol"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyS]"
+      - "${group.navigate} ctrl+[KeyS]"
     vscode:
       action: 'workbench.action.gotoSymbol'
     idea:
@@ -107,14 +107,14 @@ mapping:
       
   - id: "workbench.action.navigateToLastEditLocation"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyP]"
+      - "${group.navigate} ctrl+[KeyP]"
     vscode:
       action: 'workbench.action.navigateToLastEditLocation'
     idea:
       action: 'JumpToLastChange'
   - id: "editor.action.goToDeclaration"
     binding:
-      - "ctrl+[KeyN] shift+[KeyD]"
+      - "${group.navigate} shift+[KeyD]"
     vscode:
       action: 'editor.action.goToDeclaration'
     idea:
@@ -123,7 +123,7 @@ mapping:
         - "ctrl button1"
   - id: "editor.action.revealDefinition"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyD]"
+      - "${group.navigate} ctrl+[KeyD]"
     vscode:
       action: 'editor.action.revealDefinition'
       context: [ "editorHasDefinitionProvider && editorTextFocus" ]
@@ -132,7 +132,7 @@ mapping:
       
   - id: "editor.action.goToTypeDefinition"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyT]"
+      - "${group.navigate} ctrl+[KeyT]"
     vscode:
       action: 'editor.action.goToTypeDefinition'
     idea:
@@ -141,7 +141,7 @@ mapping:
         - "ctrl shift button1"      
   - id: "editor.action.goToImplementation"
     binding:
-      - "ctrl+[KeyI] ctrl+[KeyI]"
+      - "${group.navigate} ctrl+[KeyI]"
     vscode:
       action: 'editor.action.goToImplementation'
       context: [ "editorHasImplementationProvider && editorTextFocus" ]
@@ -151,18 +151,16 @@ mapping:
         - "ctrl alt button1"
   - id: "editor.action.goToReferences"
     binding:
-      - "ctrl+[KeyI] ctrl+[KeyR]"
+      - "${group.navigate} ctrl+[KeyU]" # "Usages"
     vscode:
       action: 'editor.action.goToReferences'
       context: [ "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" ]
     idea:
       action: 'ShowUsages'
       
-
-      
   - id: "editor.action.peekDefinition"
     binding:
-      - "ctrl+[KeyN] ctrl+[KeyD]"
+      - "${group.navigate} ctrl+[KeyD]"
     vscode:
       action: 'editor.action.peekDefinition'
     idea:
@@ -170,7 +168,7 @@ mapping:
       
   - id: "editor.action.revealDefinitionAside"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyD]"
+      - "${group.command} ctrl+[KeyD]"
     vscode:
       action: 'editor.action.revealDefinitionAside'
       context: [ "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor" ]

@@ -29,7 +29,7 @@ mapping:
       action: 'EditorResetFontSize'  
   - id: "workbench.action.terminal.toggleTerminal"
     binding:
-      - "ctrl+[KeyM] ctrl+[KeyT]"
+      - "${group.ui.elements} ctrl+[KeyT]"
       - "ctrl+`"
     vscode:
       action: 'workbench.action.terminal.toggleTerminal'
@@ -37,7 +37,7 @@ mapping:
       action: 'ActivateTerminalToolWindow'
   - id: "workbench.action.togglePanel"
     binding:
-      - "ctrl+[KeyM] ctrl+[KeyP]"
+      - "${group.ui.elements} ctrl+[KeyP]"
     vscode:
       action: 'workbench.action.togglePanel'
     idea:
@@ -45,15 +45,14 @@ mapping:
       missing: true
   - id: "workbench.action.toggleSidebarVisibility"
     binding:
-      - "ctrl+[KeyM] ctrl+[KeyS]"
+      - "${group.ui.elements} ctrl+[KeyS]"
     vscode:
       action: 'workbench.action.toggleSidebarVisibility'
     idea:
       action: 'HideSideWindows'
-
   - id: "editor.action.toggleWordWrap"
     binding:
-      - "ctrl+[KeyM] ctrl+[KeyW]"
+      - "${group.ui.elements} ctrl+[KeyW]"
     vscode:
       action: 'editor.action.toggleWordWrap'
     idea:

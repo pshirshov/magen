@@ -28,7 +28,10 @@ case class RawConcept(
   unset: Option[Boolean],
 )
 
-case class RawMapping(mapping: List[RawConcept])
+case class RawMapping(
+  keys: Option[Map[String, String]],
+  mapping: Option[List[RawConcept]],
+)
 
 case class IdeaAction(
   action: String,
@@ -38,7 +41,7 @@ case class IdeaAction(
 case class VSCodeAction(
   action: String,
   context: List[String],
-  binding: List[String],
+  binding: List[Chord],
 )
 case class ZedAction(
   action: String,
@@ -47,7 +50,7 @@ case class ZedAction(
 
 case class Concept(
   id: String,
-  binding: NEList[String],
+  binding: NEList[Chord],
   idea: Option[IdeaAction],
   vscode: Option[VSCodeAction],
   zed: Option[ZedAction],

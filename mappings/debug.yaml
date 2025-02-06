@@ -1,14 +1,14 @@
 mapping:
   - id: "workbench.action.debug.run"
     binding: 
-      - "ctrl+[KeyB] ctrl+[KeyE]"
+      - "${group.debug} ctrl+[KeyE]"
     vscode:
       action: 'workbench.action.debug.run'
     idea:
       action: 'Run'
   - id: "workbench.action.tasks.runTask"
     binding:
-      - "ctrl+[KeyB] ctrl+[KeyR]"
+      - "${group.debug} ctrl+[KeyR]"
     vscode:
       action: 'workbench.action.tasks.runTask'
     idea:
@@ -16,14 +16,14 @@ mapping:
       
   - id: "workbench.action.debug.start"
     binding:
-      - "ctrl+[KeyB] ctrl+[KeyS]"
+      - "${group.debug} ctrl+[KeyS]"
     vscode:
       action: 'workbench.action.debug.start'
     idea:
       action: 'Debug'    
   - id: "workbench.action.debug.selectandstart"
     binding:
-      - "ctrl+[KeyB] ctrl+[KeyD]"
+      - "${group.debug} ctrl+[KeyD]"
     vscode:
       action: 'workbench.action.debug.selectandstart'
     idea:

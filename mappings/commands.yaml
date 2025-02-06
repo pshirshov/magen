@@ -52,35 +52,35 @@ mapping:
       action: 'ReopenClosedTab'
   - id: "workbench.action.closeOtherEditors"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyW]"
+      - "${group.command} ctrl+[KeyW]"
     vscode:
       action: 'workbench.action.closeOtherEditors'
     idea:
       action: 'Runner.CloseAllUnpinnedViews'
   - id: "workbench.action.newWindow"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyC]"
+      - "${group.command} ctrl+[KeyC]"
     vscode:
       action: 'workbench.action.newWindow'
     idea:
       missing: true
   - id: "workbench.action.files.newUntitledFile"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyN]"
+      - "${group.command} ctrl+[KeyN]"
     vscode:
       action: 'workbench.action.files.newUntitledFile'
     idea:
       action: 'FileChooser.NewFile'
   - id: "workbench.action.splitEditorRight"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyV]"
+      - "${group.command} ctrl+[KeyV]"
     vscode:
       action: 'workbench.action.splitEditorRight'
     idea:
       action: 'SplitVertically' #OpenInRightSplit'
   - id: "workbench.action.pinEditor"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyP]"
+      - "${group.command} ctrl+[KeyP]"
     vscode:
       action: 'workbench.action.pinEditor'
       context: [ "!activeEditorIsPinned" ]
@@ -88,7 +88,7 @@ mapping:
       action: 'PinActiveTab'
   - id: "workbench.action.unpinEditor"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyP]"
+      - "${group.command} ctrl+[KeyP]"
     vscode:
       action: 'workbench.action.unpinEditor'
       context: [ "activeEditorIsPinned" ]
@@ -97,7 +97,7 @@ mapping:
       missing: true
   - id: "revealFileInOS"
     binding:
-      - "ctrl+[KeyK] ctrl+[KeyF]"
+      - "${group.command} ctrl+[KeyF]"
     vscode:
       action: 'revealFileInOS'
     idea:
