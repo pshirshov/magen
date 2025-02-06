@@ -14,7 +14,7 @@ object VSCodeRenderer extends Renderer {
     val mappings = for {
       c <- mapping.mapping
       a <- c.vscode.toList
-      b <- c.binding.map(ShortcutParser.parseUnsafe).toList.flatMap(Aliases.extend)
+      b <- (c.binding ++ a.binding).map(ShortcutParser.parseUnsafe).toList.flatMap(Aliases.extend)
     } yield {
       format(a, b)
     }
@@ -31,7 +31,7 @@ object VSCodeRenderer extends Renderer {
       "command" -> Json.fromString(a.action),
     )
 
-    if (a.context.isEmpty) {
+    if (a.context.nonEmpty) {
       a.context.map {
         ctx =>
           main.deepMerge(JsonObject("when" -> Json.fromString(ctx)))

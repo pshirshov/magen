@@ -17,21 +17,47 @@ mapping:
   - id: "editor.action.clipboardCopyAction"
     binding:
       - "ctrl+[KeyC]"
+      - "meta+[KeyC]"
     vscode:
       action: 'editor.action.clipboardCopyAction'
     idea:
-      action: '\$Copy'
+      action: '$Copy' #Editor Copy'
   - id: "editor.action.clipboardCutAction"
     binding:
       - "ctrl+[KeyX]"
+      - "meta+[KeyX]"
     vscode:
       action: 'editor.action.clipboardCutAction'
     idea:
-      action: '\$Cut'
+      action: '$Cut' #Editor Cut'
   - id: "editor.action.clipboardPasteAction"
     binding:
       - "ctrl+[KeyV]"
+      - "meta+[KeyV]"
     vscode:
       action: 'editor.action.clipboardPasteAction'
     idea:
-      action: '\$Paste'      
+      action: '$Paste' #Editor Paste'
+      
+#  # basic    
+#  - id: "generic.clipboardCopyAction"
+#    binding:
+#      - "ctrl+[KeyC]"
+#    vscode:
+#      missing: true
+#    idea:
+#      action: '$Copy'
+#  - id: "generic.clipboardCutAction"
+#    binding:
+#      - "ctrl+[KeyX]"
+#    vscode:
+#      missing: true
+#    idea:
+#      action: '$Cut'
+#  - id: "generic.clipboardPasteAction"
+#    binding:
+#      - "ctrl+[KeyV]"
+#    vscode:
+#      missing: true
+#    idea:
+#      action: '$Paste'      

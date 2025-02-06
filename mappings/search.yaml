@@ -25,10 +25,11 @@ mapping:
   - id: "editor.action.nextMatchFindAction"
     binding:
       - "alt+[KeyM]"
-      - "enter"
     vscode:
       action: 'editor.action.nextMatchFindAction'
       context: [ "editorFocus", "editorFocus && findInputFocussed" ]
+      binding:
+        - "enter"        
     idea:
       action: 'FindNext'
   - id: "editor.action.previousMatchFindAction"

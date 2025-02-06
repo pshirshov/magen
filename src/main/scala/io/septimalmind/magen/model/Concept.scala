@@ -10,6 +10,7 @@ case class RawIdeaAction(
 case class RawVSCodeAction(
   action: Option[String],
   context: Option[List[String]],
+  binding: Option[List[String]],
   missing: Option[Boolean],
 )
 case class RawZedAction(
@@ -36,6 +37,7 @@ case class IdeaAction(
 case class VSCodeAction(
   action: String,
   context: List[String],
+  binding: List[String],
 )
 case class ZedAction(
   action: String,

@@ -45,7 +45,7 @@ object IdeaRenderer extends Renderer {
 
         val bbs = pairs
           .flatMap {
-            case (_, c) =>
+            case (i, c) =>
               c.binding.map(b => (ShortcutParser.parseUnsafe(b), c.id))
           }
           .groupBy(_._1).map {

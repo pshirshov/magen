@@ -13,7 +13,7 @@ mapping:
     vscode:
       action: 'redo'
     idea:
-      action: '\$Redo'
+      action: '$Redo'
 
   - id: "deleteLeft"
     binding:
@@ -59,6 +59,20 @@ mapping:
     idea:
       action: 'EditorDuplicate'
   # new lines
+  - id: "EditorEnter"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    idea:
+      action: 'EditorEnter'
+  - id: "EditorEscape"
+    binding:
+      - "escape"
+    vscode:
+      missing: true
+    idea:
+      action: 'EditorEscape'      
   - id: "editor.action.insertLineAfter"
     binding:
       - "ctrl+enter"
