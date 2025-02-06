@@ -77,7 +77,7 @@ object VscodeImporter {
                          |    vscode:
                          |      action: '$cmd'""".stripMargin)
           }
-          IdeaRenderer.basicMappings.get(cmd) match {
+          MappingFilter.basicMappings.get(cmd) match {
             case Some(value) =>
               processed.add(cmd)
               sb.append('\n');
@@ -89,7 +89,7 @@ object VscodeImporter {
           sb.append('\n');
       }
 
-    IdeaRenderer.basicMappings
+    MappingFilter.basicMappings
       .filterNot(a => processed.contains(a._1))
       .foreach {
       case (k, v) =>

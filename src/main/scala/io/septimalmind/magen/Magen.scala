@@ -1,20 +1,17 @@
 package io.septimalmind.magen
 
 import cats.syntax.either.*
-import io.circe.*
 import io.circe.generic.auto.*
-import io.circe.yaml
+import io.circe.{yaml, *}
 import io.septimalmind.magen.model.*
-import io.septimalmind.magen.targets.{IdeaRenderer, VSCodeRenderer}
+import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, VscodeInstaller, VscodeParams}
 import io.septimalmind.magen.util.ShortcutParser
-import izumi.fundamentals.platform.files.IzFiles
-
-import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Path, Paths}
 import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
+import izumi.fundamentals.platform.files.IzFiles
 import izumi.fundamentals.platform.strings.IzString.*
 
+import java.nio.file.{Path, Paths}
 import scala.util.matching.Regex.quoteReplacement
 
 // TODO: print duplicating key references
@@ -47,21 +44,31 @@ object Magen {
       .filter(_.toFile.exists())
       .map(f => readMapping(f))
 
-    //    val renderers = List(VSCodeRenderer, ZedRenderer, IdeaRenderer)
-    val renderers = List(IdeaRenderer, VSCodeRenderer)
-
     val converted = convert(mapping)
-    renderers.foreach {
-      r =>
-        val rendered = r.render(converted) // Mapping(mapping.sortBy(_.id)))
-        if (r.id == IdeaRenderer.id) {
-          Files.write(Paths.get("/home/pavel/.config/JetBrains/IntelliJIdea2024.3/keymaps/Magen.xml"), rendered.getBytes(StandardCharsets.UTF_8))
-        }
-        if (r.id == VSCodeRenderer.id) {
-          Files.write(Paths.get("/home/pavel/work/safe/nix-gnome-lean/hosts/pavel-am5/vscode-keymap/linux/vscode-magen.json"), rendered.getBytes(StandardCharsets.UTF_8))
-        }
-        Files.write(Paths.get("target", r.id), rendered.getBytes(StandardCharsets.UTF_8))
-    }
+
+    val installers = List(
+      new VscodeInstaller(
+        VscodeParams(
+          List(
+//        "/home/pavel/work/safe/nix-gnome-lean/hosts/pavel-am5/vscode-keymap/linux/vscode-magen.json",
+            "/home/pavel/.config/VSCodium/User/keybindings.json",
+            "/home/pavel/work/safe/nix-gnome-lean/users/pavel/hm/keymap-vscode.json",
+          ).map(p => Paths.get(p))
+        )
+      ),
+      new IdeaInstaller(
+        IdeaParams(
+          List(
+            "/home/pavel/.config/JetBrains/IntelliJIdea2024.3/keymaps/Magen.xml",
+            "/home/pavel/work/safe/nix-gnome-lean/users/pavel/hm/keymap-idea.xml",
+          ).map(p => Paths.get(p)),
+          negate = true,
+          parent = "$default",
+        )
+      ),
+    )
+
+    installers.foreach(_.install(converted))
   }
 
   private def convert(mapping: List[RawMapping]): Mapping = {

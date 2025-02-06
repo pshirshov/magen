@@ -61,19 +61,30 @@ mapping:
     idea:      
       missing: true
       unmodifiable: "alt+[KeyA]"      
+      
   - id: "editor.action.replaceOne"
     binding:
       - "enter"
-      - "alt+[KeyP]"
     vscode:
       action: 'editor.action.replaceOne'
-      context: [ "editorFocus && findWidgetVisible && replaceInputFocussed", "editorFocus && findWidgetVisible" ]
+      context: [ "editorFocus && findWidgetVisible && replaceInputFocussed" ]
     idea:
       missing: true
       unmodifiable: "alt+[KeyP]"
       
-
-        
+  - id: "editor.action.replaceOne:visible"
+    binding:
+      - "alt+[KeyP]"
+    vscode:
+      action: 'editor.action.replaceOne'
+      context: [ "editorFocus && findWidgetVisible" ]
+    idea:
+      missing: true
+      unmodifiable: "alt+[KeyP]"
+  
+  
+  
+  
   - id: "editor.action.selectHighlights"
     binding:
       - "alt+[KeyH]"

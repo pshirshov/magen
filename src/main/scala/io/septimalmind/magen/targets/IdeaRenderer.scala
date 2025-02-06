@@ -5,12 +5,14 @@ import io.septimalmind.magen.Renderer
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.util.Aliases
+import izumi.fundamentals.platform.files.IzFiles
 import izumi.fundamentals.platform.resources.IzResources
 
+import java.nio.file.Paths
 import scala.annotation.tailrec
 import scala.xml.PrettyPrinter
 
-object IdeaRenderer extends Renderer {
+class IdeaRenderer(params: IdeaParams) extends Renderer {
   // useful:
   // https://github.com/JetBrains/intellij-community/blob/ed982b658a0688970a7773fbb81fce3723ab5416/plugins/ide-startup/importSettings/src/com/intellij/ide/startup/importSettings/transfer/backend/providers/vscode/mappings/KeyBindingsMappings.kt#L115
   // https://github.com/JetBrains/intellij-community/tree/b78007c38cd6213fe0cb5ca2cb6fddfd257dbc31/platform/platform-resources/src/keymaps
@@ -25,12 +27,17 @@ object IdeaRenderer extends Renderer {
 
   // TODO: index by commands/resolve dupes
   override def render(mapping: Mapping): String = {
-    val mappings = (for {
+    val index = (for {
       m <- mapping.mapping
       i <- m.idea.toList
     } yield {
       (i, m)
-    }).groupBy(_._1.action).view.map {
+    }).groupBy(_._1.action)
+
+    val defined = index.keySet
+    val negations = IdeaRenderer.allIdeaActions().diff(defined).map(n => <action id={n} />)
+
+    val mappings = index.view.map {
       case (a, pairs) =>
         val mouseBbs = pairs
           .filterNot(_._1.mouse.isEmpty)
@@ -56,9 +63,9 @@ object IdeaRenderer extends Renderer {
         <action id={a}>
           {bbs ++ mouseBbs}
         </action>
-    }
+    } ++ (if (params.negate) negations else List.empty)
 
-    val full = <keymap version="1" name="Magen" parent="Empty">
+    val full = <keymap version="1" name="Magen" parent={params.parent}>
       {mappings}
     </keymap>
     val pp = new PrettyPrinter(120, 2)
@@ -97,7 +104,7 @@ object IdeaRenderer extends Renderer {
   }
 
   @tailrec
-  def shortcutMap(shortcut: String): String = {
+  final def shortcutMap(shortcut: String): String = {
     if (shortcut.startsWith("[") && shortcut.endsWith("]")) {
       shortcutMap(shortcut.substring(1, shortcut.length - 1))
     } else {
@@ -126,10 +133,12 @@ object IdeaRenderer extends Renderer {
     }
   }
 
-  val basicMappings: Map[String, String] = {
-    val fv = IzResources.readAsString("idea-vscode-mapping.json").get
-    val pv = parser.parse(fv)
-    val jv = pv.flatMap(_.as[Map[String, String]]).toOption.get.map(_.swap).toMap
-    jv
+}
+
+object IdeaRenderer {
+  def allIdeaActions(): Set[String] = {
+    val fa = IzFiles.readString(Paths.get("./mappings/idea/idea-all-actions.json"))
+    val pa = parser.parse(fa)
+    pa.flatMap(_.as[List[String]]).toOption.get.toSet
   }
 }

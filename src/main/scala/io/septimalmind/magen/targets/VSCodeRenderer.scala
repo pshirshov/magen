@@ -6,6 +6,9 @@ import io.septimalmind.magen.Renderer
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.util.Aliases
+import izumi.fundamentals.platform.files.IzFiles
+
+import java.nio.file.Paths
 
 object VSCodeRenderer extends Renderer {
   override def id: String = "vscode.json"
@@ -19,7 +22,7 @@ object VSCodeRenderer extends Renderer {
       format(a, b)
     }
 
-    val full = mappings.flatten.asJson
+    val full = (unbind() ++ mappings.flatten).asJson
     full.printWith(Printer.spaces2)
   }
 
@@ -64,4 +67,19 @@ object VSCodeRenderer extends Renderer {
     }
   }
 
+  def unbind(): List[JsonObject] = {
+    val negations = List(
+      "mappings/vscode/vscode-keymap-linux-!negate-all.json",
+      "mappings/vscode/vscode-keymap-linux-!negate-continue.json",
+      "mappings/vscode/vscode-keymap-linux-!negate-gitlens.json",
+    )
+
+    negations.flatMap {
+      n =>
+        val fa = IzFiles.readString(Paths.get(n))
+        val pa = parser.parse(fa)
+        pa.flatMap(_.as[List[JsonObject]]).toOption.get
+    }
+
+  }
 }
