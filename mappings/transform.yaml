@@ -7,6 +7,15 @@ mapping:
       context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
     idea:
       action: 'Refactorings.QuickListPopupAction'
+      
+  - id: "move"
+    binding:
+      - "${group.transform} ctrl+[KeyE]"
+    vscode:
+      missing: true
+    idea:
+      action: 'Move'      
+      
   - id: "workbench.files.action.compareWithClipboard"
     binding:
       - "${group.transform} ctrl+[KeyC]"

@@ -10,11 +10,7 @@ import izumi.fundamentals.platform.resources.IzResources
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
-case class VscodeMapping(
-  command: String,
-  key: String,
-  when: Option[String],
-)
+
 
 object MappingFilter {
 

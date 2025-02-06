@@ -118,7 +118,7 @@ mapping:
       action: 'CommentByBlockComment'
   - id: "editor.action.commentLine"
     binding:
-      - "ctrl+/"
+      - "ctrl+[Slash]"
       - "meta+[Slash]"
     vscode:
       action: 'editor.action.commentLine'
