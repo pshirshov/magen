@@ -2,11 +2,21 @@ mapping:
   - id: "actions.find"
     binding:
       - "ctrl+[KeyF]"
+      - "meta+[KeyF]"
     vscode:
       action: 'actions.find'
       context: [ "editorFocus || editorIsOpen" ]
     idea:
       action: 'Find'      
+  - id: "editor.action.startFindReplaceAction"
+    binding:
+      - "ctrl+[KeyR]"
+      - "meta+[KeyR]"
+    vscode:
+      action: 'editor.action.startFindReplaceAction'
+      context: [ "editorFocus || editorIsOpen" ]
+    idea:
+      action: 'Replace'      
   - id: "workbench.action.findInFiles"
     binding:
       - "ctrl+shift+[KeyF]"
@@ -62,14 +72,7 @@ mapping:
       missing: true
       unmodifiable: "alt+[KeyP]"
       
-  - id: "editor.action.startFindReplaceAction"
-    binding:
-      - "ctrl+[KeyR]"
-    vscode:
-      action: 'editor.action.startFindReplaceAction'
-      context: [ "editorFocus || editorIsOpen" ]
-    idea:
-      action: 'Replace'
+
         
   - id: "editor.action.selectHighlights"
     binding:

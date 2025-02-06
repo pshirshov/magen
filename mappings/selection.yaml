@@ -76,7 +76,7 @@ mapping:
       action: 'cursorHomeSelect'
       context: [ "textInputFocus" ]
     idea:
-      action: 'EditorTextStartWithSelection'
+      action: 'EditorLineStartWithSelection'
   - id: "cursorEndSelect"
     binding:
       - "shift+end"

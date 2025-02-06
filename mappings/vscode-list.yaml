@@ -6,7 +6,7 @@ mapping:
       action: 'openReferenceToSide'
       context: [ "listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" ]
     idea:
-      missing: true      
+      action: 'OpenInRightSplit'
   - id: "refactorPreview.toggleCheckedState"
     binding:
       - "space"
@@ -198,7 +198,7 @@ mapping:
       action: 'list.select'
       context: [ "listFocus && !inputFocus && !treestickyScrollFocused" ]
     idea:
-      missing: true      
+      action: 'SearchEverywhere.SelectItem'
   - id: "list.selectAll"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyA]"

@@ -14,7 +14,6 @@ import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
 import izumi.fundamentals.platform.strings.IzString.*
 
-// TODO: run one/run selector
 // TODO: vcs
 // TODO: key variables
 // TODO: print duplicating key references
@@ -34,6 +33,7 @@ object Magen {
       "mappings/snippets.yaml",
       "mappings/transform.yaml",
       "mappings/ui.yaml",
+      "mappings/vcs.yaml",
       "mappings/unset.yaml",
       "mappings/vscode-column.yaml",
       "mappings/vscode-files.yaml",

@@ -1,10 +1,34 @@
 mapping:
   - id: "workbench.action.debug.run"
-    binding: []
+    binding: 
+      - "ctrl+[KeyB] ctrl+[KeyE]"
     vscode:
       action: 'workbench.action.debug.run'
     idea:
       action: 'Run'
+  - id: "workbench.action.debug.run"
+    binding:
+      - "ctrl+[KeyB] ctrl+[KeyR]"
+    vscode:
+      action: 'workbench.action.tasks.runTask'
+    idea:
+      action: 'ChooseRunConfiguration'
+      
+  - id: "workbench.action.debug.start"
+    binding:
+      - "ctrl+[KeyB] ctrl+[KeyS]"
+    vscode:
+      action: 'workbench.action.debug.start'
+    idea:
+      action: 'Debug'    
+  - id: "workbench.action.debug.start"
+    binding:
+      - "ctrl+[KeyB] ctrl+[KeyD]"
+    vscode:
+      action: 'workbench.action.debug.selectandstart'
+    idea:
+      action: 'ChooseDebugConfiguration'
+      
   - id: "workbench.action.debug.stepOut"
     binding: []
     vscode:
@@ -47,12 +71,7 @@ mapping:
       action: 'workbench.action.debug.stepOver'
     idea:
       action: 'StepOver'
-  - id: "workbench.action.debug.start"
-    binding: []
-    vscode:
-      action: 'workbench.action.debug.start'
-    idea:
-      action: 'Debug'
+
   - id: "workbench.action.debug.stepInto"
     binding: []
     vscode:

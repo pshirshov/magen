@@ -77,7 +77,7 @@ mapping:
     vscode:
       action: 'workbench.action.splitEditorRight'
     idea:
-      action: 'OpenInRightSplit'
+      action: 'SplitVertically' #OpenInRightSplit'
   - id: "workbench.action.pinEditor"
     binding:
       - "ctrl+[KeyK] ctrl+[KeyP]"
