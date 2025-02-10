@@ -60,6 +60,7 @@ object Magen {
         IdeaParams(
           List(
             "/home/pavel/.config/JetBrains/IntelliJIdea2024.3/keymaps/Magen.xml",
+            "/home/pavel/.config/JetBrains/Rider2024.3/keymaps/Magen.xml",
             "/home/pavel/work/safe/nix-gnome-lean/users/pavel/hm/keymap-idea-linux.xml",
           ).map(p => Paths.get(p)),
           negate = true,

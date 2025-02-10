@@ -22,7 +22,18 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
 
   // nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' -n './junk/$default.xml'
 
-  // unzip -p "$(dirname $(readlink -f `which idea-ultimate`))/../idea-ultimate/lib/app-client.jar" 'keymaps/$default.xml' | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id'
+  /*
+   unzip -p "$(dirname $(readlink -f `which idea-ultimate`))/../idea-ultimate/lib/app-client.jar" 'keymaps/$default.xml' \
+     | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' \
+     | sort \
+     | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/idea/idea-all-actions.json
+     
+   unzip -p "$(dirname $(readlink -f `which rider`))/../rider/lib/app-client.jar" 'keymaps/$default.xml' \
+       | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' \
+       | sort \
+       | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/idea/rider-all-actions.json
+
+   */
   override def id: String = "idea.xml"
 
   // TODO: index by commands/resolve dupes

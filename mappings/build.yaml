@@ -6,7 +6,25 @@ mapping:
       action: 'workbench.action.tasks.build'
     idea:
       action: 'CompileDirty'
+      
+  - id: "rider:workbench.action.tasks.build"
+    binding:
+      - "${group.build} ${group.build}"
+    vscode:
+      missing: true
+    idea:
+      action: 'BuildWholeSolutionAction'      
+      
 
+  - id: "rider:build.rebuild"
+    binding:
+      - "${group.build} ctrl+[KeyR]"
+    vscode:
+      missing: true
+    idea:
+      action: 'RebuildSolutionAction'
+
+  
   - id: "build.rebuild"
     binding:
       - "${group.build} ctrl+[KeyR]"
