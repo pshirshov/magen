@@ -127,14 +127,18 @@ mapping:
       context: [ "suggestWidgetVisible && textInputFocus" ]
     idea:
       missing: true
+      
   - id: "jumpToNextSnippetPlaceholder"
     binding:
       - "tab"
+      - "enter"
     vscode:
       action: 'jumpToNextSnippetPlaceholder'
       context: [ "hasNextTabstop && inSnippetMode && textInputFocus" ]
     idea:
-      missing: true
+      action: 'NextTemplateVariable'
+      
+      
   - id: "jumpToPrevSnippetPlaceholder"
     binding:
       - "shift+tab"

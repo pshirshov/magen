@@ -1,0 +1,71 @@
+mapping:
+  - id: "continue.quickEditHistoryDown"
+    binding:
+      - "down"
+    vscode:
+      action: 'continue.quickEditHistoryDown'
+    idea:
+      missing: true
+  - id: "continue.quickEditHistoryUp"
+    binding:
+      - "up"
+    vscode:
+      action: 'continue.quickEditHistoryUp'
+    idea:
+      missing: true
+      
+  - id: "continue:add-to-query"
+    binding:
+      - "ctrl+j ctrl+a"
+    vscode:
+      action: 'continue.focusContinueInput'
+    idea:
+      action: 'continue.focusContinueInput'
+  - id: "continue:add-to-query-no-clear"
+    binding:
+      - "ctrl+j ctrl+b"
+    vscode:
+      action: 'continue.focusContinueInputWithoutClear'
+    idea:
+      action: 'continue.focusContinueInputWithoutClear'
+
+  - id: "continue:accept-diff"
+    binding:
+      - "ctrl+shift+enter"
+    vscode:
+      action: 'continue.acceptDiff'
+    idea:
+      action: 'continue.acceptDiff'
+      
+  - id: "continue:reject-diff"
+    binding:
+      - "ctrl+shift+backspace"
+    vscode:
+      action: 'continue.rejectDiff'
+    idea:
+      action: 'continue.rejectDiff'
+
+  - id: "continue:quick-edit"
+    binding:
+      - "ctrl+j ctrl+j"
+    vscode:
+      action: 'continue.quickEdit'
+    idea:
+      action: 'continue.inlineEdit' # ?
+      
+  - id: "continue:apply-code"
+    binding:
+      - "ctrl+j ctrl+a"
+    vscode:
+      action: 'continue.applyCodeFromChat'
+    idea:
+      missing: true
+            
+  - id: "continue:new-session"
+    binding:
+      - "ctrl+j ctrl+n"
+    vscode:
+      action: 'continue.newSession'
+    idea:
+      action: 'continue.newContinueSession'
+                        

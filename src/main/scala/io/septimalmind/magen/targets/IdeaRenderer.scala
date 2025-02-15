@@ -27,7 +27,7 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
      | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' \
      | sort \
      | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/idea/idea-all-actions.json
-     
+
    unzip -p "$(dirname $(readlink -f `which rider`))/../rider/lib/app-client.jar" 'keymaps/$default.xml' \
        | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' \
        | sort \
@@ -148,7 +148,16 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
 
 object IdeaRenderer {
   def allIdeaActions(): Set[String] = {
-    val fa = IzFiles.readString(Paths.get("./mappings/idea/idea-all-actions.json"))
+    Seq(
+      "./mappings/idea/idea-all-actions.json",
+      "./mappings/idea/continue-all-actions.json",
+    )
+      .flatMap(readActionsFile)
+      .toSet
+  }
+
+  private def readActionsFile(actionsFile: String) = {
+    val fa = IzFiles.readString(Paths.get(actionsFile))
     val pa = parser.parse(fa)
     pa.flatMap(_.as[List[String]]).toOption.get.toSet
   }

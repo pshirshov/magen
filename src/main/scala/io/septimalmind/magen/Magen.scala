@@ -18,6 +18,7 @@ import scala.util.matching.Regex.quoteReplacement
 object Magen {
   def main(args: Array[String]): Unit = {
     val mapping = List(
+      "mappings/ai.yaml",
       "mappings/generic-keys.yaml",
       "mappings/build.yaml",
       "mappings/clipboard.yaml",

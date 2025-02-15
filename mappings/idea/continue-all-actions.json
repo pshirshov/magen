@@ -1,0 +1,17 @@
+[
+  "com.github.continuedev.continueintellijextension.autocomplete.AcceptAutocompleteAction",
+  "com.github.continuedev.continueintellijextension.autocomplete.CancelAutocompleteAction",
+  "com.github.continuedev.continueintellijextension.autocomplete.PartialAcceptAutocompleteAction",
+  "continue.acceptDiff",
+  "continue.acceptVerticalDiffBlock",
+  "continue.focusContinueInput",
+  "continue.focusContinueInputWithoutClear",
+  "continue.inlineEdit",
+  "continue.newContinueSession",
+  "continue.openAccountDialog",
+  "continue.openConfigPage",
+  "continue.openMorePage",
+  "continue.rejectDiff",
+  "continue.rejectVerticalDiffBlock",
+  "continue.viewHistory"
+]
