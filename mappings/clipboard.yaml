@@ -39,6 +39,26 @@ mapping:
     idea:
       action: '$Paste' #Editor Paste'
       
+  - id: "workbench.action.terminal.copyAndClearSelection"
+    binding:
+      - "ctrl+[KeyC]"
+      - "meta+[KeyC]"
+    vscode:
+      action: 'workbench.action.terminal.copyAndClearSelection'
+      context: [ "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused" ]
+    idea:
+      missing: true
+
+  - id: "workbench.action.terminal.paste"
+    binding:
+      - "ctrl+[KeyV]"
+      - "meta+[KeyV]"
+    vscode:
+      action: 'workbench.action.terminal.paste'
+      context: [ "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" ]
+    idea:
+      missing: true
+
 #  # basic    
 #  - id: "generic.clipboardCopyAction"
 #    binding:
