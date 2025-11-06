@@ -6,6 +6,7 @@ mapping:
       action: 'workbench.action.openSettings'
     zed:
       action: 'zed::OpenSettings'
+      context: [ "Workspace" ]
     idea:
       action: 'ShowSettings'
   - id: "workbench.action.zoomIn"
@@ -15,6 +16,7 @@ mapping:
       action: 'workbench.action.zoomIn'
     zed:
       action: 'zed::IncreaseBufferFontSize'
+      context: [ "Workspace" ]
     idea:
       action: 'ZoomInIdeAction'
   - id: "workbench.action.zoomOut"
@@ -24,6 +26,7 @@ mapping:
       action: 'workbench.action.zoomOut'
     zed:
       action: 'zed::DecreaseBufferFontSize'
+      context: [ "Workspace" ]
     idea:
       action: 'EditorDecreaseFontSize'
   - id: "workbench.action.zoomReset"
@@ -33,6 +36,7 @@ mapping:
       action: 'workbench.action.zoomReset'
     zed:
       action: 'zed::ResetBufferFontSize'
+      context: [ "Workspace" ]
     idea:
       action: 'EditorResetFontSize'  
   - id: "workbench.action.terminal.toggleTerminal"
@@ -52,6 +56,7 @@ mapping:
       action: 'workbench.action.togglePanel'
     zed:
       action: 'workspace::ToggleBottomDock'
+      context: [ "Workspace" ]
     idea:
       comment: "idea has independent tool windows"
       missing: true
@@ -62,6 +67,7 @@ mapping:
       action: 'workbench.action.toggleSidebarVisibility'
     zed:
       action: 'workspace::ToggleLeftDock'
+      context: [ "Workspace" ]
     idea:
       action: 'HideSideWindows'
   - id: "editor.action.toggleWordWrap"

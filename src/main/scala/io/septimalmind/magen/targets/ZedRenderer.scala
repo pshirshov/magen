@@ -34,7 +34,55 @@ object ZedRenderer extends Renderer {
         }
     }
 
-    Json.arr(result.map(_.asJson): _*).printWith(Printer.spaces2)
+    // Prepend essential global UI bindings for menus and pickers
+    val globalBindings = createGlobalBindings()
+    val pickerBindings = createPickerBindings()
+    val pickerEditorBindings = createPickerEditorBindings()
+
+    val allBindings = List(globalBindings, pickerBindings, pickerEditorBindings) ++ result
+
+    Json.arr(allBindings.map(_.asJson): _*).printWith(Printer.spaces2)
+  }
+
+  private def createGlobalBindings(): JsonObject = {
+    // These bindings apply globally and are essential for basic UI interaction
+    val bindings = Map(
+      "enter" -> Json.fromString("menu::Confirm"),
+      "escape" -> Json.fromString("menu::Cancel"),
+      "ctrl-c" -> Json.fromString("menu::Cancel"),
+      "tab" -> Json.fromString("menu::SelectNext"),
+      "shift-tab" -> Json.fromString("menu::SelectPrevious"),
+      "up" -> Json.fromString("menu::SelectPrevious"),
+      "down" -> Json.fromString("menu::SelectNext"),
+      "ctrl-n" -> Json.fromString("menu::SelectNext"),
+      "ctrl-p" -> Json.fromString("menu::SelectPrevious"),
+    )
+    JsonObject("bindings" -> bindings.asJson)
+  }
+
+  private def createPickerBindings(): JsonObject = {
+    // Picker-specific context to ensure up/down work correctly in pickers
+    val bindings = Map(
+      "up" -> Json.fromString("menu::SelectPrevious"),
+      "down" -> Json.fromString("menu::SelectNext"),
+    )
+    JsonObject(
+      "context" -> Json.fromString("Picker || menu"),
+      "bindings" -> bindings.asJson,
+    )
+  }
+
+  private def createPickerEditorBindings(): JsonObject = {
+    // When editing in a picker (e.g., typing in search), escape should cancel the picker
+    val bindings = Map(
+      "escape" -> Json.fromString("menu::Cancel"),
+      "up" -> Json.fromString("menu::SelectPrevious"),
+      "down" -> Json.fromString("menu::SelectNext"),
+    )
+    JsonObject(
+      "context" -> Json.fromString("Picker > Editor"),
+      "bindings" -> bindings.asJson,
+    )
   }
 
   case class ZedBinding(context: List[String], key: String, action: Json)

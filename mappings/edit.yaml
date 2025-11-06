@@ -85,6 +85,9 @@ mapping:
       - "enter"
     vscode:
       missing: true
+    zed:
+      action: 'editor::Newline'
+      context: [ "Editor" ]
     idea:
       action: 'EditorEnter'
   - id: "EditorEscape"
@@ -92,6 +95,9 @@ mapping:
       - "escape"
     vscode:
       missing: true
+    zed:
+      action: 'editor::Cancel'
+      context: [ "Editor" ]
     idea:
       action: 'EditorEscape'      
   - id: "editor.action.insertLineAfter"

@@ -9,7 +9,8 @@ mapping:
     idea:
       action: 'Find'
     zed:
-      action: 'buffer_search::Deploy'      
+      action: 'buffer_search::Deploy'
+      context: [ "Editor" ]      
   - id: "editor.action.startFindReplaceAction"
     binding:
       - "ctrl+[KeyR]"
@@ -20,7 +21,8 @@ mapping:
     idea:
       action: 'Replace'
     zed:
-      action: 'buffer_search::DeployReplace'      
+      action: 'buffer_search::DeployReplace'
+      context: [ "Editor" ]      
   - id: "workbench.action.findInFiles"
     binding:
       - "ctrl+shift+[KeyF]"
@@ -30,6 +32,7 @@ mapping:
       action: 'FindInPath'
     zed:
       action: 'pane::DeploySearch'
+      context: [ "Pane" ]
   - id: "workbench.action.replaceInFiles"
     binding:
       - "ctrl+shift+[KeyR]"
@@ -39,6 +42,7 @@ mapping:
       action: 'ReplaceInPath'
     zed:
       action: 'pane::DeploySearch'
+      context: [ "Pane" ]
       
   - id: "editor.action.nextMatchFindAction:editor-focus"
     binding:
@@ -61,6 +65,7 @@ mapping:
       action: 'FindNext'
     zed:
       action: 'search::SelectNextMatch'
+      context: [ "BufferSearchBar" ]
   
   - id: "editor.action.previousMatchFindAction"
     binding:
@@ -73,6 +78,7 @@ mapping:
       action: 'FindPrevious'
     zed:
       action: 'search::SelectPreviousMatch'
+      context: [ "BufferSearchBar" ]
 
   - id: "editor.action.replaceAll"
     binding:
@@ -116,7 +122,8 @@ mapping:
     idea:
       action: 'SelectAllOccurrences'
     zed:
-      action: 'search::SelectAllMatches'        
+      action: 'search::SelectAllMatches'
+      context: [ "Pane" ]        
   - id: "editor.action.selectAllMatches"
     binding:
       - "alt+[KeyH]"
@@ -126,7 +133,8 @@ mapping:
     idea:
       action: 'SelectAllOccurrences'
     zed:
-      action: 'search::SelectAllMatches'     
+      action: 'search::SelectAllMatches'
+      context: [ "BufferSearchBar" ]     
         
   # options
   - id: "toggleFindCaseSensitive"
@@ -140,6 +148,7 @@ mapping:
       unmodifiable: "alt+[KeyC]"
     zed:
       action: 'search::ToggleCaseSensitive'
+      context: [ "Pane" ]
   - id: "toggleFindInSelection"
     binding:
       - "alt+[KeyO] alt+[KeyS]"
@@ -159,6 +168,7 @@ mapping:
       unmodifiable: "alt+[KeyX]"
     zed:
       action: 'search::ToggleRegex'
+      context: [ "Pane" ]
   - id: "toggleFindWholeWord"
     binding:
       - "alt+[KeyO] alt+[KeyW]"
@@ -170,6 +180,7 @@ mapping:
       unmodifiable: "alt+[KeyW]"
     zed:
       action: 'search::ToggleWholeWord'
+      context: [ "Pane" ]
   - id: "togglePreserveCase"
     binding:
       - "alt+[KeyO] alt+[KeyC]"

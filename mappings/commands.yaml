@@ -9,6 +9,7 @@ mapping:
       action: 'CloseContent'
     zed:
       action: 'pane::CloseActiveItem'
+      context: [ "Pane" ]
   - id: "workbench.action.closeWindow"
     binding:
       - "meta+shift+[KeyW]"
@@ -20,6 +21,7 @@ mapping:
       action: 'CloseProject'
     zed:
       action: 'workspace::CloseWindow'
+      context: [ "Workspace" ]
   - id: "workbench.action.files.save"
     binding:
       - "ctrl+[KeyS]"
@@ -32,6 +34,7 @@ mapping:
       action: 'SaveAll'
     zed:
       action: 'workspace::Save'
+      context: [ "Workspace" ]
       
   - id: "workbench.action.files.saveAll"
     binding:
@@ -43,6 +46,7 @@ mapping:
       action: 'SaveAll'
     zed:
       action: 'workspace::SaveAll'
+      context: [ "Workspace" ]
   - id: "workbench.action.quit"
     binding:
       - "ctrl+[KeyQ]"
@@ -53,6 +57,7 @@ mapping:
       action: 'Exit'
     zed:
       action: 'zed::Quit'
+      context: [ "Workspace" ]
   - id: "workbench.action.reopenClosedEditor"
     binding:
       - "ctrl+shift+t"
@@ -62,6 +67,7 @@ mapping:
       action: 'ReopenClosedTab'
     zed:
       action: 'pane::ReopenClosedItem'
+      context: [ "Pane" ]
   - id: "workbench.action.closeOtherEditors"
     binding:
       - "${group.command} ctrl+[KeyW]"
@@ -71,6 +77,7 @@ mapping:
       action: 'CloseAllEditorsButActive'
     zed:
       action: 'pane::CloseOtherItems'
+      context: [ "Pane" ]
   - id: "workbench.action.newWindow"
     binding:
       - "${group.command} ctrl+[KeyC]"
@@ -80,6 +87,7 @@ mapping:
       missing: true
     zed:
       action: 'workspace::NewWindow'
+      context: [ "Workspace" ]
   - id: "workbench.action.files.newUntitledFile"
     binding:
       - "${group.command} ctrl+[KeyN]"
@@ -89,6 +97,7 @@ mapping:
       action: 'FileChooser.NewFile'
     zed:
       action: 'workspace::NewFile'
+      context: [ "Workspace" ]
   - id: "workbench.action.splitEditorRight"
     binding:
       - "${group.command} ctrl+[KeyV]"
@@ -98,6 +107,7 @@ mapping:
       action: 'SplitVertically' #OpenInRightSplit'
     zed:
       action: 'pane::SplitRight'
+      context: [ "Pane" ]
   - id: "workbench.action.pinEditor"
     binding:
       - "${group.command} ctrl+[KeyP]"
