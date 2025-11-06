@@ -42,7 +42,7 @@ mapping:
     vscode:
       action: 'workbench.action.terminal.toggleTerminal'
     zed:
-      action: 'workspace::NewTerminal'
+      action: 'terminal_panel::Toggle'
     idea:
       action: 'ActivateTerminalToolWindow'
   - id: "workbench.action.togglePanel"
@@ -69,5 +69,8 @@ mapping:
       - "${group.ui.elements} ctrl+[KeyW]"
     vscode:
       action: 'editor.action.toggleWordWrap'
+    zed:
+      action: 'editor::ToggleSoftWrap'
+      context: [ "Editor" ]
     idea:
       action: 'EditorToggleUseSoftWraps'

@@ -2,6 +2,38 @@
 
 This document maps actions from our keymap model to Zed editor actions.
 
+## Action Corrections (2025-11-06)
+
+After comparing with official Zed keybindings (junk/zed.json), the following corrections were identified:
+
+### CRITICAL FIXES NEEDED:
+
+1. **Terminal Toggle** - WRONG action being used:
+   - Current: `workspace::NewTerminal` (creates a NEW terminal)
+   - Should be: `terminal_panel::Toggle` (toggles the terminal panel visibility)
+   - Location: mappings/ui.yaml
+
+2. **Project Search** - Non-existent action:
+   - Current: `project_search::Deploy` (does NOT exist in Zed)
+   - Should be: `pane::DeploySearch` (official Zed action for project-wide search)
+   - Location: mappings/search.yaml
+
+3. **Word Wrap Toggle** - Missing action:
+   - Added: `editor::ToggleSoftWrap`
+   - Location: mappings/ui.yaml
+
+### Notes on Action Parameters:
+
+Some Zed actions accept parameters. For example:
+- `pane::DeploySearch` can take `{ "replace_enabled": true }` for replace functionality
+- We currently use simple action names without parameters, which works for basic functionality
+
+### Verified Correct Actions:
+
+All other actions with `::` namespace have been verified against the official Zed keybindings and are correct.
+
+**Important Note:** Actions like `ShowSettings`, `ZoomInIdeAction`, `EditorDecreaseFontSize`, and `EditorResetFontSize` that appear in the grep output are actually IntelliJ IDEA actions under the `idea:` section, NOT Zed actions. The Zed mappings correctly use `zed::*` equivalents.
+
 ## Cursor Movement
 
 | Our ID | VSCode Action | Zed Action |
@@ -114,9 +146,10 @@ This document maps actions from our keymap model to Zed editor actions.
 | workbench.action.zoomIn | workbench.action.zoomIn | zed::IncreaseBufferFontSize |
 | workbench.action.zoomOut | workbench.action.zoomOut | zed::DecreaseBufferFontSize |
 | workbench.action.zoomReset | workbench.action.zoomReset | zed::ResetBufferFontSize |
-| workbench.action.terminal.toggleTerminal | workbench.action.terminal.toggleTerminal | workspace::NewTerminal |
+| workbench.action.terminal.toggleTerminal | workbench.action.terminal.toggleTerminal | terminal_panel::Toggle |
 | workbench.action.togglePanel | workbench.action.togglePanel | workspace::ToggleBottomDock |
 | workbench.action.toggleSidebarVisibility | workbench.action.toggleSidebarVisibility | workspace::ToggleLeftDock |
+| editor.action.toggleWordWrap | editor.action.toggleWordWrap | editor::ToggleSoftWrap |
 
 ## Search
 
@@ -124,8 +157,8 @@ This document maps actions from our keymap model to Zed editor actions.
 |--------|--------------|-----------|
 | actions.find | actions.find | buffer_search::Deploy |
 | editor.action.startFindReplaceAction | editor.action.startFindReplaceAction | buffer_search::DeployReplace |
-| workbench.action.findInFiles | workbench.action.findInFiles | project_search::Deploy |
-| workbench.action.replaceInFiles | workbench.action.replaceInFiles | project_search::Deploy (with replace) |
+| workbench.action.findInFiles | workbench.action.findInFiles | pane::DeploySearch |
+| workbench.action.replaceInFiles | workbench.action.replaceInFiles | pane::DeploySearch (with replace_enabled: true) |
 | editor.action.nextMatchFindAction | editor.action.nextMatchFindAction | search::SelectNextMatch |
 | editor.action.previousMatchFindAction | editor.action.previousMatchFindAction | search::SelectPreviousMatch |
 | editor.action.selectAllMatches | editor.action.selectAllMatches | search::SelectAllMatches |
