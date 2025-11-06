@@ -4,6 +4,8 @@ mapping:
       - "ctrl+,"
     vscode:
       action: 'workbench.action.openSettings'
+    zed:
+      action: 'zed::OpenSettings'
     idea:
       action: 'ShowSettings'
   - id: "workbench.action.zoomIn"
@@ -11,6 +13,8 @@ mapping:
       - "ctrl+="
     vscode:
       action: 'workbench.action.zoomIn'
+    zed:
+      action: 'zed::IncreaseBufferFontSize'
     idea:
       action: 'ZoomInIdeAction'
   - id: "workbench.action.zoomOut"
@@ -18,6 +22,8 @@ mapping:
       - "ctrl+-"
     vscode:
       action: 'workbench.action.zoomOut'
+    zed:
+      action: 'zed::DecreaseBufferFontSize'
     idea:
       action: 'EditorDecreaseFontSize'
   - id: "workbench.action.zoomReset"
@@ -25,6 +31,8 @@ mapping:
       - "ctrl+[Key0]"
     vscode:
       action: 'workbench.action.zoomReset'
+    zed:
+      action: 'zed::ResetBufferFontSize'
     idea:
       action: 'EditorResetFontSize'  
   - id: "workbench.action.terminal.toggleTerminal"
@@ -33,6 +41,8 @@ mapping:
       - "ctrl+`"
     vscode:
       action: 'workbench.action.terminal.toggleTerminal'
+    zed:
+      action: 'workspace::NewTerminal'
     idea:
       action: 'ActivateTerminalToolWindow'
   - id: "workbench.action.togglePanel"
@@ -40,6 +50,8 @@ mapping:
       - "${group.ui.elements} ctrl+[KeyP]"
     vscode:
       action: 'workbench.action.togglePanel'
+    zed:
+      action: 'workspace::ToggleBottomDock'
     idea:
       comment: "idea has independent tool windows"
       missing: true
@@ -48,6 +60,8 @@ mapping:
       - "${group.ui.elements} ctrl+[KeyS]"
     vscode:
       action: 'workbench.action.toggleSidebarVisibility'
+    zed:
+      action: 'workspace::ToggleLeftDock'
     idea:
       action: 'HideSideWindows'
   - id: "editor.action.toggleWordWrap"

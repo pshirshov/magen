@@ -6,6 +6,9 @@ mapping:
     vscode:
       action: 'cursorLeft'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveLeft"
+      context: [ "Editor" ]
     idea:
       action: 'EditorLeft'
   - id: "cursorDown"
@@ -14,6 +17,9 @@ mapping:
     vscode:
       action: 'cursorDown'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveDown"
+      context: [ "Editor" ]
     idea:
       action: 'EditorDown'
   - id: "cursorRight"
@@ -22,18 +28,24 @@ mapping:
     vscode:
       action: 'cursorRight'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveRight"
+      context: [ "Editor" ]
     idea:
-      action: 'EditorRight'  
+      action: 'EditorRight'
   - id: "cursorUp"
     binding:
       - "up"
     vscode:
       action: 'cursorUp'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveUp"
+      context: [ "Editor" ]
     idea:
       action: 'EditorUp'
       
-  # jump movement   
+  # jump movement
   - id: "cursorWordLeft"
     binding:
       - "ctrl+left"
@@ -41,8 +53,11 @@ mapping:
     vscode:
       action: 'cursorWordLeft'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToPreviousWordStart"
+      context: [ "Editor" ]
     idea:
-      action: 'EditorPreviousWord'  
+      action: 'EditorPreviousWord'
   - id: "cursorWordEndRight"
     binding:
       - "ctrl+right"
@@ -50,6 +65,9 @@ mapping:
     vscode:
       action: 'cursorWordEndRight'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToNextWordEnd"
+      context: [ "Editor" ]
     idea:
       action: 'EditorNextWord'
   - id: "cursorHome"
@@ -59,8 +77,11 @@ mapping:
     vscode:
       action: 'cursorHome'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToBeginningOfLine"
+      context: [ "Editor" ]
     idea:
-      action: 'EditorLineStart'  
+      action: 'EditorLineStart'
   - id: "cursorEnd"
     binding:
       - "end"
@@ -68,6 +89,9 @@ mapping:
     vscode:
       action: 'cursorEnd'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToEndOfLine"
+      context: [ "Editor" ]
     idea:
       action: 'EditorLineEnd'
   - id: "cursorPageDown"
@@ -77,6 +101,9 @@ mapping:
     vscode:
       action: 'cursorPageDown'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::PageDown"
+      context: [ "Editor" ]
     idea:
       action: 'EditorPageDown'
   - id: "cursorPageUp"
@@ -86,6 +113,9 @@ mapping:
     vscode:
       action: 'cursorPageUp'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::PageUp"
+      context: [ "Editor" ]
     idea:
       action: 'EditorPageUp'
   - id: "cursorTop"
@@ -94,14 +124,20 @@ mapping:
     vscode:
       action: 'cursorTop'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToBeginning"
+      context: [ "Editor" ]
     idea:
-      action: 'EditorTextStart'      
+      action: 'EditorTextStart'
   - id: "cursorBottom"
     binding:
       - "ctrl+end"
     vscode:
       action: 'cursorBottom'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToEnd"
+      context: [ "Editor" ]
     idea:
       action: 'EditorTextEnd'
   # multi-cursors
@@ -111,6 +147,9 @@ mapping:
     vscode:
       action: 'editor.action.insertCursorAbove'
       context: [ "editorTextFocus" ]
+    zed:
+      action: "editor::AddSelectionAbove"
+      context: [ "Editor" ]
     idea:
       action: 'EditorCloneCaretAbove'
   - id: "editor.action.insertCursorBelow"
@@ -119,6 +158,9 @@ mapping:
     vscode:
       action: 'editor.action.insertCursorBelow'
       context: [ "editorTextFocus" ]
+    zed:
+      action: "editor::AddSelectionBelow"
+      context: [ "Editor" ]
     idea:
       action: 'EditorCloneCaretBelow'
   - id: "removeSecondaryCursors"
@@ -128,6 +170,9 @@ mapping:
     vscode:
       action: 'removeSecondaryCursors'
       context: [ "editorHasMultipleSelections && textInputFocus" ]
+    zed:
+      action: "editor::Cancel"
+      context: [ "Editor" ]
     idea:
       missing: true
 

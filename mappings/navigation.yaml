@@ -7,13 +7,17 @@ mapping:
       context: [ "editorTextFocus" ]
     idea:
       action: 'EditorMatchBrace'
+    zed:
+      action: 'editor::MoveToEnclosingBracket'
   - id: "workbench.action.gotoLine"
     binding:
-      - "${group.navigate} ctrl+[KeyL]" 
+      - "${group.navigate} ctrl+[KeyL]"
     vscode:
       action: 'workbench.action.gotoLine'
     idea:
       action: 'GotoLine'
+    zed:
+      action: 'go_to_line::Toggle'
   #
   #there is also workbench.action.navigateBackInEditLocations, etc
   - id: "workbench.action.openNextRecentlyUsedEditor"
@@ -38,7 +42,9 @@ mapping:
     vscode:
       action: 'workbench.action.navigateForward'
     idea:
-      action: 'Forward'  
+      action: 'Forward'
+    zed:
+      action: 'pane::GoForward'  
   - id: "workbench.action.navigateBack"
     binding:
       - "ctrl+[BracketLeft]"
@@ -46,6 +52,8 @@ mapping:
       action: 'workbench.action.navigateBack'
     idea:
       action: 'Back'
+    zed:
+      action: 'pane::GoBack'
 
   - id: "workbench.action.nextEditor"
     binding:
@@ -54,6 +62,8 @@ mapping:
       action: 'workbench.action.nextEditor'
     idea:
       action: 'NextTab'
+    zed:
+      action: 'pane::ActivateNextItem'
   - id: "workbench.action.previousEditor"
     binding:
       - "meta+[BracketLeft]"
@@ -61,6 +71,8 @@ mapping:
       action: 'workbench.action.previousEditor'
     idea:
       action: 'PreviousTab'
+    zed:
+      action: 'pane::ActivatePreviousItem'
       
   #      
   - id: "workbench.action.quickOpen"
@@ -70,6 +82,8 @@ mapping:
       action: 'workbench.action.quickOpen'
     idea:
       action: 'GotoFile'
+    zed:
+      action: 'file_finder::Toggle'
   - id: "workbench.action.openRecent"
     binding:
       - "${group.navigate} ctrl+[KeyR]"
@@ -77,6 +91,8 @@ mapping:
       action: 'workbench.action.openRecent'
     idea:
       action: 'RecentFiles'
+    zed:
+      action: 'projects::OpenRecent'
   - id: "workbench.action.showAllEditors"
     binding:
       - "${group.navigate} ctrl+[KeyE]"
@@ -91,6 +107,8 @@ mapping:
       action: 'workbench.action.showAllSymbols'
     idea:
       action: 'GotoClass'
+    zed:
+      action: 'project_symbols::Toggle'
   - id: "workbench.action.showCommands"
     binding:
       - "${group.navigate} ctrl+[KeyN]"
@@ -99,6 +117,8 @@ mapping:
       action: 'workbench.action.showCommands'
     idea:
       action: 'GotoAction'
+    zed:
+      action: 'command_palette::Toggle'
       
   # structure
   - id: "workbench.action.gotoSymbol"
@@ -108,6 +128,8 @@ mapping:
       action: 'workbench.action.gotoSymbol'
     idea:
       action: 'GotoSymbol'
+    zed:
+      action: 'outline::Toggle'
       
   - id: "workbench.action.navigateToLastEditLocation"
     binding:
@@ -125,6 +147,8 @@ mapping:
       action: 'GotoDeclaration'
       mouse:
         - "ctrl button1"
+    zed:
+      action: 'editor::GoToDefinition'
   - id: "editor.action.revealDefinition"
     binding:
       - "${group.navigate} ctrl+[KeyD]"
@@ -142,7 +166,9 @@ mapping:
     idea:
       action: 'GotoTypeDeclaration'
       mouse:
-        - "ctrl shift button1"      
+        - "ctrl shift button1"
+    zed:
+      action: 'editor::GoToTypeDefinition'      
   - id: "editor.action.goToImplementation"
     binding:
       - "${group.navigate} ctrl+[KeyI]"
@@ -153,6 +179,8 @@ mapping:
       action: 'GotoImplementation'
       mouse:
         - "ctrl alt button1"
+    zed:
+      action: 'editor::GoToImplementation'
   - id: "editor.action.goToReferences"
     binding:
       - "${group.navigate} ctrl+[KeyU]" # "Usages"
@@ -161,6 +189,8 @@ mapping:
       context: [ "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" ]
     idea:
       action: 'ShowUsages'
+    zed:
+      action: 'editor::FindAllReferences'
       
   - id: "editor.action.peekDefinition"
     binding:
@@ -169,6 +199,8 @@ mapping:
       action: 'editor.action.peekDefinition'
     idea:
       action: 'QuickImplementations'
+    zed:
+      action: 'editor::GoToDefinition'
       
   - id: "editor.action.revealDefinitionAside"
     binding:
@@ -188,6 +220,8 @@ mapping:
       context: [ "editorFocus" ]
     idea:
       action: 'VcsShowNextChangeMarker'
+    zed:
+      action: 'editor::GoToDiagnostic'
   - id: "editor.action.marker.prev"
     binding:
       - "alt+[KeyP]"
@@ -196,6 +230,8 @@ mapping:
       context: [ "editorFocus" ]
     idea:
       action: 'VcsShowPrevChangeMarker'
+    zed:
+      action: 'editor::GoToPreviousDiagnostic'
   # issues
   - id: "editor.action.marker.nextInFiles"
     binding:

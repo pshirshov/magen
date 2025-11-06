@@ -4,7 +4,7 @@ import cats.syntax.either.*
 import io.circe.generic.auto.*
 import io.circe.{yaml, *}
 import io.septimalmind.magen.model.*
-import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, VscodeInstaller, VscodeParams}
+import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, VscodeInstaller, VscodeParams, ZedInstaller, ZedParams}
 import io.septimalmind.magen.util.ShortcutParser
 import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
@@ -65,6 +65,14 @@ object Magen {
           ),
           negate = true,
           parent = "$default",
+        )
+      ),
+      new ZedInstaller(
+        ZedParams(
+          List(
+            "~/.config/zed/keymap.json",
+            "~/work/safe/7mind/nix-config/users/pavel/hm/keymap-zed-linux.json",
+          )
         )
       ),
     )

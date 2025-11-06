@@ -7,7 +7,9 @@ mapping:
       action: 'actions.find'
       context: [ "editorFocus || editorIsOpen" ]
     idea:
-      action: 'Find'      
+      action: 'Find'
+    zed:
+      action: 'buffer_search::Deploy'      
   - id: "editor.action.startFindReplaceAction"
     binding:
       - "ctrl+[KeyR]"
@@ -16,7 +18,9 @@ mapping:
       action: 'editor.action.startFindReplaceAction'
       context: [ "editorFocus || editorIsOpen" ]
     idea:
-      action: 'Replace'      
+      action: 'Replace'
+    zed:
+      action: 'buffer_search::DeployReplace'      
   - id: "workbench.action.findInFiles"
     binding:
       - "ctrl+shift+[KeyF]"
@@ -24,6 +28,8 @@ mapping:
       action: 'workbench.action.findInFiles'
     idea:
       action: 'FindInPath'
+    zed:
+      action: 'project_search::Deploy'
   - id: "workbench.action.replaceInFiles"
     binding:
       - "ctrl+shift+[KeyR]"
@@ -31,6 +37,8 @@ mapping:
       action: 'workbench.action.replaceInFiles'
     idea:
       action: 'ReplaceInPath'
+    zed:
+      action: 'project_search::Deploy'
       
   - id: "editor.action.nextMatchFindAction:editor-focus"
     binding:
@@ -51,6 +59,8 @@ mapping:
         - "enter"
     idea:
       action: 'FindNext'
+    zed:
+      action: 'search::SelectNextMatch'
   
   - id: "editor.action.previousMatchFindAction"
     binding:
@@ -61,6 +71,8 @@ mapping:
       context: [ "editorFocus && findInputFocussed", "editorFocus" ]
     idea:
       action: 'FindPrevious'
+    zed:
+      action: 'search::SelectPreviousMatch'
 
   - id: "editor.action.replaceAll"
     binding:
@@ -102,7 +114,9 @@ mapping:
       action: 'editor.action.selectHighlights'
       context: [ "editorFocus && !findWidgetVisible" ]
     idea:
-      action: 'SelectAllOccurrences'        
+      action: 'SelectAllOccurrences'
+    zed:
+      action: 'search::SelectAllMatches'        
   - id: "editor.action.selectAllMatches"
     binding:
       - "alt+[KeyH]"
@@ -110,7 +124,9 @@ mapping:
       action: 'editor.action.selectAllMatches'
       context: [ "editorFocus && findWidgetVisible" ]
     idea:
-      action: 'SelectAllOccurrences'     
+      action: 'SelectAllOccurrences'
+    zed:
+      action: 'search::SelectAllMatches'     
         
   # options
   - id: "toggleFindCaseSensitive"
@@ -122,6 +138,8 @@ mapping:
     idea:
       missing: true
       unmodifiable: "alt+[KeyC]"
+    zed:
+      action: 'search::ToggleCaseSensitive'
   - id: "toggleFindInSelection"
     binding:
       - "alt+[KeyO] alt+[KeyS]"
@@ -139,6 +157,8 @@ mapping:
     idea:
       missing: true
       unmodifiable: "alt+[KeyX]"
+    zed:
+      action: 'search::ToggleRegex'
   - id: "toggleFindWholeWord"
     binding:
       - "alt+[KeyO] alt+[KeyW]"
@@ -148,6 +168,8 @@ mapping:
     idea:
       missing: true
       unmodifiable: "alt+[KeyW]"
+    zed:
+      action: 'search::ToggleWholeWord'
   - id: "togglePreserveCase"
     binding:
       - "alt+[KeyO] alt+[KeyC]"

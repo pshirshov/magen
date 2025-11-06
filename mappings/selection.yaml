@@ -24,6 +24,9 @@ mapping:
     vscode:
       action: 'cursorRightSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectRight"
+      context: [ "Editor" ]
     idea:
       action: 'EditorRightWithSelection'
   - id: "cursorUpSelect"
@@ -32,6 +35,9 @@ mapping:
     vscode:
       action: 'cursorUpSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectUp"
+      context: [ "Editor" ]
     idea:
       action: 'EditorUpWithSelection'
   - id: "cursorDownSelect"
@@ -40,6 +46,9 @@ mapping:
     vscode:
       action: 'cursorDownSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectDown"
+      context: [ "Editor" ]
     idea:
       action: 'EditorDownWithSelection'
   - id: "cursorLeftSelect"
@@ -48,8 +57,11 @@ mapping:
     vscode:
       action: 'cursorLeftSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectLeft"
+      context: [ "Editor" ]
     idea:
-      action: 'EditorLeftWithSelection'  
+      action: 'EditorLeftWithSelection'
   - id: "cursorWordLeftSelect"
     binding:
       - "shift+ctrl+left"
@@ -57,6 +69,9 @@ mapping:
     vscode:
       action: 'cursorWordLeftSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectToPreviousWordStart"
+      context: [ "Editor" ]
     idea:
       action: 'EditorPreviousWordWithSelection'
   - id: "cursorWordEndRightSelect"
@@ -66,15 +81,21 @@ mapping:
     vscode:
       action: 'cursorWordEndRightSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectToNextWordEnd"
+      context: [ "Editor" ]
     idea:
       action: 'EditorNextWordWithSelection'
-  # jump selection      
+  # jump selection
   - id: "cursorHomeSelect"
     binding:
       - "shift+home"
     vscode:
       action: 'cursorHomeSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectToBeginningOfLine"
+      context: [ "Editor" ]
     idea:
       action: 'EditorLineStartWithSelection'
   - id: "cursorEndSelect"
@@ -83,6 +104,9 @@ mapping:
     vscode:
       action: 'cursorEndSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectToEndOfLine"
+      context: [ "Editor" ]
     idea:
       action: 'EditorLineEndWithSelection'
 
@@ -93,6 +117,9 @@ mapping:
     vscode:
       action: 'cursorPageDownSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectPageDown"
+      context: [ "Editor" ]
     idea:
       action: 'EditorPageDownWithSelection'
   - id: "cursorPageUpSelect"
@@ -102,6 +129,9 @@ mapping:
     vscode:
       action: 'cursorPageUpSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectPageUp"
+      context: [ "Editor" ]
     idea:
       action: 'EditorPageUpWithSelection'
 
@@ -111,6 +141,9 @@ mapping:
     vscode:
       action: 'cursorTopSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectToBeginning"
+      context: [ "Editor" ]
     idea:
       action: "EditorTextStartWithSelection"
   - id: "cursorBottomSelect"
@@ -119,6 +152,9 @@ mapping:
     vscode:
       action: 'cursorBottomSelect'
       context: [ "textInputFocus" ]
+    zed:
+      action: "editor::SelectToEnd"
+      context: [ "Editor" ]
     idea:
       action: 'EditorTextEndWithSelection'
       

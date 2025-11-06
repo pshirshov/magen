@@ -6,6 +6,9 @@ mapping:
       action: 'undo'
     idea:
       action: '$Undo'
+    zed:
+      action: "editor::Undo"
+      context: [ "Editor" ]
   - id: "redo"
     binding:
       - "ctrl+shift+z"
@@ -14,6 +17,9 @@ mapping:
       action: 'redo'
     idea:
       action: '$Redo'
+    zed:
+      action: "editor::Redo"
+      context: [ "Editor" ]
 
   - id: "deleteLeft"
     binding:
@@ -24,6 +30,9 @@ mapping:
       context: [ "textInputFocus" ]
     idea:
       action: 'EditorBackSpace'
+    zed:
+      action: "editor::Backspace"
+      context: [ "Editor" ]
   - id: "deleteRight"
     binding:
       - "delete"
@@ -32,6 +41,9 @@ mapping:
       context: [ "textInputFocus" ]
     idea:
       action: '$Delete'
+    zed:
+      action: "editor::Delete"
+      context: [ "Editor" ]
   - id: "deleteWordLeft"
     binding:
       - "alt+backspace"
@@ -40,6 +52,9 @@ mapping:
       context: [ "textInputFocus && !editorReadonly" ]
     idea:
       action: 'EditorDeleteToWordStart'
+    zed:
+      action: "editor::DeleteToPreviousWordStart"
+      context: [ "Editor" ]
   - id: "editor.action.deleteLines"
     binding:
       - "meta+backspace"
@@ -49,6 +64,9 @@ mapping:
       context: [ "textInputFocus && !editorReadonly" ]
     idea:
       action: 'EditorDeleteLine'
+    zed:
+      action: "editor::DeleteLine"
+      context: [ "Editor" ]
   - id: "editor.action.duplicateSelection"
     binding:
       - "ctrl+[KeyD]"
@@ -58,6 +76,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'EditorDuplicate'
+    zed:
+      action: "editor::DuplicateLineDown"
+      context: [ "Editor" ]
   # new lines
   - id: "EditorEnter"
     binding:
@@ -81,6 +102,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'EditorStartNewLine'
+    zed:
+      action: "editor::NewlineBelow"
+      context: [ "Editor" ]
   - id: "editor.action.insertLineBefore"
     binding:
       - "ctrl+shift+enter"
@@ -88,7 +112,10 @@ mapping:
       action: 'editor.action.insertLineBefore'
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
-      action: 'EditorStartNewLineBefore'      
+      action: 'EditorStartNewLineBefore'
+    zed:
+      action: "editor::NewlineAbove"
+      context: [ "Editor" ]      
   # move
   - id: "editor.action.moveLinesDownAction"
     binding:
@@ -98,6 +125,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'MoveStatementDown'
+    zed:
+      action: "editor::MoveLineDown"
+      context: [ "Editor" ]
   - id: "editor.action.moveLinesUpAction"
     binding:
       - "shift+alt+up"
@@ -106,6 +136,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'MoveStatementUp'
+    zed:
+      action: "editor::MoveLineUp"
+      context: [ "Editor" ]
   # comments
   - id: "editor.action.blockComment"
     binding:
@@ -116,6 +149,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'CommentByBlockComment'
+    zed:
+      action: "editor::ToggleComments"
+      context: [ "Editor" ]
   - id: "editor.action.commentLine"
     binding:
       - "ctrl+[Slash]"
@@ -125,6 +161,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'CommentByLineComment'
+    zed:
+      action: "editor::ToggleComments"
+      context: [ "Editor" ]
   # formatting
   - id: "editor.action.formatDocument"
     binding:
@@ -134,6 +173,9 @@ mapping:
       context: [ "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor" ]
     idea:
       action: 'ReformatCode'
+    zed:
+      action: "editor::Format"
+      context: [ "Editor" ]
   - id: "editor.action.formatDocument.none"
     binding:
       - "ctrl+[KeyT] ctrl+[KeyF]"
@@ -150,6 +192,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'EditorIndentLineOrSelection'
+    zed:
+      action: "editor::Indent"
+      context: [ "Editor" ]
   - id: "editor.action.outdentLines"
     binding:
       - "shift+tab"
@@ -158,6 +203,9 @@ mapping:
       context: [ "editorTextFocus && !editorReadonly" ]
     idea:
       action: 'EditorUnindentLineOrSelection'
+    zed:
+      action: "editor::Outdent"
+      context: [ "Editor" ]
   - id: "EditorUnindentSelection"
     binding:
       - "shift+tab"

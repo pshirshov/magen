@@ -15,6 +15,8 @@ mapping:
       context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
     idea:
       action: 'ShowIntentionActions' # 'QuickActionPopup'
+    zed:
+      action: 'editor::ToggleCodeActions'
   - id: "editor.action.triggerParameterHints"
     binding:
       - "${group.info} ctrl+[KeyP]"
@@ -23,6 +25,8 @@ mapping:
       context: [ "editorHasSignatureHelpProvider && editorTextFocus" ]
     idea:
       action: 'ParameterInfo'
+    zed:
+      action: 'editor::ShowSignatureHelp'
   - id: "editor.action.triggerSuggest"
     binding:
       - "ctrl+space"
@@ -30,4 +34,6 @@ mapping:
       action: 'editor.action.triggerSuggest'
       context: [ "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" ]
     idea:
-      action: 'CodeCompletion'        
+      action: 'CodeCompletion'
+    zed:
+      action: 'editor::ShowCompletions'

@@ -7,6 +7,8 @@ mapping:
       action: 'workbench.action.closeActiveEditor'
     idea:
       action: 'CloseContent'
+    zed:
+      action: 'pane::CloseActiveItem'
   - id: "workbench.action.closeWindow"
     binding:
       - "meta+shift+[KeyW]"
@@ -16,6 +18,8 @@ mapping:
       action: 'workbench.action.closeWindow'
     idea:
       action: 'CloseProject'
+    zed:
+      action: 'workspace::CloseWindow'
   - id: "workbench.action.files.save"
     binding:
       - "ctrl+[KeyS]"
@@ -26,6 +30,8 @@ mapping:
     idea:
       comment: 'Idea has no Save All '
       action: 'SaveAll'
+    zed:
+      action: 'workspace::Save'
       
   - id: "workbench.action.files.saveAll"
     binding:
@@ -35,14 +41,18 @@ mapping:
       action: 'workbench.action.files.saveAll'
     idea:
       action: 'SaveAll'
+    zed:
+      action: 'workspace::SaveAll'
   - id: "workbench.action.quit"
     binding:
       - "ctrl+[KeyQ]"
-      - "meta+[KeyQ]" 
+      - "meta+[KeyQ]"
     vscode:
       action: 'workbench.action.quit'
     idea:
       action: 'Exit'
+    zed:
+      action: 'zed::Quit'
   - id: "workbench.action.reopenClosedEditor"
     binding:
       - "ctrl+shift+t"
@@ -50,6 +60,8 @@ mapping:
       action: 'workbench.action.reopenClosedEditor'
     idea:
       action: 'ReopenClosedTab'
+    zed:
+      action: 'pane::ReopenClosedItem'
   - id: "workbench.action.closeOtherEditors"
     binding:
       - "${group.command} ctrl+[KeyW]"
@@ -57,6 +69,8 @@ mapping:
       action: 'workbench.action.closeOtherEditors'
     idea:
       action: 'CloseAllEditorsButActive'
+    zed:
+      action: 'pane::CloseOtherItems'
   - id: "workbench.action.newWindow"
     binding:
       - "${group.command} ctrl+[KeyC]"
@@ -64,6 +78,8 @@ mapping:
       action: 'workbench.action.newWindow'
     idea:
       missing: true
+    zed:
+      action: 'workspace::NewWindow'
   - id: "workbench.action.files.newUntitledFile"
     binding:
       - "${group.command} ctrl+[KeyN]"
@@ -71,6 +87,8 @@ mapping:
       action: 'workbench.action.files.newUntitledFile'
     idea:
       action: 'FileChooser.NewFile'
+    zed:
+      action: 'workspace::NewFile'
   - id: "workbench.action.splitEditorRight"
     binding:
       - "${group.command} ctrl+[KeyV]"
@@ -78,6 +96,8 @@ mapping:
       action: 'workbench.action.splitEditorRight'
     idea:
       action: 'SplitVertically' #OpenInRightSplit'
+    zed:
+      action: 'pane::SplitRight'
   - id: "workbench.action.pinEditor"
     binding:
       - "${group.command} ctrl+[KeyP]"
