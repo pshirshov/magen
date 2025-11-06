@@ -52,18 +52,17 @@ object Magen {
         VscodeParams(
           List(
 //        "/home/pavel/work/safe/nix-gnome-lean/hosts/pavel-am5/vscode-keymap/linux/vscode-magen.json",
-            "/home/pavel/.config/VSCodium/User/keybindings.json",
-            "/home/pavel/work/safe/7mind/nix-config/users/pavel/hm/keymap-vscode-linux.json",
-          ).map(p => Paths.get(p))
+            "~/.config/VSCodium/User/keybindings.json",
+            "~/work/safe/7mind/nix-config/users/pavel/hm/keymap-vscode-linux.json",
+          )
         )
       ),
       new IdeaInstaller(
         IdeaParams(
           List(
-            "/home/pavel/.config/JetBrains/IntelliJIdea2024.3/keymaps/Magen.xml",
-            "/home/pavel/.config/JetBrains/Rider2024.3/keymaps/Magen.xml",
-            "/home/pavel/work/safe/7mind/nix-config/users/pavel/hm/keymap-idea-linux.xml",
-          ).map(p => Paths.get(p)),
+            "~/.config/JetBrains/*/keymaps/Magen.xml",
+            "~/work/safe/7mind/nix-config/users/pavel/hm/keymap-idea-linux.xml",
+          ),
           negate = true,
           parent = "$default",
         )

@@ -1,6 +1,7 @@
 package io.septimalmind.magen.targets
 
 import io.septimalmind.magen.model.Mapping
+import io.septimalmind.magen.util.PathExpander
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Path}
@@ -19,7 +20,7 @@ trait Installer {
 }
 
 case class IdeaParams(
-  writeTo: List[Path],
+  writeToPatterns: List[String],
   negate: Boolean,
   parent: String,
 )
@@ -27,8 +28,10 @@ case class IdeaParams(
 class IdeaInstaller(params: IdeaParams) extends Installer {
   def install(mapping: Mapping): Unit = {
     val rendered = new IdeaRenderer(params).render(mapping)
-    params.writeTo.foreach {
+    val paths = PathExpander.expandGlobs(params.writeToPatterns)
+    paths.foreach {
       p =>
+        println(s"Installing into $p")
         write(rendered, p)
     }
   }
@@ -36,28 +39,32 @@ class IdeaInstaller(params: IdeaParams) extends Installer {
 }
 
 case class VscodeParams(
-  writeTo: List[Path]
+  writeToPatterns: List[String]
 )
 
 class VscodeInstaller(params: VscodeParams) extends Installer {
   def install(mapping: Mapping): Unit = {
     val rendered = VSCodeRenderer.render(mapping)
-    params.writeTo.foreach {
+    val paths = PathExpander.expandGlobs(params.writeToPatterns)
+    paths.foreach {
       p =>
+        println(s"Installing into $p")
         write(rendered, p)
     }
   }
 }
 
 case class ZedParams(
-  writeTo: List[Path]
+  writeToPatterns: List[String]
 )
 
 class ZedInstaller(params: ZedParams) extends Installer {
   def install(mapping: Mapping): Unit = {
     val rendered = ZedRenderer.render(mapping)
-    params.writeTo.foreach {
+    val paths = PathExpander.expandGlobs(params.writeToPatterns)
+    paths.foreach {
       p =>
+        println(s"Installing into $p")
         write(rendered, p)
     }
   }
