@@ -3996,7 +3996,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
     "args": {
-      "text": "\u001b[24~a"
+      "text": "\\u001b[24~a"
     }
   },
   {
@@ -4004,7 +4004,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
     "args": {
-      "text": "\u001b[24~b"
+      "text": "\\u001b[24~b"
     }
   },
   {
@@ -4012,7 +4012,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'",
     "args": {
-      "text": "\u001b[24~c"
+      "text": "\\u001b[24~c"
     }
   },
   {
@@ -4020,7 +4020,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "accessibilityModeEnabled && terminalFocus",
     "args": {
-      "text": "\u0012"
+      "text": "\\u0012"
     }
   },
   {
@@ -4028,7 +4028,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus",
     "args": {
-      "text": "\u0007"
+      "text": "\\u0007"
     }
   },
   {
@@ -4036,7 +4036,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus",
     "args": {
-      "text": "\u0017"
+      "text": "\\u0017"
     }
   },
   {
@@ -4044,7 +4044,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus",
     "args": {
-      "text": "\u001bd"
+      "text": "\\u001bd"
     }
   },
   {
@@ -4052,7 +4052,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus",
     "args": {
-      "text": "\u0000"
+      "text": "\\u0000"
     }
   },
   {
@@ -4060,7 +4060,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus",
     "args": {
-      "text": "\u001e"
+      "text": "\\u001e"
     }
   },
   {
@@ -4068,7 +4068,7 @@
     "command": "-workbench.action.terminal.sendSequence",
     "when": "terminalFocus",
     "args": {
-      "text": "\u001f"
+      "text": "\\u001f"
     }
   },
   {

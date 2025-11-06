@@ -12,7 +12,7 @@ trait Installer {
     if (p.toFile.exists()) {
       p.toFile.delete()
     }
-    Files.write(p, rendered.getBytes(StandardCharsets.UTF_8))
+    Files.write(p, rendered.getBytes(StandardCharsets.US_ASCII))
     ()
   }
 

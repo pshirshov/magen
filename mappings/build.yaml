@@ -18,7 +18,7 @@ mapping:
 
   - id: "rider:build.rebuild"
     binding:
-      - "${group.build} ctrl+[KeyR]"
+      - "${group.build} ctrl+[KeyP]"
     vscode:
       missing: true
     idea:
@@ -27,7 +27,7 @@ mapping:
   
   - id: "build.rebuild"
     binding:
-      - "${group.build} ctrl+[KeyR]"
+      - "${group.build} ctrl+[KeyP]"
     vscode:
       missing: true
     idea:
@@ -40,3 +40,11 @@ mapping:
       missing: true
     idea:
       action: 'Compile'
+
+  - id: "build.reimport"
+    binding:
+      - "${group.build} ctrl+[KeyI]"
+    vscode:
+      missing: true
+    idea:
+      action: 'ExternalSystem.RefreshAllProjects'
