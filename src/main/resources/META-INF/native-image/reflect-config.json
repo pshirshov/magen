@@ -1,0 +1,27 @@
+[
+  {
+    "name": "scala.Symbol",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true
+  },
+  {
+    "name": "scala.Symbol$",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredFields": true,
+    "allPublicFields": true
+  },
+  {
+    "name": "scala.runtime.SymbolLiteral",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true,
+    "allDeclaredMethods": true,
+    "allPublicMethods": true
+  }
+]

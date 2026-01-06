@@ -37,3 +37,54 @@ mapping:
       action: 'CodeCompletion'
     zed:
       action: 'editor::ShowCompletions'
+  # Completion menu navigation
+  - id: "zed.completionConfirm"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ConfirmCompletion'
+      context: [ "Editor && showing_completions" ]
+    idea:
+      missing: true
+  - id: "zed.completionMenuNext"
+    binding:
+      - "down"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ContextMenuNext'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "zed.completionMenuPrevious"
+    binding:
+      - "up"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ContextMenuPrevious'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "zed.codeActionConfirm"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ConfirmCodeAction'
+      context: [ "Editor && showing_code_actions" ]
+    idea:
+      missing: true
+  - id: "zed.renameConfirm"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ConfirmRename'
+      context: [ "Editor && renaming" ]
+    idea:
+      missing: true

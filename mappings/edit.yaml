@@ -87,7 +87,7 @@ mapping:
       missing: true
     zed:
       action: 'editor::Newline'
-      context: [ "Editor" ]
+      context: [ "Editor && mode == full" ]
     idea:
       action: 'EditorEnter'
   - id: "EditorEscape"
@@ -110,7 +110,7 @@ mapping:
       action: 'EditorStartNewLine'
     zed:
       action: "editor::NewlineBelow"
-      context: [ "Editor" ]
+      context: [ "Editor && mode == full" ]
   - id: "editor.action.insertLineBefore"
     binding:
       - "ctrl+shift+enter"
@@ -121,7 +121,7 @@ mapping:
       action: 'EditorStartNewLineBefore'
     zed:
       action: "editor::NewlineAbove"
-      context: [ "Editor" ]      
+      context: [ "Editor && mode == full" ]      
   # move
   - id: "editor.action.moveLinesDownAction"
     binding:

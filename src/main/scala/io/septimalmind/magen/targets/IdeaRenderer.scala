@@ -6,7 +6,6 @@ import io.septimalmind.magen.model.*
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.util.Aliases
 import izumi.fundamentals.platform.files.IzFiles
-import izumi.fundamentals.platform.resources.IzResources
 
 import java.nio.file.Paths
 import scala.annotation.tailrec

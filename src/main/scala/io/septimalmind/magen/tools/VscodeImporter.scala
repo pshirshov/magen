@@ -1,6 +1,6 @@
 package io.septimalmind.magen.tools
 
-import io.septimalmind.magen.targets.{IdeaRenderer, VSCodeRenderer}
+import io.septimalmind.magen.targets.VSCodeRenderer
 import io.septimalmind.magen.util.{Aliases, ShortcutParser}
 import izumi.fundamentals.platform.files.IzFiles
 
