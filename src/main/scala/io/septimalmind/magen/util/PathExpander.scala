@@ -7,9 +7,10 @@ object PathExpander {
 
   def expandGlob(pattern: String): List[Path] = {
     val normalized = expandTilde(pattern)
+    val hasWildcard = containsWildcard(normalized)
     val segments = normalized.split("/").toList.filter(_.nonEmpty)
     val root = if (normalized.startsWith("/")) Paths.get("/") else Paths.get(".")
-    expandPath(segments, root)
+    expandPath(segments, root, allowCreate = !hasWildcard)
   }
 
   private def expandTilde(path: String): String = {
@@ -23,7 +24,7 @@ object PathExpander {
     }
   }
 
-  private def expandPath(segments: List[String], currentPath: Path): List[Path] = {
+  private def expandPath(segments: List[String], currentPath: Path, allowCreate: Boolean): List[Path] = {
     segments match {
       case Nil =>
         if (Files.exists(currentPath)) List(currentPath) else Nil
@@ -31,15 +32,21 @@ object PathExpander {
       case segment :: remaining =>
         if (containsWildcard(segment)) {
           expandWildcard(currentPath, segment).flatMap { expanded =>
-            expandPath(remaining, expanded)
+            expandPath(remaining, expanded, allowCreate = false)
           }
         } else {
           val nextPath = currentPath.resolve(segment)
           if (remaining.isEmpty) {
-            if (Files.exists(nextPath)) List(nextPath) else Nil
+            if (Files.exists(nextPath)) {
+              List(nextPath)
+            } else if (allowCreate && Files.exists(currentPath) && Files.isDirectory(currentPath)) {
+              List(nextPath)
+            } else {
+              Nil
+            }
           } else {
             if (Files.exists(nextPath) && Files.isDirectory(nextPath)) {
-              expandPath(remaining, nextPath)
+              expandPath(remaining, nextPath, allowCreate)
             } else {
               Nil
             }

@@ -2,7 +2,9 @@ package io.septimalmind.magen
 
 import cats.syntax.either.*
 import io.circe.generic.auto.*
+import io.circe.syntax.*
 import io.circe.{yaml, *}
+import io.septimalmind.magen.config.MagenConfig
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, VscodeInstaller, VscodeParams, ZedInstaller, ZedParams}
 import io.septimalmind.magen.util.ShortcutParser
@@ -11,7 +13,8 @@ import izumi.fundamentals.collections.nonempty.NEList
 import izumi.fundamentals.platform.files.IzFiles
 import izumi.fundamentals.platform.strings.IzString.*
 
-import java.nio.file.{Path, Paths}
+import java.nio.charset.StandardCharsets
+import java.nio.file.{Files, Path, Paths}
 import scala.util.matching.Regex.quoteReplacement
 
 // TODO: print duplicating key references
@@ -46,38 +49,53 @@ object Magen {
       .map(f => readMapping(f))
 
     val converted = convert(mapping)
+    val config = loadOrCreateConfig()
 
     val installers = List(
       new VscodeInstaller(
         VscodeParams(
-          List(
-//        "/home/pavel/work/safe/nix-gnome-lean/hosts/pavel-am5/vscode-keymap/linux/vscode-magen.json",
-            "~/.config/VSCodium/User/keybindings.json",
-            "~/work/safe/7mind/nix-config/users/pavel/hm/keymap-vscode-linux.json",
-          )
+          List("~/.config/VSCodium/User/keybindings.json") ++ config.`installer-paths`.vscode
         )
       ),
       new IdeaInstaller(
         IdeaParams(
-          List(
-            "~/.config/JetBrains/*/keymaps/Magen.xml",
-            "~/work/safe/7mind/nix-config/users/pavel/hm/keymap-idea-linux.xml",
-          ),
+          List("~/.config/JetBrains/*/keymaps/Magen.xml") ++ config.`installer-paths`.idea,
           negate = true,
           parent = "$default",
         )
       ),
       new ZedInstaller(
         ZedParams(
-          List(
-            "~/.config/zed/keymap.json",
-            "~/work/safe/7mind/nix-config/users/pavel/hm/keymap-zed-linux.json",
-          )
+          List("~/.config/zed/keymap.json") ++ config.`installer-paths`.zed
         )
       ),
     )
 
     installers.foreach(_.install(converted))
+  }
+
+  private val configPath: Path = {
+    val home = System.getProperty("user.home")
+    Paths.get(home, ".config", "magen", "magen.json")
+  }
+
+  private def loadOrCreateConfig(): MagenConfig = {
+    if (Files.exists(configPath)) {
+      val content = IzFiles.readString(configPath)
+      parser.parse(content)
+        .flatMap(_.as[MagenConfig])
+        .getOrElse {
+          println(s"Warning: Failed to parse $configPath, using empty config")
+          MagenConfig.empty
+        }
+    } else {
+      Files.createDirectories(configPath.getParent)
+      val emptyConfig = MagenConfig.empty
+      val json = emptyConfig.asJson.spaces2
+      Files.write(configPath, json.getBytes(StandardCharsets.UTF_8))
+      println(s"Created config file: $configPath")
+      emptyConfig
+    }
   }
 
   private def convert(mapping: List[RawMapping]): Mapping = {

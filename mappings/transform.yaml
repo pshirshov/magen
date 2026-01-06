@@ -76,3 +76,11 @@ mapping:
       missing: true
     idea:
       action: 'IntroduceParameter'
+  - id: "Generate"
+    binding:
+      - "${group.transform} [KeyG]"
+      - "${group.transform} ctrl+[KeyG]"
+    vscode:
+      missing: true
+    idea:
+      action: 'Generate'
