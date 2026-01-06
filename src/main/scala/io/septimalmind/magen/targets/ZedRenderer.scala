@@ -28,7 +28,7 @@ object ZedRenderer extends Renderer {
           JsonObject("bindings" -> bindingsMap.asJson)
         } else {
           JsonObject(
-            "context" -> Json.fromString(contexts.mkString(" && ")),
+            "context" -> Json.fromString(contexts.mkString(" || ")),
             "bindings" -> bindingsMap.asJson,
           )
         }

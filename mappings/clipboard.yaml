@@ -4,6 +4,9 @@ mapping:
       - "alt+[KeyC] alt+[KeyP]"
     vscode:
       action: 'copyFilePath'
+    zed:
+      action: 'editor::CopyPath'
+      context: [ "Editor" ]
     idea:
       action: 'CopyPaths'
   - id: "copyRelativeFilePath"
@@ -13,13 +16,16 @@ mapping:
       action: 'copyRelativeFilePath'
     idea: 
       missing: true
-  # basic    
+  # basic
   - id: "editor.action.clipboardCopyAction"
     binding:
       - "ctrl+[KeyC]"
       - "meta+[KeyC]"
     vscode:
       action: 'editor.action.clipboardCopyAction'
+    zed:
+      action: 'editor::Copy'
+      context: [ "Editor" ]
     idea:
       action: '$Copy' #Editor Copy'
   - id: "editor.action.clipboardCutAction"
@@ -28,6 +34,9 @@ mapping:
       - "meta+[KeyX]"
     vscode:
       action: 'editor.action.clipboardCutAction'
+    zed:
+      action: 'editor::Cut'
+      context: [ "Editor" ]
     idea:
       action: '$Cut' #Editor Cut'
   - id: "editor.action.clipboardPasteAction"
@@ -36,26 +45,33 @@ mapping:
       - "meta+[KeyV]"
     vscode:
       action: 'editor.action.clipboardPasteAction'
+    zed:
+      action: 'editor::Paste'
+      context: [ "Editor" ]
     idea:
       action: '$Paste' #Editor Paste'
       
   - id: "workbench.action.terminal.copyAndClearSelection"
     binding:
-      - "ctrl+[KeyC]"
-      - "meta+[KeyC]"
+      - "ctrl+shift+[KeyC]"
     vscode:
       action: 'workbench.action.terminal.copyAndClearSelection'
       context: [ "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused" ]
+    zed:
+      action: 'terminal::Copy'
+      context: [ "Terminal" ]
     idea:
       missing: true
 
   - id: "workbench.action.terminal.paste"
     binding:
-      - "ctrl+[KeyV]"
-      - "meta+[KeyV]"
+      - "ctrl+shift+[KeyV]"
     vscode:
       action: 'workbench.action.terminal.paste'
       context: [ "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" ]
+    zed:
+      action: 'terminal::Paste'
+      context: [ "Terminal" ]
     idea:
       missing: true
 

@@ -86,26 +86,35 @@ mapping:
     vscode:
       action: 'editor.action.replaceAll'
       context: [ "editorFocus && findWidgetVisible" ]
-    idea:      
+    zed:
+      action: 'search::ReplaceAll'
+      context: [ "BufferSearchBar && in_replace" ]
+    idea:
       missing: true
-      unmodifiable: "alt+[KeyA]"      
-      
+      unmodifiable: "alt+[KeyA]"
+
   - id: "editor.action.replaceOne"
     binding:
       - "enter"
     vscode:
       action: 'editor.action.replaceOne'
       context: [ "editorFocus && findWidgetVisible && replaceInputFocussed" ]
+    zed:
+      action: 'search::ReplaceNext'
+      context: [ "BufferSearchBar && in_replace" ]
     idea:
       missing: true
       unmodifiable: "alt+[KeyP]"
-      
+
   - id: "editor.action.replaceOne:visible"
     binding:
       - "alt+[KeyP]"
     vscode:
       action: 'editor.action.replaceOne'
       context: [ "editorFocus && findWidgetVisible" ]
+    zed:
+      action: 'search::ReplaceNext'
+      context: [ "BufferSearchBar && in_replace" ]
     idea:
       missing: true
       unmodifiable: "alt+[KeyP]"

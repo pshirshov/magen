@@ -38,6 +38,9 @@ mapping:
     vscode:
       action: 'editor.action.rename'
       context: [ "editorHasRenameProvider && editorTextFocus && !editorReadonly" ]
+    zed:
+      action: 'editor::Rename'
+      context: [ "Editor" ]
     idea:
       action: 'RenameElement'
   - id: "editor.action.toggleOvertypeInsertMode"
@@ -53,6 +56,9 @@ mapping:
       - "${group.transform} ctrl+[KeyI]"
     vscode:
       action: 'editor.action.organizeImports'
+    zed:
+      action: 'editor::OrganizeImports'
+      context: [ "Editor" ]
     idea:
       action: 'OptimizeImports'
   - id: "ExtractMethod"
