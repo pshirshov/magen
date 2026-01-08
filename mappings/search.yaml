@@ -72,7 +72,7 @@ mapping:
       action: 'editor.action.nextMatchFindAction'
       context: [ "editorFocus && findInputFocussed && !replaceInputFocussed" ]
     idea:
-      action: 'FindNext'
+      missing: true
     zed:
       action: 'search::SelectNextMatch'
       context: [ "BufferSearchBar && !in_replace" ]
@@ -97,7 +97,7 @@ mapping:
       action: 'editor.action.previousMatchFindAction'
       context: [ "editorFocus && findInputFocussed && !replaceInputFocussed" ]
     idea:
-      action: 'FindPrevious'
+      missing: true
     zed:
       action: 'search::SelectPreviousMatch'
       context: [ "BufferSearchBar && !in_replace" ]
