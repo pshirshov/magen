@@ -68,6 +68,28 @@ mapping:
       context: [ "Editor && (showing_code_actions || showing_completions)" ]
     idea:
       missing: true
+  - id: "completionMenuFirst"
+    binding:
+      - "pageup"
+    vscode:
+      action: 'selectPrevPageSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+    zed:
+      action: 'editor::ContextMenuFirst'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "completionMenuLast"
+    binding:
+      - "pagedown"
+    vscode:
+      action: 'selectNextPageSuggestion'
+      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+    zed:
+      action: 'editor::ContextMenuLast'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
   - id: "zed.codeActionConfirm"
     binding:
       - "enter"

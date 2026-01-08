@@ -59,14 +59,24 @@ mapping:
     vscode:
       action: 'editor.action.nextMatchFindAction'
       context: [ "editorFocus && findInputFocussed" ]
-      binding:
-        - "enter"
     idea:
       action: 'FindNext'
     zed:
       action: 'search::SelectNextMatch'
       context: [ "BufferSearchBar" ]
-  
+
+  - id: "search.nextMatchOnEnter"
+    binding:
+      - "enter"
+    vscode:
+      action: 'editor.action.nextMatchFindAction'
+      context: [ "editorFocus && findInputFocussed && !replaceInputFocussed" ]
+    idea:
+      action: 'FindNext'
+    zed:
+      action: 'search::SelectNextMatch'
+      context: [ "BufferSearchBar && !in_replace" ]
+
   - id: "editor.action.previousMatchFindAction"
     binding:
       - "shift+enter"
@@ -79,6 +89,18 @@ mapping:
     zed:
       action: 'search::SelectPreviousMatch'
       context: [ "BufferSearchBar" ]
+
+  - id: "search.previousMatchOnShiftEnter"
+    binding:
+      - "shift+enter"
+    vscode:
+      action: 'editor.action.previousMatchFindAction'
+      context: [ "editorFocus && findInputFocussed && !replaceInputFocussed" ]
+    idea:
+      action: 'FindPrevious'
+    zed:
+      action: 'search::SelectPreviousMatch'
+      context: [ "BufferSearchBar && !in_replace" ]
 
   - id: "editor.action.replaceAll"
     binding:
@@ -158,6 +180,17 @@ mapping:
     zed:
       action: 'search::ToggleCaseSensitive'
       context: [ "Pane" ]
+  - id: "toggleFindCaseSensitive:searchBar"
+    binding:
+      - "alt+[KeyC]"
+    vscode:
+      action: 'toggleFindCaseSensitive'
+      context: [ "findInputFocussed" ]
+    idea:
+      missing: true
+    zed:
+      action: 'search::ToggleCaseSensitive'
+      context: [ "BufferSearchBar" ]
   - id: "toggleFindInSelection"
     binding:
       - "alt+[KeyO] alt+[KeyS]"
@@ -178,6 +211,17 @@ mapping:
     zed:
       action: 'search::ToggleRegex'
       context: [ "Pane" ]
+  - id: "toggleFindRegex:searchBar"
+    binding:
+      - "alt+[KeyX]"
+    vscode:
+      action: 'toggleFindRegex'
+      context: [ "findInputFocussed" ]
+    idea:
+      missing: true
+    zed:
+      action: 'search::ToggleRegex'
+      context: [ "BufferSearchBar" ]
   - id: "toggleFindWholeWord"
     binding:
       - "alt+[KeyO] alt+[KeyW]"
@@ -190,6 +234,17 @@ mapping:
     zed:
       action: 'search::ToggleWholeWord'
       context: [ "Pane" ]
+  - id: "toggleFindWholeWord:searchBar"
+    binding:
+      - "alt+[KeyW]"
+    vscode:
+      action: 'toggleFindWholeWord'
+      context: [ "findInputFocussed" ]
+    idea:
+      missing: true
+    zed:
+      action: 'search::ToggleWholeWord'
+      context: [ "BufferSearchBar" ]
   - id: "togglePreserveCase"
     binding:
       - "alt+[KeyO] alt+[KeyC]"

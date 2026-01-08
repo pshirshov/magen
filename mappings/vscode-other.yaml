@@ -172,14 +172,6 @@ mapping:
       context: [ "inDebugRepl && textInputFocus" ]
     idea:
       missing: true
-  - id: "selectNextPageSuggestion"
-    binding:
-      - "pagedown"
-    vscode:
-      action: 'selectNextPageSuggestion'
-      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
-    idea:
-      missing: true
   - id: "selectNextSuggestion"
     binding:
       - "down"
@@ -198,14 +190,6 @@ mapping:
       context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
       #    idea:
       #      action: 'EditorLookupUp'
-    idea:
-      missing: true
-  - id: "selectPrevPageSuggestion"
-    binding:
-      - "pageup"
-    vscode:
-      action: 'selectPrevPageSuggestion'
-      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
     idea:
       missing: true
   - id: "showNextParameterHint"
