@@ -199,6 +199,20 @@ mapping:
       context: [ "editorFocus" ]
     idea:
       missing: true
+    zed:
+      action: 'search::ToggleSelection'
+      context: [ "Pane" ]
+  - id: "toggleFindInSelection:searchBar"
+    binding:
+      - "alt+[KeyS]"
+    vscode:
+      action: 'toggleFindInSelection'
+      context: [ "findInputFocussed" ]
+    idea:
+      missing: true
+    zed:
+      action: 'search::ToggleSelection'
+      context: [ "BufferSearchBar" ]
   - id: "toggleFindRegex"
     binding:
       - "alt+[KeyO] alt+[KeyX]"
