@@ -60,10 +60,20 @@ object VSCodeRenderer extends Renderer {
   }
 
   private def renderKey(f: NamedKey): String = {
-    if (f.name.length == 1) {
-      s"[Key${f.name.toUpperCase}]"
-    } else {
-      f.name
+    f.name match {
+      case "BracketLeft" => "["
+      case "BracketRight" => "]"
+      case "Slash" => "/"
+      case "Backslash" => "\\"
+      case "Minus" => "-"
+      case "Equal" => "="
+      case "Quote" => "'"
+      case "Backquote" => "`"
+      case "Semicolon" => ";"
+      case "Comma" => ","
+      case "Period" => "."
+      case s if s.length == 1 => s.toLowerCase
+      case s => s.toLowerCase
     }
   }
 
