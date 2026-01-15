@@ -50,6 +50,17 @@ mapping:
       action: "terminal_panel::Toggle"
     idea:
       action: "ActivateTerminalToolWindow"
+  - id: "workbench.action.terminal.new"
+    binding:
+      - "meta+[KeyT]"
+    vscode:
+      action: "workbench.action.terminal.new"
+      context: ["terminalFocus"]
+    zed:
+      action: "workspace::NewTerminal"
+      context: ["Terminal"]
+    idea:
+      action: "Terminal.NewTab"
   - id: "workbench.action.togglePanel"
     binding:
       - "${group.ui.elements} ctrl+[KeyP]"

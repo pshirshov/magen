@@ -4,190 +4,189 @@ mapping:
     binding: []
     unset: true
     vscode:
-      action: 'scrollPageUp'
+      action: "scrollPageUp"
     idea:
-      action: 'ScrollPane-scrollUp'
+      action: "ScrollPane-scrollUp"
   - id: "scrollLineDown"
     binding: []
     unset: true
     vscode:
-      action: 'scrollLineDown'
+      action: "scrollLineDown"
     idea:
-      action: 'EditorScrollDown'
+      action: "EditorScrollDown"
   - id: "scrollPageDown"
     binding: []
     unset: true
     vscode:
-      action: 'scrollPageDown'
+      action: "scrollPageDown"
     idea:
-      action: 'ScrollPane-scrollDown'
+      action: "ScrollPane-scrollDown"
   - id: "scrollLineUp"
     binding: []
     unset: true
     vscode:
-      action: 'scrollLineUp'
+      action: "scrollLineUp"
     idea:
-      action: 'EditorScrollUp'
+      action: "EditorScrollUp"
   # folding
   - id: "editor.unfoldRecursively"
     binding: []
     unset: true
     vscode:
-      action: 'editor.unfoldRecursively'
+      action: "editor.unfoldRecursively"
     idea:
-      action: 'ExpandRegionRecursively'
+      action: "ExpandRegionRecursively"
   - id: "editor.fold"
     binding: []
     unset: true
     vscode:
-      action: 'editor.fold'
+      action: "editor.fold"
     idea:
-      action: 'CollapseBlock'
+      action: "CollapseBlock"
   - id: "editor.unfoldAll"
     binding: []
     unset: true
     vscode:
-      action: 'editor.unfoldAll'
+      action: "editor.unfoldAll"
     idea:
-      action: 'ExpandAllRegions'
+      action: "ExpandAllRegions"
   - id: "editor.foldRecursively"
     binding: []
     unset: true
     vscode:
-      action: 'editor.foldRecursively'
+      action: "editor.foldRecursively"
     idea:
-      action: 'CollapseRegionRecursively'
+      action: "CollapseRegionRecursively"
   - id: "editor.foldAll"
     binding: []
     unset: true
     vscode:
-      action: 'editor.foldAll'
+      action: "editor.foldAll"
     idea:
-      action: 'CollapseAll'
+      action: "CollapseAll"
   - id: "editor.unfold"
     binding: []
     unset: true
     vscode:
-      action: 'editor.unfold'
+      action: "editor.unfold"
     idea:
-      action: 'ExpandRegion'
-  # editing  
+      action: "ExpandRegion"
+  # editing
 
-      
   - id: "editor.action.copyLinesDownAction"
     binding: []
     unset: true
     vscode:
-      action: 'editor.action.copyLinesDownAction'
+      action: "editor.action.copyLinesDownAction"
     idea:
-      action: 'EditorDuplicate'
+      action: "EditorDuplicate"
   - id: "tab"
     binding: []
     unset: true
     vscode:
-      action: 'tab'
+      action: "tab"
     idea:
-      action: 'EditorTab'
+      action: "EditorTab"
   - id: "deleteWordRight"
     binding: []
     unset: true
     vscode:
-      action: 'deleteWordRight'
+      action: "deleteWordRight"
     idea:
-      action: 'EditorDeleteToWordEnd'
+      action: "EditorDeleteToWordEnd"
   - id: "editor.action.insertCursorAtEndOfEachLineSelected"
     binding: []
     unset: true
     vscode:
-      action: 'editor.action.insertCursorAtEndOfEachLineSelected'
+      action: "editor.action.insertCursorAtEndOfEachLineSelected"
     idea:
-      action: 'EditorToggleColumnMode'
+      action: "EditorToggleColumnMode"
   - id: "editor.action.addSelectionToNextFindMatch"
     binding: []
     unset: true
     vscode:
-      action: 'editor.action.addSelectionToNextFindMatch'
+      action: "editor.action.addSelectionToNextFindMatch"
     idea:
-      action: 'SelectNextOccurrence'
-  
+      action: "SelectNextOccurrence"
+
   # commands
   - id: "workbench.action.toggleZenMode"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.toggleZenMode'
+      action: "workbench.action.toggleZenMode"
     idea:
-      action: 'ToggleDistractionFreeMode'
+      action: "ToggleDistractionFreeMode"
   - id: "workbench.action.files.revealActiveFileInWindows"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.files.revealActiveFileInWindows'
+      action: "workbench.action.files.revealActiveFileInWindows"
     idea:
-      action: 'RevealIn'
+      action: "RevealIn"
   - id: "workbench.action.splitEditor"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.splitEditor'
+      action: "workbench.action.splitEditor"
     idea:
-      action: 'SplitVertically'
+      action: "SplitVertically"
   - id: "workbench.action.output.toggleOutput"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.output.toggleOutput'
+      action: "workbench.action.output.toggleOutput"
     idea:
-      action: 'ActivateRunToolWindow'
+      action: "ActivateRunToolWindow"
   - id: "workbench.action.closeAllEditors"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.closeAllEditors'
+      action: "workbench.action.closeAllEditors"
     idea:
-      action: 'CloseAllEditors'
+      action: "CloseAllEditors"
   - id: "workbench.view.explorer"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.view.explorer'
+      action: "workbench.view.explorer"
     idea:
-      action: 'ActivateProjectToolWindow'
+      action: "ActivateProjectToolWindow"
   - id: "workbench.view.scm"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.view.scm'
+      action: "workbench.view.scm"
     idea:
-      action: 'ActivateVersionControlToolWindow'
+      action: "ActivateVersionControlToolWindow"
   - id: "workbench.action.compareEditor.previousChange"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.compareEditor.previousChange'
+      action: "workbench.action.compareEditor.previousChange"
     idea:
-      action: 'PreviousDiff'
+      action: "PreviousDiff"
   - id: "workbench.action.compareEditor.nextChange"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.compareEditor.nextChange'
+      action: "workbench.action.compareEditor.nextChange"
     idea:
-      action: 'Diff.NextChange'
+      action: "Diff.NextChange"
   - id: "workbench.action.files.showOpenedFileInNewWindow"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.action.files.showOpenedFileInNewWindow'
+      action: "workbench.action.files.showOpenedFileInNewWindow"
     idea:
-      action: 'EditSourceInNewWindow'
+      action: "EditSourceInNewWindow"
   - id: "workbench.actions.view.problems"
     binding: []
     unset: true
     vscode:
-      action: 'workbench.actions.view.problems'
+      action: "workbench.actions.view.problems"
     idea:
-      action: 'ActivateProblemsViewToolWindow'
+      action: "ActivateProblemsViewToolWindow"
   #  - id: "workbench.view.extensions"
   #    binding: []
   #  unset: true
@@ -195,8 +194,8 @@ mapping:
   #      action: 'workbench.view.extensions'
   #    idea:
   #      action: 'WelcomeScreen.Plugins'
-  
-  #      
+
+  #
   #  - id: "workbench.action.selectTheme"
   #    binding: []
   #    unset: true
@@ -225,5 +224,14 @@ mapping:
   #      action: 'workbench.action.files.openFileFolder'
   #    idea:
   #      action: 'OpenFile'
-  #      
-  
+
+  # terminal
+  - id: "workbench.action.terminal.new.unset"
+    binding: []
+    unset: true
+    vscode:
+      action: "workbench.action.terminal.new"
+    zed:
+      action: "workspace::NewTerminal"
+    idea:
+      action: "Terminal.NewTab"
