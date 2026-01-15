@@ -1,116 +1,116 @@
 mapping:
   - id: "actions.find"
     binding:
-      - "ctrl+[KeyF]"
+      # - "ctrl+[KeyF]"
       - "meta+[KeyF]"
     vscode:
-      action: 'actions.find'
-      context: [ "editorFocus || editorIsOpen" ]
+      action: "actions.find"
+      context: ["editorFocus || editorIsOpen"]
     idea:
-      action: 'Find'
+      action: "Find"
     zed:
-      action: 'buffer_search::Deploy'
-      context: [ "Editor" ]      
+      action: "buffer_search::Deploy"
+      context: ["Editor"]
   - id: "editor.action.startFindReplaceAction"
     binding:
-      - "ctrl+[KeyR]"
+      # - "ctrl+[KeyR]"
       - "meta+[KeyR]"
     vscode:
-      action: 'editor.action.startFindReplaceAction'
-      context: [ "editorFocus || editorIsOpen" ]
+      action: "editor.action.startFindReplaceAction"
+      context: ["editorFocus || editorIsOpen"]
     idea:
-      action: 'Replace'
+      action: "Replace"
     zed:
-      action: 'buffer_search::DeployReplace'
-      context: [ "Editor" ]      
+      action: "buffer_search::DeployReplace"
+      context: ["Editor"]
   - id: "workbench.action.findInFiles"
     binding:
-      - "ctrl+shift+[KeyF]"
+      - "meta+shift+[KeyF]"
     vscode:
-      action: 'workbench.action.findInFiles'
+      action: "workbench.action.findInFiles"
     idea:
-      action: 'FindInPath'
+      action: "FindInPath"
     zed:
-      action: 'pane::DeploySearch'
-      context: [ "Pane" ]
+      action: "pane::DeploySearch"
+      context: ["Pane"]
   - id: "workbench.action.replaceInFiles"
     binding:
-      - "ctrl+shift+[KeyR]"
+      - "meta+shift+[KeyR]"
     vscode:
-      action: 'workbench.action.replaceInFiles'
+      action: "workbench.action.replaceInFiles"
     idea:
-      action: 'ReplaceInPath'
+      action: "ReplaceInPath"
     zed:
-      action: 'pane::DeploySearch'
-      context: [ "Pane" ]
-      
+      action: "pane::DeploySearch"
+      context: ["Pane"]
+
   - id: "editor.action.nextMatchFindAction:editor-focus"
     binding:
       - "alt+[KeyM]"
     vscode:
-      action: 'editor.action.nextMatchFindAction'
-      context: [ "editorFocus" ]        
+      action: "editor.action.nextMatchFindAction"
+      context: ["editorFocus"]
     idea:
       missing: true
-      
+
   - id: "editor.action.nextMatchFindAction:find-widget-focused"
     binding:
       - "alt+[KeyM]"
     vscode:
-      action: 'editor.action.nextMatchFindAction'
-      context: [ "editorFocus && findInputFocussed" ]
+      action: "editor.action.nextMatchFindAction"
+      context: ["editorFocus && findInputFocussed"]
     idea:
-      action: 'FindNext'
+      action: "FindNext"
     zed:
-      action: 'search::SelectNextMatch'
-      context: [ "BufferSearchBar" ]
+      action: "search::SelectNextMatch"
+      context: ["BufferSearchBar"]
 
   - id: "search.nextMatchOnEnter"
     binding:
       - "enter"
     vscode:
-      action: 'editor.action.nextMatchFindAction'
-      context: [ "editorFocus && findInputFocussed && !replaceInputFocussed" ]
+      action: "editor.action.nextMatchFindAction"
+      context: ["editorFocus && findInputFocussed && !replaceInputFocussed"]
     idea:
       missing: true
     zed:
-      action: 'search::SelectNextMatch'
-      context: [ "BufferSearchBar && !in_replace" ]
+      action: "search::SelectNextMatch"
+      context: ["BufferSearchBar && !in_replace"]
 
   - id: "editor.action.previousMatchFindAction"
     binding:
       - "shift+enter"
       - "alt+shift+[KeyM]"
     vscode:
-      action: 'editor.action.previousMatchFindAction'
-      context: [ "editorFocus && findInputFocussed", "editorFocus" ]
+      action: "editor.action.previousMatchFindAction"
+      context: ["editorFocus && findInputFocussed", "editorFocus"]
     idea:
-      action: 'FindPrevious'
+      action: "FindPrevious"
     zed:
-      action: 'search::SelectPreviousMatch'
-      context: [ "BufferSearchBar" ]
+      action: "search::SelectPreviousMatch"
+      context: ["BufferSearchBar"]
 
   - id: "search.previousMatchOnShiftEnter"
     binding:
       - "shift+enter"
     vscode:
-      action: 'editor.action.previousMatchFindAction'
-      context: [ "editorFocus && findInputFocussed && !replaceInputFocussed" ]
+      action: "editor.action.previousMatchFindAction"
+      context: ["editorFocus && findInputFocussed && !replaceInputFocussed"]
     idea:
       missing: true
     zed:
-      action: 'search::SelectPreviousMatch'
-      context: [ "BufferSearchBar && !in_replace" ]
+      action: "search::SelectPreviousMatch"
+      context: ["BufferSearchBar && !in_replace"]
 
   - id: "editor.action.replaceAll"
     binding:
       - "alt+[KeyA]"
     vscode:
-      action: 'editor.action.replaceAll'
-      context: [ "editorFocus && findWidgetVisible" ]
+      action: "editor.action.replaceAll"
+      context: ["editorFocus && findWidgetVisible"]
     zed:
-      action: 'search::ReplaceAll'
-      context: [ "BufferSearchBar && in_replace" ]
+      action: "search::ReplaceAll"
+      context: ["BufferSearchBar && in_replace"]
     idea:
       missing: true
       unmodifiable: "alt+[KeyA]"
@@ -119,11 +119,11 @@ mapping:
     binding:
       - "enter"
     vscode:
-      action: 'editor.action.replaceOne'
-      context: [ "editorFocus && findWidgetVisible && replaceInputFocussed" ]
+      action: "editor.action.replaceOne"
+      context: ["editorFocus && findWidgetVisible && replaceInputFocussed"]
     zed:
-      action: 'search::ReplaceNext'
-      context: [ "BufferSearchBar && in_replace" ]
+      action: "search::ReplaceNext"
+      context: ["BufferSearchBar && in_replace"]
     idea:
       missing: true
       unmodifiable: "alt+[KeyP]"
@@ -132,139 +132,136 @@ mapping:
     binding:
       - "alt+[KeyP]"
     vscode:
-      action: 'editor.action.replaceOne'
-      context: [ "editorFocus && findWidgetVisible" ]
+      action: "editor.action.replaceOne"
+      context: ["editorFocus && findWidgetVisible"]
     zed:
-      action: 'search::ReplaceNext'
-      context: [ "BufferSearchBar && in_replace" ]
+      action: "search::ReplaceNext"
+      context: ["BufferSearchBar && in_replace"]
     idea:
       missing: true
       unmodifiable: "alt+[KeyP]"
-  
-  
-  
-  
+
   - id: "editor.action.selectHighlights"
     binding:
       - "alt+[KeyH]"
     vscode:
-      action: 'editor.action.selectHighlights'
-      context: [ "editorFocus && !findWidgetVisible" ]
+      action: "editor.action.selectHighlights"
+      context: ["editorFocus && !findWidgetVisible"]
     idea:
-      action: 'SelectAllOccurrences'
+      action: "SelectAllOccurrences"
     zed:
-      action: 'search::SelectAllMatches'
-      context: [ "Pane" ]        
+      action: "search::SelectAllMatches"
+      context: ["Pane"]
   - id: "editor.action.selectAllMatches"
     binding:
       - "alt+[KeyH]"
     vscode:
-      action: 'editor.action.selectAllMatches'
-      context: [ "editorFocus && findWidgetVisible" ]
+      action: "editor.action.selectAllMatches"
+      context: ["editorFocus && findWidgetVisible"]
     idea:
-      action: 'SelectAllOccurrences'
+      action: "SelectAllOccurrences"
     zed:
-      action: 'search::SelectAllMatches'
-      context: [ "BufferSearchBar" ]     
-        
+      action: "search::SelectAllMatches"
+      context: ["BufferSearchBar"]
+
   # options
   - id: "toggleFindCaseSensitive"
     binding:
       - "alt+[KeyO] alt+[KeyC]"
     vscode:
-      action: 'toggleFindCaseSensitive'
-      context: [ "editorFocus" ]
+      action: "toggleFindCaseSensitive"
+      context: ["editorFocus"]
     idea:
       missing: true
       unmodifiable: "alt+[KeyC]"
     zed:
-      action: 'search::ToggleCaseSensitive'
-      context: [ "Pane" ]
+      action: "search::ToggleCaseSensitive"
+      context: ["Pane"]
   - id: "toggleFindCaseSensitive:searchBar"
     binding:
       - "alt+[KeyC]"
     vscode:
-      action: 'toggleFindCaseSensitive'
-      context: [ "findInputFocussed" ]
+      action: "toggleFindCaseSensitive"
+      context: ["findInputFocussed"]
     idea:
       missing: true
     zed:
-      action: 'search::ToggleCaseSensitive'
-      context: [ "BufferSearchBar" ]
+      action: "search::ToggleCaseSensitive"
+      context: ["BufferSearchBar"]
   - id: "toggleFindInSelection"
     binding:
       - "alt+[KeyO] alt+[KeyS]"
     vscode:
-      action: 'toggleFindInSelection'
-      context: [ "editorFocus" ]
+      action: "toggleFindInSelection"
+      context: ["editorFocus"]
     idea:
       missing: true
     zed:
-      action: 'search::ToggleSelection'
-      context: [ "Pane" ]
+      action: "search::ToggleSelection"
+      context: ["Pane"]
   - id: "toggleFindInSelection:searchBar"
     binding:
       - "alt+[KeyS]"
     vscode:
-      action: 'toggleFindInSelection'
-      context: [ "findInputFocussed" ]
+      action: "toggleFindInSelection"
+      context: ["findInputFocussed"]
     idea:
       missing: true
     zed:
-      action: 'search::ToggleSelection'
-      context: [ "BufferSearchBar" ]
+      action: "search::ToggleSelection"
+      context: ["BufferSearchBar"]
   - id: "toggleFindRegex"
     binding:
       - "alt+[KeyO] alt+[KeyX]"
     vscode:
-      action: 'toggleFindRegex'
-      context: [ "editorFocus" ]
+      action: "toggleFindRegex"
+      context: ["editorFocus"]
     idea:
       missing: true
       unmodifiable: "alt+[KeyX]"
     zed:
-      action: 'search::ToggleRegex'
-      context: [ "Pane" ]
+      action: "search::ToggleRegex"
+      context: ["Pane"]
   - id: "toggleFindRegex:searchBar"
     binding:
       - "alt+[KeyX]"
     vscode:
-      action: 'toggleFindRegex'
-      context: [ "findInputFocussed" ]
+      action: "toggleFindRegex"
+      context: ["findInputFocussed"]
     idea:
       missing: true
     zed:
-      action: 'search::ToggleRegex'
-      context: [ "BufferSearchBar" ]
+      action: "search::ToggleRegex"
+      context: ["BufferSearchBar"]
   - id: "toggleFindWholeWord"
     binding:
       - "alt+[KeyO] alt+[KeyW]"
     vscode:
-      action: 'toggleFindWholeWord'
-      context: [ "editorFocus" ]
+      action: "toggleFindWholeWord"
+      context: ["editorFocus"]
     idea:
       missing: true
       unmodifiable: "alt+[KeyW]"
     zed:
-      action: 'search::ToggleWholeWord'
-      context: [ "Pane" ]
+      action: "search::ToggleWholeWord"
+      context: ["Pane"]
   - id: "toggleFindWholeWord:searchBar"
     binding:
       - "alt+[KeyW]"
     vscode:
-      action: 'toggleFindWholeWord'
-      context: [ "findInputFocussed" ]
+      action: "toggleFindWholeWord"
+      context: ["findInputFocussed"]
     idea:
       missing: true
     zed:
-      action: 'search::ToggleWholeWord'
-      context: [ "BufferSearchBar" ]
+      action: "search::ToggleWholeWord"
+      context: ["BufferSearchBar"]
   - id: "togglePreserveCase"
     binding:
       - "alt+[KeyO] alt+[KeyC]"
     vscode:
-      action: 'togglePreserveCase'
-      context: [ "editorFocus" ]
+      action: "togglePreserveCase"
+      context: ["editorFocus"]
     idea:
       missing: true
-      unmodifiable: "alt+[KeyC]"              
+      unmodifiable: "alt+[KeyC]"

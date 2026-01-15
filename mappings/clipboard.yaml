@@ -3,79 +3,87 @@ mapping:
     binding:
       - "alt+[KeyC] alt+[KeyP]"
     vscode:
-      action: 'copyFilePath'
+      action: "copyFilePath"
     zed:
-      action: 'editor::CopyPath'
-      context: [ "Editor" ]
+      action: "editor::CopyPath"
+      context: ["Editor"]
     idea:
-      action: 'CopyPaths'
+      action: "CopyPaths"
   - id: "copyRelativeFilePath"
     binding:
       - "alt+[KeyC] alt+[KeyR]"
     vscode:
-      action: 'copyRelativeFilePath'
-    idea: 
+      action: "copyRelativeFilePath"
+    idea:
       missing: true
   # basic
   - id: "editor.action.clipboardCopyAction"
     binding:
-      - "ctrl+[KeyC]"
+      #- "ctrl+[KeyC]"
       - "meta+[KeyC]"
     vscode:
-      action: 'editor.action.clipboardCopyAction'
+      action: "editor.action.clipboardCopyAction"
     zed:
-      action: 'editor::Copy'
-      context: [ "Editor" ]
+      action: "editor::Copy"
+      context: ["Editor"]
     idea:
-      action: '$Copy' #Editor Copy'
+      action: "$Copy" #Editor Copy'
   - id: "editor.action.clipboardCutAction"
     binding:
-      - "ctrl+[KeyX]"
+      #- "ctrl+[KeyX]"
       - "meta+[KeyX]"
     vscode:
-      action: 'editor.action.clipboardCutAction'
+      action: "editor.action.clipboardCutAction"
     zed:
-      action: 'editor::Cut'
-      context: [ "Editor" ]
+      action: "editor::Cut"
+      context: ["Editor"]
     idea:
-      action: '$Cut' #Editor Cut'
+      action: "$Cut" #Editor Cut'
   - id: "editor.action.clipboardPasteAction"
     binding:
-      - "ctrl+[KeyV]"
+      #- "ctrl+[KeyV]"
       - "meta+[KeyV]"
     vscode:
-      action: 'editor.action.clipboardPasteAction'
+      action: "editor.action.clipboardPasteAction"
     zed:
-      action: 'editor::Paste'
-      context: [ "Editor" ]
+      action: "editor::Paste"
+      context: ["Editor"]
     idea:
-      action: '$Paste' #Editor Paste'
-      
-  - id: "workbench.action.terminal.copyAndClearSelection"
+      action: "$Paste" #Editor Paste'
+
+  - id: "workbench.action.terminal.copySelection"
     binding:
-      - "ctrl+shift+[KeyC]"
+      # - "ctrl+shift+[KeyC]"
+      - "meta+[KeyC]"
     vscode:
-      action: 'workbench.action.terminal.copyAndClearSelection'
-      context: [ "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused" ]
+      #action: "workbench.action.terminal.copyAndClearSelection"
+      action: "workbench.action.terminal.copySelection"
+      context:
+        [
+          "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused",
+        ]
     zed:
-      action: 'terminal::Copy'
-      context: [ "Terminal" ]
+      action: "terminal::Copy"
+      context: ["Terminal"]
     idea:
       missing: true
 
   - id: "workbench.action.terminal.paste"
     binding:
-      - "ctrl+shift+[KeyV]"
+      #- "ctrl+shift+[KeyV]"
+      - "meta+[KeyV]"
     vscode:
-      action: 'workbench.action.terminal.paste'
-      context: [ "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" ]
+      action: "workbench.action.terminal.paste"
+      context:
+        [
+          "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported",
+        ]
     zed:
-      action: 'terminal::Paste'
-      context: [ "Terminal" ]
+      action: "terminal::Paste"
+      context: ["Terminal"]
     idea:
       missing: true
-
-#  # basic    
+#  # basic
 #  - id: "generic.clipboardCopyAction"
 #    binding:
 #      - "ctrl+[KeyC]"
@@ -96,4 +104,4 @@ mapping:
 #    vscode:
 #      missing: true
 #    idea:
-#      action: '$Paste'      
+#      action: '$Paste'

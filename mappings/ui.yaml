@@ -1,62 +1,63 @@
 mapping:
   - id: "workbench.action.openSettings"
     binding:
-      - "ctrl+,"
+      # - "ctrl+,"
+      - "meta+,"
     vscode:
-      action: 'workbench.action.openSettings'
+      action: "workbench.action.openSettings"
     zed:
-      action: 'zed::OpenSettings'
-      context: [ "Workspace" ]
+      action: "zed::OpenSettings"
+      context: ["Workspace"]
     idea:
-      action: 'ShowSettings'
+      action: "ShowSettings"
   - id: "workbench.action.zoomIn"
     binding:
-      - "ctrl+="
+      - "meta+="
     vscode:
-      action: 'workbench.action.zoomIn'
+      action: "workbench.action.zoomIn"
     zed:
-      action: 'zed::IncreaseBufferFontSize'
-      context: [ "Workspace" ]
+      action: "zed::IncreaseBufferFontSize"
+      context: ["Workspace"]
     idea:
-      action: 'ZoomInIdeAction'
+      action: "ZoomInIdeAction"
   - id: "workbench.action.zoomOut"
     binding:
-      - "ctrl+-"
+      - "meta+-"
     vscode:
-      action: 'workbench.action.zoomOut'
+      action: "workbench.action.zoomOut"
     zed:
-      action: 'zed::DecreaseBufferFontSize'
-      context: [ "Workspace" ]
+      action: "zed::DecreaseBufferFontSize"
+      context: ["Workspace"]
     idea:
-      action: 'EditorDecreaseFontSize'
+      action: "EditorDecreaseFontSize"
   - id: "workbench.action.zoomReset"
     binding:
-      - "ctrl+[Key0]"
+      - "meta+[Key0]"
     vscode:
-      action: 'workbench.action.zoomReset'
+      action: "workbench.action.zoomReset"
     zed:
-      action: 'zed::ResetBufferFontSize'
-      context: [ "Workspace" ]
+      action: "zed::ResetBufferFontSize"
+      context: ["Workspace"]
     idea:
-      action: 'EditorResetFontSize'  
+      action: "EditorResetFontSize"
   - id: "workbench.action.terminal.toggleTerminal"
     binding:
       - "${group.ui.elements} ctrl+[KeyT]"
       - "ctrl+`"
     vscode:
-      action: 'workbench.action.terminal.toggleTerminal'
+      action: "workbench.action.terminal.toggleTerminal"
     zed:
-      action: 'terminal_panel::Toggle'
+      action: "terminal_panel::Toggle"
     idea:
-      action: 'ActivateTerminalToolWindow'
+      action: "ActivateTerminalToolWindow"
   - id: "workbench.action.togglePanel"
     binding:
       - "${group.ui.elements} ctrl+[KeyP]"
     vscode:
-      action: 'workbench.action.togglePanel'
+      action: "workbench.action.togglePanel"
     zed:
-      action: 'workspace::ToggleBottomDock'
-      context: [ "Workspace" ]
+      action: "workspace::ToggleBottomDock"
+      context: ["Workspace"]
     idea:
       comment: "idea has independent tool windows"
       missing: true
@@ -64,19 +65,19 @@ mapping:
     binding:
       - "${group.ui.elements} ctrl+[KeyS]"
     vscode:
-      action: 'workbench.action.toggleSidebarVisibility'
+      action: "workbench.action.toggleSidebarVisibility"
     zed:
-      action: 'workspace::ToggleLeftDock'
-      context: [ "Workspace" ]
+      action: "workspace::ToggleLeftDock"
+      context: ["Workspace"]
     idea:
-      action: 'HideSideWindows'
+      action: "HideSideWindows"
   - id: "editor.action.toggleWordWrap"
     binding:
       - "${group.ui.elements} ctrl+[KeyW]"
     vscode:
-      action: 'editor.action.toggleWordWrap'
+      action: "editor.action.toggleWordWrap"
     zed:
-      action: 'editor::ToggleSoftWrap'
-      context: [ "Editor" ]
+      action: "editor::ToggleSoftWrap"
+      context: ["Editor"]
     idea:
-      action: 'EditorToggleUseSoftWraps'
+      action: "EditorToggleUseSoftWraps"

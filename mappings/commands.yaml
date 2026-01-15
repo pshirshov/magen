@@ -1,127 +1,127 @@
 mapping:
   - id: "workbench.action.closeActiveEditor"
     binding:
-      - "ctrl+[KeyW]"
+      # - "ctrl+[KeyW]"
       - "meta+[KeyW]"
     vscode:
-      action: 'workbench.action.closeActiveEditor'
+      action: "workbench.action.closeActiveEditor"
     idea:
-      action: 'CloseContent'
+      action: "CloseContent"
     zed:
-      action: 'pane::CloseActiveItem'
-      context: [ "Pane" ]
+      action: "pane::CloseActiveItem"
+      context: ["Pane"]
   - id: "workbench.action.closeWindow"
     binding:
       - "meta+shift+[KeyW]"
-      - "ctrl+shift+[KeyW]"
+      # - "ctrl+shift+[KeyW]"
     vscode:
-#      action: 'workbench.action.closeFolder' # keeps window open
-      action: 'workbench.action.closeWindow'
+      #      action: 'workbench.action.closeFolder' # keeps window open
+      action: "workbench.action.closeWindow"
     idea:
-      action: 'CloseProject'
+      action: "CloseProject"
     zed:
-      action: 'workspace::CloseWindow'
-      context: [ "Workspace" ]
+      action: "workspace::CloseWindow"
+      context: ["Workspace"]
   - id: "workbench.action.files.save"
     binding:
-      - "ctrl+[KeyS]"
+      # - "ctrl+[KeyS]"
       - "meta+[KeyS]"
     vscode:
-      action: 'workbench.action.files.save'
+      action: "workbench.action.files.save"
       # action: 'workbench.action.files.saveAll'
     idea:
-      comment: 'Idea has no Save All '
-      action: 'SaveAll'
+      comment: "Idea has no Save All "
+      action: "SaveAll"
     zed:
-      action: 'workspace::Save'
-      context: [ "Workspace" ]
-      
+      action: "workspace::Save"
+      context: ["Workspace"]
+
   - id: "workbench.action.files.saveAll"
     binding:
-      - "ctrl+shift+[KeyS]"
+      # - "ctrl+shift+[KeyS]"
       - "meta+shift+[KeyS]"
     vscode:
-      action: 'workbench.action.files.saveAll'
+      action: "workbench.action.files.saveAll"
     idea:
-      action: 'SaveAll'
+      action: "SaveAll"
     zed:
-      action: 'workspace::SaveAll'
-      context: [ "Workspace" ]
+      action: "workspace::SaveAll"
+      context: ["Workspace"]
   - id: "workbench.action.quit"
     binding:
       - "ctrl+[KeyQ]"
       - "meta+[KeyQ]"
     vscode:
-      action: 'workbench.action.quit'
+      action: "workbench.action.quit"
     idea:
-      action: 'Exit'
+      action: "Exit"
     zed:
-      action: 'zed::Quit'
-      context: [ "Workspace" ]
+      action: "zed::Quit"
+      context: ["Workspace"]
   - id: "workbench.action.reopenClosedEditor"
     binding:
       - "ctrl+shift+t"
     vscode:
-      action: 'workbench.action.reopenClosedEditor'
+      action: "workbench.action.reopenClosedEditor"
     idea:
-      action: 'ReopenClosedTab'
+      action: "ReopenClosedTab"
     zed:
-      action: 'pane::ReopenClosedItem'
-      context: [ "Pane" ]
+      action: "pane::ReopenClosedItem"
+      context: ["Pane"]
   - id: "workbench.action.closeOtherEditors"
     binding:
       - "${group.command} ctrl+[KeyW]"
     vscode:
-      action: 'workbench.action.closeOtherEditors'
+      action: "workbench.action.closeOtherEditors"
     idea:
-      action: 'CloseAllEditorsButActive'
+      action: "CloseAllEditorsButActive"
     zed:
-      action: 'pane::CloseOtherItems'
-      context: [ "Pane" ]
+      action: "pane::CloseOtherItems"
+      context: ["Pane"]
   - id: "workbench.action.newWindow"
     binding:
       - "${group.command} ctrl+[KeyC]"
     vscode:
-      action: 'workbench.action.newWindow'
+      action: "workbench.action.newWindow"
     idea:
       missing: true
     zed:
-      action: 'workspace::NewWindow'
-      context: [ "Workspace" ]
+      action: "workspace::NewWindow"
+      context: ["Workspace"]
   - id: "workbench.action.files.newUntitledFile"
     binding:
       - "${group.command} ctrl+[KeyN]"
     vscode:
-      action: 'workbench.action.files.newUntitledFile'
+      action: "workbench.action.files.newUntitledFile"
     idea:
-      action: 'FileChooser.NewFile'
+      action: "FileChooser.NewFile"
     zed:
-      action: 'workspace::NewFile'
-      context: [ "Workspace" ]
+      action: "workspace::NewFile"
+      context: ["Workspace"]
   - id: "workbench.action.splitEditorRight"
     binding:
       - "${group.command} ctrl+[KeyV]"
     vscode:
-      action: 'workbench.action.splitEditorRight'
+      action: "workbench.action.splitEditorRight"
     idea:
-      action: 'SplitVertically' #OpenInRightSplit'
+      action: "SplitVertically" #OpenInRightSplit'
     zed:
-      action: 'pane::SplitRight'
-      context: [ "Pane" ]
+      action: "pane::SplitRight"
+      context: ["Pane"]
   - id: "workbench.action.pinEditor"
     binding:
       - "${group.command} ctrl+[KeyP]"
     vscode:
-      action: 'workbench.action.pinEditor'
-      context: [ "!activeEditorIsPinned" ]
+      action: "workbench.action.pinEditor"
+      context: ["!activeEditorIsPinned"]
     idea:
-      action: 'PinActiveTab'
+      action: "PinActiveTab"
   - id: "workbench.action.unpinEditor"
     binding:
       - "${group.command} ctrl+[KeyP]"
     vscode:
-      action: 'workbench.action.unpinEditor'
-      context: [ "activeEditorIsPinned" ]
+      action: "workbench.action.unpinEditor"
+      context: ["activeEditorIsPinned"]
     idea:
       comment: "combined with pin"
       missing: true
@@ -129,6 +129,6 @@ mapping:
     binding:
       - "${group.command} ctrl+[KeyF]"
     vscode:
-      action: 'revealFileInOS'
+      action: "revealFileInOS"
     idea:
-      action: 'RevealIn'
+      action: "RevealIn"

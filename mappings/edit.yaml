@@ -1,84 +1,84 @@
 mapping:
   - id: "undo"
     binding:
-      - "ctrl+[KeyZ]"
+      - "meta+[KeyZ]"
     vscode:
-      action: 'undo'
+      action: "undo"
     idea:
-      action: '$Undo'
+      action: "$Undo"
     zed:
       action: "editor::Undo"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "redo"
     binding:
-      - "ctrl+shift+z"
-      - "ctrl+[KeyY]"
+      - "meta+shift+z"
+      - "meta+[KeyY]"
     vscode:
-      action: 'redo'
+      action: "redo"
     idea:
-      action: '$Redo'
+      action: "$Redo"
     zed:
       action: "editor::Redo"
-      context: [ "Editor" ]
+      context: ["Editor"]
 
   - id: "deleteLeft"
     binding:
       - "shift+backspace"
       - "backspace"
     vscode:
-      action: 'deleteLeft'
-      context: [ "textInputFocus" ]
+      action: "deleteLeft"
+      context: ["textInputFocus"]
     idea:
-      action: 'EditorBackSpace'
+      action: "EditorBackSpace"
     zed:
       action: "editor::Backspace"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "deleteRight"
     binding:
       - "delete"
     vscode:
-      action: 'deleteRight'
-      context: [ "textInputFocus" ]
+      action: "deleteRight"
+      context: ["textInputFocus"]
     idea:
-      action: '$Delete'
+      action: "$Delete"
     zed:
       action: "editor::Delete"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "deleteWordLeft"
     binding:
       - "alt+backspace"
     vscode:
-      action: 'deleteWordLeft'
-      context: [ "textInputFocus && !editorReadonly" ]
+      action: "deleteWordLeft"
+      context: ["textInputFocus && !editorReadonly"]
     idea:
-      action: 'EditorDeleteToWordStart'
+      action: "EditorDeleteToWordStart"
     zed:
       action: "editor::DeleteToPreviousWordStart"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "editor.action.deleteLines"
     binding:
       - "meta+backspace"
       - "ctrl+backspace"
     vscode:
-      action: 'editor.action.deleteLines'
-      context: [ "textInputFocus && !editorReadonly" ]
+      action: "editor.action.deleteLines"
+      context: ["textInputFocus && !editorReadonly"]
     idea:
-      action: 'EditorDeleteLine'
+      action: "EditorDeleteLine"
     zed:
       action: "editor::DeleteLine"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "editor.action.duplicateSelection"
     binding:
-      - "ctrl+[KeyD]"
+      # - "ctrl+[KeyD]"
       - "meta+[KeyD]"
     vscode:
-      action: 'editor.action.duplicateSelection'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.duplicateSelection"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'EditorDuplicate'
+      action: "EditorDuplicate"
     zed:
       action: "editor::DuplicateLineDown"
-      context: [ "Editor" ]
+      context: ["Editor"]
   # new lines
   - id: "EditorEnter"
     binding:
@@ -86,151 +86,156 @@ mapping:
     vscode:
       missing: true
     zed:
-      action: 'editor::Newline'
-      context: [ "Editor && mode == full" ]
+      action: "editor::Newline"
+      context: ["Editor && mode == full"]
     idea:
-      action: 'EditorEnter'
+      action: "EditorEnter"
   - id: "EditorEscape"
     binding:
       - "escape"
     vscode:
       missing: true
     zed:
-      action: 'editor::Cancel'
-      context: [ "Editor" ]
+      action: "editor::Cancel"
+      context: ["Editor"]
     idea:
-      action: 'EditorEscape'      
+      action: "EditorEscape"
   - id: "editor.action.insertLineAfter"
     binding:
       - "ctrl+enter"
     vscode:
-      action: 'editor.action.insertLineAfter'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.insertLineAfter"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'EditorStartNewLine'
+      action: "EditorStartNewLine"
     zed:
       action: "editor::NewlineBelow"
-      context: [ "Editor && mode == full" ]
+      context: ["Editor && mode == full"]
   - id: "editor.action.insertLineBefore"
     binding:
       - "ctrl+shift+enter"
     vscode:
-      action: 'editor.action.insertLineBefore'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.insertLineBefore"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'EditorStartNewLineBefore'
+      action: "EditorStartNewLineBefore"
     zed:
       action: "editor::NewlineAbove"
-      context: [ "Editor && mode == full" ]      
+      context: ["Editor && mode == full"]
   # move
   - id: "editor.action.moveLinesDownAction"
     binding:
       - "shift+alt+down"
     vscode:
-      action: 'editor.action.moveLinesDownAction'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.moveLinesDownAction"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'MoveStatementDown'
+      action: "MoveStatementDown"
     zed:
       action: "editor::MoveLineDown"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "editor.action.moveLinesUpAction"
     binding:
       - "shift+alt+up"
     vscode:
-      action: 'editor.action.moveLinesUpAction'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.moveLinesUpAction"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'MoveStatementUp'
+      action: "MoveStatementUp"
     zed:
       action: "editor::MoveLineUp"
-      context: [ "Editor" ]
+      context: ["Editor"]
   # comments
   - id: "editor.action.blockComment"
     binding:
       - "meta+shift+[Slash]"
       - "ctrl+shift+[Slash]"
     vscode:
-      action: 'editor.action.blockComment'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.blockComment"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'CommentByBlockComment'
+      action: "CommentByBlockComment"
     zed:
       action: "editor::ToggleComments"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "editor.action.commentLine"
     binding:
       - "ctrl+[Slash]"
       - "meta+[Slash]"
     vscode:
-      action: 'editor.action.commentLine'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.commentLine"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'CommentByLineComment'
+      action: "CommentByLineComment"
     zed:
       action: "editor::ToggleComments"
-      context: [ "Editor" ]
+      context: ["Editor"]
   # formatting
   - id: "editor.action.formatDocument"
     binding:
       - "ctrl+[KeyT] ctrl+[KeyF]"
     vscode:
-      action: 'editor.action.formatDocument'
-      context: [ "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor" ]
+      action: "editor.action.formatDocument"
+      context:
+        [
+          "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor",
+        ]
     idea:
-      action: 'ReformatCode'
+      action: "ReformatCode"
     zed:
       action: "editor::Format"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "editor.action.formatDocument.none"
     binding:
       - "ctrl+[KeyT] ctrl+[KeyF]"
     vscode:
-      action: 'editor.action.formatDocument.none'
-      context: [ "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly" ]
+      action: "editor.action.formatDocument.none"
+      context:
+        [
+          "editorTextFocus && !editorHasDocumentFormattingProvider && !editorReadonly",
+        ]
     idea:
       missing: true
   - id: "editor.action.indentLines"
     binding:
       - "tab"
     vscode:
-      action: 'editor.action.indentLines'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.indentLines"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'EditorIndentLineOrSelection'
+      action: "EditorIndentLineOrSelection"
     zed:
       action: "editor::Indent"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "editor.action.outdentLines"
     binding:
       - "shift+tab"
     vscode:
-      action: 'editor.action.outdentLines'
-      context: [ "editorTextFocus && !editorReadonly" ]
+      action: "editor.action.outdentLines"
+      context: ["editorTextFocus && !editorReadonly"]
     idea:
-      action: 'EditorUnindentLineOrSelection'
+      action: "EditorUnindentLineOrSelection"
     zed:
       action: "editor::Outdent"
-      context: [ "Editor" ]
+      context: ["Editor"]
   - id: "EditorUnindentSelection"
     binding:
       - "shift+tab"
     vscode:
       missing: true
     idea:
-      action: 'EditorUnindentSelection'
+      action: "EditorUnindentSelection"
   - id: "EditorIndentSelection"
     binding:
       - "tab"
     vscode:
       missing: true
     idea:
-      action: 'EditorIndentSelection'
-      
+      action: "EditorIndentSelection"
+
     #- id: "outdent"
     #    binding:
     #      - "shift+tab"
     #    vscode:
     #      action: 'outdent'
     #      context: [ "editorTextFocus && !editorReadonly && !editorTabMovesFocus" ]
-    
