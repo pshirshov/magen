@@ -7,4 +7,4 @@ keys:
   group.info: "ctrl+[KeyI]"
   group.navigate: "ctrl+[KeyN]"
   
-  select.all: "${group.command} ctrl-[KeyA]"
+  select.all: "meta+[KeyA]"
