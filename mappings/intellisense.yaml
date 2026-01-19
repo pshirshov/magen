@@ -73,18 +73,40 @@ mapping:
       - "pageup"
     vscode:
       action: 'selectPrevPageSuggestion'
-      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+      context: [ "suggestWidgetVisible" ]
     zed:
       action: 'editor::ContextMenuFirst'
       context: [ "Editor && (showing_code_actions || showing_completions)" ]
     idea:
-      missing: true
+      action: 'EditorLookupUp'
   - id: "completionMenuLast"
     binding:
       - "pagedown"
     vscode:
       action: 'selectNextPageSuggestion'
-      context: [ "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" ]
+      context: [ "suggestWidgetVisible" ]
+    zed:
+      action: 'editor::ContextMenuLast'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      action: 'EditorLookupDown'
+  - id: "completionMenuHome"
+    binding:
+      - "home"
+    vscode:
+      action: 'selectFirstSuggestion'
+      context: [ "suggestWidgetVisible" ]
+    zed:
+      action: 'editor::ContextMenuFirst'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "completionMenuEnd"
+    binding:
+      - "end"
+    vscode:
+      action: 'selectLastSuggestion'
+      context: [ "suggestWidgetVisible" ]
     zed:
       action: 'editor::ContextMenuLast'
       context: [ "Editor && (showing_code_actions || showing_completions)" ]
