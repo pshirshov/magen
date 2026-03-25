@@ -1,0 +1,48 @@
+mapping:
+  - id: "CompileDirty"
+    binding:
+      - "meta+[F9]"
+      - "meta+[KeyB] meta+[KeyB]"
+    idea:
+      action: "CompileDirty"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "CompileProject"
+    binding:
+      - "meta+[KeyB] meta+[KeyR]"
+    idea:
+      action: "CompileProject"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "Scala.ShowImplicits"
+    binding:
+      - "shift+ctrl+alt+[Equal]"
+      - "shift+ctrl+alt+[ADD]"
+    idea:
+      action: "Scala.ShowImplicits"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "android.deploy.ApplyChanges"
+    binding:
+      - "ctrl+meta+[KeyE]"
+    idea:
+      action: "android.deploy.ApplyChanges"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "android.deploy.CodeSwap"
+    binding:
+      - "shift+ctrl+meta+[KeyE]"
+    idea:
+      action: "android.deploy.CodeSwap"
+    vscode:
+      missing: true
+    zed:
+      missing: true

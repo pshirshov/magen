@@ -24,6 +24,8 @@ object Magen {
         cmdGenerate(rest)
       case "schemes" :: Nil =>
         cmdSchemes()
+      case "render" :: rest =>
+        cmdRender(rest)
       case "import" :: rest =>
         cmdImport(rest)
       case "negate-idea" :: rest =>
@@ -71,6 +73,37 @@ object Magen {
     )
 
     installers.foreach(_.install(converted))
+  }
+
+  private def cmdRender(args: List[String]): Unit = {
+    val config = loadOrCreateConfig()
+    val schemeId = parseSchemeArg(args)
+      .orElse(config.scheme.map(SchemeId.apply))
+      .getOrElse(SchemeId.default)
+
+    val outputDir = args.filterNot(_.startsWith("--")).filterNot(a => args.indexOf(a) > 0 && args(args.indexOf(a) - 1) == "--scheme")
+      .headOption.map(Paths.get(_))
+      .getOrElse(Paths.get("output"))
+
+    Files.createDirectories(outputDir)
+
+    println(s"Rendering scheme: ${schemeId.name} to $outputDir")
+    val converted = loadScheme(schemeId)
+
+    val keymapName = s"Magen-${schemeId.name}"
+
+    val vscodeOut = targets.VSCodeRenderer.render(converted)
+    Files.write(outputDir.resolve("keybindings.json"), vscodeOut.getBytes(StandardCharsets.UTF_8))
+    println(s"  wrote ${outputDir.resolve("keybindings.json")}")
+
+    val ideaRenderer = new targets.IdeaRenderer(IdeaParams(List.empty, negate = true, parent = "$default", keymapName = keymapName))
+    val ideaOut = ideaRenderer.render(converted)
+    Files.write(outputDir.resolve(s"$keymapName.xml"), ideaOut.getBytes(StandardCharsets.UTF_8))
+    println(s"  wrote ${outputDir.resolve(s"$keymapName.xml")}")
+
+    val zedOut = targets.ZedRenderer.render(converted)
+    Files.write(outputDir.resolve("keymap.json"), zedOut.getBytes(StandardCharsets.UTF_8))
+    println(s"  wrote ${outputDir.resolve("keymap.json")}")
   }
 
   private def cmdSchemes(): Unit = {
@@ -215,67 +248,20 @@ object Magen {
   }
 
   private def parseImportArgs(args: List[String]): (String, SchemeId) = {
-    // Expected: <file> --scheme NAME or --scheme NAME <file>
-    // Also: --keymap-id ID may appear (for idea)
-    var file: Option[String] = None
-    var scheme: Option[String] = None
-    var keymapId: Option[String] = None
-    var i = 0
-    val argArr = args.toArray
-    while (i < argArr.length) {
-      argArr(i) match {
-        case "--scheme" =>
-          assert(i + 1 < argArr.length, "--scheme requires a value")
-          scheme = Some(argArr(i + 1))
-          i += 2
-        case "--keymap-id" =>
-          assert(i + 1 < argArr.length, "--keymap-id requires a value")
-          keymapId = Some(argArr(i + 1))
-          i += 2
-        case arg if !arg.startsWith("--") =>
-          file = Some(arg)
-          i += 1
-        case other =>
-          System.err.println(s"Unknown option: $other")
-          printUsage()
-          sys.exit(1)
-      }
-    }
-    val schemeId = scheme.map(SchemeId.apply).getOrElse {
+    val (fileParts, keymapId, scheme) = parseArgsRaw(args)
+    val schemeId = scheme.getOrElse {
       System.err.println("--scheme NAME is required for import")
       printUsage()
       sys.exit(1)
     }
-    (file.getOrElse(""), schemeId)
+    (joinFileParts(fileParts), schemeId)
   }
 
   private def parseImportArgsWithKeymapId(args: List[String]): (Option[String], Option[String], SchemeId) = {
-    var file: Option[String] = None
-    var scheme: Option[String] = None
-    var keymapId: Option[String] = None
-    var i = 0
-    val argArr = args.toArray
-    while (i < argArr.length) {
-      argArr(i) match {
-        case "--scheme" =>
-          assert(i + 1 < argArr.length, "--scheme requires a value")
-          scheme = Some(argArr(i + 1))
-          i += 2
-        case "--keymap-id" =>
-          assert(i + 1 < argArr.length, "--keymap-id requires a value")
-          keymapId = Some(argArr(i + 1))
-          i += 2
-        case arg if !arg.startsWith("--") =>
-          file = Some(arg)
-          i += 1
-        case other =>
-          System.err.println(s"Unknown option: $other")
-          printUsage()
-          sys.exit(1)
-      }
-    }
+    val (fileParts, keymapId, scheme) = parseArgsRaw(args)
+    val file = if (fileParts.isEmpty) None else Some(joinFileParts(fileParts))
     // scheme is required when actually importing (file or keymapId given), optional for list mode
-    val schemeId = scheme.map(SchemeId.apply).getOrElse {
+    val schemeId = scheme.getOrElse {
       if (file.nonEmpty || keymapId.nonEmpty) {
         System.err.println("--scheme NAME is required for import")
         printUsage()
@@ -286,12 +272,53 @@ object Magen {
     (file, keymapId, schemeId)
   }
 
+  // Collects positional args (file path parts that may have been split on spaces by SBT),
+  // named options (--scheme, --keymap-id), and returns them separately.
+  private def parseArgsRaw(args: List[String]): (List[String], Option[String], Option[SchemeId]) = {
+    val fileParts = scala.collection.mutable.ListBuffer.empty[String]
+    var scheme: Option[String] = None
+    var keymapId: Option[String] = None
+    var i = 0
+    val argArr = args.toArray
+    while (i < argArr.length) {
+      argArr(i) match {
+        case "--scheme" =>
+          assert(i + 1 < argArr.length, "--scheme requires a value")
+          scheme = Some(argArr(i + 1))
+          i += 2
+        case "--keymap-id" =>
+          assert(i + 1 < argArr.length, "--keymap-id requires a value")
+          keymapId = Some(argArr(i + 1))
+          i += 2
+        case arg if !arg.startsWith("--") =>
+          fileParts += arg
+          i += 1
+        case other =>
+          System.err.println(s"Unknown option: $other")
+          printUsage()
+          sys.exit(1)
+      }
+    }
+    (fileParts.toList, keymapId, scheme.map(SchemeId.apply))
+  }
+
+  // Joins path parts that were split on spaces, strips wrapping quotes
+  private def joinFileParts(parts: List[String]): String = {
+    val joined = parts.mkString(" ")
+    if ((joined.startsWith("'") && joined.endsWith("'")) || (joined.startsWith("\"") && joined.endsWith("\""))) {
+      joined.substring(1, joined.length - 1)
+    } else {
+      joined
+    }
+  }
+
   private def printUsage(): Unit = {
     System.err.println(
       """Usage: magen <command> [options]
         |
         |Commands:
-        |  generate [--scheme NAME]                    Generate keybindings (default command)
+        |  generate [--scheme NAME]                    Generate and install keybindings (default)
+        |  render [dir] [--scheme NAME]                Render to directory (default: ./output)
         |  schemes                                     List available schemes
         |  import vscode <file> --scheme NAME          Import VSCode keybindings
         |  import idea [--keymap-id ID] --scheme NAME  Import IntelliJ keybindings
