@@ -17,40 +17,38 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Path, Paths}
 import scala.util.matching.Regex.quoteReplacement
 
-// TODO: print duplicating key references
 object Magen {
   def main(args: Array[String]): Unit = {
-    val mapping = List(
-      "mappings/ai.yaml",
-      "mappings/generic-keys.yaml",
-      "mappings/build.yaml",
-      "mappings/clipboard.yaml",
-      "mappings/commands.yaml",
-      "mappings/cursor.yaml",
-      "mappings/debug.yaml",
-      "mappings/edit.yaml",
-      "mappings/intellisense.yaml",
-      "mappings/navigation.yaml",
-      "mappings/search.yaml",
-      "mappings/selection.yaml",
-      "mappings/snippets.yaml",
-      "mappings/transform.yaml",
-      "mappings/ui.yaml",
-      "mappings/vcs.yaml",
-      "mappings/unset.yaml",
-      "mappings/vscode-column.yaml",
-      "mappings/vscode-files.yaml",
-      "mappings/vscode-list.yaml",
-      "mappings/vscode-other.yaml",
-      "mappings/vscode-quickinput.yaml",
-    )
-      .map(f => Paths.get(f))
-      .filter(_.toFile.exists())
-      .map(f => readMapping(f))
+    args.toList match {
+      case "generate" :: rest =>
+        cmdGenerate(rest)
+      case "schemes" :: Nil =>
+        cmdSchemes()
+      case "import" :: rest =>
+        cmdImport(rest)
+      case "negate-idea" :: rest =>
+        cmdNegateIdea(rest)
+      case "negate-vscode" :: rest =>
+        cmdNegateVscode(rest)
+      case Nil =>
+        cmdGenerate(Nil)
+      case unknown :: _ =>
+        System.err.println(s"Unknown command: $unknown")
+        printUsage()
+        sys.exit(1)
+    }
+  }
 
-    val converted = convert(mapping)
+  private def cmdGenerate(args: List[String]): Unit = {
     val config = loadOrCreateConfig()
+    val schemeId = parseSchemeArg(args)
+      .orElse(config.scheme.map(SchemeId.apply))
+      .getOrElse(SchemeId.default)
 
+    println(s"Generating scheme: ${schemeId.name}")
+    val converted = loadScheme(schemeId)
+
+    val keymapName = s"Magen-${schemeId.name}"
     val installers = List(
       new VscodeInstaller(
         VscodeParams(
@@ -59,9 +57,10 @@ object Magen {
       ),
       new IdeaInstaller(
         IdeaParams(
-          List("~/.config/JetBrains/*/keymaps/Magen.xml") ++ config.`installer-paths`.idea,
+          List(s"~/.config/JetBrains/*/keymaps/$keymapName.xml") ++ config.`installer-paths`.idea,
           negate = true,
           parent = "$default",
+          keymapName = keymapName,
         )
       ),
       new ZedInstaller(
@@ -73,6 +72,264 @@ object Magen {
 
     installers.foreach(_.install(converted))
   }
+
+  private def cmdSchemes(): Unit = {
+    val schemes = listSchemes()
+    if (schemes.isEmpty) {
+      println("No schemes found in mappings/schemes/")
+    } else {
+      println("Available schemes:")
+      schemes.foreach(s => println(s"  ${s.name}"))
+    }
+  }
+
+  private def cmdImport(args: List[String]): Unit = {
+    args match {
+      case "vscode" :: rest =>
+        cmdImportVscode(rest)
+      case "idea" :: rest =>
+        cmdImportIdea(rest)
+      case "zed" :: rest =>
+        cmdImportZed(rest)
+      case Nil =>
+        System.err.println("Missing import source. Expected: vscode, idea, or zed")
+        sys.exit(1)
+      case unknown :: _ =>
+        System.err.println(s"Unknown import source: $unknown. Expected: vscode, idea, or zed")
+        sys.exit(1)
+    }
+  }
+
+  private def cmdImportVscode(args: List[String]): Unit = {
+    val (file, schemeId) = parseImportArgs(args)
+    val source = Paths.get(file)
+    assert(source.toFile.exists(), s"File not found: $source")
+    println(s"Importing VSCode keybindings from $source into scheme '${schemeId.name}'")
+    val imported = importer.VscodeSchemeImporter.importFrom(source)
+    val out = importer.SchemeWriter.write(schemeId, imported)
+    println(s"Done: $out")
+  }
+
+  private def cmdImportIdea(args: List[String]): Unit = {
+    val (file, keymapId, schemeId) = parseImportArgsWithKeymapId(args)
+
+    (file, keymapId) match {
+      case (Some(f), _) =>
+        // import from a specific XML file
+        val source = Paths.get(f)
+        assert(source.toFile.exists(), s"File not found: $source")
+        println(s"Importing IntelliJ keybindings from $source into scheme '${schemeId.name}'")
+        val imported = importer.IdeaSchemeImporter.importFromFile(source)
+        val out = importer.SchemeWriter.write(schemeId, imported)
+        println(s"Done: $out")
+
+      case (None, Some(id)) =>
+        // import by keymap ID from discovered sources
+        println(s"Looking for keymap '$id'...")
+        val keymaps = importer.IdeaSchemeImporter.listKeymaps()
+        val sources = keymaps.map(_.source).distinct
+        val imported = importer.IdeaSchemeImporter.importFrom(id, sources)
+        val out = importer.SchemeWriter.write(schemeId, imported)
+        println(s"Done: $out")
+
+      case (None, None) =>
+        // list mode
+        println("Available IntelliJ keymaps:")
+        val keymaps = importer.IdeaSchemeImporter.listKeymaps()
+        if (keymaps.isEmpty) {
+          println("  (none found)")
+        } else {
+          keymaps.foreach { km =>
+            val src = if (km.bundled) "bundled" else km.source.toString
+            println(s"  ${km.name} (parent: ${km.parent}, source: $src)")
+          }
+        }
+        println("\nUse --keymap-id <name> to import a specific keymap")
+    }
+  }
+
+  private def cmdImportZed(args: List[String]): Unit = {
+    val (file, schemeId) = parseImportArgs(args)
+    val source = Paths.get(file)
+    assert(source.toFile.exists(), s"File not found: $source")
+    println(s"Importing Zed keybindings from $source into scheme '${schemeId.name}'")
+    val imported = importer.ZedSchemeImporter.importFrom(source)
+    val out = importer.SchemeWriter.write(schemeId, imported)
+    println(s"Done: $out")
+  }
+
+  private def cmdNegateIdea(args: List[String]): Unit = {
+    val file = args.headOption.map(Paths.get(_))
+    val output = Paths.get("mappings", "shared", "idea")
+    Files.createDirectories(output)
+
+    file match {
+      case Some(f) =>
+        // extract from a specific XML file
+        assert(f.toFile.exists(), s"File not found: $f")
+        println(s"Extracting IDEA actions from $f")
+        val actions = importer.IdeaNegationGenerator.extractActionsFromXml(f)
+        val outFile = output.resolve("idea-all-actions.json")
+        importer.IdeaNegationGenerator.writeActionsJson(actions, outFile)
+        println(s"Wrote ${actions.size} actions to $outFile")
+
+      case None =>
+        // auto-discover from bundled keymaps
+        println("Discovering IDEA installations...")
+        val actions = importer.IdeaNegationGenerator.extractFromBundledDefault()
+        if (actions.isEmpty) {
+          System.err.println("No IDEA installation found. Provide a keymap XML file as argument.")
+          sys.exit(1)
+        }
+        val outFile = output.resolve("idea-all-actions.json")
+        importer.IdeaNegationGenerator.writeActionsJson(actions, outFile)
+        println(s"Wrote ${actions.size} actions to $outFile")
+    }
+  }
+
+  private def cmdNegateVscode(args: List[String]): Unit = {
+    val file = args.headOption.map(Paths.get(_))
+    val output = Paths.get("mappings", "shared", "vscode")
+    Files.createDirectories(output)
+
+    file match {
+      case Some(f) =>
+        assert(f.toFile.exists(), s"File not found: $f")
+        println(s"Generating VSCode negations from $f")
+        val outFile = output.resolve("vscode-keymap-linux-!negate-all.json")
+        importer.VscodeNegationGenerator.generateFromDefaults(f, outFile)
+        println(s"Wrote negations to $outFile")
+
+      case None =>
+        System.err.println("Provide a VSCode default keybindings JSON file as argument.")
+        System.err.println("Export with: code --list-keybindings > vscode-defaults.json")
+        sys.exit(1)
+    }
+  }
+
+  private def parseSchemeArg(args: List[String]): Option[SchemeId] = {
+    args match {
+      case "--scheme" :: name :: _ => Some(SchemeId(name))
+      case _ => None
+    }
+  }
+
+  private def parseImportArgs(args: List[String]): (String, SchemeId) = {
+    // Expected: <file> --scheme NAME or --scheme NAME <file>
+    // Also: --keymap-id ID may appear (for idea)
+    var file: Option[String] = None
+    var scheme: Option[String] = None
+    var keymapId: Option[String] = None
+    var i = 0
+    val argArr = args.toArray
+    while (i < argArr.length) {
+      argArr(i) match {
+        case "--scheme" =>
+          assert(i + 1 < argArr.length, "--scheme requires a value")
+          scheme = Some(argArr(i + 1))
+          i += 2
+        case "--keymap-id" =>
+          assert(i + 1 < argArr.length, "--keymap-id requires a value")
+          keymapId = Some(argArr(i + 1))
+          i += 2
+        case arg if !arg.startsWith("--") =>
+          file = Some(arg)
+          i += 1
+        case other =>
+          System.err.println(s"Unknown option: $other")
+          printUsage()
+          sys.exit(1)
+      }
+    }
+    val schemeId = scheme.map(SchemeId.apply).getOrElse {
+      System.err.println("--scheme NAME is required for import")
+      printUsage()
+      sys.exit(1)
+    }
+    (file.getOrElse(""), schemeId)
+  }
+
+  private def parseImportArgsWithKeymapId(args: List[String]): (Option[String], Option[String], SchemeId) = {
+    var file: Option[String] = None
+    var scheme: Option[String] = None
+    var keymapId: Option[String] = None
+    var i = 0
+    val argArr = args.toArray
+    while (i < argArr.length) {
+      argArr(i) match {
+        case "--scheme" =>
+          assert(i + 1 < argArr.length, "--scheme requires a value")
+          scheme = Some(argArr(i + 1))
+          i += 2
+        case "--keymap-id" =>
+          assert(i + 1 < argArr.length, "--keymap-id requires a value")
+          keymapId = Some(argArr(i + 1))
+          i += 2
+        case arg if !arg.startsWith("--") =>
+          file = Some(arg)
+          i += 1
+        case other =>
+          System.err.println(s"Unknown option: $other")
+          printUsage()
+          sys.exit(1)
+      }
+    }
+    // scheme is required when actually importing (file or keymapId given), optional for list mode
+    val schemeId = scheme.map(SchemeId.apply).getOrElse {
+      if (file.nonEmpty || keymapId.nonEmpty) {
+        System.err.println("--scheme NAME is required for import")
+        printUsage()
+        sys.exit(1)
+      }
+      SchemeId("_unused_") // list mode, won't be used
+    }
+    (file, keymapId, schemeId)
+  }
+
+  private def printUsage(): Unit = {
+    System.err.println(
+      """Usage: magen <command> [options]
+        |
+        |Commands:
+        |  generate [--scheme NAME]                    Generate keybindings (default command)
+        |  schemes                                     List available schemes
+        |  import vscode <file> --scheme NAME          Import VSCode keybindings
+        |  import idea [--keymap-id ID] --scheme NAME  Import IntelliJ keybindings
+        |  import idea                                 List available IntelliJ keymaps
+        |  import zed <file> --scheme NAME             Import Zed keybindings
+        |  negate-idea [<keymap.xml>]                  Generate IDEA negation list
+        |  negate-vscode <defaults.json>               Generate VSCode negation list
+        |""".stripMargin
+    )
+  }
+
+  // -- Scheme loading --
+
+  def loadScheme(schemeId: SchemeId): Mapping = {
+    val schemesDir = Paths.get("mappings", "schemes")
+    val schemeDir = schemesDir.resolve(schemeId.name)
+    assert(schemeDir.toFile.isDirectory, s"Scheme directory not found: $schemeDir. Available: ${listSchemes().map(_.name).mkString(", ")}")
+
+    val rawMappings = schemeDir.toFile.listFiles()
+      .filter(_.getName.endsWith(".yaml"))
+      .sorted
+      .map(f => readMapping(f.toPath))
+      .toList
+
+    convert(rawMappings)
+  }
+
+  def listSchemes(): List[SchemeId] = {
+    val schemesDir = Paths.get("mappings", "schemes")
+    if (!schemesDir.toFile.isDirectory) return List.empty
+    schemesDir.toFile.listFiles()
+      .filter(_.isDirectory)
+      .map(d => SchemeId(d.getName))
+      .sorted(Ordering.by[SchemeId, String](_.name))
+      .toList
+  }
+
+  // -- Config --
 
   private val configPath: Path = {
     val home = System.getProperty("user.home")
@@ -97,6 +354,8 @@ object Magen {
       emptyConfig
     }
   }
+
+  // -- Mapping conversion --
 
   private def convert(mapping: List[RawMapping]): Mapping = {
     val allConcepts = mapping.flatMap(_.mapping.toSeq.flatten)
@@ -184,7 +443,7 @@ object Magen {
     result
   }
 
-  private def readMapping(path: Path): RawMapping = {
+  def readMapping(path: Path): RawMapping = {
     println(s"Reading $path")
     val input = IzFiles.readString(path)
 

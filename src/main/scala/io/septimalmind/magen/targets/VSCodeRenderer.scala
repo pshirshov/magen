@@ -79,9 +79,9 @@ object VSCodeRenderer extends Renderer {
 
   def unbind(): List[JsonObject] = {
     val negations = List(
-      "mappings/vscode/vscode-keymap-linux-!negate-all.json",
-      "mappings/vscode/vscode-keymap-linux-!negate-continue.json",
-      "mappings/vscode/vscode-keymap-linux-!negate-gitlens.json",
+      "mappings/shared/vscode/vscode-keymap-linux-!negate-all.json",
+      "mappings/shared/vscode/vscode-keymap-linux-!negate-continue.json",
+      "mappings/shared/vscode/vscode-keymap-linux-!negate-gitlens.json",
     )
 
     negations.flatMap {

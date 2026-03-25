@@ -21,7 +21,8 @@ object InstallerPaths {
 }
 
 case class MagenConfig(
-  `installer-paths`: InstallerPaths
+  scheme: Option[String],
+  `installer-paths`: InstallerPaths,
 )
 
 object MagenConfig {
@@ -29,6 +30,7 @@ object MagenConfig {
   implicit val decoder: Decoder[MagenConfig] = deriveDecoder
 
   val empty: MagenConfig = MagenConfig(
-    `installer-paths` = InstallerPaths.empty
+    scheme = None,
+    `installer-paths` = InstallerPaths.empty,
   )
 }

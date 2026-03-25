@@ -23,6 +23,7 @@ case class IdeaParams(
   writeToPatterns: List[String],
   negate: Boolean,
   parent: String,
+  keymapName: String,
 )
 
 class IdeaInstaller(params: IdeaParams) extends Installer {

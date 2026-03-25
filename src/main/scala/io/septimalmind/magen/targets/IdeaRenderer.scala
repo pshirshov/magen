@@ -25,12 +25,12 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
    unzip -p "$(dirname $(readlink -f `which idea-ultimate`))/../idea-ultimate/lib/app-client.jar" 'keymaps/$default.xml' \
      | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' \
      | sort \
-     | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/idea/idea-all-actions.json
+     | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/shared/idea/idea-all-actions.json
 
    unzip -p "$(dirname $(readlink -f `which rider`))/../rider/lib/app-client.jar" 'keymaps/$default.xml' \
        | nix run nixpkgs#xmlstarlet -- sel -t -v '//action/@id' \
        | sort \
-       | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/idea/rider-all-actions.json
+       | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" | jq  > ./mappings/shared/idea/rider-all-actions.json
 
    */
   override def id: String = "idea.xml"
@@ -75,7 +75,7 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
         </action>
     } ++ (if (params.negate) negations else List.empty)
 
-    val full = <keymap version="1" name="Magen" parent={params.parent}>
+    val full = <keymap version="1" name={params.keymapName} parent={params.parent}>
       {mappings}
     </keymap>
     val pp = new PrettyPrinter(120, 2)
@@ -148,8 +148,8 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
 object IdeaRenderer {
   def allIdeaActions(): Set[String] = {
     Seq(
-      "./mappings/idea/idea-all-actions.json",
-      "./mappings/idea/continue-all-actions.json",
+      "./mappings/shared/idea/idea-all-actions.json",
+      "./mappings/shared/idea/continue-all-actions.json",
     )
       .flatMap(readActionsFile)
       .toSet
