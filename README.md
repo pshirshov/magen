@@ -27,49 +27,51 @@ Magen reads YAML mapping files that define keyboard shortcuts in an editor-agnos
 
 Mappings are organized into **schemes** under `mappings/schemes/<name>/`. The default scheme is `pshirshov`.
 
-## Installation
+## Quick Start
 
 ```bash
-# Run directly with Nix
-nix run github:pshirshov/magen
+# Build the fat JAR
+./build.sh
 
-# Or build locally
-nix build
-./result/bin/magen
-
-# Or with SBT
-sbt run
+# Run magen via the wrapper script
+./magen.sh generate
+./magen.sh schemes
+./magen.sh render /tmp/magen-output
 ```
 
+The `magen.sh` wrapper runs from the project root so that `mappings/` paths resolve correctly. Scheme directories are **not** embedded in the JAR — they live on disk and are read at runtime.
+
 ## CLI Usage
+
+All examples below use `./magen.sh`. Replace with `magen` if using a Nix installation, or `sbt run` during development.
 
 ### Generate and install keybindings
 
 ```bash
 # Generate using the default scheme (from config or "pshirshov")
-magen generate
+./magen.sh generate
 
 # Generate a specific scheme
-magen generate --scheme pshirshov
+./magen.sh generate --scheme pshirshov
 ```
 
 ### Render keybindings to files (without installing)
 
 ```bash
 # Render to ./output directory
-magen render
+./magen.sh render
 
 # Render to a specific directory
-magen render /tmp/magen-output
+./magen.sh render /tmp/magen-output
 
 # Render a specific scheme
-magen render /tmp/magen-output --scheme pshirshov
+./magen.sh render /tmp/magen-output --scheme from-idea
 ```
 
 ### List available schemes
 
 ```bash
-magen schemes
+./magen.sh schemes
 ```
 
 ### Import keybindings from editors
@@ -78,37 +80,63 @@ Import an editor's native keybindings as a new Magen scheme:
 
 ```bash
 # Import from VSCode / VSCodium
-magen import vscode ~/.config/VSCodium/User/keybindings.json --scheme my-vscode
+./magen.sh import vscode ~/.config/VSCodium/User/keybindings.json --scheme my-vscode
 
 # Import from Zed
-magen import zed ~/.config/zed/keymap.json --scheme my-zed
+./magen.sh import zed ~/.config/zed/keymap.json --scheme my-zed
 
 # Import from IntelliJ — from a keymap XML file
-magen import idea ~/.config/JetBrains/IntelliJIdea2025.2/keymaps/MyKeymap.xml --scheme my-idea
+./magen.sh import idea ~/.config/JetBrains/IntelliJIdea2025.2/keymaps/MyKeymap.xml --scheme my-idea
 
 # Import from IntelliJ — by keymap ID (auto-discovers installed IDEs)
-magen import idea --keymap-id '$default' --scheme idea-defaults
+./magen.sh import idea --keymap-id '$default' --scheme idea-defaults
 
 # List available IntelliJ keymaps (no --scheme required)
-magen import idea
+./magen.sh import idea
 ```
 
 Imported schemes are written to `mappings/schemes/<name>/imported.yaml`. The imported editor's actions are filled in; other editors are marked `missing: true`.
 
-### Generate negation lists
+### Regenerate negation lists
 
-Negation lists suppress default editor keybindings so they don't conflict with Magen bindings.
+When Magen generates keybindings, it also **negates** (unbinds) the editor's default shortcuts to prevent conflicts. This works differently per editor:
+
+- **IntelliJ**: Magen reads all known action IDs from `mappings/shared/idea/idea-all-actions.json`. Any action not explicitly defined in the scheme gets an empty `<action id="..."/>` entry in the generated keymap XML, which removes it from the parent keymap.
+- **VSCode**: Magen prepends entries from `mappings/shared/vscode/vscode-keymap-linux-!negate-*.json` to the generated `keybindings.json`. These are `{key, command: "-command"}` entries that unbind default shortcuts.
+
+These negation lists need to be regenerated when you update your editor (new actions/shortcuts appear) or when adding support for new plugins.
+
+#### IntelliJ negation list
 
 ```bash
-# Generate IDEA negation list from a keymap XML
-magen negate-idea /path/to/keymap.xml
+# Auto-discover installed IDEs, extract $default keymap action IDs
+./magen.sh negate-idea
 
-# Auto-discover from installed IDEs
-magen negate-idea
-
-# Generate VSCode negation list from default keybindings export
-magen negate-vscode /path/to/vscode-defaults.json
+# Or extract from a specific keymap XML file
+./magen.sh negate-idea /path/to/keymap.xml
 ```
+
+This writes `mappings/shared/idea/idea-all-actions.json`. For plugin-specific actions (e.g. Continue), maintain separate files like `continue-all-actions.json` in the same directory.
+
+The original manual workflow this replaces:
+```bash
+unzip -p "$(dirname $(readlink -f $(which idea-ultimate)))/../idea-ultimate/lib/app-client.jar" 'keymaps/$default.xml' \
+  | xmlstarlet sel -t -v '//action/@id' \
+  | sort \
+  | python -c "import sys,json; print(json.dumps([line.strip() for line in sys.stdin]))" \
+  | jq > ./mappings/shared/idea/idea-all-actions.json
+```
+
+#### VSCode negation list
+
+```bash
+# First, export VSCode/VSCodium default keybindings to a JSON file.
+# Open VSCode, run "Preferences: Open Default Keyboard Shortcuts (JSON)",
+# and save the contents to a file. Then:
+./magen.sh negate-vscode /path/to/vscode-defaults.json
+```
+
+This writes `mappings/shared/vscode/vscode-keymap-linux-!negate-all.json`. Plugin-specific negation files (e.g. `!negate-gitlens.json`, `!negate-continue.json`) are maintained separately — the VSCode renderer loads all `!negate-*.json` files from that directory.
 
 ## Configuration
 
@@ -156,17 +184,29 @@ mappings/
     vscode/             # VSCode negation files
 ```
 
+## Building
+
+```bash
+# Build fat JAR (output: target/scala-2.13/magen.jar)
+./build.sh
+
+# Or manually
+sbt assembly
+
+# Run via SBT during development (no build step needed)
+sbt "run generate"
+sbt "run schemes"
+sbt "run render /tmp/output --scheme pshirshov"
+```
+
 ## Development
 
 ```bash
 # Enter dev shell
 nix develop
 
-# Run
+# Run directly
 sbt run
-
-# Build fat JAR
-sbt assembly
 
 # Regenerate dependency lockfile
 nix develop -c bash -c "nix run github:7mind/squish-find-the-brains -- lockfile-config.json 2>/dev/null" > deps.lock.json

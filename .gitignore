@@ -3,6 +3,7 @@
 .bsp
 .direnv
 result
+output/
 
 ### VisualStudioCode template
 .vscode/*
