@@ -337,13 +337,19 @@ object Magen {
     val schemeDir = schemesDir.resolve(schemeId.name)
     assert(schemeDir.toFile.isDirectory, s"Scheme directory not found: $schemeDir. Available: ${listSchemes().map(_.name).mkString(", ")}")
 
-    val rawMappings = schemeDir.toFile.listFiles()
-      .filter(_.getName.endsWith(".yaml"))
+    val rawMappings = collectYamlFiles(schemeDir.toFile)
       .sorted
       .map(f => readMapping(f.toPath))
       .toList
 
     convert(rawMappings)
+  }
+
+  private def collectYamlFiles(dir: java.io.File): Array[java.io.File] = {
+    val files = dir.listFiles()
+    val yamlFiles = files.filter(f => f.isFile && f.getName.endsWith(".yaml"))
+    val subDirFiles = files.filter(_.isDirectory).flatMap(collectYamlFiles)
+    yamlFiles ++ subDirFiles
   }
 
   def listSchemes(): List[SchemeId] = {
@@ -427,12 +433,17 @@ object Magen {
           println(s"${c.id}: not defined for Zed")
         }
 
+        val hasMouseOnly = c.binding.isEmpty && i.exists(_.mouse.nonEmpty)
+
         if (Seq(i, v, z).exists(_.nonEmpty) && c.binding.nonEmpty) {
           val chord = NEList
             .unsafeFrom(c.binding)
             .map(expandTemplate(_, vars))
             .map(ShortcutParser.parseUnsafe)
           Seq(Concept(c.id, chord, i, v, z))
+        } else if (hasMouseOnly) {
+          val placeholder = NEList(Chord(List.empty))
+          Seq(Concept(c.id, placeholder, i, None, None))
         } else if (!c.unset.contains(true)) {
           println(s"Incomplete definition: ${c.id}")
           Seq.empty

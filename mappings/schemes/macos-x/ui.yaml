@@ -1,0 +1,197 @@
+mapping:
+  - id: "ActivateCommitToolWindow"
+    binding:
+      - "meta+0"
+    idea:
+      action: "ActivateCommitToolWindow"
+    vscode:
+      action: "workbench.view.scm"
+    zed:
+      missing: true
+  - id: "ActivateDebugToolWindow"
+    binding:
+      - "meta+5"
+    idea:
+      action: "ActivateDebugToolWindow"
+    vscode:
+      action: "workbench.view.debug"
+    zed:
+      missing: true
+  - id: "ActivateFindToolWindow"
+    binding:
+      - "meta+3"
+    idea:
+      action: "ActivateFindToolWindow"
+    vscode:
+      action: "workbench.view.search"
+    zed:
+      missing: true
+  - id: "ActivateProblemsViewToolWindow"
+    binding:
+      - "meta+6"
+    idea:
+      action: "ActivateProblemsViewToolWindow"
+    vscode:
+      action: "workbench.actions.view.problems"
+    zed:
+      action: "diagnostics::Deploy"
+      context: ["Workspace"]
+  - id: "ActivateProjectToolWindow"
+    binding:
+      - "meta+1"
+    idea:
+      action: "ActivateProjectToolWindow"
+    vscode:
+      action: "workbench.view.explorer"
+    zed:
+      action: "project_panel::ToggleFocus"
+      context: ["Workspace"]
+  - id: "ActivateRunToolWindow"
+    binding:
+      - "meta+4"
+    idea:
+      action: "ActivateRunToolWindow"
+    vscode:
+      action: "workbench.action.output.toggleOutput"
+    zed:
+      missing: true
+  - id: "ActivateStructureToolWindow"
+    binding:
+      - "meta+7"
+    idea:
+      action: "ActivateStructureToolWindow"
+    vscode:
+      missing: true
+    zed:
+      action: "outline_panel::ToggleFocus"
+      context: ["Workspace"]
+  - id: "ActivateVersionControlToolWindow"
+    binding:
+      - "meta+9"
+    idea:
+      action: "ActivateVersionControlToolWindow"
+    vscode:
+      action: "workbench.view.scm"
+    zed:
+      missing: true
+  - id: "EditorDecreaseFontSizeGlobal"
+    binding:
+      - "ctrl+shift+[Comma]"
+    idea:
+      action: "EditorDecreaseFontSizeGlobal"
+    vscode:
+      action: "workbench.action.zoomOut"
+    zed:
+      action: "zed::DecreaseBufferFontSize"
+      context: ["Workspace"]
+  - id: "EditorIncreaseFontSizeGlobal"
+    binding:
+      - "ctrl+shift+[Period]"
+    idea:
+      action: "EditorIncreaseFontSizeGlobal"
+    vscode:
+      action: "workbench.action.zoomIn"
+    zed:
+      action: "zed::IncreaseBufferFontSize"
+      context: ["Workspace"]
+  - id: "ResetIdeScaleAction"
+    binding:
+      - "ctrl+alt+0"
+    idea:
+      action: "ResetIdeScaleAction"
+    vscode:
+      action: "workbench.action.zoomReset"
+    zed:
+      action: "zed::ResetBufferFontSize"
+      context: ["Workspace"]
+  - id: "ShowSettings"
+    binding:
+      - "meta+[Comma]"
+    idea:
+      action: "ShowSettings"
+    vscode:
+      action: "workbench.action.openSettings"
+    zed:
+      action: "zed::OpenSettings"
+      context: ["Workspace"]
+  - id: "ToggleFullScreen"
+    binding:
+      - "meta+ctrl+[KeyF]"
+    idea:
+      action: "ToggleFullScreen"
+    vscode:
+      action: "workbench.action.toggleFullScreen"
+    zed:
+      action: "zed::ToggleFullScreen"
+      context: ["Workspace"]
+  - id: "ZoomInIdeAction"
+    binding:
+      - "ctrl+alt+[Equal]"
+    idea:
+      action: "ZoomInIdeAction"
+    vscode:
+      action: "workbench.action.zoomIn"
+    zed:
+      action: "zed::IncreaseBufferFontSize"
+      context: ["Workspace"]
+  - id: "ZoomOutIdeAction"
+    binding:
+      - "ctrl+alt+[Minus]"
+    idea:
+      action: "ZoomOutIdeAction"
+    vscode:
+      action: "workbench.action.zoomOut"
+    zed:
+      action: "zed::DecreaseBufferFontSize"
+      context: ["Workspace"]
+  - id: "ActivateTerminalToolWindow"
+    binding:
+      - "alt+[F12]"
+    idea:
+      action: "ActivateTerminalToolWindow"
+    vscode:
+      action: "workbench.action.terminal.toggleTerminal"
+    zed:
+      action: "terminal_panel::Toggle"
+      context: ["Workspace"]
+  - id: "Terminal.NewTab"
+    binding:
+      - "meta+[KeyT]"
+    idea:
+      action: "Terminal.NewTab"
+    vscode:
+      action: "workbench.action.terminal.new"
+      context: ["terminalFocus"]
+    zed:
+      action: "workspace::NewTerminal"
+      context: ["Terminal"]
+  - id: "HideSideWindows"
+    binding:
+      - "meta+shift+[F12]"
+    idea:
+      action: "HideSideWindows"
+    vscode:
+      action: "workbench.action.toggleSidebarVisibility"
+    zed:
+      action: "workspace::ToggleLeftDock"
+      context: ["Workspace"]
+  - id: "EditorToggleUseSoftWraps"
+    binding:
+      - "meta+shift+[KeyW]"
+    idea:
+      action: "EditorToggleUseSoftWraps"
+    vscode:
+      action: "editor.action.toggleWordWrap"
+    zed:
+      action: "editor::ToggleSoftWrap"
+      context: ["Editor"]
+  - id: "SplitVertically"
+    binding:
+      - "meta+shift+[KeyV]"
+    idea:
+      action: "SplitVertically"
+    vscode:
+      action: "workbench.action.splitEditorRight"
+    zed:
+      action: "pane::SplitRight"
+      context: ["Pane"]

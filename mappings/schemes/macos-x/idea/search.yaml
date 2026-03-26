@@ -1,0 +1,19 @@
+mapping:
+  - id: "ShowSearchHistory"
+    binding:
+      - "alt+[down]"
+    idea:
+      action: "ShowSearchHistory"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ToggleFindInSelection"
+    binding:
+      - "ctrl+alt+[KeyE]"
+    idea:
+      action: "ToggleFindInSelection"
+    vscode:
+      missing: true
+    zed:
+      missing: true

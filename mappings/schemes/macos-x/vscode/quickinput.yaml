@@ -1,0 +1,61 @@
+mapping:
+  - id: "quickInput.acceptInBackground"
+    binding:
+      - "right"
+    vscode:
+      action: 'quickInput.acceptInBackground'
+      context: [ "cursorAtEndOfQuickInputBox && inQuickInput && quickInputType == 'quickPick' || inQuickInput && !inputFocus && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.first"
+    binding:
+      - "home"
+      - "meta+[ArrowLeft]"
+    vscode:
+      action: 'quickInput.first'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.last"
+    binding:
+      - "end"
+      - "meta+[ArrowRight]"
+    vscode:
+      action: 'quickInput.last'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.next"
+    binding:
+      - "down"
+    vscode:
+      action: 'quickInput.next'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.pageNext"
+    binding:
+      - "pagedown"
+      - "meta+[ArrowDown]"
+    vscode:
+      action: 'quickInput.pageNext'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.pagePrevious"
+    binding:
+      - "meta+[ArrowUp]"
+      - "pageup"
+    vscode:
+      action: 'quickInput.pagePrevious'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.previous"
+    binding:
+      - "up"
+    vscode:
+      action: 'quickInput.previous'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true

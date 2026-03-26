@@ -26,7 +26,8 @@ object IdeaSchemeImporter {
 
   def importFrom(keymapId: String, keymapSources: List[Path]): ImportedScheme = {
     val allKeymaps = keymapSources.flatMap(discoverKeymapsIn)
-    val keymap = allKeymaps.find(_.name == keymapId)
+    val keymap = allKeymaps
+      .find(_.name == keymapId)
       .getOrElse {
         val available = allKeymaps.map(_.name).mkString(", ")
         throw new RuntimeException(s"Keymap '$keymapId' not found. Available: $available")
@@ -43,26 +44,28 @@ object IdeaSchemeImporter {
 
   private def parseKeymapXml(xml: Elem): ImportedScheme = {
     val actions = xml \ "action"
-    val bindings = actions.flatMap { action =>
-      val actionId = (action \ "@id").text
-      val shortcuts = action \ "keyboard-shortcut"
+    val bindings = actions.flatMap {
+      action =>
+        val actionId = (action \ "@id").text
+        val shortcuts = action \ "keyboard-shortcut"
 
-      shortcuts.flatMap { shortcut =>
-        val firstKeystroke = (shortcut \ "@first-keystroke").text
-        val secondKeystroke = (shortcut \ "@second-keystroke").text
+        shortcuts.flatMap {
+          shortcut =>
+            val firstKeystroke = (shortcut \ "@first-keystroke").text
+            val secondKeystroke = (shortcut \ "@second-keystroke").text
 
-        if (firstKeystroke.nonEmpty) {
-          val firstCombo = parseIdeaCombo(firstKeystroke)
-          val combos = if (secondKeystroke.nonEmpty) {
-            List(firstCombo, parseIdeaCombo(secondKeystroke))
-          } else {
-            List(firstCombo)
-          }
-          Some(ImportedBinding(actionId, Chord(combos), List.empty))
-        } else {
-          None
+            if (firstKeystroke.nonEmpty) {
+              val firstCombo = parseIdeaCombo(firstKeystroke)
+              val combos = if (secondKeystroke.nonEmpty) {
+                List(firstCombo, parseIdeaCombo(secondKeystroke))
+              } else {
+                List(firstCombo)
+              }
+              Some(ImportedBinding(actionId, Chord(combos), List.empty))
+            } else {
+              None
+            }
         }
-      }
     }
 
     ImportedScheme(ImportSource.Idea, bindings.toList)
@@ -74,7 +77,7 @@ object IdeaSchemeImporter {
     val (modParts, keyParts) = parts.partition(isModifier)
 
     val modifiers = modParts.map {
-      case s if s.toLowerCase == "ctrl" => Modifier.Ctrl
+      case s if s.toLowerCase == "ctrl" || s.toLowerCase == "control" => Modifier.Ctrl
       case s if s.toLowerCase == "alt" => Modifier.Alt
       case s if s.toLowerCase == "shift" => Modifier.Shift
       case s if s.toLowerCase == "meta" => Modifier.Meta
@@ -88,7 +91,7 @@ object IdeaSchemeImporter {
 
   private def isModifier(s: String): Boolean = {
     val lower = s.toLowerCase
-    lower == "ctrl" || lower == "alt" || lower == "shift" || lower == "meta"
+    lower == "ctrl" || lower == "control" || lower == "alt" || lower == "shift" || lower == "meta"
   }
 
   private def normalizeIdeaKey(key: String): NamedKey = {
@@ -103,9 +106,12 @@ object IdeaSchemeImporter {
       case "COMMA" => NamedKey("Comma")
       case "PERIOD" => NamedKey("Period")
       case "SEMICOLON" => NamedKey("Semicolon")
-      case "SLASH" => NamedKey("Slash")
+      case "SLASH" | "DIVIDE" => NamedKey("Slash")
       case "BACK_SLASH" => NamedKey("Backslash")
       case "AMPERSAND" => NamedKey("Quote")
+      case "BACK_QUOTE" => NamedKey("Backquote")
+      case "MULTIPLY" => NamedKey("MULTIPLY")
+      case s if s.startsWith("NUMPAD") => NamedKey(s)
       case "ENTER" => NamedKey("enter")
       case "ESCAPE" => NamedKey("escape")
       case "TAB" => NamedKey("tab")
@@ -144,9 +150,10 @@ object IdeaSchemeImporter {
 
   private def listBundledKeymaps(): List[IdeaKeymapInfo] = {
     val idePaths = discoverIdePaths()
-    idePaths.flatMap { idePath =>
-      val jarPath = findAppClientJar(idePath)
-      jarPath.toList.flatMap(listKeymapsInJar)
+    idePaths.flatMap {
+      idePath =>
+        val jarPath = findAppClientJar(idePath)
+        jarPath.toList.flatMap(listKeymapsInJar)
     }
   }
 
@@ -184,44 +191,52 @@ object IdeaSchemeImporter {
   }
 
   private def loadKeymapFromJar(info: IdeaKeymapInfo): Elem = {
-    Using(new ZipFile(info.source.toFile)) { zip =>
-      val entries = scala.jdk.CollectionConverters.EnumerationHasAsScala(zip.entries()).asScala
-      val keymapEntry = entries.find { e =>
-        e.getName.startsWith("keymaps/") && e.getName.endsWith(".xml") && {
-          Using(new BufferedInputStream(zip.getInputStream(e))) { is =>
-            val xml = XML.load(is)
-            (xml \ "@name").text == info.name
-          }.getOrElse(false)
+    Using(new ZipFile(info.source.toFile)) {
+      zip =>
+        val entries = scala.jdk.CollectionConverters.EnumerationHasAsScala(zip.entries()).asScala
+        val keymapEntry = entries.find {
+          e =>
+            e.getName.startsWith("keymaps/") && e.getName.endsWith(".xml") && {
+              Using(new BufferedInputStream(zip.getInputStream(e))) {
+                is =>
+                  val xml = XML.load(is)
+                  (xml \ "@name").text == info.name
+              }.getOrElse(false)
+            }
         }
-      }
 
-      keymapEntry match {
-        case Some(entry) =>
-          Using(new BufferedInputStream(zip.getInputStream(entry))) { is =>
-            XML.load(is)
-          }.get
-        case None =>
-          throw new RuntimeException(s"Keymap '${info.name}' not found in JAR ${info.source}")
-      }
+        keymapEntry match {
+          case Some(entry) =>
+            Using(new BufferedInputStream(zip.getInputStream(entry))) {
+              is =>
+                XML.load(is)
+            }.get
+          case None =>
+            throw new RuntimeException(s"Keymap '${info.name}' not found in JAR ${info.source}")
+        }
     }.get
   }
 
   private def listKeymapsInJar(jarPath: Path): List[IdeaKeymapInfo] = {
     try {
-      Using(new ZipFile(jarPath.toFile)) { zip =>
-        val entries = scala.jdk.CollectionConverters.EnumerationHasAsScala(zip.entries()).asScala
-        entries.filter(e => e.getName.startsWith("keymaps/") && e.getName.endsWith(".xml")).flatMap { entry =>
-          try {
-            Using(new BufferedInputStream(zip.getInputStream(entry))) { is =>
-              val xml = XML.load(is)
-              val name = (xml \ "@name").text
-              val parent = (xml \ "@parent").text
-              IdeaKeymapInfo(name, parent, jarPath, bundled = true)
-            }.toOption
-          } catch {
-            case _: Exception => None
-          }
-        }.toList
+      Using(new ZipFile(jarPath.toFile)) {
+        zip =>
+          val entries = scala.jdk.CollectionConverters.EnumerationHasAsScala(zip.entries()).asScala
+          entries
+            .filter(e => e.getName.startsWith("keymaps/") && e.getName.endsWith(".xml")).flatMap {
+              entry =>
+                try {
+                  Using(new BufferedInputStream(zip.getInputStream(entry))) {
+                    is =>
+                      val xml = XML.load(is)
+                      val name = (xml \ "@name").text
+                      val parent = (xml \ "@parent").text
+                      IdeaKeymapInfo(name, parent, jarPath, bundled = true)
+                  }.toOption
+                } catch {
+                  case _: Exception => None
+                }
+            }.toList
       }.getOrElse(List.empty)
     } catch {
       case _: Exception => List.empty
@@ -236,19 +251,20 @@ object IdeaSchemeImporter {
       "/snap/intellij-idea-*/current/",
     )
     // also try `which idea-ultimate` / `which idea-community`
-    val fromPath = List("idea-ultimate", "idea-community", "rider").flatMap { cmd =>
-      try {
-        val proc = new ProcessBuilder("which", cmd).start()
-        val result = new String(proc.getInputStream.readAllBytes()).trim
-        proc.waitFor()
-        if (proc.exitValue() == 0 && result.nonEmpty) {
-          // follow symlinks to find the actual installation
-          val resolved = Paths.get(result).toRealPath()
-          Some(resolved.getParent.getParent) // bin/idea -> installation root
-        } else None
-      } catch {
-        case _: Exception => None
-      }
+    val fromPath = List("idea-ultimate", "idea-community", "rider").flatMap {
+      cmd =>
+        try {
+          val proc = new ProcessBuilder("which", cmd).start()
+          val result = new String(proc.getInputStream.readAllBytes()).trim
+          proc.waitFor()
+          if (proc.exitValue() == 0 && result.nonEmpty) {
+            // follow symlinks to find the actual installation
+            val resolved = Paths.get(result).toRealPath()
+            Some(resolved.getParent.getParent) // bin/idea -> installation root
+          } else None
+        } catch {
+          case _: Exception => None
+        }
     }
 
     val fromGlobs = PathExpander.expandGlobs(patterns).filter(_.toFile.isDirectory)

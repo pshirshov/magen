@@ -63,7 +63,7 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
         val bbs = pairs
           .flatMap {
             case (_, c) =>
-              c.binding.map(b => (b, c.id))
+              c.binding.toList.filter(_.combos.nonEmpty).map(b => (b, c.id))
           }
           .groupBy(_._1).map {
             case (chord, cs) =>

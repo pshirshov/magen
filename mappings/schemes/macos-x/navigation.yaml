@@ -1,0 +1,281 @@
+mapping:
+  - id: "Back"
+    binding:
+      - "meta+[BracketLeft]"
+      - "meta+alt+[left]"
+    idea:
+      action: "Back"
+    vscode:
+      action: "workbench.action.navigateBack"
+    zed:
+      action: "pane::GoBack"
+      context: ["Pane"]
+  - id: "CallHierarchy"
+    binding:
+      - "ctrl+alt+[KeyH]"
+    idea:
+      action: "CallHierarchy"
+    vscode:
+      action: "references-view.showCallHierarchy"
+    zed:
+      missing: true
+  - id: "ExpressionTypeInfo"
+    binding:
+      - "ctrl+shift+[KeyP]"
+    idea:
+      action: "ExpressionTypeInfo"
+    vscode:
+      action: "editor.action.showHover"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::Hover"
+      context: ["Editor"]
+  - id: "Forward"
+    binding:
+      - "meta+[BracketRight]"
+      - "meta+alt+[right]"
+    idea:
+      action: "Forward"
+    vscode:
+      action: "workbench.action.navigateForward"
+    zed:
+      action: "pane::GoForward"
+      context: ["Pane"]
+  - id: "GotoClass"
+    binding:
+      - "meta+[KeyO]"
+    idea:
+      action: "GotoClass"
+    vscode:
+      action: "workbench.action.showAllSymbols"
+    zed:
+      action: "project_symbols::Toggle"
+      context: ["Workspace"]
+  - id: "GotoDeclaration"
+    binding:
+      - "meta+[KeyB]"
+    idea:
+      action: "GotoDeclaration"
+      mouse:
+        - "meta button1"
+    vscode:
+      action: "editor.action.goToDeclaration"
+    zed:
+      action: "editor::GoToDefinition"
+      context: ["Editor"]
+  - id: "GotoFile"
+    binding:
+      - "meta+shift+[KeyO]"
+    idea:
+      action: "GotoFile"
+    vscode:
+      action: "workbench.action.quickOpen"
+    zed:
+      action: "file_finder::Toggle"
+      context: ["Workspace"]
+  - id: "GotoLine"
+    binding:
+      - "meta+[KeyL]"
+    idea:
+      action: "GotoLine"
+    vscode:
+      action: "workbench.action.gotoLine"
+    zed:
+      action: "go_to_line::Toggle"
+      context: ["Editor"]
+  - id: "GotoNextElementUnderCaretUsage"
+    binding:
+      - "ctrl+alt+[down]"
+    idea:
+      action: "GotoNextElementUnderCaretUsage"
+    vscode:
+      action: "editor.action.wordHighlight.next"
+      context: ["editorTextFocus"]
+    zed:
+      missing: true
+  - id: "GotoPrevElementUnderCaretUsage"
+    binding:
+      - "ctrl+alt+[up]"
+    idea:
+      action: "GotoPrevElementUnderCaretUsage"
+    vscode:
+      action: "editor.action.wordHighlight.prev"
+      context: ["editorTextFocus"]
+    zed:
+      missing: true
+  - id: "GotoNextError"
+    binding:
+      - "[F2]"
+    idea:
+      action: "GotoNextError"
+    vscode:
+      action: "editor.action.marker.nextInFiles"
+      context: ["editorFocus"]
+    zed:
+      action: "editor::GoToDiagnostic"
+      context: ["Editor"]
+  - id: "GotoPreviousError"
+    binding:
+      - "shift+[F2]"
+    idea:
+      action: "GotoPreviousError"
+    vscode:
+      action: "editor.action.marker.prevInFiles"
+      context: ["editorFocus"]
+    zed:
+      action: "editor::GoToPreviousDiagnostic"
+      context: ["Editor"]
+  - id: "GotoSymbol"
+    binding:
+      - "meta+alt+[KeyO]"
+    idea:
+      action: "GotoSymbol"
+    vscode:
+      action: "workbench.action.gotoSymbol"
+    zed:
+      action: "outline::Toggle"
+      context: ["Workspace"]
+  - id: "GotoTypeDeclaration"
+    binding:
+      - "meta+shift+[KeyB]"
+      - "ctrl+shift+[KeyB]"
+    idea:
+      action: "GotoTypeDeclaration"
+      mouse:
+        - "meta shift button1"
+    vscode:
+      action: "editor.action.goToTypeDefinition"
+    zed:
+      action: "editor::GoToTypeDefinition"
+      context: ["Editor"]
+  - id: "NextSplitter"
+    binding:
+      - "alt+[tab]"
+    idea:
+      action: "NextSplitter"
+    vscode:
+      action: "workbench.action.focusNextGroup"
+    zed:
+      action: "workspace::ActivateNextPane"
+      context: ["Workspace"]
+  - id: "NextTab"
+    binding:
+      - "meta+shift+[BracketRight]"
+      - "ctrl+[right]"
+    idea:
+      action: "NextTab"
+    vscode:
+      action: "workbench.action.nextEditor"
+    zed:
+      action: "pane::ActivateNextItem"
+      context: ["Pane"]
+  - id: "PrevSplitter"
+    binding:
+      - "alt+shift+[tab]"
+    idea:
+      action: "PrevSplitter"
+    vscode:
+      action: "workbench.action.focusPreviousGroup"
+    zed:
+      action: "workspace::ActivatePreviousPane"
+      context: ["Workspace"]
+  - id: "PreviousTab"
+    binding:
+      - "meta+shift+[BracketLeft]"
+      - "ctrl+[left]"
+    idea:
+      action: "PreviousTab"
+    vscode:
+      action: "workbench.action.previousEditor"
+    zed:
+      action: "pane::ActivatePreviousItem"
+      context: ["Pane"]
+  - id: "QuickImplementations"
+    binding:
+      - "alt+[space]"
+      - "meta+[KeyY]"
+    idea:
+      action: "QuickImplementations"
+    vscode:
+      action: "editor.action.peekDefinition"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::GoToDefinition"
+      context: ["Editor"]
+  - id: "QuickJavaDoc"
+    binding:
+      - "[F1]"
+      - "ctrl+[KeyJ]"
+    idea:
+      action: "QuickJavaDoc"
+    vscode:
+      action: "editor.action.showHover"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::Hover"
+      context: ["Editor"]
+  - id: "TypeHierarchy"
+    binding:
+      - "ctrl+[KeyH]"
+    idea:
+      action: "TypeHierarchy"
+    vscode:
+      action: "editor.showTypeHierarchy"
+    zed:
+      missing: true
+  - id: "GotoAction"
+    binding:
+      - "meta+shift+[KeyA]"
+    idea:
+      action: "GotoAction"
+    vscode:
+      action: "workbench.action.showCommands"
+    zed:
+      action: "command_palette::Toggle"
+      context: ["Workspace"]
+  - id: "GotoImplementation"
+    binding:
+      - "meta+alt+[KeyB]"
+    idea:
+      action: "GotoImplementation"
+      mouse:
+        - "meta alt button1"
+    vscode:
+      action: "editor.action.goToImplementation"
+      context: ["editorHasImplementationProvider && editorTextFocus"]
+    zed:
+      action: "editor::GoToImplementation"
+      context: ["Editor"]
+  - id: "ShowUsages"
+    binding:
+      - "meta+alt+[F7]"
+    idea:
+      action: "ShowUsages"
+    vscode:
+      action: "editor.action.goToReferences"
+      context:
+        [
+          "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+        ]
+    zed:
+      action: "editor::FindAllReferences"
+      context: ["Editor"]
+  - id: "JumpToLastChange"
+    binding:
+      - "meta+shift+[Backspace]"
+    idea:
+      action: "JumpToLastChange"
+    vscode:
+      action: "workbench.action.navigateToLastEditLocation"
+    zed:
+      missing: true
+  - id: "RecentFiles"
+    binding:
+      - "meta+[KeyE]"
+    idea:
+      action: "RecentFiles"
+    vscode:
+      action: "workbench.action.openRecent"
+    zed:
+      action: "projects::OpenRecent"
+      context: ["Workspace"]

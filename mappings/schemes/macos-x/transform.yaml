@@ -1,0 +1,44 @@
+mapping:
+  - id: "OptimizeImports"
+    binding:
+      - "ctrl+alt+[KeyO]"
+    idea:
+      action: "OptimizeImports"
+    vscode:
+      action: "editor.action.organizeImports"
+    zed:
+      action: "editor::OrganizeImports"
+      context: ["Editor"]
+  - id: "RenameFile"
+    binding:
+      - "shift+[F6]"
+    idea:
+      comment: "in idea: combined with RenameElement"
+      missing: true
+    vscode:
+      action: "renameFile"
+      context: ["filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"]
+    zed:
+      action: "project_panel::Rename"
+      context: ["ProjectPanel && not_editing"]
+  - id: "RenameElement"
+    binding:
+      - "shift+[F6]"
+    idea:
+      action: "RenameElement"
+    vscode:
+      action: "editor.action.rename"
+      context: ["editorHasRenameProvider && editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::Rename"
+      context: ["Editor"]
+  - id: "Refactorings.QuickListPopupAction"
+    binding:
+      - "ctrl+[KeyT]"
+    idea:
+      action: "Refactorings.QuickListPopupAction"
+    vscode:
+      action: "editor.action.refactor"
+      context: ["editorHasCodeActionsProvider && textInputFocus && !editorReadonly"]
+    zed:
+      missing: true

@@ -63,15 +63,17 @@ object VSCodeRenderer extends Renderer {
     f.name match {
       case "BracketLeft" => "["
       case "BracketRight" => "]"
-      case "Slash" => "/"
-      case "Backslash" => "\\"
+      case "Slash" | "DIVIDE" => "/"
+      case "Backslash" | "IntlBackslash" => "\\"
       case "Minus" => "-"
       case "Equal" => "="
       case "Quote" => "'"
-      case "Backquote" => "`"
+      case "Backquote" | "BACK_QUOTE" => "`"
       case "Semicolon" => ";"
       case "Comma" => ","
       case "Period" => "."
+      case "MULTIPLY" => "numpad_multiply"
+      case s if s.startsWith("NUMPAD") => s"numpad${s.drop(6).toLowerCase}"
       case s if s.length == 1 => s.toLowerCase
       case s => s.toLowerCase
     }

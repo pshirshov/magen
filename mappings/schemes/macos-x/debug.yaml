@@ -1,0 +1,92 @@
+mapping:
+  - id: "ChooseDebugConfiguration"
+    binding:
+      - "ctrl+alt+[KeyD]"
+    idea:
+      action: "ChooseDebugConfiguration"
+    vscode:
+      action: "workbench.action.debug.selectandstart"
+    zed:
+      missing: true
+  - id: "ChooseRunConfiguration"
+    binding:
+      - "ctrl+alt+[KeyR]"
+    idea:
+      action: "ChooseRunConfiguration"
+    vscode:
+      action: "workbench.action.tasks.runTask"
+    zed:
+      missing: true
+  - id: "Debug"
+    binding:
+      - "ctrl+[KeyD]"
+    idea:
+      action: "Debug"
+    vscode:
+      action: "workbench.action.debug.start"
+    zed:
+      missing: true
+  - id: "Resume"
+    binding:
+      - "meta+alt+[KeyR]"
+      - "[F9]"
+    idea:
+      action: "Resume"
+    vscode:
+      action: "workbench.action.debug.continue"
+    zed:
+      missing: true
+  - id: "RunToCursor"
+    binding:
+      - "alt+[F9]"
+    idea:
+      action: "RunToCursor"
+    vscode:
+      action: "editor.debug.action.runToCursor"
+    zed:
+      missing: true
+  - id: "ToggleLineBreakpoint"
+    binding:
+      - "meta+[F8]"
+    idea:
+      action: "ToggleLineBreakpoint"
+    vscode:
+      action: "editor.debug.action.toggleBreakpoint"
+    zed:
+      missing: true
+  - id: "StepOver"
+    binding:
+      - "[F8]"
+    idea:
+      action: "StepOver"
+    vscode:
+      action: "workbench.action.debug.stepOver"
+    zed:
+      missing: true
+  - id: "StepInto"
+    binding:
+      - "[F7]"
+    idea:
+      action: "StepInto"
+    vscode:
+      action: "workbench.action.debug.stepInto"
+    zed:
+      missing: true
+  - id: "StepOut"
+    binding:
+      - "shift+[F8]"
+    idea:
+      action: "StepOut"
+    vscode:
+      action: "workbench.action.debug.stepOut"
+    zed:
+      missing: true
+  - id: "Stop"
+    binding:
+      - "meta+[F2]"
+    idea:
+      action: "Stop"
+    vscode:
+      action: "workbench.action.debug.stop"
+    zed:
+      missing: true

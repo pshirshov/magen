@@ -1,0 +1,34 @@
+mapping:
+  - id: "CodeCompletion"
+    binding:
+      - "ctrl+[space]"
+    idea:
+      action: "CodeCompletion"
+    vscode:
+      action: "editor.action.triggerSuggest"
+      context: ["editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible"]
+    zed:
+      action: "editor::ShowCompletions"
+      context: ["Editor"]
+  - id: "ParameterInfo"
+    binding:
+      - "meta+[KeyP]"
+    idea:
+      action: "ParameterInfo"
+    vscode:
+      action: "editor.action.triggerParameterHints"
+      context: ["editorHasSignatureHelpProvider && editorTextFocus"]
+    zed:
+      action: "editor::ShowSignatureHelp"
+      context: ["Editor"]
+  - id: "ShowIntentionActions"
+    binding:
+      - "alt+[enter]"
+    idea:
+      action: "ShowIntentionActions"
+    vscode:
+      action: "editor.action.quickFix"
+      context: ["editorHasCodeActionsProvider && textInputFocus && !editorReadonly"]
+    zed:
+      action: "editor::ToggleCodeActions"
+      context: ["Editor"]

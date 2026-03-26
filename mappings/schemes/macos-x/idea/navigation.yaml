@@ -1,0 +1,159 @@
+mapping:
+  - id: "EditSource"
+    binding:
+      - "meta+[down]"
+      - "[F4]"
+    idea:
+      action: "EditSource"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExternalJavaDoc"
+    binding:
+      - "shift+[F1]"
+    idea:
+      action: "ExternalJavaDoc"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "GotoRelated"
+    binding:
+      - "ctrl+meta+[up]"
+    idea:
+      action: "GotoRelated"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "MethodDown"
+    binding:
+      - "ctrl+shift+[down]"
+    idea:
+      action: "MethodDown"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "MethodOverloadSwitchDown"
+    binding:
+      - "alt+[down]"
+    idea:
+      action: "MethodOverloadSwitchDown"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "MethodOverloadSwitchUp"
+    binding:
+      - "alt+[up]"
+    idea:
+      action: "MethodOverloadSwitchUp"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "MethodUp"
+    binding:
+      - "ctrl+shift+[up]"
+    idea:
+      action: "MethodUp"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "NextEditorTab"
+    binding:
+      - "ctrl+shift+[right]"
+    idea:
+      action: "NextEditorTab"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "NextProjectWindow"
+    binding:
+      - "meta+alt+[BACK_QUOTE]"
+    idea:
+      action: "NextProjectWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "NextWindow"
+    binding:
+      - "meta+[BACK_QUOTE]"
+    idea:
+      action: "NextWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "PreviousEditorTab"
+    binding:
+      - "ctrl+shift+[left]"
+    idea:
+      action: "PreviousEditorTab"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "PreviousProjectWindow"
+    binding:
+      - "meta+shift+alt+[BACK_QUOTE]"
+    idea:
+      action: "PreviousProjectWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "PreviousWindow"
+    binding:
+      - "meta+shift+[BACK_QUOTE]"
+    idea:
+      action: "PreviousWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "SearchEverywhere.NavigateToNextGroup"
+    binding:
+      - "[PageDown]"
+      - "meta+[down]"
+    idea:
+      action: "SearchEverywhere.NavigateToNextGroup"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "SearchEverywhere.NavigateToPrevGroup"
+    binding:
+      - "[PageUp]"
+      - "meta+[up]"
+    idea:
+      action: "SearchEverywhere.NavigateToPrevGroup"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ShowNavBar"
+    binding:
+      - "meta+[up]"
+      - "alt+[home]"
+    idea:
+      action: "ShowNavBar"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "Switcher"
+    binding:
+      - "ctrl+[tab]"
+      - "ctrl+shift+[tab]"
+    idea:
+      action: "Switcher"
+    vscode:
+      missing: true
+    zed:
+      missing: true
