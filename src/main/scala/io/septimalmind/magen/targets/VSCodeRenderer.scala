@@ -5,10 +5,7 @@ import io.circe.syntax.*
 import io.septimalmind.magen.Renderer
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.*
-import io.septimalmind.magen.util.Aliases
-import izumi.fundamentals.platform.files.IzFiles
-
-import java.nio.file.Paths
+import io.septimalmind.magen.util.{Aliases, MagenPaths}
 
 object VSCodeRenderer extends Renderer {
   override def id: String = "vscode.json"
@@ -81,14 +78,14 @@ object VSCodeRenderer extends Renderer {
 
   def unbind(): List[JsonObject] = {
     val negations = List(
-      "mappings/shared/vscode/vscode-keymap-linux-!negate-all.json",
-      "mappings/shared/vscode/vscode-keymap-linux-!negate-continue.json",
-      "mappings/shared/vscode/vscode-keymap-linux-!negate-gitlens.json",
+      "vscode-keymap-linux-!negate-all.json",
+      "vscode-keymap-linux-!negate-continue.json",
+      "vscode-keymap-linux-!negate-gitlens.json",
     )
 
     negations.flatMap {
       n =>
-        val fa = IzFiles.readString(Paths.get(n))
+        val fa = MagenPaths.readSharedFile(s"vscode/$n")
         val pa = parser.parse(fa)
         pa.flatMap(_.as[List[JsonObject]]).toOption.get
     }

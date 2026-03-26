@@ -2,13 +2,14 @@ package io.septimalmind.magen.importer
 
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.{Chord, Modifier, SchemeId}
+import io.septimalmind.magen.util.MagenPaths
 
 import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Path, Paths}
+import java.nio.file.{Files, Path}
 
 object SchemeWriter {
   def write(schemeId: SchemeId, imported: ImportedScheme): Path = {
-    val schemeDir = Paths.get("mappings", "schemes", schemeId.name)
+    val schemeDir = MagenPaths.writableDir.resolve("schemes").resolve(schemeId.name)
     Files.createDirectories(schemeDir)
 
     val grouped = imported.bindings

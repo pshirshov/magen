@@ -4,10 +4,7 @@ import io.circe.parser
 import io.septimalmind.magen.Renderer
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
-import io.septimalmind.magen.util.Aliases
-import izumi.fundamentals.platform.files.IzFiles
-
-import java.nio.file.Paths
+import io.septimalmind.magen.util.{Aliases, MagenPaths}
 import scala.annotation.tailrec
 import scala.xml.PrettyPrinter
 
@@ -148,15 +145,15 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
 object IdeaRenderer {
   def allIdeaActions(): Set[String] = {
     Seq(
-      "./mappings/shared/idea/idea-all-actions.json",
-      "./mappings/shared/idea/continue-all-actions.json",
+      "idea-all-actions.json",
+      "continue-all-actions.json",
     )
       .flatMap(readActionsFile)
       .toSet
   }
 
   private def readActionsFile(actionsFile: String) = {
-    val fa = IzFiles.readString(Paths.get(actionsFile))
+    val fa = MagenPaths.readSharedFile(s"idea/$actionsFile")
     val pa = parser.parse(fa)
     pa.flatMap(_.as[List[String]]).toOption.get.toSet
   }

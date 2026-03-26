@@ -7,7 +7,7 @@ import io.circe.{yaml, *}
 import io.septimalmind.magen.config.MagenConfig
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, VscodeInstaller, VscodeParams, ZedInstaller, ZedParams}
-import io.septimalmind.magen.util.ShortcutParser
+import io.septimalmind.magen.util.{MagenPaths, MappingsSource, ShortcutParser}
 import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
 import izumi.fundamentals.platform.files.IzFiles
@@ -19,7 +19,10 @@ import scala.util.matching.Regex.quoteReplacement
 
 object Magen {
   def main(args: Array[String]): Unit = {
-    args.toList match {
+    val (globalArgs, commandArgs) = extractGlobalArgs(args.toList)
+    globalArgs.mappingsDir.foreach(p => MagenPaths.configure(MappingsSource.Filesystem(p)))
+
+    commandArgs match {
       case "generate" :: rest =>
         cmdGenerate(rest)
       case "schemes" :: Nil =>
@@ -39,6 +42,26 @@ object Magen {
         printUsage()
         sys.exit(1)
     }
+  }
+
+  private case class GlobalArgs(mappingsDir: Option[Path])
+
+  private def extractGlobalArgs(args: List[String]): (GlobalArgs, List[String]) = {
+    var mappingsDir: Option[Path] = None
+    val remaining = scala.collection.mutable.ListBuffer.empty[String]
+    var i = 0
+    val arr = args.toArray
+    while (i < arr.length) {
+      arr(i) match {
+        case "--mappings" if i + 1 < arr.length =>
+          mappingsDir = Some(Paths.get(arr(i + 1)))
+          i += 2
+        case _ =>
+          remaining += arr(i)
+          i += 1
+      }
+    }
+    (GlobalArgs(mappingsDir), remaining.toList)
   }
 
   private def cmdGenerate(args: List[String]): Unit = {
@@ -202,7 +225,7 @@ object Magen {
 
   private def cmdNegateIdea(args: List[String]): Unit = {
     val file = args.headOption.map(Paths.get(_))
-    val output = Paths.get("mappings", "shared", "idea")
+    val output = MagenPaths.writableDir.resolve("shared").resolve("idea")
     Files.createDirectories(output)
 
     file match {
@@ -231,7 +254,7 @@ object Magen {
 
   private def cmdNegateVscode(args: List[String]): Unit = {
     val file = args.headOption.map(Paths.get(_))
-    val output = Paths.get("mappings", "shared", "vscode")
+    val output = MagenPaths.writableDir.resolve("shared").resolve("vscode")
     Files.createDirectories(output)
 
     file match {
@@ -328,7 +351,10 @@ object Magen {
 
   private def printUsage(): Unit = {
     System.err.println(
-      """Usage: magen <command> [options]
+      """Usage: magen [--mappings DIR] <command> [options]
+        |
+        |Global options:
+        |  --mappings DIR  Use mappings from DIR instead of bundled resources
         |
         |Commands:
         |  generate [--scheme NAME] [--platform PLATFORM]   Generate and install keybindings (default)
@@ -378,14 +404,13 @@ object Magen {
   }
 
   def loadAndValidate(schemeId: SchemeId, platform: Platform): (Mapping, ValidationResult) = {
-    val schemesDir = Paths.get("mappings", "schemes")
-    val schemeDir = schemesDir.resolve(schemeId.name)
-    assert(schemeDir.toFile.isDirectory, s"Scheme directory not found: $schemeDir. Available: ${listSchemes().map(_.name).mkString(", ")}")
+    val schemeFiles = MagenPaths.listSchemeFiles(schemeId.name)
+    assert(schemeFiles.nonEmpty, s"Scheme not found or empty: ${schemeId.name}. Available: ${listSchemes().map(_.name).mkString(", ")}")
 
-    val rawMappings = collectYamlFiles(schemeDir.toFile)
-      .sorted
-      .map(f => readMapping(f.toPath))
-      .toList
+    val rawMappings = schemeFiles.sorted.map { fileName =>
+      println(s"Reading ${schemeId.name}/$fileName")
+      readMappingFromString(MagenPaths.readSchemeFile(schemeId.name, fileName))
+    }
 
     val rawConcepts = rawMappings.flatMap(_.mapping.toSeq.flatten)
     val mapping = convert(rawMappings, platform)
@@ -393,21 +418,8 @@ object Magen {
     (mapping, result)
   }
 
-  private def collectYamlFiles(dir: java.io.File): Array[java.io.File] = {
-    val files = dir.listFiles()
-    val yamlFiles = files.filter(f => f.isFile && f.getName.endsWith(".yaml"))
-    val subDirFiles = files.filter(_.isDirectory).flatMap(collectYamlFiles)
-    yamlFiles ++ subDirFiles
-  }
-
   def listSchemes(): List[SchemeId] = {
-    val schemesDir = Paths.get("mappings", "schemes")
-    if (!schemesDir.toFile.isDirectory) return List.empty
-    schemesDir.toFile.listFiles()
-      .filter(_.isDirectory)
-      .map(d => SchemeId(d.getName))
-      .sorted(Ordering.by[SchemeId, String](_.name))
-      .toList
+    MagenPaths.listSchemes().map(SchemeId.apply)
   }
 
   // -- Config --
@@ -531,16 +543,17 @@ object Magen {
     result
   }
 
-  def readMapping(path: Path): RawMapping = {
-    println(s"Reading $path")
-    val input = IzFiles.readString(path)
-
+  def readMappingFromString(input: String): RawMapping = {
     val json = yaml.v12.parser.parse(input)
-
-    val mapping = json
+    json
       .leftMap(err => err: Error)
       .flatMap(_.as[RawMapping])
       .valueOr(throw _)
-    mapping
+  }
+
+  def readMapping(path: Path): RawMapping = {
+    println(s"Reading $path")
+    val input = new String(Files.readAllBytes(path), StandardCharsets.UTF_8)
+    readMappingFromString(input)
   }
 }

@@ -1,7 +1,7 @@
 package io.septimalmind.magen.tools
 
 import io.septimalmind.magen.targets.VSCodeRenderer
-import io.septimalmind.magen.util.{Aliases, ShortcutParser}
+import io.septimalmind.magen.util.{Aliases, MagenPaths, ShortcutParser}
 import izumi.fundamentals.platform.files.IzFiles
 
 import java.nio.charset.StandardCharsets
@@ -127,7 +127,7 @@ object VscodeImporter {
       sb.append('\n');
     }
 
-    Files.write(Paths.get("mappings", "vscode-idea-imported.yaml"), sb.toString().getBytes(StandardCharsets.UTF_8))
+    Files.write(MagenPaths.writableDir.resolve("vscode-idea-imported.yaml"), sb.toString().getBytes(StandardCharsets.UTF_8))
     ()
   }
 }
