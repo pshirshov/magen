@@ -36,7 +36,7 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
   override def id: String = "idea.xml"
 
   // TODO: index by commands/resolve dupes
-  override def render(mapping: Mapping): String = {
+  override def render(mapping: Mapping, platform: Platform): String = {
     val index = (for {
       m <- mapping.mapping
       i <- m.idea.toList

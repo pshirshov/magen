@@ -1,0 +1,180 @@
+mapping:
+  - id: "EditorDown"
+    binding:
+      macos:
+        - "[down]"
+        - "ctrl+[KeyN]"
+      default:
+        - "[down]"
+    idea:
+      action: "EditorDown"
+    vscode:
+      action: "cursorDown"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveDown"
+      context: ["Editor"]
+  - id: "EditorLeft"
+    binding:
+      macos:
+        - "[left]"
+        - "ctrl+[KeyB]"
+      default:
+        - "[left]"
+    idea:
+      action: "EditorLeft"
+    vscode:
+      action: "cursorLeft"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveLeft"
+      context: ["Editor"]
+  - id: "EditorLineEnd"
+    binding:
+      macos:
+        - "meta+[right]"
+        - "[end]"
+        - "ctrl+[KeyE]"
+      default:
+        - "[end]"
+    idea:
+      action: "EditorLineEnd"
+    vscode:
+      action: "cursorEnd"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveToEndOfLine"
+      context: ["Editor"]
+  - id: "EditorLineStart"
+    binding:
+      macos:
+        - "meta+[left]"
+        - "[home]"
+        - "ctrl+[KeyA]"
+      default:
+        - "[home]"
+    idea:
+      action: "EditorLineStart"
+    vscode:
+      action: "cursorHome"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveToBeginningOfLine"
+      context: ["Editor"]
+  - id: "EditorMatchBrace"
+    binding:
+      - "ctrl+[KeyM]"
+    idea:
+      action: "EditorMatchBrace"
+    vscode:
+      action: "editor.action.jumpToBracket"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::MoveToEnclosingBracket"
+      context: ["Editor"]
+  - id: "EditorNextWord"
+    binding:
+      macos:
+        - "alt+[right]"
+        - "ctrl+alt+[KeyF]"
+      default:
+        - "alt+[right]"
+    idea:
+      action: "EditorNextWord"
+    vscode:
+      action: "cursorWordEndRight"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveToNextWordEnd"
+      context: ["Editor"]
+  - id: "EditorPreviousWord"
+    binding:
+      macos:
+        - "alt+[left]"
+        - "ctrl+alt+[KeyB]"
+      default:
+        - "alt+[left]"
+    idea:
+      action: "EditorPreviousWord"
+    vscode:
+      action: "cursorWordLeft"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveToPreviousWordStart"
+      context: ["Editor"]
+  - id: "EditorRight"
+    binding:
+      macos:
+        - "[right]"
+        - "ctrl+[KeyF]"
+      default:
+        - "[right]"
+    idea:
+      action: "EditorRight"
+    vscode:
+      action: "cursorRight"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveRight"
+      context: ["Editor"]
+  - id: "EditorUp"
+    binding:
+      macos:
+        - "[up]"
+        - "ctrl+[KeyP]"
+      default:
+        - "[up]"
+    idea:
+      action: "EditorUp"
+    vscode:
+      action: "cursorUp"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveUp"
+      context: ["Editor"]
+  - id: "EditorPageDown"
+    binding:
+      - "[pagedown]"
+    idea:
+      action: "EditorPageDown"
+    vscode:
+      action: "cursorPageDown"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::PageDown"
+      context: ["Editor"]
+  - id: "EditorPageUp"
+    binding:
+      - "[pageup]"
+    idea:
+      action: "EditorPageUp"
+    vscode:
+      action: "cursorPageUp"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::PageUp"
+      context: ["Editor"]
+  - id: "EditorTextStart"
+    binding:
+      macos: "meta+[home]"
+      default: "ctrl+[home]"
+    idea:
+      action: "EditorTextStart"
+    vscode:
+      action: "cursorTop"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveToBeginning"
+      context: ["Editor"]
+  - id: "EditorTextEnd"
+    binding:
+      macos: "meta+[end]"
+      default: "ctrl+[end]"
+    idea:
+      action: "EditorTextEnd"
+    vscode:
+      action: "cursorBottom"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::MoveToEnd"
+      context: ["Editor"]

@@ -1,6 +1,6 @@
 package io.septimalmind.magen.targets
 
-import io.septimalmind.magen.model.Mapping
+import io.septimalmind.magen.model.{Mapping, Platform}
 import io.septimalmind.magen.util.PathExpander
 
 import java.nio.charset.StandardCharsets
@@ -26,9 +26,9 @@ case class IdeaParams(
   keymapName: String,
 )
 
-class IdeaInstaller(params: IdeaParams) extends Installer {
+class IdeaInstaller(params: IdeaParams, platform: Platform) extends Installer {
   def install(mapping: Mapping): Unit = {
-    val rendered = new IdeaRenderer(params).render(mapping)
+    val rendered = new IdeaRenderer(params).render(mapping, platform)
     val paths = PathExpander.expandGlobs(params.writeToPatterns)
     paths.foreach {
       p =>
@@ -43,9 +43,9 @@ case class VscodeParams(
   writeToPatterns: List[String]
 )
 
-class VscodeInstaller(params: VscodeParams) extends Installer {
+class VscodeInstaller(params: VscodeParams, platform: Platform) extends Installer {
   def install(mapping: Mapping): Unit = {
-    val rendered = VSCodeRenderer.render(mapping)
+    val rendered = VSCodeRenderer.render(mapping, platform)
     val paths = PathExpander.expandGlobs(params.writeToPatterns)
     paths.foreach {
       p =>
@@ -59,9 +59,9 @@ case class ZedParams(
   writeToPatterns: List[String]
 )
 
-class ZedInstaller(params: ZedParams) extends Installer {
+class ZedInstaller(params: ZedParams, platform: Platform) extends Installer {
   def install(mapping: Mapping): Unit = {
-    val rendered = ZedRenderer.render(mapping)
+    val rendered = ZedRenderer.render(mapping, platform)
     val paths = PathExpander.expandGlobs(params.writeToPatterns)
     paths.foreach {
       p =>

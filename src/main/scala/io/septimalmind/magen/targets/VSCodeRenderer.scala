@@ -13,7 +13,7 @@ import java.nio.file.Paths
 object VSCodeRenderer extends Renderer {
   override def id: String = "vscode.json"
 
-  override def render(mapping: Mapping): String = {
+  override def render(mapping: Mapping, platform: Platform): String = {
     val mappings = for {
       c <- mapping.mapping
       a <- c.vscode.toList

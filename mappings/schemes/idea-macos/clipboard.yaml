@@ -1,0 +1,75 @@
+mapping:
+  - id: "editor.action.clipboardCopyAction"
+    binding:
+      macos: "meta+[KeyC]"
+      default: "ctrl+[KeyC]"
+    idea:
+      action: "$Copy"
+    vscode:
+      action: "editor.action.clipboardCopyAction"
+    zed:
+      action: "editor::Copy"
+      context: ["Editor"]
+  - id: "editor.action.clipboardCutAction"
+    binding:
+      macos: "meta+[KeyX]"
+      default: "ctrl+[KeyX]"
+    idea:
+      action: "$Cut"
+    vscode:
+      action: "editor.action.clipboardCutAction"
+    zed:
+      action: "editor::Cut"
+      context: ["Editor"]
+  - id: "editor.action.clipboardPasteAction"
+    binding:
+      macos: "meta+[KeyV]"
+      default: "ctrl+[KeyV]"
+    idea:
+      action: "$Paste"
+    vscode:
+      action: "editor.action.clipboardPasteAction"
+    zed:
+      action: "editor::Paste"
+      context: ["Editor"]
+  - id: "copyFilePath"
+    binding:
+      macos: "meta+shift+[KeyC]"
+      default: "ctrl+shift+[KeyC]"
+    idea:
+      action: "CopyPaths"
+    vscode:
+      action: "copyFilePath"
+    zed:
+      action: "editor::CopyPath"
+      context: ["Editor"]
+  - id: "workbench.action.terminal.copySelection"
+    binding:
+      macos: "meta+[KeyC]"
+      default: "ctrl+[KeyC]"
+    idea:
+      action: "Terminal.CopySelectedText"
+    vscode:
+      action: "workbench.action.terminal.copySelection"
+      context:
+        [
+          "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected",
+        ]
+    zed:
+      action: "terminal::Copy"
+      context: ["Terminal"]
+  - id: "workbench.action.terminal.paste"
+    binding:
+      macos: "meta+[KeyV]"
+      default: "ctrl+[KeyV]"
+    idea:
+      action: "Terminal.Paste"
+    vscode:
+      action: "workbench.action.terminal.paste"
+      context:
+        [
+          "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported",
+        ]
+    zed:
+      action: "terminal::Paste"
+      context: ["Terminal"]

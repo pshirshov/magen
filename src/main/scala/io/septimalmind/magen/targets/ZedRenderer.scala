@@ -10,7 +10,7 @@ import io.septimalmind.magen.util.Aliases
 object ZedRenderer extends Renderer {
   override def id: String = "zed.json"
 
-  override def render(mapping: Mapping): String = {
+  override def render(mapping: Mapping, platform: Platform): String = {
     val bindings = for {
       c <- mapping.mapping
       a <- c.zed.toList

@@ -43,19 +43,22 @@ object Magen {
 
   private def cmdGenerate(args: List[String]): Unit = {
     val config = loadOrCreateConfig()
+    val platform = parsePlatformArg(args).getOrElse(Platform.detect())
     val schemeId = parseSchemeArg(args)
       .orElse(config.scheme.map(SchemeId.apply))
       .getOrElse(SchemeId.default)
 
-    println(s"Generating scheme: ${schemeId.name}")
-    val converted = loadScheme(schemeId)
+    println(s"Generating scheme: ${schemeId.name} (platform: $platform)")
+    val (converted, validation) = loadAndValidate(schemeId, platform)
+    reportValidation(validation)
 
     val keymapName = s"Magen-${schemeId.name}"
     val installers = List(
       new VscodeInstaller(
         VscodeParams(
           List("~/.config/VSCodium/User/keybindings.json") ++ config.`installer-paths`.vscode
-        )
+        ),
+        platform,
       ),
       new IdeaInstaller(
         IdeaParams(
@@ -63,12 +66,14 @@ object Magen {
           negate = true,
           parent = "$default",
           keymapName = keymapName,
-        )
+        ),
+        platform,
       ),
       new ZedInstaller(
         ZedParams(
           List("~/.config/zed/keymap.json") ++ config.`installer-paths`.zed
-        )
+        ),
+        platform,
       ),
     )
 
@@ -77,31 +82,35 @@ object Magen {
 
   private def cmdRender(args: List[String]): Unit = {
     val config = loadOrCreateConfig()
+    val platform = parsePlatformArg(args).getOrElse(Platform.detect())
     val schemeId = parseSchemeArg(args)
       .orElse(config.scheme.map(SchemeId.apply))
       .getOrElse(SchemeId.default)
 
-    val outputDir = args.filterNot(_.startsWith("--")).filterNot(a => args.indexOf(a) > 0 && args(args.indexOf(a) - 1) == "--scheme")
+    val namedArgs = Set("--scheme", "--platform")
+    val outputDir = args.filterNot(_.startsWith("--"))
+      .filterNot(a => args.indexOf(a) > 0 && namedArgs.contains(args(args.indexOf(a) - 1)))
       .headOption.map(Paths.get(_))
       .getOrElse(Paths.get("output"))
 
     Files.createDirectories(outputDir)
 
-    println(s"Rendering scheme: ${schemeId.name} to $outputDir")
-    val converted = loadScheme(schemeId)
+    println(s"Rendering scheme: ${schemeId.name} (platform: $platform) to $outputDir")
+    val (converted, validation) = loadAndValidate(schemeId, platform)
+    reportValidation(validation)
 
     val keymapName = s"Magen-${schemeId.name}"
 
-    val vscodeOut = targets.VSCodeRenderer.render(converted)
+    val vscodeOut = targets.VSCodeRenderer.render(converted, platform)
     Files.write(outputDir.resolve("keybindings.json"), vscodeOut.getBytes(StandardCharsets.UTF_8))
     println(s"  wrote ${outputDir.resolve("keybindings.json")}")
 
     val ideaRenderer = new targets.IdeaRenderer(IdeaParams(List.empty, negate = true, parent = "$default", keymapName = keymapName))
-    val ideaOut = ideaRenderer.render(converted)
+    val ideaOut = ideaRenderer.render(converted, platform)
     Files.write(outputDir.resolve(s"$keymapName.xml"), ideaOut.getBytes(StandardCharsets.UTF_8))
     println(s"  wrote ${outputDir.resolve(s"$keymapName.xml")}")
 
-    val zedOut = targets.ZedRenderer.render(converted)
+    val zedOut = targets.ZedRenderer.render(converted, platform)
     Files.write(outputDir.resolve("keymap.json"), zedOut.getBytes(StandardCharsets.UTF_8))
     println(s"  wrote ${outputDir.resolve("keymap.json")}")
   }
@@ -241,9 +250,14 @@ object Magen {
   }
 
   private def parseSchemeArg(args: List[String]): Option[SchemeId] = {
-    args match {
-      case "--scheme" :: name :: _ => Some(SchemeId(name))
-      case _ => None
+    args.sliding(2).collectFirst {
+      case "--scheme" :: name :: Nil => SchemeId(name)
+    }
+  }
+
+  private def parsePlatformArg(args: List[String]): Option[Platform] = {
+    args.sliding(2).collectFirst {
+      case "--platform" :: value :: Nil => Platform.parse(value)
     }
   }
 
@@ -317,22 +331,53 @@ object Magen {
       """Usage: magen <command> [options]
         |
         |Commands:
-        |  generate [--scheme NAME]                    Generate and install keybindings (default)
-        |  render [dir] [--scheme NAME]                Render to directory (default: ./output)
-        |  schemes                                     List available schemes
-        |  import vscode <file> --scheme NAME          Import VSCode keybindings
-        |  import idea [--keymap-id ID] --scheme NAME  Import IntelliJ keybindings
-        |  import idea                                 List available IntelliJ keymaps
-        |  import zed <file> --scheme NAME             Import Zed keybindings
-        |  negate-idea [<keymap.xml>]                  Generate IDEA negation list
-        |  negate-vscode <defaults.json>               Generate VSCode negation list
+        |  generate [--scheme NAME] [--platform PLATFORM]   Generate and install keybindings (default)
+        |  render [dir] [--scheme NAME] [--platform PLATFORM] Render to directory (default: ./output)
+        |  schemes                                           List available schemes
+        |  import vscode <file> --scheme NAME                Import VSCode keybindings
+        |  import idea [--keymap-id ID] --scheme NAME        Import IntelliJ keybindings
+        |  import idea                                       List available IntelliJ keymaps
+        |  import zed <file> --scheme NAME                   Import Zed keybindings
+        |  negate-idea [<keymap.xml>]                        Generate IDEA negation list
+        |  negate-vscode <defaults.json>                     Generate VSCode negation list
+        |
+        |Platforms: macos, linux, win (default: auto-detect)
         |""".stripMargin
     )
   }
 
+  // -- Validation --
+
+  private def reportValidation(result: ValidationResult): Unit = {
+    val missing = result.missingBindings
+    val ideaWarnings = result.ideaConflicts
+    val errors = result.errors
+
+    if (missing.nonEmpty) {
+      System.err.println(s"\nMissing platform bindings (${missing.size}):")
+      missing.foreach(m => System.err.println(s"  ${m.message}"))
+    }
+
+    if (ideaWarnings.nonEmpty) {
+      System.err.println(s"\nIDEA binding conflicts (${ideaWarnings.size}, warnings - IDEA resolves by runtime context):")
+      ideaWarnings.foreach(c => System.err.println(s"  ${c.message}"))
+    }
+
+    if (errors.nonEmpty) {
+      System.err.println(s"\nBinding conflicts (${errors.size}):")
+      errors.foreach(c => System.err.println(s"  ${c.message}"))
+      System.err.println()
+      assert(false, s"${errors.size} binding conflict(s) found, aborting")
+    }
+  }
+
   // -- Scheme loading --
 
-  def loadScheme(schemeId: SchemeId): Mapping = {
+  def loadScheme(schemeId: SchemeId, platform: Platform): Mapping = {
+    loadAndValidate(schemeId, platform)._1
+  }
+
+  def loadAndValidate(schemeId: SchemeId, platform: Platform): (Mapping, ValidationResult) = {
     val schemesDir = Paths.get("mappings", "schemes")
     val schemeDir = schemesDir.resolve(schemeId.name)
     assert(schemeDir.toFile.isDirectory, s"Scheme directory not found: $schemeDir. Available: ${listSchemes().map(_.name).mkString(", ")}")
@@ -342,7 +387,10 @@ object Magen {
       .map(f => readMapping(f.toPath))
       .toList
 
-    convert(rawMappings)
+    val rawConcepts = rawMappings.flatMap(_.mapping.toSeq.flatten)
+    val mapping = convert(rawMappings, platform)
+    val result = MappingValidator.validate(mapping, rawConcepts, platform)
+    (mapping, result)
   }
 
   private def collectYamlFiles(dir: java.io.File): Array[java.io.File] = {
@@ -390,7 +438,7 @@ object Magen {
 
   // -- Mapping conversion --
 
-  private def convert(mapping: List[RawMapping]): Mapping = {
+  private def convert(mapping: List[RawMapping], platform: Platform): Mapping = {
     val allConcepts = mapping.flatMap(_.mapping.toSeq.flatten)
     val bad = allConcepts.map(m => (m.id, m)).toMultimap.filter(_._2.size > 1)
     if (bad.nonEmpty) {
@@ -411,6 +459,8 @@ object Magen {
 
     val concepts = allConcepts.flatMap {
       c =>
+        val resolvedBinding = c.binding.resolve(platform)
+
         val i = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
         val v = c.vscode.flatMap(
           i =>
@@ -433,11 +483,11 @@ object Magen {
           println(s"${c.id}: not defined for Zed")
         }
 
-        val hasMouseOnly = c.binding.isEmpty && i.exists(_.mouse.nonEmpty)
+        val hasMouseOnly = resolvedBinding.isEmpty && i.exists(_.mouse.nonEmpty)
 
-        if (Seq(i, v, z).exists(_.nonEmpty) && c.binding.nonEmpty) {
+        if (Seq(i, v, z).exists(_.nonEmpty) && resolvedBinding.nonEmpty) {
           val chord = NEList
-            .unsafeFrom(c.binding)
+            .unsafeFrom(resolvedBinding)
             .map(expandTemplate(_, vars))
             .map(ShortcutParser.parseUnsafe)
           Seq(Concept(c.id, chord, i, v, z))

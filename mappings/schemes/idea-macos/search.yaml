@@ -1,0 +1,81 @@
+mapping:
+  - id: "Find"
+    binding:
+      macos: "meta+[KeyF]"
+      default: "ctrl+[KeyF]"
+    idea:
+      action: "Find"
+    vscode:
+      action: "actions.find"
+      context: ["editorFocus || editorIsOpen"]
+    zed:
+      action: "buffer_search::Deploy"
+      context: ["Editor"]
+  - id: "FindInPath"
+    binding:
+      macos: "meta+shift+[KeyF]"
+      default: "ctrl+shift+[KeyF]"
+    idea:
+      action: "FindInPath"
+    vscode:
+      action: "workbench.action.findInFiles"
+    zed:
+      action: "pane::DeploySearch"
+      context: ["Pane"]
+  - id: "FindNext"
+    binding:
+      macos:
+        - "[F3]"
+        - "ctrl+[KeyL]"
+        - "meta+[KeyG]"
+      default:
+        - "[F3]"
+        - "ctrl+[KeyL]"
+    idea:
+      action: "FindNext"
+    vscode:
+      action: "editor.action.nextMatchFindAction"
+      context: ["editorFocus"]
+    zed:
+      action: "search::SelectNextMatch"
+      context: ["BufferSearchBar"]
+  - id: "FindPrevious"
+    binding:
+      macos:
+        - "shift+[F3]"
+        - "ctrl+shift+[KeyL]"
+        - "meta+shift+[KeyG]"
+      default:
+        - "shift+[F3]"
+        - "ctrl+shift+[KeyL]"
+    idea:
+      action: "FindPrevious"
+    vscode:
+      action: "editor.action.previousMatchFindAction"
+      context: ["editorFocus"]
+    zed:
+      action: "search::SelectPreviousMatch"
+      context: ["BufferSearchBar"]
+  - id: "ReplaceInPath"
+    binding:
+      macos: "meta+shift+[KeyR]"
+      default: "ctrl+shift+[KeyR]"
+    idea:
+      action: "ReplaceInPath"
+    vscode:
+      action: "workbench.action.replaceInFiles"
+    zed:
+      action: "pane::DeploySearch"
+      context: ["Pane"]
+  - id: "Replace"
+    binding:
+      macos: "meta+[KeyR]"
+      default: "ctrl+[KeyR]"
+    idea:
+      action: "Replace"
+    vscode:
+      action: "editor.action.startFindReplaceAction"
+      context: ["editorFocus || editorIsOpen"]
+    zed:
+      action: "buffer_search::DeployReplace"
+      context: ["Editor"]
