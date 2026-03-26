@@ -85,7 +85,7 @@ object VSCodeRenderer extends Renderer {
 
     negations.flatMap {
       n =>
-        val fa = MagenPaths.readSharedFile(s"vscode/$n")
+        val fa = MagenPaths.readNegationFile(s"vscode/$n")
         val pa = parser.parse(fa)
         pa.flatMap(_.as[List[JsonObject]]).toOption.get
     }

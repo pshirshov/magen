@@ -11,6 +11,7 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
 
   override def afterEach(): Unit = {
     MagenPaths.configure(MappingsSource.Classpath)
+    MagenPaths.configureNegations(NegationsSource.Classpath)
   }
 
   "MagenPaths in Classpath mode" should {
@@ -47,16 +48,16 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
       content should include("actions.find")
     }
 
-    "read a shared file" in {
+    "read a negation file" in {
       MagenPaths.configure(MappingsSource.Classpath)
-      val content = MagenPaths.readSharedFile("idea/idea-all-actions.json")
+      val content = MagenPaths.readNegationFile("idea/idea-all-actions.json")
       content should include("[")
       content.length should be > 100
     }
 
-    "read vscode negation shared files" in {
+    "read vscode negation files" in {
       MagenPaths.configure(MappingsSource.Classpath)
-      val content = MagenPaths.readSharedFile("vscode/vscode-keymap-linux-!negate-all.json")
+      val content = MagenPaths.readNegationFile("vscode/vscode-keymap-linux-!negate-all.json")
       content should include("[")
     }
 
@@ -73,16 +74,29 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
         MagenPaths.listSchemeFiles("nonexistent-scheme")
       }
     }
+
+    "fail on writableDir in classpath mode" in {
+      MagenPaths.configure(MappingsSource.Classpath)
+      an[AssertionError] should be thrownBy {
+        MagenPaths.writableDir
+      }
+    }
+
+    "fail on missing negation file" in {
+      MagenPaths.configure(MappingsSource.Classpath)
+      an[AssertionError] should be thrownBy {
+        MagenPaths.readNegationFile("nonexistent/file.json")
+      }
+    }
   }
 
   "MagenPaths in Filesystem mode" should {
     "list schemes from filesystem" in {
       val tmpDir = Files.createTempDirectory("magen-test-")
       try {
-        val schemesDir = tmpDir.resolve("schemes")
-        Files.createDirectories(schemesDir.resolve("test-scheme"))
+        Files.createDirectories(tmpDir.resolve("test-scheme"))
         Files.write(
-          schemesDir.resolve("test-scheme").resolve("bindings.yaml"),
+          tmpDir.resolve("test-scheme").resolve("bindings.yaml"),
           "mapping: []".getBytes(StandardCharsets.UTF_8),
         )
 
@@ -97,7 +111,7 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
     "list scheme files from filesystem" in {
       val tmpDir = Files.createTempDirectory("magen-test-")
       try {
-        val schemeDir = tmpDir.resolve("schemes").resolve("my-scheme")
+        val schemeDir = tmpDir.resolve("my-scheme")
         val subDir = schemeDir.resolve("sub")
         Files.createDirectories(subDir)
         Files.write(schemeDir.resolve("a.yaml"), "mapping: []".getBytes(StandardCharsets.UTF_8))
@@ -113,16 +127,72 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
       }
     }
 
+    "return writableDir in filesystem mode" in {
+      val tmpDir = Files.createTempDirectory("magen-test-")
+      try {
+        MagenPaths.configure(MappingsSource.Filesystem(tmpDir))
+        MagenPaths.writableDir shouldBe tmpDir
+      } finally {
+        deleteRecursive(tmpDir)
+      }
+    }
+
     "read files from filesystem" in {
       val tmpDir = Files.createTempDirectory("magen-test-")
       try {
-        val schemeDir = tmpDir.resolve("schemes").resolve("fs-scheme")
+        val schemeDir = tmpDir.resolve("fs-scheme")
         Files.createDirectories(schemeDir)
         Files.write(schemeDir.resolve("test.yaml"), "mapping:\n  - id: \"test\"".getBytes(StandardCharsets.UTF_8))
 
         MagenPaths.configure(MappingsSource.Filesystem(tmpDir))
         val content = MagenPaths.readSchemeFile("fs-scheme", "test.yaml")
         content should include("test")
+      } finally {
+        deleteRecursive(tmpDir)
+      }
+    }
+  }
+
+  "MagenPaths negation source" should {
+    "read negation file from filesystem" in {
+      val tmpDir = Files.createTempDirectory("magen-neg-test-")
+      try {
+        val ideaDir = tmpDir.resolve("idea")
+        Files.createDirectories(ideaDir)
+        Files.write(ideaDir.resolve("test-actions.json"), "[\"Action1\", \"Action2\"]".getBytes(StandardCharsets.UTF_8))
+
+        MagenPaths.configureNegations(NegationsSource.Filesystem(tmpDir))
+        val content = MagenPaths.readNegationFile("idea/test-actions.json")
+        content should include("Action1")
+        content should include("Action2")
+      } finally {
+        deleteRecursive(tmpDir)
+      }
+    }
+
+    "fall back to classpath when negation file not on filesystem" in {
+      val tmpDir = Files.createTempDirectory("magen-neg-test-")
+      try {
+        MagenPaths.configureNegations(NegationsSource.Filesystem(tmpDir))
+        val content = MagenPaths.readNegationFile("idea/idea-all-actions.json")
+        content should include("[")
+        content.length should be > 100
+      } finally {
+        deleteRecursive(tmpDir)
+      }
+    }
+
+    "prefer filesystem negation over classpath" in {
+      val tmpDir = Files.createTempDirectory("magen-neg-test-")
+      try {
+        val ideaDir = tmpDir.resolve("idea")
+        Files.createDirectories(ideaDir)
+        val customContent = "[\"CustomAction\"]"
+        Files.write(ideaDir.resolve("idea-all-actions.json"), customContent.getBytes(StandardCharsets.UTF_8))
+
+        MagenPaths.configureNegations(NegationsSource.Filesystem(tmpDir))
+        val content = MagenPaths.readNegationFile("idea/idea-all-actions.json")
+        content shouldBe customContent
       } finally {
         deleteRecursive(tmpDir)
       }

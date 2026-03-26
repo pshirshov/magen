@@ -69,7 +69,7 @@ nix profile install github:7mind/magen
 }
 ```
 
-All mapping schemes and shared data are bundled inside the JAR as classpath resources. No external files needed at runtime.
+All mapping schemes and negation data are bundled inside the JAR as classpath resources. No external files needed at runtime.
 
 ### From source
 
@@ -78,43 +78,69 @@ All mapping schemes and shared data are bundled inside the JAR as classpath reso
 sbt assembly
 
 # Run
-java -jar target/scala-2.13/magen.jar schemes
+java -jar target/scala-2.13/magen.jar list
 java -jar target/scala-2.13/magen.jar generate --scheme pshirshov
 ```
 
 ## CLI Usage
 
 ```
-Usage: magen [--mappings DIR] <command> [options]
-
-Global options:
-  --mappings DIR  Use mappings from DIR instead of bundled resources
-
-Commands:
-  generate [--scheme NAME] [--platform PLATFORM]     Generate and install keybindings (default)
-  render [dir] [--scheme NAME] [--platform PLATFORM]  Render to directory (default: ./output)
-  schemes                                              List available schemes
-  import vscode <file> --scheme NAME                   Import VSCode keybindings
-  import idea [--keymap-id ID] --scheme NAME           Import IntelliJ keybindings
-  import idea                                          List available IntelliJ keymaps
-  import zed <file> --scheme NAME                      Import Zed keybindings
-  negate-idea [<keymap.xml>]                           Generate IDEA negation list
-  negate-vscode <defaults.json>                        Generate VSCode negation list
-
-Platforms: macos, linux, win (default: auto-detect)
+magen <command> [options]
 ```
 
-### Generate and install keybindings
+All options can appear anywhere after the command.
+
+### Global Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--mappings DIR` | Directory with scheme mappings (YAML files organized by scheme) | Bundled classpath resources |
+| `--negations DIR` | Directory with negation files (editor action lists for unbinding). Filesystem is checked first, falling back to classpath if a file is missing | Bundled classpath resources |
+| `--scheme NAME` | Scheme name | Value from config file, or `pshirshov` |
+| `--platform PLATFORM` | Target platform for keybinding generation: `macos`, `linux`, `win` | Auto-detected from host OS |
+| `--keymap PATH` | Path to an editor keymap file (used by `import` and `import-negation`) | Auto-discovered from platform-specific editor paths |
+| `--keymap-id ID` | IntelliJ keymap identifier (used by `import idea`) | `$default` when auto-discovering |
+
+### Commands
+
+#### `generate` -- Generate and install keybindings
+
+Reads the scheme, resolves bindings for the target platform, validates for conflicts, and writes keybinding files to each editor's config directory. Installation paths are auto-detected per platform and can be extended via the config file's `installer-paths` section. This is the **default command** when no command is specified.
+
+```
+magen generate [--scheme NAME] [--platform PLATFORM] [--mappings DIR] [--negations DIR]
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--scheme NAME` | No | From config file, or `pshirshov` |
+| `--platform PLATFORM` | No | Auto-detected from host OS |
+| `--mappings DIR` | No | Bundled classpath resources |
+| `--negations DIR` | No | Bundled classpath resources |
 
 ```bash
-# Generate using the default scheme (from config or "pshirshov")
+# Generate using the default scheme
 magen generate
 
 # Generate a specific scheme for a specific platform
 magen generate --scheme idea-macos --platform linux
 ```
 
-### Render keybindings to files (without installing)
+#### `render` -- Render keybindings to files
+
+Render keybindings to files without installing. Produces `keybindings.json` (VSCode), `Magen-<scheme>.xml` (IDEA), and `keymap.json` (Zed) in the output directory.
+
+```
+magen render [DIR] [--scheme NAME] [--platform PLATFORM] [--mappings DIR] [--negations DIR]
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `DIR` (positional) | No | `./output` |
+| `--scheme NAME` | No | From config file, or `pshirshov` |
+| `--platform PLATFORM` | No | Auto-detected from host OS |
+| `--mappings DIR` | No | Bundled classpath resources |
+| `--negations DIR` | No | Bundled classpath resources |
 
 ```bash
 # Render to ./output directory
@@ -124,62 +150,157 @@ magen render
 magen render /tmp/magen-output --scheme from-idea
 ```
 
-### List available schemes
+#### `list` -- List available schemes
 
-```bash
-magen schemes
+```
+magen list [--mappings DIR]
 ```
 
-### Import keybindings from editors
-
-Import an editor's native keybindings as a new Magen scheme:
-
-```bash
-# Import from VSCode / VSCodium
-magen import vscode ~/.config/VSCodium/User/keybindings.json --scheme my-vscode
-
-# Import from Zed
-magen import zed ~/.config/zed/keymap.json --scheme my-zed
-
-# Import from IntelliJ -- from a keymap XML file
-magen import idea ~/.config/JetBrains/IntelliJIdea2025.2/keymaps/MyKeymap.xml --scheme my-idea
-
-# Import from IntelliJ -- by keymap ID (auto-discovers installed IDEs)
-magen import idea --keymap-id '$default' --scheme idea-defaults
-
-# List available IntelliJ keymaps (no --scheme required)
-magen import idea
-```
-
-Import and negate commands write to the filesystem. By default they write to `./mappings/` in the current directory. Use `--mappings` to specify a different location:
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--mappings DIR` | No | Bundled classpath resources |
 
 ```bash
-magen --mappings ./src/main/resources/mappings import idea --keymap-id '$default' --scheme new-scheme
+magen list
 ```
 
-### Regenerate negation lists
+#### `scan` -- Scan for local editor keybindings
 
-When Magen generates keybindings, it also **negates** (unbinds) the editor's default shortcuts to prevent conflicts:
+Discovers keybinding files on the local filesystem for all supported editors (VSCode, VSCodium, Zed, IntelliJ IDEA) using platform-specific default paths. No options; always uses the auto-detected host platform.
 
-- **IntelliJ**: Reads all known action IDs from shared data. Any action not explicitly defined in the scheme gets an empty `<action id="..."/>` entry in the generated keymap XML, removing it from the parent keymap.
-- **VSCode**: Prepends negation entries (`{key, command: "-command"}`) to the generated `keybindings.json` that unbind default shortcuts.
-
-These negation lists need to be regenerated when you update your editor or add support for new plugins.
+```
+magen scan
+```
 
 ```bash
-# IntelliJ: auto-discover installed IDEs
-magen negate-idea
-
-# IntelliJ: from a specific keymap XML file
-magen negate-idea /path/to/keymap.xml
-
-# VSCode: from exported default keybindings
-magen negate-vscode /path/to/vscode-defaults.json
+magen scan
 ```
+
+#### `import vscode` -- Import VSCode/VSCodium keybindings
+
+Import VSCode or VSCodium keybindings as a new Magen scheme. When `--keymap` is omitted, auto-discovers keybindings from platform default paths (VSCodium paths are checked before VSCode).
+
+```
+magen import vscode --scheme NAME --mappings DIR [--keymap PATH]
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--scheme NAME` | **Yes** | -- |
+| `--mappings DIR` | **Yes** | -- |
+| `--keymap PATH` | No | Auto-discover from platform defaults (VSCodium > VSCode) |
+
+```bash
+# Auto-discover from platform defaults
+magen import vscode --scheme my-vscode --mappings src/main/resources/mappings
+
+# From a specific file
+magen import vscode --keymap ~/Library/Application\ Support/Code/User/keybindings.json \
+  --scheme my-vscode --mappings src/main/resources/mappings
+```
+
+#### `import idea` -- Import IntelliJ keybindings
+
+Import IntelliJ IDEA keybindings as a new Magen scheme. Supports three modes: direct file path (`--keymap`), keymap ID lookup (`--keymap-id`), or auto-discovery (neither specified).
+
+```
+magen import idea --scheme NAME --mappings DIR [--keymap PATH | --keymap-id ID]
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--scheme NAME` | **Yes** | -- |
+| `--mappings DIR` | **Yes** | -- |
+| `--keymap PATH` | No | Mutually exclusive with `--keymap-id` |
+| `--keymap-id ID` | No | When neither `--keymap` nor `--keymap-id` given: auto-discover installed IDEs and use `$default` keymap |
+
+```bash
+# Auto-discover $default keymap from installed IDEs
+magen import idea --scheme my-idea --mappings src/main/resources/mappings
+
+# Import a specific keymap by ID
+magen import idea --keymap-id '$default' --scheme idea-defaults --mappings src/main/resources/mappings
+
+# Import from a specific XML file
+magen import idea --keymap /path/to/keymap.xml --scheme from-file --mappings src/main/resources/mappings
+```
+
+#### `import zed` -- Import Zed keybindings
+
+Import Zed keybindings as a new Magen scheme.
+
+```
+magen import zed --scheme NAME --mappings DIR [--keymap PATH]
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--scheme NAME` | **Yes** | -- |
+| `--mappings DIR` | **Yes** | -- |
+| `--keymap PATH` | No | Auto-discover from platform defaults |
+
+```bash
+# Auto-discover
+magen import zed --scheme my-zed --mappings src/main/resources/mappings
+
+# From a specific file
+magen import zed --keymap ~/.config/zed/keymap.json --scheme my-zed --mappings src/main/resources/mappings
+```
+
+#### `import-negation idea` -- Generate IDEA negation list
+
+Extract all action IDs from an IntelliJ keymap for use as a negation list. When Magen generates IDEA keybindings, any action not explicitly defined in the scheme gets an empty `<action id="..."/>` entry in the keymap XML, removing it from the parent keymap.
+
+Output: `<negations>/idea/idea-all-actions.json`
+
+```
+magen import-negation idea --negations DIR [--keymap PATH]
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--negations DIR` | **Yes** | -- |
+| `--keymap PATH` | No | Auto-discover from installed JetBrains IDEs via bundled default extraction. If no IDE found, no file is generated |
+
+```bash
+# Auto-discover installed IDEs
+magen import-negation idea --negations src/main/resources/negations
+
+# From a specific keymap XML file
+magen import-negation idea --keymap /path/to/keymap.xml --negations src/main/resources/negations
+```
+
+#### `import-negation vscode` -- Generate VSCode negation list
+
+Generate VSCode negation entries for unbinding default shortcuts. Prepends `{key, command: "-command"}` entries to the generated `keybindings.json`.
+
+Output: `<negations>/vscode/vscode-keymap-linux-!negate-all.json`
+
+```
+magen import-negation vscode --negations DIR --keymap PATH
+```
+
+| Parameter | Required | Default |
+|-----------|----------|---------|
+| `--negations DIR` | **Yes** | -- |
+| `--keymap PATH` | **Yes** | No auto-discovery. Export with: `code --list-keybindings > vscode-defaults.json` |
+
+```bash
+# From exported default keybindings
+magen import-negation vscode --keymap /path/to/vscode-defaults.json --negations src/main/resources/negations
+```
+
+Negation lists should be regenerated when you update your editor or add support for new plugins.
 
 ## Configuration
 
-`~/.config/magen/magen.json`:
+Config file location is platform-dependent:
+
+| Platform | Path |
+|----------|------|
+| macOS    | `~/Library/Application Support/magen/magen.json` |
+| Linux    | `~/.config/magen/magen.json` |
+| Windows  | `~/AppData/Roaming/magen/magen.json` |
 
 ```json
 {
@@ -195,25 +316,46 @@ magen negate-vscode /path/to/vscode-defaults.json
 - `scheme` -- default scheme name (overridden by `--scheme` CLI arg)
 - `installer-paths` -- additional installation paths beyond the defaults
 
-Default installation paths:
-- VSCode: `~/.config/VSCodium/User/keybindings.json`
+### Default installation paths
+
+Magen auto-detects the host platform and uses the correct paths for each editor.
+
+**macOS:**
+- VSCodium: `~/Library/Application Support/VSCodium/User/keybindings.json`
+- VSCode: `~/Library/Application Support/Code/User/keybindings.json`
+- IDEA: `~/Library/Application Support/JetBrains/*/keymaps/Magen-<scheme>.xml`
+- Zed: `~/.config/zed/keymap.json`
+
+**Linux:**
+- VSCodium: `~/.config/VSCodium/User/keybindings.json`
+- VSCode: `~/.config/Code/User/keybindings.json`
 - IDEA: `~/.config/JetBrains/*/keymaps/Magen-<scheme>.xml`
 - Zed: `~/.config/zed/keymap.json`
+
+**Windows:**
+- VSCodium: `~/AppData/Roaming/VSCodium/User/keybindings.json`
+- VSCode: `~/AppData/Roaming/Code/User/keybindings.json`
+- IDEA: `~/AppData/Roaming/JetBrains/*/keymaps/Magen-<scheme>.xml`
+- Zed: `~/AppData/Roaming/Zed/keymap.json`
 
 ## Project Structure
 
 ```
-src/main/resources/mappings/
-  schemes/
-    pshirshov/          # Default scheme
-    idea-macos/         # macOS-oriented IDEA scheme with platform-specific bindings
-    from-idea/          # Imported from IDEA defaults
-  shared/
-    idea/               # IntelliJ action lists (for negation)
-    vscode/             # VSCode negation files
+src/main/resources/
+  mappings/               # --mappings reads from here
+    pshirshov/            # Default scheme
+    idea-macos/           # macOS-oriented IDEA scheme with platform-specific bindings
+    from-idea/            # Imported from IDEA defaults
+  negations/              # --negations reads/writes here
+    idea/                 # IntelliJ action lists (for negation)
+    vscode/               # VSCode negation files
+  editor-mappings/        # Cross-editor action equivalences
+    from-idea.json        # IDEA action → VSCode/Zed equivalents
+    from-vscode.json      # VSCode action → IDEA/Zed equivalents
+    from-zed.json         # Zed action → IDEA/VSCode equivalents
 ```
 
-Schemes and shared data are bundled as classpath resources in the JAR. At runtime, magen reads them from the classpath by default.
+Schemes and negation data are bundled as classpath resources in the JAR. At runtime, magen reads them from the classpath by default. Use `--mappings` and `--negations` to override with filesystem directories.
 
 ## Development
 
@@ -224,7 +366,7 @@ Schemes and shared data are bundled as classpath resources in the JAR. At runtim
 nix develop
 
 # Run via SBT (reads resources from classpath automatically)
-sbt "run schemes"
+sbt "run list"
 sbt "run generate --scheme pshirshov"
 sbt "run render /tmp/output --scheme pshirshov"
 
@@ -234,18 +376,18 @@ sbt test
 
 ### Editing mappings
 
-When developing schemes locally, point `--mappings` to the resources directory so changes are picked up without rebuilding:
+When developing locally, point `--mappings` and `--negations` to the resources directories so changes are picked up without rebuilding:
 
 ```bash
-sbt "run --mappings src/main/resources/mappings generate --scheme pshirshov"
-sbt "run --mappings src/main/resources/mappings schemes"
+sbt "run generate --scheme pshirshov --mappings src/main/resources/mappings --negations src/main/resources/negations"
+sbt "run list --mappings src/main/resources/mappings"
 ```
 
-Import and negate commands also write to the `--mappings` directory, keeping resources in sync:
+Import commands write to the `--mappings` directory, import-negation commands write to the `--negations` directory:
 
 ```bash
-sbt "run --mappings src/main/resources/mappings import idea --keymap-id '\$default' --scheme new-scheme"
-sbt "run --mappings src/main/resources/mappings negate-idea"
+sbt "run import idea --keymap-id '\$default' --scheme new-scheme --mappings src/main/resources/mappings"
+sbt "run import-negation idea --negations src/main/resources/negations"
 ```
 
 ### Building
@@ -255,7 +397,7 @@ sbt "run --mappings src/main/resources/mappings negate-idea"
 sbt assembly
 
 # The JAR is self-contained -- run from anywhere
-java -jar target/scala-2.13/magen.jar schemes
+java -jar target/scala-2.13/magen.jar list
 ```
 
 ### Regenerate dependency lockfile

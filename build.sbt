@@ -38,6 +38,7 @@ lazy val root = (project in file("."))
       "distage-core",
     ).map("io.7mind.izumi" %% _ % "1.2.16"),
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.18" % Test,
+    Test / parallelExecution := false,
     scalacOptions ++= Seq(
       "-Wconf:cat=other-match-analysis:error",
       "-encoding",

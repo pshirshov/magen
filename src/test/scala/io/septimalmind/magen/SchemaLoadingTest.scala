@@ -1,7 +1,7 @@
 package io.septimalmind.magen
 
 import io.septimalmind.magen.model.Platform
-import io.septimalmind.magen.util.{MagenPaths, MappingsSource}
+import io.septimalmind.magen.util.{MagenPaths, MappingsSource, NegationsSource}
 import org.scalatest.wordspec.AnyWordSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.BeforeAndAfterEach
@@ -10,6 +10,7 @@ class SchemaLoadingTest extends AnyWordSpec with Matchers with BeforeAndAfterEac
 
   override def afterEach(): Unit = {
     MagenPaths.configure(MappingsSource.Classpath)
+    MagenPaths.configureNegations(NegationsSource.Classpath)
   }
 
   "Schema loading from classpath" should {

@@ -1,8 +1,8 @@
 package io.septimalmind.magen.importer
 
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
-import io.septimalmind.magen.model.{Chord, Modifier}
-import io.septimalmind.magen.util.PathExpander
+import io.septimalmind.magen.model.{Chord, Modifier, Platform}
+import io.septimalmind.magen.util.{DefaultPaths, PathExpander}
 
 import java.io.BufferedInputStream
 import java.nio.file.{Path, Paths}
@@ -143,7 +143,7 @@ object IdeaSchemeImporter {
   // -- Keymap discovery --
 
   private def listUserKeymaps(): List[IdeaKeymapInfo] = {
-    val patterns = List("~/.config/JetBrains/*/keymaps/*.xml")
+    val patterns = DefaultPaths.ideaUserKeymapPatterns(Platform.detect())
     val paths = PathExpander.expandGlobs(patterns)
     paths.flatMap(parseKeymapFileInfo)
   }
@@ -244,13 +244,9 @@ object IdeaSchemeImporter {
   }
 
   private def discoverIdePaths(): List[Path] = {
-    // common IntelliJ installation locations
-    val patterns = List(
-      "~/.local/share/JetBrains/Toolbox/apps/*/ch-0/*/",
-      "/opt/jetbrains/*/",
-      "/snap/intellij-idea-*/current/",
-    )
-    // also try `which idea-ultimate` / `which idea-community`
+    val hostPlatform = Platform.detect()
+    val patterns = DefaultPaths.ideaInstallationPatterns(hostPlatform)
+
     val fromPath = List("idea-ultimate", "idea-community", "rider").flatMap {
       cmd =>
         try {
@@ -258,9 +254,8 @@ object IdeaSchemeImporter {
           val result = new String(proc.getInputStream.readAllBytes()).trim
           proc.waitFor()
           if (proc.exitValue() == 0 && result.nonEmpty) {
-            // follow symlinks to find the actual installation
             val resolved = Paths.get(result).toRealPath()
-            Some(resolved.getParent.getParent) // bin/idea -> installation root
+            Some(resolved.getParent.getParent)
           } else None
         } catch {
           case _: Exception => None

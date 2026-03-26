@@ -153,7 +153,7 @@ object IdeaRenderer {
   }
 
   private def readActionsFile(actionsFile: String) = {
-    val fa = MagenPaths.readSharedFile(s"idea/$actionsFile")
+    val fa = MagenPaths.readNegationFile(s"idea/$actionsFile")
     val pa = parser.parse(fa)
     pa.flatMap(_.as[List[String]]).toOption.get.toSet
   }

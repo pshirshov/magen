@@ -1,0 +1,1234 @@
+{
+  "editor::ConfirmRename|Editor && renaming" : {
+    "vscode" : {
+      "action" : "acceptRenameInput",
+      "context" : [
+        "editorFocus && renameInputVisible && !isComposing"
+      ]
+    }
+  },
+  "editor::ConfirmCompletion|Editor && showing_completions" : {
+    "vscode" : {
+      "action" : "acceptSelectedSuggestion",
+      "context" : [
+        "acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus"
+      ]
+    }
+  },
+  "editor::Cancel|Editor && renaming" : {
+    "vscode" : {
+      "action" : "cancelRenameInput",
+      "context" : [
+        "editorFocus && renameInputVisible"
+      ]
+    }
+  },
+  "search::Dismiss|BufferSearchBar" : {
+    "vscode" : {
+      "action" : "closeFindWidget",
+      "context" : [
+        "editorFocus && findWidgetVisible && !isComposing"
+      ]
+    }
+  },
+  "project_panel::Delete|ProjectPanel && not_editing" : {
+    "vscode" : {
+      "action" : "deleteFile",
+      "context" : [
+        "filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus",
+        "filesExplorerFocus && foldersViewVisible && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus"
+      ]
+    }
+  },
+  "search::SelectNextMatch|BufferSearchBar && !in_replace" : {
+    "vscode" : {
+      "action" : "editor.action.nextMatchFindAction",
+      "context" : [
+        "editorFocus && findInputFocussed && !replaceInputFocussed"
+      ]
+    }
+  },
+  "search::SelectPreviousMatch|BufferSearchBar && !in_replace" : {
+    "vscode" : {
+      "action" : "editor.action.previousMatchFindAction",
+      "context" : [
+        "editorFocus && findInputFocussed && !replaceInputFocussed"
+      ]
+    }
+  },
+  "search::ReplaceAll|BufferSearchBar && in_replace" : {
+    "vscode" : {
+      "action" : "editor.action.replaceAll",
+      "context" : [
+        "editorFocus && findWidgetVisible"
+      ]
+    }
+  },
+  "search::ReplaceNext|BufferSearchBar && in_replace" : {
+    "vscode" : {
+      "action" : "editor.action.replaceOne",
+      "context" : [
+        "editorFocus && findWidgetVisible && replaceInputFocussed"
+      ]
+    }
+  },
+  "project_panel::Open|ProjectPanel && not_editing" : {
+    "vscode" : {
+      "action" : "explorer.openAndPassFocus",
+      "context" : [
+        "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus"
+      ]
+    }
+  },
+  "editor::Cancel|Editor && showing_completions" : {
+    "vscode" : {
+      "action" : "hideSuggestWidget",
+      "context" : [
+        "suggestWidgetVisible && textInputFocus"
+      ]
+    }
+  },
+  "project_panel::Trash|ProjectPanel && not_editing" : {
+    "vscode" : {
+      "action" : "moveFileToTrash",
+      "context" : [
+        "explorerResourceMoveableToTrash && filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus"
+      ]
+    }
+  },
+  "editor::Cancel|Editor" : {
+    "idea" : {
+      "action" : "EditorEscape"
+    }
+  },
+  "project_panel::Rename|ProjectPanel && not_editing" : {
+    "vscode" : {
+      "action" : "renameFile",
+      "context" : [
+        "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+      ]
+    }
+  },
+  "editor::ContextMenuFirst|Editor && (showing_code_actions || showing_completions)" : {
+    "idea" : {
+      "action" : "EditorLookupUp"
+    },
+    "vscode" : {
+      "action" : "selectPrevPageSuggestion",
+      "context" : [
+        "suggestWidgetVisible"
+      ]
+    }
+  },
+  "editor::ContextMenuLast|Editor && (showing_code_actions || showing_completions)" : {
+    "idea" : {
+      "action" : "EditorLookupDown"
+    },
+    "vscode" : {
+      "action" : "selectNextPageSuggestion",
+      "context" : [
+        "suggestWidgetVisible"
+      ]
+    }
+  },
+  "editor::ContextMenuNext|Editor && (showing_code_actions || showing_completions)" : {
+    "vscode" : {
+      "action" : "selectNextSuggestion",
+      "context" : [
+        "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
+      ]
+    }
+  },
+  "editor::ContextMenuPrevious|Editor && (showing_code_actions || showing_completions)" : {
+    "vscode" : {
+      "action" : "selectPrevSuggestion",
+      "context" : [
+        "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
+      ]
+    }
+  },
+  "search::ToggleCaseSensitive|Pane" : {
+    "vscode" : {
+      "action" : "toggleFindCaseSensitive",
+      "context" : [
+        "editorFocus"
+      ]
+    }
+  },
+  "search::ToggleSelection|Pane" : {
+    "vscode" : {
+      "action" : "toggleFindInSelection",
+      "context" : [
+        "editorFocus"
+      ]
+    }
+  },
+  "search::ToggleRegex|Pane" : {
+    "vscode" : {
+      "action" : "toggleFindRegex",
+      "context" : [
+        "editorFocus"
+      ]
+    }
+  },
+  "search::ToggleWholeWord|Pane" : {
+    "vscode" : {
+      "action" : "toggleFindWholeWord",
+      "context" : [
+        "editorFocus"
+      ]
+    }
+  },
+  "workspace::NewWindow|Workspace" : {
+    "vscode" : {
+      "action" : "workbench.action.newWindow"
+    }
+  },
+  "workspace::ToggleBottomDock|Workspace" : {
+    "vscode" : {
+      "action" : "workbench.action.togglePanel"
+    }
+  },
+  "editor::Copy|Editor" : {
+    "idea" : {
+      "action" : "$Copy"
+    },
+    "vscode" : {
+      "action" : "editor.action.clipboardCopyAction"
+    }
+  },
+  "editor::Cut|Editor" : {
+    "idea" : {
+      "action" : "$Cut"
+    },
+    "vscode" : {
+      "action" : "editor.action.clipboardCutAction"
+    }
+  },
+  "editor::Delete|Editor" : {
+    "idea" : {
+      "action" : "EditorDelete"
+    },
+    "vscode" : {
+      "action" : "deleteRight",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::Paste|Editor" : {
+    "idea" : {
+      "action" : "$Paste"
+    },
+    "vscode" : {
+      "action" : "editor.action.clipboardPasteAction"
+    }
+  },
+  "editor::Redo|Editor" : {
+    "idea" : {
+      "action" : "$Redo"
+    },
+    "vscode" : {
+      "action" : "redo"
+    }
+  },
+  "editor::SelectAll|Editor,Terminal" : {
+    "idea" : {
+      "action" : "$SelectAll"
+    },
+    "vscode" : {
+      "action" : "editor.action.selectAll"
+    }
+  },
+  "editor::Undo|Editor" : {
+    "idea" : {
+      "action" : "$Undo"
+    },
+    "vscode" : {
+      "action" : "undo"
+    }
+  },
+  "diagnostics::Deploy|Workspace" : {
+    "idea" : {
+      "action" : "ActivateProblemsViewToolWindow"
+    },
+    "vscode" : {
+      "action" : "workbench.actions.view.problems"
+    }
+  },
+  "project_panel::ToggleFocus|Workspace" : {
+    "idea" : {
+      "action" : "ActivateProjectToolWindow"
+    },
+    "vscode" : {
+      "action" : "workbench.view.explorer"
+    }
+  },
+  "outline_panel::ToggleFocus|Workspace" : {
+    "idea" : {
+      "action" : "ActivateStructureToolWindow"
+    }
+  },
+  "terminal_panel::Toggle" : {
+    "idea" : {
+      "action" : "ActivateTerminalToolWindow"
+    },
+    "vscode" : {
+      "action" : "workbench.action.terminal.toggleTerminal"
+    }
+  },
+  "pane::GoBack|Pane" : {
+    "idea" : {
+      "action" : "Back"
+    },
+    "vscode" : {
+      "action" : "workbench.action.navigateBack"
+    }
+  },
+  "pane::CloseActiveItem|Pane" : {
+    "idea" : {
+      "action" : "CloseContent"
+    },
+    "vscode" : {
+      "action" : "workbench.action.closeActiveEditor"
+    }
+  },
+  "pane::CloseOtherItems|Pane" : {
+    "idea" : {
+      "action" : "CloseAllEditorsButActive"
+    },
+    "vscode" : {
+      "action" : "workbench.action.closeOtherEditors"
+    }
+  },
+  "workspace::CloseWindow|Workspace" : {
+    "idea" : {
+      "action" : "CloseProject"
+    },
+    "vscode" : {
+      "action" : "workbench.action.closeWindow"
+    }
+  },
+  "editor::ShowCompletions" : {
+    "idea" : {
+      "action" : "CodeCompletion"
+    },
+    "vscode" : {
+      "action" : "editor.action.triggerSuggest",
+      "context" : [
+        "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible"
+      ]
+    }
+  },
+  "editor::ToggleComments|Editor" : {
+    "idea" : {
+      "action" : "CommentByLineComment"
+    },
+    "vscode" : {
+      "action" : "editor.action.commentLine",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::CopyPath|Editor" : {
+    "idea" : {
+      "action" : "CopyPaths"
+    },
+    "vscode" : {
+      "action" : "copyFilePath"
+    }
+  },
+  "editor::Backspace|Editor" : {
+    "idea" : {
+      "action" : "EditorBackSpace"
+    },
+    "vscode" : {
+      "action" : "deleteLeft",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::AddSelectionAbove|Editor" : {
+    "idea" : {
+      "action" : "EditorCloneCaretAbove"
+    },
+    "vscode" : {
+      "action" : "editor.action.insertCursorAbove",
+      "context" : [
+        "editorTextFocus"
+      ]
+    }
+  },
+  "editor::AddSelectionBelow|Editor" : {
+    "idea" : {
+      "action" : "EditorCloneCaretBelow"
+    },
+    "vscode" : {
+      "action" : "editor.action.insertCursorBelow",
+      "context" : [
+        "editorTextFocus"
+      ]
+    }
+  },
+  "zed::DecreaseBufferFontSize|Workspace" : {
+    "idea" : {
+      "action" : "ZoomOutIdeAction"
+    },
+    "vscode" : {
+      "action" : "workbench.action.zoomOut"
+    }
+  },
+  "editor::DeleteLine|Editor" : {
+    "idea" : {
+      "action" : "EditorDeleteLine"
+    },
+    "vscode" : {
+      "action" : "editor.action.deleteLines",
+      "context" : [
+        "textInputFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::DeleteToNextWordEnd|Editor" : {
+    "idea" : {
+      "action" : "EditorDeleteToWordEnd"
+    },
+    "vscode" : {
+      "action" : "deleteWordRight",
+      "context" : [
+        "textInputFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::DeleteToPreviousWordStart|Editor" : {
+    "idea" : {
+      "action" : "EditorDeleteToWordStart"
+    },
+    "vscode" : {
+      "action" : "deleteWordLeft",
+      "context" : [
+        "textInputFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::MoveDown|Editor" : {
+    "idea" : {
+      "action" : "EditorDown"
+    },
+    "vscode" : {
+      "action" : "cursorDown",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectDown|Editor" : {
+    "idea" : {
+      "action" : "EditorDownWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorDownSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::DuplicateLineDown|Editor" : {
+    "idea" : {
+      "action" : "EditorDuplicate"
+    },
+    "vscode" : {
+      "action" : "editor.action.duplicateSelection",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::Newline|Editor && mode == full" : {
+    "idea" : {
+      "action" : "EditorEnter"
+    }
+  },
+  "zed::IncreaseBufferFontSize|Workspace" : {
+    "idea" : {
+      "action" : "ZoomInIdeAction"
+    },
+    "vscode" : {
+      "action" : "workbench.action.zoomIn"
+    }
+  },
+  "editor::Indent|Editor" : {
+    "idea" : {
+      "action" : "EditorIndentLineOrSelection"
+    },
+    "vscode" : {
+      "action" : "editor.action.indentLines",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::JoinLines|Editor" : {
+    "idea" : {
+      "action" : "EditorJoinLines"
+    },
+    "vscode" : {
+      "action" : "editor.action.joinLines"
+    }
+  },
+  "editor::MoveLeft|Editor" : {
+    "idea" : {
+      "action" : "EditorLeft"
+    },
+    "vscode" : {
+      "action" : "cursorLeft",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectLeft|Editor" : {
+    "idea" : {
+      "action" : "EditorLeftWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorLeftSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::MoveToEndOfLine|Editor" : {
+    "idea" : {
+      "action" : "EditorLineEnd"
+    },
+    "vscode" : {
+      "action" : "cursorEnd",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectToEndOfLine|Editor" : {
+    "idea" : {
+      "action" : "EditorLineEndWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorEndSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::MoveToBeginningOfLine|Editor" : {
+    "idea" : {
+      "action" : "EditorLineStart"
+    },
+    "vscode" : {
+      "action" : "cursorHome",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectToBeginningOfLine|Editor" : {
+    "idea" : {
+      "action" : "EditorLineStartWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorHomeSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::MoveToEnclosingBracket|Editor" : {
+    "idea" : {
+      "action" : "EditorMatchBrace"
+    },
+    "vscode" : {
+      "action" : "editor.action.jumpToBracket",
+      "context" : [
+        "editorTextFocus"
+      ]
+    }
+  },
+  "editor::MoveToNextWordEnd|Editor" : {
+    "idea" : {
+      "action" : "EditorNextWord"
+    },
+    "vscode" : {
+      "action" : "cursorWordEndRight",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectToNextWordEnd|Editor" : {
+    "idea" : {
+      "action" : "EditorNextWordWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorWordEndRightSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::PageDown|Editor" : {
+    "idea" : {
+      "action" : "EditorPageDown"
+    },
+    "vscode" : {
+      "action" : "cursorPageDown",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectPageDown|Editor" : {
+    "idea" : {
+      "action" : "EditorPageDownWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorPageDownSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::PageUp|Editor" : {
+    "idea" : {
+      "action" : "EditorPageUp"
+    },
+    "vscode" : {
+      "action" : "cursorPageUp",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectPageUp|Editor" : {
+    "idea" : {
+      "action" : "EditorPageUpWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorPageUpSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::MoveToPreviousWordStart|Editor" : {
+    "idea" : {
+      "action" : "EditorPreviousWord"
+    },
+    "vscode" : {
+      "action" : "cursorWordLeft",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectToPreviousWordStart|Editor" : {
+    "idea" : {
+      "action" : "EditorPreviousWordWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorWordLeftSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "zed::ResetBufferFontSize|Workspace" : {
+    "idea" : {
+      "action" : "ResetIdeScaleAction"
+    },
+    "vscode" : {
+      "action" : "workbench.action.zoomReset"
+    }
+  },
+  "editor::MoveRight|Editor" : {
+    "idea" : {
+      "action" : "EditorRight"
+    },
+    "vscode" : {
+      "action" : "cursorRight",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectRight|Editor" : {
+    "idea" : {
+      "action" : "EditorRightWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorRightSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectLargerSyntaxNode|Editor" : {
+    "idea" : {
+      "action" : "EditorSelectWord"
+    },
+    "vscode" : {
+      "action" : "editor.action.smartSelect.expand",
+      "context" : [
+        "editorTextFocus"
+      ]
+    }
+  },
+  "editor::NewlineBelow|Editor && mode == full" : {
+    "idea" : {
+      "action" : "EditorStartNewLine"
+    },
+    "vscode" : {
+      "action" : "editor.action.insertLineAfter",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::NewlineAbove|Editor && mode == full" : {
+    "idea" : {
+      "action" : "EditorStartNewLineBefore"
+    },
+    "vscode" : {
+      "action" : "editor.action.insertLineBefore",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::MoveToEnd|Editor" : {
+    "idea" : {
+      "action" : "EditorTextEnd"
+    },
+    "vscode" : {
+      "action" : "cursorBottom",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectToEnd|Editor" : {
+    "idea" : {
+      "action" : "EditorTextEndWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorBottomSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::MoveToBeginning|Editor" : {
+    "idea" : {
+      "action" : "EditorTextStart"
+    },
+    "vscode" : {
+      "action" : "cursorTop",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectToBeginning|Editor" : {
+    "idea" : {
+      "action" : "EditorTextStartWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorTopSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::ToggleSoftWrap|Editor" : {
+    "idea" : {
+      "action" : "EditorToggleUseSoftWraps"
+    },
+    "vscode" : {
+      "action" : "editor.action.toggleWordWrap"
+    }
+  },
+  "editor::SelectSmallerSyntaxNode|Editor" : {
+    "idea" : {
+      "action" : "EditorUnSelectWord"
+    },
+    "vscode" : {
+      "action" : "editor.action.smartSelect.shrink",
+      "context" : [
+        "editorTextFocus"
+      ]
+    }
+  },
+  "editor::Outdent|Editor" : {
+    "idea" : {
+      "action" : "EditorUnindentLineOrSelection"
+    },
+    "vscode" : {
+      "action" : "editor.action.outdentLines",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::MoveUp|Editor" : {
+    "idea" : {
+      "action" : "EditorUp"
+    },
+    "vscode" : {
+      "action" : "cursorUp",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "editor::SelectUp|Editor" : {
+    "idea" : {
+      "action" : "EditorUpWithSelection"
+    },
+    "vscode" : {
+      "action" : "cursorUpSelect",
+      "context" : [
+        "textInputFocus"
+      ]
+    }
+  },
+  "zed::Quit|Workspace" : {
+    "idea" : {
+      "action" : "Exit"
+    },
+    "vscode" : {
+      "action" : "workbench.action.quit"
+    }
+  },
+  "editor::Hover|Editor" : {
+    "idea" : {
+      "action" : "QuickJavaDoc"
+    },
+    "vscode" : {
+      "action" : "editor.action.showHover",
+      "context" : [
+        "editorTextFocus"
+      ]
+    }
+  },
+  "workspace::NewFile|Workspace" : {
+    "idea" : {
+      "action" : "NewScratchFile"
+    },
+    "vscode" : {
+      "action" : "workbench.action.files.newUntitledFile"
+    }
+  },
+  "buffer_search::Deploy|Editor" : {
+    "idea" : {
+      "action" : "Find"
+    },
+    "vscode" : {
+      "action" : "actions.find",
+      "context" : [
+        "editorFocus || editorIsOpen"
+      ]
+    }
+  },
+  "pane::DeploySearch|Pane" : {
+    "idea" : {
+      "action" : "ReplaceInPath"
+    },
+    "vscode" : {
+      "action" : "workbench.action.replaceInFiles"
+    }
+  },
+  "search::SelectNextMatch|BufferSearchBar" : {
+    "idea" : {
+      "action" : "FindNext"
+    },
+    "vscode" : {
+      "action" : "editor.action.nextMatchFindAction",
+      "context" : [
+        "editorFocus && findInputFocussed"
+      ]
+    }
+  },
+  "search::SelectPreviousMatch|BufferSearchBar" : {
+    "idea" : {
+      "action" : "FindPrevious"
+    },
+    "vscode" : {
+      "action" : "editor.action.previousMatchFindAction",
+      "context" : [
+        "editorFocus && findInputFocussed",
+        "editorFocus"
+      ]
+    }
+  },
+  "pane::GoForward|Pane" : {
+    "idea" : {
+      "action" : "Forward"
+    },
+    "vscode" : {
+      "action" : "workbench.action.navigateForward"
+    }
+  },
+  "command_palette::Toggle|Workspace" : {
+    "idea" : {
+      "action" : "GotoAction"
+    },
+    "vscode" : {
+      "action" : "workbench.action.showCommands"
+    }
+  },
+  "project_symbols::Toggle|Workspace" : {
+    "idea" : {
+      "action" : "GotoClass"
+    },
+    "vscode" : {
+      "action" : "workbench.action.showAllSymbols"
+    }
+  },
+  "editor::GoToDefinition|Editor" : {
+    "idea" : {
+      "action" : "QuickImplementations"
+    },
+    "vscode" : {
+      "action" : "editor.action.peekDefinition"
+    }
+  },
+  "file_finder::Toggle|Workspace" : {
+    "idea" : {
+      "action" : "GotoFile"
+    },
+    "vscode" : {
+      "action" : "workbench.action.quickOpen"
+    }
+  },
+  "editor::GoToImplementation|Editor" : {
+    "idea" : {
+      "action" : "GotoImplementation"
+    },
+    "vscode" : {
+      "action" : "editor.action.goToImplementation",
+      "context" : [
+        "editorHasImplementationProvider && editorTextFocus"
+      ]
+    }
+  },
+  "go_to_line::Toggle|Editor" : {
+    "idea" : {
+      "action" : "GotoLine"
+    },
+    "vscode" : {
+      "action" : "workbench.action.gotoLine"
+    }
+  },
+  "editor::GoToDiagnostic|Editor" : {
+    "idea" : {
+      "action" : "VcsShowNextChangeMarker"
+    },
+    "vscode" : {
+      "action" : "editor.action.marker.next",
+      "context" : [
+        "editorFocus"
+      ]
+    }
+  },
+  "editor::GoToPreviousDiagnostic|Editor" : {
+    "idea" : {
+      "action" : "VcsShowPrevChangeMarker"
+    },
+    "vscode" : {
+      "action" : "editor.action.marker.prev",
+      "context" : [
+        "editorFocus"
+      ]
+    }
+  },
+  "outline::Toggle|Workspace" : {
+    "idea" : {
+      "action" : "GotoSymbol"
+    },
+    "vscode" : {
+      "action" : "workbench.action.gotoSymbol"
+    }
+  },
+  "editor::GoToTypeDefinition|Editor" : {
+    "idea" : {
+      "action" : "GotoTypeDeclaration"
+    },
+    "vscode" : {
+      "action" : "editor.action.goToTypeDefinition"
+    }
+  },
+  "workspace::ToggleLeftDock|Workspace" : {
+    "idea" : {
+      "action" : "HideSideWindows"
+    },
+    "vscode" : {
+      "action" : "workbench.action.toggleSidebarVisibility"
+    }
+  },
+  "editor::MoveLineDown|Editor" : {
+    "idea" : {
+      "action" : "MoveStatementDown"
+    },
+    "vscode" : {
+      "action" : "editor.action.moveLinesDownAction",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "editor::MoveLineUp|Editor" : {
+    "idea" : {
+      "action" : "MoveStatementUp"
+    },
+    "vscode" : {
+      "action" : "editor.action.moveLinesUpAction",
+      "context" : [
+        "editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "workspace::ActivateNextPane|Workspace" : {
+    "idea" : {
+      "action" : "NextSplitter"
+    },
+    "vscode" : {
+      "action" : "workbench.action.focusNextGroup"
+    }
+  },
+  "pane::ActivateNextItem|Pane" : {
+    "idea" : {
+      "action" : "NextTab"
+    },
+    "vscode" : {
+      "action" : "workbench.action.nextEditor"
+    }
+  },
+  "editor::OrganizeImports|Editor" : {
+    "idea" : {
+      "action" : "OptimizeImports"
+    },
+    "vscode" : {
+      "action" : "editor.action.organizeImports"
+    }
+  },
+  "editor::ShowSignatureHelp" : {
+    "idea" : {
+      "action" : "ParameterInfo"
+    },
+    "vscode" : {
+      "action" : "editor.action.triggerParameterHints",
+      "context" : [
+        "editorHasSignatureHelpProvider && editorTextFocus"
+      ]
+    }
+  },
+  "workspace::ActivatePreviousPane|Workspace" : {
+    "idea" : {
+      "action" : "PrevSplitter"
+    },
+    "vscode" : {
+      "action" : "workbench.action.focusPreviousGroup"
+    }
+  },
+  "pane::ActivatePreviousItem|Pane" : {
+    "idea" : {
+      "action" : "PreviousTab"
+    },
+    "vscode" : {
+      "action" : "workbench.action.previousEditor"
+    }
+  },
+  "projects::OpenRecent|Workspace" : {
+    "idea" : {
+      "action" : "RecentFiles"
+    },
+    "vscode" : {
+      "action" : "workbench.action.openRecent"
+    }
+  },
+  "editor::Format|Editor" : {
+    "idea" : {
+      "action" : "ReformatCode"
+    },
+    "vscode" : {
+      "action" : "editor.action.formatDocument",
+      "context" : [
+        "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor"
+      ]
+    }
+  },
+  "editor::Rename|Editor" : {
+    "idea" : {
+      "action" : "RenameElement"
+    },
+    "vscode" : {
+      "action" : "editor.action.rename",
+      "context" : [
+        "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+      ]
+    }
+  },
+  "pane::ReopenClosedItem|Pane" : {
+    "idea" : {
+      "action" : "ReopenClosedTab"
+    },
+    "vscode" : {
+      "action" : "workbench.action.reopenClosedEditor"
+    }
+  },
+  "buffer_search::DeployReplace|Editor" : {
+    "idea" : {
+      "action" : "Replace"
+    },
+    "vscode" : {
+      "action" : "editor.action.startFindReplaceAction",
+      "context" : [
+        "editorFocus || editorIsOpen"
+      ]
+    }
+  },
+  "workspace::Save|Workspace" : {
+    "idea" : {
+      "action" : "SaveAll"
+    },
+    "vscode" : {
+      "action" : "workbench.action.files.save"
+    }
+  },
+  "workspace::SaveAll|Workspace" : {
+    "idea" : {
+      "action" : "SaveAll"
+    },
+    "vscode" : {
+      "action" : "workbench.action.files.saveAll"
+    }
+  },
+  "search::SelectAllMatches|BufferSearchBar" : {
+    "idea" : {
+      "action" : "SelectAllOccurrences"
+    },
+    "vscode" : {
+      "action" : "editor.action.selectAllMatches",
+      "context" : [
+        "editorFocus && findWidgetVisible"
+      ]
+    }
+  },
+  "search::SelectAllMatches|Pane" : {
+    "idea" : {
+      "action" : "SelectAllOccurrences"
+    },
+    "vscode" : {
+      "action" : "editor.action.selectHighlights",
+      "context" : [
+        "editorFocus && !findWidgetVisible"
+      ]
+    }
+  },
+  "editor::ToggleCodeActions" : {
+    "idea" : {
+      "action" : "ShowIntentionActions"
+    },
+    "vscode" : {
+      "action" : "editor.action.quickFix",
+      "context" : [
+        "editorHasCodeActionsProvider && textInputFocus && !editorReadonly"
+      ]
+    }
+  },
+  "zed::OpenSettings|Workspace" : {
+    "idea" : {
+      "action" : "ShowSettings"
+    },
+    "vscode" : {
+      "action" : "workbench.action.openSettings"
+    }
+  },
+  "editor::FindAllReferences|Editor" : {
+    "idea" : {
+      "action" : "ShowUsages"
+    },
+    "vscode" : {
+      "action" : "editor.action.goToReferences",
+      "context" : [
+        "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+      ]
+    }
+  },
+  "pane::SplitRight|Pane" : {
+    "idea" : {
+      "action" : "SplitVertically"
+    },
+    "vscode" : {
+      "action" : "workbench.action.splitEditorRight"
+    }
+  },
+  "terminal::Copy|Terminal" : {
+    "idea" : {
+      "action" : "Terminal.CopySelectedText"
+    },
+    "vscode" : {
+      "action" : "workbench.action.terminal.copySelection",
+      "context" : [
+        "terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused"
+      ]
+    }
+  },
+  "workspace::NewTerminal|Terminal" : {
+    "idea" : {
+      "action" : "Terminal.NewTab"
+    },
+    "vscode" : {
+      "action" : "workbench.action.terminal.new",
+      "context" : [
+        "terminalFocus"
+      ]
+    }
+  },
+  "terminal::Paste|Terminal" : {
+    "idea" : {
+      "action" : "Terminal.Paste"
+    },
+    "vscode" : {
+      "action" : "workbench.action.terminal.paste",
+      "context" : [
+        "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+      ]
+    }
+  },
+  "zed::ToggleFullScreen|Workspace" : {
+    "idea" : {
+      "action" : "ToggleFullScreen"
+    },
+    "vscode" : {
+      "action" : "workbench.action.toggleFullScreen"
+    }
+  },
+  "editor::GoToHunk|Editor" : {
+    "idea" : {
+      "action" : "VcsShowNextChangeMarker"
+    },
+    "vscode" : {
+      "action" : "workbench.action.editor.nextChange"
+    }
+  },
+  "editor::GoToPreviousHunk|Editor" : {
+    "idea" : {
+      "action" : "VcsShowPrevChangeMarker"
+    },
+    "vscode" : {
+      "action" : "workbench.action.editor.previousChange"
+    }
+  }
+}
