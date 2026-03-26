@@ -203,6 +203,8 @@ magen import vscode --keymap ~/Library/Application\ Support/Code/User/keybinding
 
 Import IntelliJ IDEA keybindings as a new Magen scheme. Supports three modes: direct file path (`--keymap`), keymap ID lookup (`--keymap-id`), or auto-discovery (neither specified).
 
+**Parent keymap resolution:** IDEA keymaps use a parent inheritance chain (e.g. `Sublime Text (Mac OS X)` → `Mac OS X 10.5+` → `$default`). Magen automatically resolves the full parent chain, merging inherited bindings: child shortcuts override parent shortcuts for the same action, and empty `<action/>` elements in a child unbind that action from the parent. Bundled default keymaps (`$default`, `Mac OS X 10.5+`, `Emacs`, etc.) are included as resources and used for parent resolution. If a parent keymap is not found, a warning is printed and only the keymap's own bindings are imported.
+
 ```
 magen import idea --scheme NAME --mappings DIR [--keymap PATH | --keymap-id ID]
 ```
@@ -353,6 +355,11 @@ src/main/resources/
     from-idea.json        # IDEA action → VSCode/Zed equivalents
     from-vscode.json      # VSCode action → IDEA/Zed equivalents
     from-zed.json         # Zed action → IDEA/VSCode equivalents
+  idea-keymaps/           # Bundled IntelliJ default keymaps (for parent resolution)
+    $default.xml          # Root keymap with all default bindings
+    Mac OS X 10.5+.xml    # macOS keymap (parent: $default)
+    Emacs.xml             # Emacs keymap (parent: $default)
+    ...                   # Other bundled keymaps from IntelliJ Community
 ```
 
 Schemes and negation data are bundled as classpath resources in the JAR. At runtime, magen reads them from the classpath by default. Use `--mappings` and `--negations` to override with filesystem directories.

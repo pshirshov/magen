@@ -137,7 +137,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
   "IDEA import → render round-trip" should {
     val ideaInput =
       """<?xml version="1.0" encoding="UTF-8"?>
-        |<keymap version="1" name="TestKeymap" parent="$default">
+        |<keymap version="1" name="TestKeymap">
         |  <action id="$Copy">
         |    <keyboard-shortcut first-keystroke="ctrl C" />
         |  </action>
@@ -263,7 +263,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
     "handle two-keystroke IDEA shortcuts" in {
       val twoKeyInput =
         """<?xml version="1.0" encoding="UTF-8"?>
-          |<keymap version="1" name="TestTwoKey" parent="$default">
+          |<keymap version="1" name="TestTwoKey">
           |  <action id="Vcs.Push">
           |    <keyboard-shortcut first-keystroke="ctrl K" second-keystroke="ctrl P" />
           |  </action>
@@ -418,7 +418,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val vscodeJson = """[{"key": "ctrl+c", "command": "editor.action.clipboardCopyAction"}]"""
       val ideaXml =
         """<?xml version="1.0" encoding="UTF-8"?>
-          |<keymap version="1" name="Test" parent="$default">
+          |<keymap version="1" name="Test">
           |  <action id="$Copy"><keyboard-shortcut first-keystroke="ctrl C" /></action>
           |</keymap>""".stripMargin
       val zedJson = """[{"bindings": {"ctrl-c": "editor::Copy"}}]"""
@@ -455,7 +455,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       // Import Ctrl+C as copy from IDEA
       val ideaXml =
         """<?xml version="1.0" encoding="UTF-8"?>
-          |<keymap version="1" name="Test" parent="$default">
+          |<keymap version="1" name="Test">
           |  <action id="$Copy"><keyboard-shortcut first-keystroke="ctrl C" /></action>
           |</keymap>""".stripMargin
       val ideaFile = writeTempFile("idea.xml", ideaXml)
@@ -498,7 +498,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
     "handle IDEA special key names (BACK_SPACE, PAGE_DOWN)" in {
       val input =
         """<?xml version="1.0" encoding="UTF-8"?>
-          |<keymap version="1" name="Test" parent="$default">
+          |<keymap version="1" name="Test">
           |  <action id="EditorBackSpace"><keyboard-shortcut first-keystroke="BACK_SPACE" /></action>
           |  <action id="EditorPageDown"><keyboard-shortcut first-keystroke="PAGE_DOWN" /></action>
           |</keymap>""".stripMargin

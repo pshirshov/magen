@@ -7,6 +7,7 @@ import io.septimalmind.magen.util.{DefaultPaths, PathExpander}
 import java.io.BufferedInputStream
 import java.nio.file.{Path, Paths}
 import java.util.zip.ZipFile
+import scala.collection.mutable
 import scala.util.Using
 import scala.xml.{Elem, XML}
 
@@ -18,6 +19,8 @@ case class IdeaKeymapInfo(
 )
 
 object IdeaSchemeImporter {
+  private val BUNDLED_RESOURCE_PREFIX = "idea-keymaps"
+
   def listKeymaps(): List[IdeaKeymapInfo] = {
     val userKeymaps = listUserKeymaps()
     val bundledKeymaps = listBundledKeymaps()
@@ -34,41 +37,110 @@ object IdeaSchemeImporter {
       }
 
     val xml = loadKeymapXml(keymap)
-    parseKeymapXml(xml)
+    val findParent: String => Option[Elem] = name => {
+      allKeymaps.find(_.name == name).map(loadKeymapXml)
+        .orElse(loadBundledKeymapResource(name))
+    }
+    resolveAndParse(xml, findParent)
   }
 
   def importFromFile(file: Path): ImportedScheme = {
     val xml = XML.loadFile(file.toFile)
-    parseKeymapXml(xml)
+    resolveAndParse(xml, name => loadBundledKeymapResource(name))
   }
 
-  private def parseKeymapXml(xml: Elem): ImportedScheme = {
-    val actions = xml \ "action"
-    val bindings = actions.flatMap {
-      action =>
-        val actionId = (action \ "@id").text
-        val shortcuts = action \ "keyboard-shortcut"
+  // -- Parent resolution and merging --
 
-        shortcuts.flatMap {
-          shortcut =>
-            val firstKeystroke = (shortcut \ "@first-keystroke").text
-            val secondKeystroke = (shortcut \ "@second-keystroke").text
+  private def resolveAndParse(xml: Elem, findParent: String => Option[Elem]): ImportedScheme = {
+    val resolved = resolveParentChain(xml, findParent)
+    val bindings = resolved.values.flatten.toList
+    println(s"  Resolved ${resolved.size} actions (${bindings.size} bindings) after parent inheritance")
+    ImportedScheme(ImportSource.Idea, bindings)
+  }
 
-            if (firstKeystroke.nonEmpty) {
-              val firstCombo = parseIdeaCombo(firstKeystroke)
-              val combos = if (secondKeystroke.nonEmpty) {
-                List(firstCombo, parseIdeaCombo(secondKeystroke))
-              } else {
-                List(firstCombo)
-              }
-              Some(ImportedBinding(actionId, Chord(combos), List.empty))
-            } else {
-              None
-            }
-        }
+  private def resolveParentChain(
+    xml: Elem,
+    findParent: String => Option[Elem],
+  ): Map[String, List[ImportedBinding]] = {
+    val parentName = (xml \ "@parent").text
+    val keymapName = (xml \ "@name").text
+
+    val parentActions = if (parentName.nonEmpty) {
+      findParent(parentName) match {
+        case Some(parentXml) =>
+          println(s"  Resolving parent '$parentName' for keymap '$keymapName'")
+          resolveParentChain(parentXml, findParent)
+        case None =>
+          println(s"  WARNING: Parent keymap '$parentName' not found for '$keymapName', skipping parent resolution")
+          Map.empty[String, List[ImportedBinding]]
+      }
+    } else {
+      Map.empty[String, List[ImportedBinding]]
     }
 
-    ImportedScheme(ImportSource.Idea, bindings.toList)
+    mergeActionMaps(parentActions, extractActionMap(xml))
+  }
+
+  private def extractActionMap(xml: Elem): Map[String, List[ImportedBinding]] = {
+    val actions = xml \ "action"
+    val result = mutable.LinkedHashMap.empty[String, List[ImportedBinding]]
+
+    actions.foreach { action =>
+      val actionId = (action \ "@id").text
+      val shortcuts = action \ "keyboard-shortcut"
+
+      val bindings = shortcuts.flatMap { shortcut =>
+        val firstKeystroke = (shortcut \ "@first-keystroke").text
+        val secondKeystroke = (shortcut \ "@second-keystroke").text
+
+        if (firstKeystroke.nonEmpty) {
+          val firstCombo = parseIdeaCombo(firstKeystroke)
+          val combos = if (secondKeystroke.nonEmpty) {
+            List(firstCombo, parseIdeaCombo(secondKeystroke))
+          } else {
+            List(firstCombo)
+          }
+          Some(ImportedBinding(actionId, Chord(combos), List.empty))
+        } else {
+          None
+        }
+      }.toList
+
+      // Empty list means explicit unbind (action present but no shortcuts)
+      result(actionId) = bindings
+    }
+
+    result.toMap
+  }
+
+  private def mergeActionMaps(
+    parent: Map[String, List[ImportedBinding]],
+    child: Map[String, List[ImportedBinding]],
+  ): Map[String, List[ImportedBinding]] = {
+    val result = mutable.LinkedHashMap.from(parent)
+
+    child.foreach { case (actionId, bindings) =>
+      if (bindings.isEmpty) {
+        // Empty action in child = explicit unbind from parent
+        result.remove(actionId)
+      } else {
+        // Child overrides parent
+        result(actionId) = bindings
+      }
+    }
+
+    result.toMap
+  }
+
+  // -- Bundled keymap resources --
+
+  private def loadBundledKeymapResource(name: String): Option[Elem] = {
+    val resourcePath = s"/$BUNDLED_RESOURCE_PREFIX/$name.xml"
+    Option(getClass.getResourceAsStream(resourcePath)).map { is =>
+      Using(new BufferedInputStream(is)) { bis =>
+        XML.load(bis)
+      }.get
+    }
   }
 
   // IntelliJ format: "ctrl shift K" or "ctrl alt BACK_SPACE"
