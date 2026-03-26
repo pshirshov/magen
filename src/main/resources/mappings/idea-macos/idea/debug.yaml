@@ -1,0 +1,20 @@
+mapping:
+  - id: "DebugClass"
+    binding:
+      - "ctrl+shift+[F9]"
+      - "ctrl+shift+[KeyD]"
+    idea:
+      action: "DebugClass"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "XDebugger.AttachToProcess"
+    binding:
+      - "alt+shift+[F5]"
+    idea:
+      action: "XDebugger.AttachToProcess"
+    vscode:
+      missing: true
+    zed:
+      missing: true

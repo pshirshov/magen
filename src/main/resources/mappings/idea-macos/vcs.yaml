@@ -1,0 +1,39 @@
+mapping:
+  - id: "Diff.NextChange"
+    binding:
+      - "ctrl+shift+[right]"
+    idea:
+      action: "Diff.NextChange"
+    vscode:
+      action: "workbench.action.compareEditor.nextChange"
+    zed:
+      missing: true
+  - id: "Diff.PrevChange"
+    binding:
+      - "ctrl+shift+[left]"
+    idea:
+      action: "Diff.PrevChange"
+    vscode:
+      action: "workbench.action.compareEditor.previousChange"
+    zed:
+      missing: true
+  - id: "VcsShowNextChangeMarker"
+    binding:
+      - "shift+ctrl+alt+[down]"
+    idea:
+      action: "VcsShowNextChangeMarker"
+    vscode:
+      action: "workbench.action.editor.nextChange"
+    zed:
+      action: "editor::GoToHunk"
+      context: ["Editor"]
+  - id: "VcsShowPrevChangeMarker"
+    binding:
+      - "shift+ctrl+alt+[up]"
+    idea:
+      action: "VcsShowPrevChangeMarker"
+    vscode:
+      action: "workbench.action.editor.previousChange"
+    zed:
+      action: "editor::GoToPreviousHunk"
+      context: ["Editor"]

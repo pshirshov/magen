@@ -17,7 +17,7 @@ object ShortcutParser extends RegexParsers {
     }
 
   def key: Parser[NamedKey] =
-    ("""[a-zA-Z0-9\[\],.=`/-]+""".r) ^^ {
+    ("""[a-zA-Z0-9\[\],.=`/_-]+""".r) ^^ {
       s =>
         NamedKey.make(s)
     }

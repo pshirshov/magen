@@ -185,7 +185,7 @@
     "when": "editorTextFocus && gitlens:enabled && isInDiffRightEditor && config.gitlens.keymap == 'chorded' && resourceScheme =~ /^(gitlens|git|pr)$/"
   },
   {
-    "key": "shift+alt+[IntlBackslash]",
+    "key": "shift+alt+oem_102",
     "command": "-gitlens.diffWithWorking",
     "when": "editorTextFocus && gitlens:enabled && config.gitlens.keymap == 'alternate' && resourceScheme =~ /^(gitlens|git|pr)$/"
   },
@@ -195,7 +195,7 @@
     "when": "editorTextFocus && gitlens:enabled && config.gitlens.keymap == 'alternate' && resourceScheme =~ /^(gitlens|git|pr)$/"
   },
   {
-    "key": "ctrl+shift+g shift+[IntlBackslash]",
+    "key": "ctrl+shift+g shift+oem_102",
     "command": "-gitlens.diffWithWorking",
     "when": "editorTextFocus && gitlens:enabled && config.gitlens.keymap == 'chorded' && resourceScheme =~ /^(gitlens|git|pr)$/"
   },
@@ -205,7 +205,7 @@
     "when": "editorTextFocus && gitlens:enabled && config.gitlens.keymap == 'chorded' && resourceScheme =~ /^(gitlens|git|pr)$/"
   },
   {
-    "key": "alt+[IntlBackslash]",
+    "key": "alt+oem_102",
     "command": "-gitlens.diffLineWithPrevious",
     "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && resource in 'gitlens:tabs:tracked'"
   },
@@ -215,7 +215,7 @@
     "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && resource in 'gitlens:tabs:tracked'"
   },
   {
-    "key": "ctrl+shift+g [IntlBackslash]",
+    "key": "ctrl+shift+g oem_102",
     "command": "-gitlens.diffLineWithPrevious",
     "when": "editorTextFocus && config.gitlens.keymap == 'chorded' && resource in 'gitlens:tabs:tracked'"
   },

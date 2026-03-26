@@ -1,0 +1,395 @@
+mapping:
+  - id: "ActivateBookmarksToolWindow"
+    binding:
+      macos: "meta+2"
+      default: "ctrl+2"
+    idea:
+      action: "ActivateBookmarksToolWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ActivateNuGetToolWindow"
+    binding:
+      macos: "meta+alt+7"
+      default: "ctrl+alt+7"
+    idea:
+      action: "ActivateNuGetToolWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ActivateServicesToolWindow"
+    binding:
+      macos: "meta+8"
+      default: "ctrl+8"
+    idea:
+      action: "ActivateServicesToolWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ActivateUnitTestsToolWindow"
+    binding:
+      macos: "meta+alt+8"
+      default: "ctrl+alt+8"
+    idea:
+      action: "ActivateUnitTestsToolWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "EmojiAndSymbols"
+    binding:
+      macos: "ctrl+meta+[space]"
+      default: "ctrl+alt+[space]"
+    idea:
+      action: "EmojiAndSymbols"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExpandAllToLevel1"
+    binding:
+      macos:
+        - "meta+alt+[MULTIPLY] 1"
+        - "meta+alt+[MULTIPLY] [NUMPAD1]"
+      default:
+        - "ctrl+alt+[MULTIPLY] 1"
+        - "ctrl+alt+[MULTIPLY] [NUMPAD1]"
+    idea:
+      action: "ExpandAllToLevel1"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExpandAllToLevel2"
+    binding:
+      macos:
+        - "meta+alt+[MULTIPLY] 2"
+        - "meta+alt+[MULTIPLY] [NUMPAD2]"
+      default:
+        - "ctrl+alt+[MULTIPLY] 2"
+        - "ctrl+alt+[MULTIPLY] [NUMPAD2]"
+    idea:
+      action: "ExpandAllToLevel2"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExpandAllToLevel3"
+    binding:
+      macos:
+        - "meta+alt+[MULTIPLY] 3"
+        - "meta+alt+[MULTIPLY] [NUMPAD3]"
+      default:
+        - "ctrl+alt+[MULTIPLY] 3"
+        - "ctrl+alt+[MULTIPLY] [NUMPAD3]"
+    idea:
+      action: "ExpandAllToLevel3"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExpandAllToLevel4"
+    binding:
+      macos:
+        - "meta+alt+[MULTIPLY] 4"
+        - "meta+alt+[MULTIPLY] [NUMPAD4]"
+      default:
+        - "ctrl+alt+[MULTIPLY] 4"
+        - "ctrl+alt+[MULTIPLY] [NUMPAD4]"
+    idea:
+      action: "ExpandAllToLevel4"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExpandAllToLevel5"
+    binding:
+      macos:
+        - "meta+alt+[MULTIPLY] 5"
+        - "meta+alt+[MULTIPLY] [NUMPAD5]"
+      default:
+        - "ctrl+alt+[MULTIPLY] 5"
+        - "ctrl+alt+[MULTIPLY] [NUMPAD5]"
+    idea:
+      action: "ExpandAllToLevel5"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ExportToTextFile"
+    binding:
+      - "ctrl+[KeyO]"
+    idea:
+      action: "ExportToTextFile"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "List-selectFirstRow"
+    binding:
+      - "alt+[up]"
+    idea:
+      action: "List-selectFirstRow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "List-selectFirstRowExtendSelection"
+    binding:
+      - "alt+shift+[up]"
+    idea:
+      action: "List-selectFirstRowExtendSelection"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "List-selectLastRow"
+    binding:
+      - "alt+[down]"
+    idea:
+      action: "List-selectLastRow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "List-selectLastRowExtendSelection"
+    binding:
+      - "alt+shift+[down]"
+    idea:
+      action: "List-selectLastRowExtendSelection"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "MinimizeCurrentWindow"
+    binding:
+      macos: "meta+[KeyM]"
+      default: "ctrl+[KeyM]"
+    idea:
+      action: "MinimizeCurrentWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "QuickChangeScheme"
+    binding:
+      - "ctrl+[BACK_QUOTE]"
+    idea:
+      action: "QuickChangeScheme"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ResizeToolWindowDown"
+    binding:
+      - "ctrl+alt+[down]"
+    idea:
+      action: "ResizeToolWindowDown"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ResizeToolWindowLeft"
+    binding:
+      - "ctrl+alt+[left]"
+    idea:
+      action: "ResizeToolWindowLeft"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ResizeToolWindowRight"
+    binding:
+      - "ctrl+alt+[right]"
+    idea:
+      action: "ResizeToolWindowRight"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ResizeToolWindowUp"
+    binding:
+      - "ctrl+alt+[up]"
+    idea:
+      action: "ResizeToolWindowUp"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ServiceView.GroupByContributor"
+    binding:
+      - "ctrl+[KeyT]"
+    idea:
+      action: "ServiceView.GroupByContributor"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ServiceView.ShowServices"
+    binding:
+      macos: "shift+meta+[KeyT]"
+      default: "shift+ctrl+[KeyT]"
+    idea:
+      action: "ServiceView.ShowServices"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ShowContent"
+    binding:
+      - "ctrl+shift+[down]"
+    idea:
+      action: "ShowContent"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ShowFilterPopup"
+    binding:
+      - "ctrl+alt+[KeyF]"
+    idea:
+      action: "ShowFilterPopup"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ShowProjectStructureSettings"
+    binding:
+      macos: "meta+[Semicolon]"
+      default: "ctrl+[Semicolon]"
+    idea:
+      action: "ShowProjectStructureSettings"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "TodoViewGroupByFlattenPackage"
+    binding:
+      - "ctrl+[KeyF]"
+    idea:
+      action: "TodoViewGroupByFlattenPackage"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "TodoViewGroupByShowModules"
+    binding:
+      - "ctrl+[KeyM]"
+    idea:
+      action: "TodoViewGroupByShowModules"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "TodoViewGroupByShowPackages"
+    binding:
+      - "ctrl+[KeyP]"
+    idea:
+      action: "TodoViewGroupByShowPackages"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageFiltering.Imports"
+    binding:
+      - "ctrl+[KeyI]"
+    idea:
+      action: "UsageFiltering.Imports"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageFiltering.ReadAccess"
+    binding:
+      - "ctrl+[KeyR]"
+    idea:
+      action: "UsageFiltering.ReadAccess"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageFiltering.WriteAccess"
+    binding:
+      - "ctrl+[KeyW]"
+    idea:
+      action: "UsageFiltering.WriteAccess"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageGrouping.Directory"
+    binding:
+      - "ctrl+[KeyP]"
+    idea:
+      action: "UsageGrouping.Directory"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageGrouping.DirectoryStructure"
+    binding:
+      - "ctrl+[KeyD]"
+    idea:
+      action: "UsageGrouping.DirectoryStructure"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageGrouping.FileStructure"
+    binding:
+      - "ctrl+[KeyS]"
+    idea:
+      action: "UsageGrouping.FileStructure"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageGrouping.FlattenModules"
+    binding:
+      - "ctrl+[KeyO]"
+    idea:
+      action: "UsageGrouping.FlattenModules"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageGrouping.Module"
+    binding:
+      - "ctrl+[KeyM]"
+    idea:
+      action: "UsageGrouping.Module"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageGrouping.UsageType"
+    binding:
+      - "ctrl+[KeyT]"
+    idea:
+      action: "UsageGrouping.UsageType"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "UsageView.Include"
+    binding:
+      - "shift+[Backspace]"
+    idea:
+      action: "UsageView.Include"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ZoomCurrentWindow"
+    binding:
+      macos: "meta+ctrl+[Equal]"
+      default: "alt+ctrl+[Equal]"
+    idea:
+      action: "ZoomCurrentWindow"
+    vscode:
+      missing: true
+    zed:
+      missing: true

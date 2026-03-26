@@ -10,7 +10,7 @@ import io.septimalmind.magen.util.Aliases
 object ZedRenderer extends Renderer {
   override def id: String = "zed.json"
 
-  override def render(mapping: Mapping): String = {
+  override def render(mapping: Mapping, platform: Platform): String = {
     val bindings = for {
       c <- mapping.mapping
       a <- c.zed.toList
@@ -138,15 +138,17 @@ object ZedRenderer extends Renderer {
       case "space" => "space"
       case "BracketLeft" => "["
       case "BracketRight" => "]"
-      case "Slash" => "/"
-      case "Backslash" => "\\"
+      case "Slash" | "DIVIDE" => "/"
+      case "Backslash" | "IntlBackslash" => "\\"
       case "Minus" => "-"
       case "Equal" => "="
       case "Quote" => "'"
-      case "Backquote" => "`"
+      case "Backquote" | "BACK_QUOTE" => "`"
       case "Semicolon" => ";"
       case "Comma" => ","
       case "Period" => "."
+      case "MULTIPLY" => "*"
+      case s if s.startsWith("NUMPAD") => s.drop(6).toLowerCase
       // Single character keys
       case s if s.length == 1 => s.toLowerCase
       case s => s.toLowerCase

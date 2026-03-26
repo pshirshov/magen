@@ -18,8 +18,10 @@ object Key {
 
   object NamedKey {
     def make(s: String): NamedKey = {
-      if (s.startsWith("[Key")) {
+      if (s.startsWith("[Key") && s.endsWith("]")) {
         new NamedKey(s.substring(4, 5))
+      } else if (s.startsWith("[") && s.endsWith("]")) {
+        new NamedKey(s.substring(1, s.length - 1))
       } else {
         new NamedKey(s)
       }

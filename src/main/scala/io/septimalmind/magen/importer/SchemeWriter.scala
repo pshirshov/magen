@@ -2,19 +2,23 @@ package io.septimalmind.magen.importer
 
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.{Chord, Modifier, SchemeId}
+import io.septimalmind.magen.util.MagenPaths
 
 import java.nio.charset.StandardCharsets
-import java.nio.file.{Files, Path, Paths}
+import java.nio.file.{Files, Path}
 
 object SchemeWriter {
   def write(schemeId: SchemeId, imported: ImportedScheme): Path = {
-    val schemeDir = Paths.get("mappings", "schemes", schemeId.name)
+    val schemeDir = MagenPaths.writableDir.resolve(schemeId.name)
     Files.createDirectories(schemeDir)
 
     val grouped = imported.bindings
       .groupBy(b => b.action)
       .toList
       .sortBy(_._1)
+
+    var mapped = 0
+    var unmapped = 0
 
     val sb = new StringBuilder()
     sb.append("mapping:\n")
@@ -30,43 +34,72 @@ object SchemeWriter {
           sb.append(s"""      - "${renderChord(chord)}"\n""")
         }
 
-        imported.source match {
-          case ImportSource.VSCode =>
-            sb.append("    vscode:\n")
-            sb.append(s"""      action: "$action"\n""")
-            if (allContexts.nonEmpty) {
-              sb.append(s"""      context: [${allContexts.map(c => s""""$c"""").mkString(", ")}]\n""")
-            }
-            sb.append("    idea:\n")
-            sb.append("      missing: true\n")
-            sb.append("    zed:\n")
-            sb.append("      missing: true\n")
-
-          case ImportSource.Idea =>
-            sb.append("    idea:\n")
-            sb.append(s"""      action: "$action"\n""")
-            sb.append("    vscode:\n")
-            sb.append("      missing: true\n")
-            sb.append("    zed:\n")
-            sb.append("      missing: true\n")
-
-          case ImportSource.Zed =>
-            sb.append("    zed:\n")
-            sb.append(s"""      action: "$action"\n""")
-            if (allContexts.nonEmpty) {
-              sb.append(s"""      context: [${allContexts.map(c => s""""$c"""").mkString(", ")}]\n""")
-            }
-            sb.append("    idea:\n")
-            sb.append("      missing: true\n")
-            sb.append("    vscode:\n")
-            sb.append("      missing: true\n")
+        val equivalents = imported.source match {
+          case ImportSource.Idea => EditorMappings.lookupFromIdea(action)
+          case ImportSource.VSCode => EditorMappings.lookupFromVscode(action, allContexts)
+          case ImportSource.Zed => EditorMappings.lookupFromZed(action, allContexts)
         }
+
+        val hasMapped = writeEditorActions(sb, imported.source, action, allContexts, equivalents)
+        if (hasMapped) mapped += 1 else unmapped += 1
     }
 
     val outputFile = schemeDir.resolve("imported.yaml")
     Files.write(outputFile, sb.toString().getBytes(StandardCharsets.UTF_8))
-    println(s"Wrote ${grouped.size} bindings to $outputFile")
+    println(s"Wrote ${grouped.size} bindings to $outputFile ($mapped with cross-editor mappings, $unmapped without)")
     outputFile
+  }
+
+  private def writeEditorActions(
+    sb: StringBuilder,
+    source: ImportSource,
+    action: String,
+    allContexts: List[String],
+    equivalents: EditorEquivalents,
+  ): Boolean = {
+    source match {
+      case ImportSource.Idea =>
+        writeActionSection(sb, "idea", action, List.empty)
+        val v = writeEquivalentOrMissing(sb, "vscode", equivalents.vscode)
+        val z = writeEquivalentOrMissing(sb, "zed", equivalents.zed)
+        v || z
+
+      case ImportSource.VSCode =>
+        writeActionSection(sb, "vscode", action, allContexts)
+        val i = writeEquivalentOrMissing(sb, "idea", equivalents.idea)
+        val z = writeEquivalentOrMissing(sb, "zed", equivalents.zed)
+        i || z
+
+      case ImportSource.Zed =>
+        writeActionSection(sb, "zed", action, allContexts)
+        val i = writeEquivalentOrMissing(sb, "idea", equivalents.idea)
+        val v = writeEquivalentOrMissing(sb, "vscode", equivalents.vscode)
+        i || v
+    }
+  }
+
+  private def writeActionSection(sb: StringBuilder, editor: String, action: String, context: List[String]): Unit = {
+    sb.append(s"    $editor:\n")
+    sb.append(s"""      action: "$action"\n""")
+    if (context.nonEmpty) {
+      sb.append(s"""      context: [${context.map(c => s""""$c"""").mkString(", ")}]\n""")
+    }
+  }
+
+  private def writeEquivalentOrMissing(sb: StringBuilder, editor: String, ref: Option[EditorActionRef]): Boolean = {
+    ref match {
+      case Some(r) =>
+        sb.append(s"    $editor:\n")
+        sb.append(s"""      action: "${r.action}"\n""")
+        if (r.context.nonEmpty) {
+          sb.append(s"""      context: [${r.context.map(c => s""""$c"""").mkString(", ")}]\n""")
+        }
+        true
+      case None =>
+        sb.append(s"    $editor:\n")
+        sb.append("      missing: true\n")
+        false
+    }
   }
 
   def renderChord(chord: Chord): String = {

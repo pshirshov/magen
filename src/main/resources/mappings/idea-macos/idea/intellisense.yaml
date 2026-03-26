@@ -1,0 +1,56 @@
+mapping:
+  - id: "ClassNameCompletion"
+    binding:
+      - "ctrl+alt+[space]"
+    idea:
+      action: "ClassNameCompletion"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ContextHelp"
+    binding:
+      macos: "meta+shift+[F1]"
+      default: "ctrl+shift+[F1]"
+    idea:
+      action: "ContextHelp"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "EditorContextInfo"
+    binding:
+      - "ctrl+shift+[KeyQ]"
+    idea:
+      action: "EditorContextInfo"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ImplementMethods"
+    binding:
+      - "ctrl+[KeyI]"
+    idea:
+      action: "ImplementMethods"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "OverrideMethods"
+    binding:
+      - "ctrl+[KeyO]"
+    idea:
+      action: "OverrideMethods"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "SmartTypeCompletion"
+    binding:
+      - "ctrl+shift+[space]"
+    idea:
+      action: "SmartTypeCompletion"
+    vscode:
+      missing: true
+    zed:
+      missing: true

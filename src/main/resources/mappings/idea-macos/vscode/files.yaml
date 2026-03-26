@@ -1,0 +1,119 @@
+mapping:
+  - id: "explorer.openAndPassFocus"
+    binding:
+      - "enter"
+    vscode:
+      action: 'explorer.openAndPassFocus'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus" ]
+    zed:
+      action: "project_panel::Open"
+      context: ["ProjectPanel && not_editing"]
+    idea:
+      missing: true
+  - id: "filesExplorer.cancelCut"
+    binding:
+      - "escape"
+    vscode:
+      action: 'filesExplorer.cancelCut'
+      context: [ "explorerResourceCut && filesExplorerFocus && foldersViewVisible && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "filesExplorer.copy"
+    binding:
+      macos: "meta+[KeyC]"
+      default: "ctrl+[KeyC]"
+    vscode:
+      action: 'filesExplorer.copy'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "filesExplorer.cut"
+    binding:
+      macos: "meta+[KeyX]"
+      default: "ctrl+[KeyX]"
+    vscode:
+      action: 'filesExplorer.cut'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "filesExplorer.findInFolder"
+    binding:
+      - "alt+[KeyF]"
+    vscode:
+      action: 'filesExplorer.findInFolder'
+      context: [ "explorerResourceIsFolder && filesExplorerFocus && foldersViewVisible && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "filesExplorer.openFilePreserveFocus"
+    binding:
+      - "space"
+    vscode:
+      action: 'filesExplorer.openFilePreserveFocus'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "filesExplorer.paste"
+    binding:
+      macos: "meta+[KeyV]"
+      default: "ctrl+[KeyV]"
+    vscode:
+      action: 'filesExplorer.paste'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "firstCompressedFolder"
+    binding:
+      - "home"
+    vscode:
+      action: 'firstCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedFirstFocus && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "lastCompressedFolder"
+    binding:
+      - "end"
+    vscode:
+      action: 'lastCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedLastFocus && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "moveFileToTrash"
+    binding:
+      - "delete"
+    vscode:
+      action: 'moveFileToTrash'
+      context: [ "explorerResourceMoveableToTrash && filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus" ]
+    zed:
+      action: "project_panel::Trash"
+      context: ["ProjectPanel && not_editing"]
+    idea:
+      missing: true
+  - id: "nextCompressedFolder"
+    binding:
+      - "right"
+    vscode:
+      action: 'nextCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedLastFocus && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "previousCompressedFolder"
+    binding:
+      - "left"
+    vscode:
+      action: 'previousCompressedFolder'
+      context: [ "explorerViewletCompressedFocus && filesExplorerFocus && foldersViewVisible && !explorerViewletCompressedFirstFocus && !inputFocus" ]
+    idea:
+      missing: true
+  - id: "deleteFile"
+    binding:
+      - "shift+delete"
+    vscode:
+      action: 'deleteFile'
+      context: [ "filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus", "filesExplorerFocus && foldersViewVisible && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus" ]
+    zed:
+      action: "project_panel::Delete"
+      context: ["ProjectPanel && not_editing"]
+    idea:
+      missing: true
+
+  

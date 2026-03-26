@@ -1,7 +1,7 @@
 {
   description = "magen - keyboard mapping generator";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/25.11";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   inputs.squish-find-the-brains.url = "github:7mind/squish-find-the-brains";
@@ -22,6 +22,10 @@
           config.allowUnfree = true;
         };
 
+        buildSbt = builtins.readFile ./build.sbt;
+        versionMatch = builtins.match ''.*version := "([0-9]+\.[0-9]+\.[0-9]+)(-SNAPSHOT)?".*'' buildSbt;
+        version = builtins.elemAt versionMatch 0;
+
         jdk = pkgs.jdk21;
 
         coursierCache = squish-find-the-brains.lib.mkCoursierCache {
@@ -30,15 +34,14 @@
         };
 
         sbtSetup = squish-find-the-brains.lib.mkSbtSetup {
-          inherit pkgs coursierCache;
-          jdk = jdk;
+          inherit pkgs coursierCache jdk;
         };
       in
       {
         packages = rec {
           magen = pkgs.stdenv.mkDerivation {
+            inherit version;
             pname = "magen";
-            version = "0.1.0";
             src = ./.;
 
             nativeBuildInputs = sbtSetup.nativeBuildInputs ++ [ pkgs.makeWrapper ];
@@ -48,7 +51,13 @@
               export LANG=C.UTF-8
               export LC_ALL=C.UTF-8
               ${sbtSetup.setupScript}
-              sbt assembly
+              ${if pkgs.stdenv.isDarwin then ''
+                HOME="$TMPDIR" \
+                SBT_OPTS="-Duser.home=$TMPDIR -Dsbt.global.base=$TMPDIR/.sbt -Dsbt.ivy.home=$TMPDIR/.ivy2 -Divy.home=$TMPDIR/.ivy2 -Dsbt.boot.directory=$TMPDIR/.sbt/boot" \
+                sbt assembly
+              '' else ''
+                sbt assembly
+              ''}
             '';
 
             installPhase = ''
@@ -60,6 +69,14 @@
             '';
           };
           default = magen;
+        };
+
+        apps = {
+          magen = {
+            type = "app";
+            program = "${self.packages.${system}.magen}/bin/magen";
+          };
+          default = self.apps.${system}.magen;
         };
 
         devShells.default = pkgs.mkShell {

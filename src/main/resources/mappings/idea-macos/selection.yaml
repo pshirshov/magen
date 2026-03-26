@@ -1,0 +1,252 @@
+mapping:
+  - id: "EditorDownWithSelection"
+    binding:
+      - "shift+[down]"
+    idea:
+      action: "EditorDownWithSelection"
+    vscode:
+      action: "cursorDownSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectDown"
+      context: ["Editor"]
+  - id: "EditorUpWithSelection"
+    binding:
+      - "shift+[up]"
+    idea:
+      action: "EditorUpWithSelection"
+    vscode:
+      action: "cursorUpSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectUp"
+      context: ["Editor"]
+  - id: "EditorLeftWithSelection"
+    binding:
+      - "shift+[left]"
+    idea:
+      action: "EditorLeftWithSelection"
+    vscode:
+      action: "cursorLeftSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectLeft"
+      context: ["Editor"]
+  - id: "EditorRightWithSelection"
+    binding:
+      - "shift+[right]"
+    idea:
+      action: "EditorRightWithSelection"
+    vscode:
+      action: "cursorRightSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectRight"
+      context: ["Editor"]
+  - id: "EditorPageDownWithSelection"
+    binding:
+      - "shift+[pagedown]"
+    idea:
+      action: "EditorPageDownWithSelection"
+    vscode:
+      action: "cursorPageDownSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectPageDown"
+      context: ["Editor"]
+  - id: "EditorPageUpWithSelection"
+    binding:
+      - "shift+[pageup]"
+    idea:
+      action: "EditorPageUpWithSelection"
+    vscode:
+      action: "cursorPageUpSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectPageUp"
+      context: ["Editor"]
+  - id: "EditorTextStartWithSelection"
+    binding:
+      - "ctrl+shift+[home]"
+    idea:
+      action: "EditorTextStartWithSelection"
+    vscode:
+      action: "cursorTopSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectToBeginning"
+      context: ["Editor"]
+  - id: "EditorTextEndWithSelection"
+    binding:
+      - "ctrl+shift+[end]"
+    idea:
+      action: "EditorTextEndWithSelection"
+    vscode:
+      action: "cursorBottomSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectToEnd"
+      context: ["Editor"]
+  - id: "EditorLineEndWithSelection"
+    binding:
+      macos:
+        - "meta+shift+[right]"
+        - "shift+[end]"
+      default:
+        - "ctrl+shift+[right]"
+        - "shift+[end]"
+    idea:
+      action: "EditorLineEndWithSelection"
+    vscode:
+      action: "cursorEndSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectToEndOfLine"
+      context: ["Editor"]
+  - id: "EditorLineStartWithSelection"
+    binding:
+      macos:
+        - "meta+shift+[left]"
+        - "shift+[home]"
+      default:
+        - "ctrl+shift+[left]"
+        - "shift+[home]"
+    idea:
+      action: "EditorLineStartWithSelection"
+    vscode:
+      action: "cursorHomeSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectToBeginningOfLine"
+      context: ["Editor"]
+  - id: "EditorNextWordWithSelection"
+    binding:
+      macos:
+        - "alt+shift+[right]"
+        - "ctrl+alt+shift+[KeyF]"
+      default:
+        - "alt+shift+[right]"
+    idea:
+      action: "EditorNextWordWithSelection"
+    vscode:
+      action: "cursorWordEndRightSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectToNextWordEnd"
+      context: ["Editor"]
+  - id: "EditorPreviousWordWithSelection"
+    binding:
+      macos:
+        - "alt+shift+[left]"
+        - "ctrl+alt+shift+[KeyB]"
+      default:
+        - "alt+shift+[left]"
+    idea:
+      action: "EditorPreviousWordWithSelection"
+    vscode:
+      action: "cursorWordLeftSelect"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::SelectToPreviousWordStart"
+      context: ["Editor"]
+  - id: "EditorSelectWord"
+    binding:
+      - "alt+[up]"
+    idea:
+      action: "EditorSelectWord"
+    vscode:
+      action: "editor.action.smartSelect.expand"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::SelectLargerSyntaxNode"
+      context: ["Editor"]
+  - id: "EditorToggleColumnMode"
+    binding:
+      macos:
+        - "shift+meta+8"
+        - "shift+meta+[MULTIPLY]"
+      default:
+        - "shift+ctrl+8"
+        - "shift+ctrl+[MULTIPLY]"
+    idea:
+      action: "EditorToggleColumnMode"
+    vscode:
+      action: "editor.action.insertCursorAtEndOfEachLineSelected"
+      context: ["editorTextFocus"]
+    zed:
+      missing: true
+  - id: "EditorUnSelectWord"
+    binding:
+      - "alt+[down]"
+    idea:
+      action: "EditorUnSelectWord"
+    vscode:
+      action: "editor.action.smartSelect.shrink"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::SelectSmallerSyntaxNode"
+      context: ["Editor"]
+  - id: "SelectAllOccurrences"
+    binding:
+      macos: "meta+ctrl+[KeyG]"
+      default: "alt+ctrl+[KeyG]"
+    idea:
+      action: "SelectAllOccurrences"
+    vscode:
+      action: "editor.action.selectHighlights"
+      context: ["editorFocus"]
+    zed:
+      action: "search::SelectAllMatches"
+      context: ["Pane"]
+  - id: "SelectNextOccurrence"
+    binding:
+      - "ctrl+[KeyG]"
+    idea:
+      action: "SelectNextOccurrence"
+    vscode:
+      action: "editor.action.addSelectionToNextFindMatch"
+      context: ["editorFocus"]
+    zed:
+      missing: true
+  - id: "UnselectPreviousOccurrence"
+    binding:
+      - "ctrl+shift+[KeyG]"
+    idea:
+      action: "UnselectPreviousOccurrence"
+    vscode:
+      action: "cursorUndo"
+    zed:
+      missing: true
+  - id: "$SelectAll"
+    binding:
+      macos: "meta+[KeyA]"
+      default: "ctrl+[KeyA]"
+    idea:
+      action: "$SelectAll"
+    vscode:
+      action: "editor.action.selectAll"
+    zed:
+      action: "editor::SelectAll"
+      context: ["Editor"]
+  - id: "EditorCloneCaretAbove"
+    binding:
+      - "ctrl+shift+[up]"
+    idea:
+      action: "EditorCloneCaretAbove"
+    vscode:
+      action: "editor.action.insertCursorAbove"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::AddSelectionAbove"
+      context: ["Editor"]
+  - id: "EditorCloneCaretBelow"
+    binding:
+      - "ctrl+shift+[down]"
+    idea:
+      action: "EditorCloneCaretBelow"
+    vscode:
+      action: "editor.action.insertCursorBelow"
+      context: ["editorTextFocus"]
+    zed:
+      action: "editor::AddSelectionBelow"
+      context: ["Editor"]

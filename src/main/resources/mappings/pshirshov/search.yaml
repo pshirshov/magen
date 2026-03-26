@@ -258,7 +258,7 @@ mapping:
       context: ["BufferSearchBar"]
   - id: "togglePreserveCase"
     binding:
-      - "alt+[KeyO] alt+[KeyC]"
+      - "alt+[KeyO] alt+[KeyP]"
     vscode:
       action: "togglePreserveCase"
       context: ["editorFocus"]

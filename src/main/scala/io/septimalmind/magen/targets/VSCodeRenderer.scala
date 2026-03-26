@@ -5,15 +5,12 @@ import io.circe.syntax.*
 import io.septimalmind.magen.Renderer
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.*
-import io.septimalmind.magen.util.Aliases
-import izumi.fundamentals.platform.files.IzFiles
-
-import java.nio.file.Paths
+import io.septimalmind.magen.util.{Aliases, MagenPaths}
 
 object VSCodeRenderer extends Renderer {
   override def id: String = "vscode.json"
 
-  override def render(mapping: Mapping): String = {
+  override def render(mapping: Mapping, platform: Platform): String = {
     val mappings = for {
       c <- mapping.mapping
       a <- c.vscode.toList
@@ -63,15 +60,17 @@ object VSCodeRenderer extends Renderer {
     f.name match {
       case "BracketLeft" => "["
       case "BracketRight" => "]"
-      case "Slash" => "/"
-      case "Backslash" => "\\"
+      case "Slash" | "DIVIDE" => "/"
+      case "Backslash" | "IntlBackslash" => "\\"
       case "Minus" => "-"
       case "Equal" => "="
       case "Quote" => "'"
-      case "Backquote" => "`"
+      case "Backquote" | "BACK_QUOTE" => "`"
       case "Semicolon" => ";"
       case "Comma" => ","
       case "Period" => "."
+      case "MULTIPLY" => "numpad_multiply"
+      case s if s.startsWith("NUMPAD") => s"numpad${s.drop(6).toLowerCase}"
       case s if s.length == 1 => s.toLowerCase
       case s => s.toLowerCase
     }
@@ -79,14 +78,14 @@ object VSCodeRenderer extends Renderer {
 
   def unbind(): List[JsonObject] = {
     val negations = List(
-      "mappings/shared/vscode/vscode-keymap-linux-!negate-all.json",
-      "mappings/shared/vscode/vscode-keymap-linux-!negate-continue.json",
-      "mappings/shared/vscode/vscode-keymap-linux-!negate-gitlens.json",
+      "vscode-keymap-linux-!negate-all.json",
+      "vscode-keymap-linux-!negate-continue.json",
+      "vscode-keymap-linux-!negate-gitlens.json",
     )
 
     negations.flatMap {
       n =>
-        val fa = IzFiles.readString(Paths.get(n))
+        val fa = MagenPaths.readNegationFile(s"vscode/$n")
         val pa = parser.parse(fa)
         pa.flatMap(_.as[List[JsonObject]]).toOption.get
     }

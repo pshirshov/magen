@@ -21,7 +21,7 @@ case class RawZedAction(
 
 case class RawConcept(
   id: String,
-  binding: List[String],
+  binding: PlatformBinding,
   idea: Option[RawIdeaAction],
   vscode: Option[RawVSCodeAction],
   zed: Option[RawZedAction],

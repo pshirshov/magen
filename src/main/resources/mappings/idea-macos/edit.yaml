@@ -1,0 +1,260 @@
+mapping:
+  - id: "$Delete"
+    binding:
+      - "[delete]"
+    idea:
+      action: "$Delete"
+    vscode:
+      action: "deleteRight"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::Delete"
+      context: ["Editor"]
+  - id: "$Undo"
+    binding:
+      macos: "meta+[KeyZ]"
+      default: "ctrl+[KeyZ]"
+    idea:
+      action: "$Undo"
+    vscode:
+      action: "undo"
+    zed:
+      action: "editor::Undo"
+      context: ["Editor"]
+  - id: "AutoIndentLines"
+    binding:
+      - "ctrl+alt+[KeyI]"
+    idea:
+      action: "AutoIndentLines"
+    vscode:
+      action: "editor.action.reindentLines"
+    zed:
+      missing: true
+  - id: "CommentByBlockComment"
+    binding:
+      macos:
+        - "meta+alt+[Slash]"
+        - "meta+alt+[DIVIDE]"
+        - "ctrl+shift+[Slash]"
+        - "ctrl+shift+[DIVIDE]"
+        - "meta+shift+[Slash]"
+        - "meta+shift+[DIVIDE]"
+      default:
+        - "ctrl+alt+[Slash]"
+        - "ctrl+alt+[DIVIDE]"
+        - "ctrl+shift+[Slash]"
+        - "ctrl+shift+[DIVIDE]"
+        - "ctrl+shift+[Slash]"
+        - "ctrl+shift+[DIVIDE]"
+    idea:
+      action: "CommentByBlockComment"
+    vscode:
+      action: "editor.action.blockComment"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::ToggleComments"
+      context: ["Editor"]
+  - id: "EditorBackSpace"
+    binding:
+      - "[Backspace]"
+      - "shift+[Backspace]"
+    idea:
+      action: "EditorBackSpace"
+    vscode:
+      action: "deleteLeft"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::Backspace"
+      context: ["Editor"]
+  - id: "EditorDelete"
+    binding:
+      - "[delete]"
+    idea:
+      action: "EditorDelete"
+    vscode:
+      action: "deleteRight"
+      context: ["textInputFocus"]
+    zed:
+      action: "editor::Delete"
+      context: ["Editor"]
+  - id: "EditorDeleteLine"
+    binding:
+      macos: "meta+[Backspace]"
+      default: "ctrl+[Backspace]"
+    idea:
+      action: "EditorDeleteLine"
+    vscode:
+      action: "editor.action.deleteLines"
+      context: ["textInputFocus && !editorReadonly"]
+    zed:
+      action: "editor::DeleteLine"
+      context: ["Editor"]
+  - id: "EditorDeleteToWordEnd"
+    binding:
+      - "alt+[delete]"
+    idea:
+      action: "EditorDeleteToWordEnd"
+    vscode:
+      action: "deleteWordRight"
+      context: ["textInputFocus && !editorReadonly"]
+    zed:
+      action: "editor::DeleteToNextWordEnd"
+      context: ["Editor"]
+  - id: "EditorDeleteToWordStart"
+    binding:
+      - "alt+[Backspace]"
+    idea:
+      action: "EditorDeleteToWordStart"
+    vscode:
+      action: "deleteWordLeft"
+      context: ["textInputFocus && !editorReadonly"]
+    zed:
+      action: "editor::DeleteToPreviousWordStart"
+      context: ["Editor"]
+  - id: "EditorJoinLines"
+    binding:
+      - "ctrl+shift+[KeyJ]"
+    idea:
+      action: "EditorJoinLines"
+    vscode:
+      action: "editor.action.joinLines"
+    zed:
+      action: "editor::JoinLines"
+      context: ["Editor"]
+  - id: "EditorStartNewLine"
+    binding:
+      - "shift+[enter]"
+    idea:
+      action: "EditorStartNewLine"
+    vscode:
+      action: "editor.action.insertLineAfter"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::NewlineBelow"
+      context: ["Editor && mode == full"]
+  - id: "$Redo"
+    binding:
+      macos: "meta+shift+[KeyZ]"
+      default: "ctrl+shift+[KeyZ]"
+    idea:
+      action: "$Redo"
+    vscode:
+      action: "redo"
+    zed:
+      action: "editor::Redo"
+      context: ["Editor"]
+  - id: "EditorDuplicate"
+    binding:
+      macos: "meta+[KeyD]"
+      default: "ctrl+[KeyD]"
+    idea:
+      action: "EditorDuplicate"
+    vscode:
+      action: "editor.action.duplicateSelection"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::DuplicateLineDown"
+      context: ["Editor"]
+  - id: "EditorEnter"
+    binding:
+      - "[enter]"
+    idea:
+      action: "EditorEnter"
+    vscode:
+      missing: true
+    zed:
+      action: "editor::Newline"
+      context: ["Editor && mode == full"]
+  - id: "EditorEscape"
+    binding:
+      - "[escape]"
+    idea:
+      action: "EditorEscape"
+    vscode:
+      missing: true
+    zed:
+      action: "editor::Cancel"
+      context: ["Editor"]
+  - id: "EditorStartNewLineBefore"
+    binding:
+      macos: "meta+alt+[enter]"
+      default: "ctrl+alt+[enter]"
+    idea:
+      action: "EditorStartNewLineBefore"
+    vscode:
+      action: "editor.action.insertLineBefore"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::NewlineAbove"
+      context: ["Editor && mode == full"]
+  - id: "CommentByLineComment"
+    binding:
+      macos: "meta+[Slash]"
+      default: "ctrl+[Slash]"
+    idea:
+      action: "CommentByLineComment"
+    vscode:
+      action: "editor.action.commentLine"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::ToggleComments"
+      context: ["Editor"]
+  - id: "EditorIndentLineOrSelection"
+    binding:
+      - "[tab]"
+    idea:
+      action: "EditorIndentLineOrSelection"
+    vscode:
+      action: "editor.action.indentLines"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::Indent"
+      context: ["Editor"]
+  - id: "EditorUnindentLineOrSelection"
+    binding:
+      - "shift+[tab]"
+    idea:
+      action: "EditorUnindentLineOrSelection"
+    vscode:
+      action: "editor.action.outdentLines"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::Outdent"
+      context: ["Editor"]
+  - id: "MoveStatementDown"
+    binding:
+      - "alt+shift+[down]"
+    idea:
+      action: "MoveStatementDown"
+    vscode:
+      action: "editor.action.moveLinesDownAction"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::MoveLineDown"
+      context: ["Editor"]
+  - id: "MoveStatementUp"
+    binding:
+      - "alt+shift+[up]"
+    idea:
+      action: "MoveStatementUp"
+    vscode:
+      action: "editor.action.moveLinesUpAction"
+      context: ["editorTextFocus && !editorReadonly"]
+    zed:
+      action: "editor::MoveLineUp"
+      context: ["Editor"]
+  - id: "ReformatCode"
+    binding:
+      macos: "meta+alt+[KeyL]"
+      default: "ctrl+alt+[KeyL]"
+    idea:
+      action: "ReformatCode"
+    vscode:
+      action: "editor.action.formatDocument"
+      context:
+        [
+          "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor",
+        ]
+    zed:
+      action: "editor::Format"
+      context: ["Editor"]

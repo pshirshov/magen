@@ -442,7 +442,7 @@
     "when": "editorFocus"
   },
   {
-    "key": "shift+alt+[IntlBackslash]",
+    "key": "shift+alt+oem_102",
     "command": "-editor.action.autoFix",
     "when": "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/"
   },
@@ -583,7 +583,7 @@
     "when": "standaloneColorPickerVisible"
   },
   {
-    "key": "ctrl+shift+[IntlBackslash]",
+    "key": "ctrl+shift+oem_102",
     "command": "-editor.action.inPlaceReplace.down",
     "when": "editorTextFocus && !editorReadonly"
   },
@@ -593,7 +593,7 @@
     "when": "editorTextFocus && !editorReadonly"
   },
   {
-    "key": "ctrl+[IntlBackslash]",
+    "key": "ctrl+oem_102",
     "command": "-editor.action.inPlaceReplace.up",
     "when": "editorTextFocus && !editorReadonly"
   },
@@ -1709,7 +1709,7 @@
     "when": "breadcrumbsPossible && breadcrumbsVisible"
   },
   {
-    "key": "ctrl+shift+[IntlBackslash]",
+    "key": "ctrl+shift+oem_102",
     "command": "-breadcrumbs.focusAndSelect",
     "when": "breadcrumbsPossible && breadcrumbsVisible"
   },
@@ -1764,7 +1764,7 @@
     "when": "breadcrumbsActive && breadcrumbsVisible"
   },
   {
-    "key": "ctrl+shift+[IntlBackslash]",
+    "key": "ctrl+shift+oem_102",
     "command": "-breadcrumbs.toggleToOn",
     "when": "!config.breadcrumbs.enabled"
   },
@@ -4490,7 +4490,7 @@
     "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus"
   },
   {
-    "key": "ctrl+shift+[IntlBackslash]",
+    "key": "ctrl+shift+oem_102",
     "command": "-editor.action.accessibleViewGoToSymbol",
     "when": "accessibilityHelpIsShown && accessibleViewGoToSymbolSupported || accessibleViewGoToSymbolSupported && accessibleViewIsShown"
   },
