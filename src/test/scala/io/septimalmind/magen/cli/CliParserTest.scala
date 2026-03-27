@@ -149,5 +149,39 @@ class CliParserTest extends AnyWordSpec with Matchers {
         CliParser.parse(List("generate", "--platform", "beos"))
       }
     }
+
+    "use MAGEN_MAPPINGS_PATH env var when --mappings not provided" in {
+      val env    = Map("MAGEN_MAPPINGS_PATH" -> "/env/mappings")
+      val (_, parsed) = CliParser.parse(List("generate"), env)
+      parsed.mappingsDir shouldBe Some(Paths.get("/env/mappings"))
+    }
+
+    "use MAGEN_NEGATIONS_PATH env var when --negations not provided" in {
+      val env    = Map("MAGEN_NEGATIONS_PATH" -> "/env/negations")
+      val (_, parsed) = CliParser.parse(List("generate"), env)
+      parsed.negationsDir shouldBe Some(Paths.get("/env/negations"))
+    }
+
+    "CLI --mappings overrides MAGEN_MAPPINGS_PATH env var" in {
+      val env    = Map("MAGEN_MAPPINGS_PATH" -> "/env/mappings")
+      val (_, parsed) = CliParser.parse(List("generate", "--mappings", "/cli/mappings"), env)
+      parsed.mappingsDir shouldBe Some(Paths.get("/cli/mappings"))
+    }
+
+    "CLI --negations overrides MAGEN_NEGATIONS_PATH env var" in {
+      val env    = Map("MAGEN_NEGATIONS_PATH" -> "/env/negations")
+      val (_, parsed) = CliParser.parse(List("generate", "--negations", "/cli/negations"), env)
+      parsed.negationsDir shouldBe Some(Paths.get("/cli/negations"))
+    }
+
+    "mappingsDir is None when neither CLI nor env var is set" in {
+      val (_, parsed) = CliParser.parse(List("generate"), Map.empty)
+      parsed.mappingsDir shouldBe None
+    }
+
+    "negationsDir is None when neither CLI nor env var is set" in {
+      val (_, parsed) = CliParser.parse(List("generate"), Map.empty)
+      parsed.negationsDir shouldBe None
+    }
   }
 }

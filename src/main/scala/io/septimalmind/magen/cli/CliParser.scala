@@ -19,7 +19,7 @@ object CliParser {
   /** Splits args into command (first non-flag token) and the rest.
     * All flags (--mappings, --scheme, etc.) can appear anywhere after the command.
     */
-  def parse(args: List[String]): (Option[String], ParsedArgs) = {
+  def parse(args: List[String], env: Map[String, String] = sys.env): (Option[String], ParsedArgs) = {
     val arr                        = args.toArray
     var command: Option[String]    = None
     var mappingsDir: Option[Path]  = None
@@ -70,8 +70,8 @@ object CliParser {
     }
 
     val parsed = ParsedArgs(
-      mappingsDir  = mappingsDir,
-      negationsDir = negationsDir,
+      mappingsDir  = mappingsDir.orElse(env.get("MAGEN_MAPPINGS_PATH").map(Paths.get(_))),
+      negationsDir = negationsDir.orElse(env.get("MAGEN_NEGATIONS_PATH").map(Paths.get(_))),
       scheme       = scheme.map(SchemeId.apply),
       platform     = platform.map(Platform.parse),
       keymap       = keymap,

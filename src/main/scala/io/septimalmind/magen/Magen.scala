@@ -360,10 +360,11 @@ object Magen {
         |
         |Global Options:
         |  --mappings DIR       Directory with scheme mappings (YAML files organized by scheme).
-        |                       Default: bundled classpath resources.
+        |                       Default: $MAGEN_MAPPINGS_PATH env var, then bundled classpath resources.
         |  --negations DIR      Directory with negation files (editor action lists for unbinding).
-        |                       Default: bundled classpath resources. When set, filesystem is
-        |                       checked first, falling back to classpath if a file is missing.
+        |                       Default: $MAGEN_NEGATIONS_PATH env var, then bundled classpath resources.
+        |                       When set, filesystem is checked first, falling back to classpath
+        |                       if a file is missing.
         |  --scheme NAME        Scheme name to use.
         |                       Default: value from config file, or "pshirshov" if not configured.
         |  --platform PLATFORM  Target platform for keybinding generation: macos, linux, win.
