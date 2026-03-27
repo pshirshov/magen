@@ -10,22 +10,26 @@ import java.nio.file.{Files, Path}
 object VscodeNegationGenerator {
   def generateFromDefaults(defaultsPath: Path, outputPath: Path): Unit = {
     val content = IzFiles.readString(defaultsPath)
-    val entries = parser.parse(content)
+    val entries = parser
+      .parse(content)
       .flatMap(_.as[List[JsonObject]])
       .getOrElse(throw new RuntimeException(s"Failed to parse VSCode defaults from $defaultsPath"))
 
-    val negations = entries.flatMap { obj =>
-      val command = obj("command").flatMap(_.asString)
-      val key = obj("key").flatMap(_.asString)
+    val negations = entries.flatMap {
+      obj =>
+        val command = obj("command").flatMap(_.asString)
+        val key     = obj("key").flatMap(_.asString)
 
-      (command, key) match {
-        case (Some(cmd), Some(k)) if !cmd.startsWith("-") =>
-          Some(JsonObject(
-            "key" -> Json.fromString(k),
-            "command" -> Json.fromString(s"-$cmd"),
-          ))
-        case _ => None
-      }
+        (command, key) match {
+          case (Some(cmd), Some(k)) if !cmd.startsWith("-") =>
+            Some(
+              JsonObject(
+                "key"     -> Json.fromString(k),
+                "command" -> Json.fromString(s"-$cmd"),
+              )
+            )
+          case _ => None
+        }
     }
 
     val json = negations.asJson.printWith(Printer.spaces2)

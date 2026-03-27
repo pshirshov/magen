@@ -1,0 +1,11 @@
+{
+  "action_name": "flake-refresh",
+  "success": false,
+  "start_time": "2026-03-27T15:06:18.523669",
+  "end_time": "2026-03-27T15:06:20.747504",
+  "duration_seconds": 2.223835,
+  "exit_code": 127,
+  "stdout_size": 187,
+  "stderr_size": 187,
+  "error_message": "Script exited with code 127"
+}

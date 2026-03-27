@@ -6,10 +6,10 @@ import scala.jdk.CollectionConverters.*
 object PathExpander {
 
   def expandGlob(pattern: String): List[Path] = {
-    val normalized = expandTilde(pattern)
+    val normalized  = expandTilde(pattern)
     val hasWildcard = containsWildcard(normalized)
-    val segments = normalized.split("/").toList.filter(_.nonEmpty)
-    val root = if (normalized.startsWith("/")) Paths.get("/") else Paths.get(".")
+    val segments    = normalized.split("/").toList.filter(_.nonEmpty)
+    val root        = if (normalized.startsWith("/")) Paths.get("/") else Paths.get(".")
     expandPath(segments, root, allowCreate = !hasWildcard)
   }
 
@@ -31,8 +31,9 @@ object PathExpander {
 
       case segment :: remaining =>
         if (containsWildcard(segment)) {
-          expandWildcard(currentPath, segment).flatMap { expanded =>
-            expandPath(remaining, expanded, allowCreate = false)
+          expandWildcard(currentPath, segment).flatMap {
+            expanded =>
+              expandPath(remaining, expanded, allowCreate = false)
           }
         } else {
           val nextPath = currentPath.resolve(segment)
@@ -67,11 +68,13 @@ object PathExpander {
     val matcher = directory.getFileSystem.getPathMatcher(s"glob:$pattern")
 
     try {
-      Files.list(directory)
+      Files
+        .list(directory)
         .iterator()
         .asScala
-        .filter { path =>
-          matcher.matches(path.getFileName)
+        .filter {
+          path =>
+            matcher.matches(path.getFileName)
         }
         .toList
     } catch {

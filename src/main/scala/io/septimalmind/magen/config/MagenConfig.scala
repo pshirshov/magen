@@ -15,8 +15,8 @@ object InstallerPaths {
 
   val empty: InstallerPaths = InstallerPaths(
     vscode = List.empty,
-    idea = List.empty,
-    zed = List.empty,
+    idea   = List.empty,
+    zed    = List.empty,
   )
 }
 
@@ -30,7 +30,7 @@ object MagenConfig {
   implicit val decoder: Decoder[MagenConfig] = deriveDecoder
 
   val empty: MagenConfig = MagenConfig(
-    scheme = None,
+    scheme            = None,
     `installer-paths` = InstallerPaths.empty,
   )
 }

@@ -20,10 +20,10 @@ object NegationsSource {
 }
 
 object MagenPaths {
-  private val MAPPINGS_PREFIX = "mappings"
+  private val MAPPINGS_PREFIX  = "mappings"
   private val NEGATIONS_PREFIX = "negations"
 
-  private var _source: MappingsSource = MappingsSource.Classpath
+  private var _source: MappingsSource           = MappingsSource.Classpath
   private var _negationsSource: NegationsSource = NegationsSource.Classpath
 
   def configure(source: MappingsSource): Unit = {
@@ -34,7 +34,7 @@ object MagenPaths {
     _negationsSource = source
   }
 
-  def source: MappingsSource = _source
+  def source: MappingsSource           = _source
   def negationsSource: NegationsSource = _negationsSource
 
   def readMappingFile(relativePath: String): String = {
@@ -47,7 +47,8 @@ object MagenPaths {
   }
 
   /** Reads a negation file. When filesystem source is configured, tries filesystem first,
-    * falls back to classpath if the file doesn't exist on the filesystem. */
+    * falls back to classpath if the file doesn't exist on the filesystem.
+    */
   def readNegationFile(relativePath: String): String = {
     _negationsSource match {
       case NegationsSource.Filesystem(base) =>
@@ -75,10 +76,11 @@ object MagenPaths {
           .map(f => dir.relativize(f).toString)
           .sorted
       case MappingsSource.Classpath =>
-        withClasspathDir(MAPPINGS_PREFIX, schemeName) { dir =>
-          collectYamlFiles(dir)
-            .map(f => dir.relativize(f).toString)
-            .sorted
+        withClasspathDir(MAPPINGS_PREFIX, schemeName) {
+          dir =>
+            collectYamlFiles(dir)
+              .map(f => dir.relativize(f).toString)
+              .sorted
         }.getOrElse(throw new AssertionError(s"Scheme not found on classpath: $schemeName"))
     }
   }
@@ -108,18 +110,21 @@ object MagenPaths {
       case MappingsSource.Filesystem(base) =>
         val dir = if (relativePath.isEmpty) base else base.resolve(relativePath)
         if (Files.isDirectory(dir)) {
-          Files.list(dir).iterator().asScala
+          Files
+            .list(dir).iterator().asScala
             .filter(Files.isDirectory(_))
             .map(_.getFileName.toString)
             .toList.sorted
         } else List.empty
       case MappingsSource.Classpath =>
         val classpathPath = if (relativePath.isEmpty) MAPPINGS_PREFIX else s"$MAPPINGS_PREFIX/$relativePath"
-        withClasspathDirRaw(classpathPath) { dir =>
-          Files.list(dir).iterator().asScala
-            .filter(Files.isDirectory(_))
-            .map(_.getFileName.toString)
-            .toList.sorted
+        withClasspathDirRaw(classpathPath) {
+          dir =>
+            Files
+              .list(dir).iterator().asScala
+              .filter(Files.isDirectory(_))
+              .map(_.getFileName.toString)
+              .toList.sorted
         }.getOrElse(List.empty)
     }
   }
@@ -137,11 +142,11 @@ object MagenPaths {
       case "file" =>
         Some(f(Paths.get(url.toURI)))
       case "jar" =>
-        val uri = url.toURI
-        val parts = uri.toString.split("!")
+        val uri    = url.toURI
+        val parts  = uri.toString.split("!")
         val jarUri = URI.create(parts(0))
-        val jarFs = getOrCreateFileSystem(jarUri)
-        val dir = jarFs.getPath(parts(1))
+        val jarFs  = getOrCreateFileSystem(jarUri)
+        val dir    = jarFs.getPath(parts(1))
         Some(f(dir))
       case other =>
         throw new AssertionError(s"Unsupported classpath protocol: $other")
@@ -152,16 +157,19 @@ object MagenPaths {
 
   private def getOrCreateFileSystem(jarUri: URI): FileSystem = {
     if (_jarFs == null) {
-      _jarFs = try FileSystems.getFileSystem(jarUri)
-      catch { case _: java.nio.file.FileSystemNotFoundException =>
-        FileSystems.newFileSystem(jarUri, java.util.Collections.emptyMap[String, Any]())
-      }
+      _jarFs =
+        try FileSystems.getFileSystem(jarUri)
+        catch {
+          case _: java.nio.file.FileSystemNotFoundException =>
+            FileSystems.newFileSystem(jarUri, java.util.Collections.emptyMap[String, Any]())
+        }
     }
     _jarFs
   }
 
   private def collectYamlFiles(dir: Path): List[Path] = {
-    Files.walk(dir).iterator().asScala
+    Files
+      .walk(dir).iterator().asScala
       .filter(p => Files.isRegularFile(p) && p.toString.endsWith(".yaml"))
       .toList
   }

@@ -45,7 +45,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "import VSCode keybindings and produce valid scheme YAML" in {
       val inputFile = writeTempFile("keybindings.json", vscodeInput)
-      val imported = VscodeSchemeImporter.importFrom(inputFile)
+      val imported  = VscodeSchemeImporter.importFrom(inputFile)
 
       imported.source shouldBe ImportSource.VSCode
       imported.bindings should not be empty
@@ -58,7 +58,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "write scheme and load it back through Magen pipeline" in {
       val inputFile = writeTempFile("keybindings.json", vscodeInput)
-      val imported = VscodeSchemeImporter.importFrom(inputFile)
+      val imported  = VscodeSchemeImporter.importFrom(inputFile)
 
       val mappingsDir = tmpDir.resolve("mappings")
       Files.createDirectories(mappingsDir)
@@ -77,7 +77,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keybindings.json", vscodeInput, ImportSource.VSCode, Platform.Linux)
 
       val rendered = VSCodeRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       val commands = json.flatMap(_("command").flatMap(_.asString))
       commands should contain("editor.action.clipboardCopyAction")
@@ -94,11 +94,11 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keybindings.json", vscodeInput, ImportSource.VSCode, Platform.Linux)
 
       val rendered = ZedRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       // Zed output should contain bindings from cross-editor mappings
       val allBindings = json.flatMap(_("bindings").flatMap(_.asObject))
-      val allActions = allBindings.flatMap(_.values.flatMap(_.asString))
+      val allActions  = allBindings.flatMap(_.values.flatMap(_.asString))
 
       // undo/redo should have zed equivalents if cross-editor mappings exist
       val zedConcepts = mapping.mapping.filter(_.zed.isDefined)
@@ -123,7 +123,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keybindings.json", vscodeInput, ImportSource.VSCode, Platform.Linux)
 
       val rendered = VSCodeRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       // find the clipboardCopy entry and verify its "when" clause
       val copyEntry = json.find(o => o("command").flatMap(_.asString).contains("editor.action.clipboardCopyAction"))
@@ -190,7 +190,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "import IDEA keybindings and produce valid scheme YAML" in {
       val inputFile = writeTempFile("keymap.xml", ideaInput)
-      val imported = IdeaSchemeImporter.importFromFile(inputFile)
+      val imported  = IdeaSchemeImporter.importFromFile(inputFile)
 
       imported.source shouldBe ImportSource.Idea
       imported.bindings should not be empty
@@ -204,7 +204,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "populate cross-editor mappings for known IDEA actions" in {
       val inputFile = writeTempFile("keymap.xml", ideaInput)
-      val imported = IdeaSchemeImporter.importFromFile(inputFile)
+      val imported  = IdeaSchemeImporter.importFromFile(inputFile)
 
       val mappingsDir = tmpDir.resolve("mappings")
       Files.createDirectories(mappingsDir)
@@ -238,7 +238,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keymap.xml", ideaInput, ImportSource.Idea, Platform.Linux)
 
       val rendered = VSCodeRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       val commands = json.flatMap(_("command").flatMap(_.asString))
       // Known IDEA actions should have VSCode equivalents
@@ -250,10 +250,10 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keymap.xml", ideaInput, ImportSource.Idea, Platform.Linux)
 
       val rendered = ZedRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       val allBindings = json.flatMap(_("bindings").flatMap(_.asObject))
-      val allActions = allBindings.flatMap(_.values.flatMap(_.asString))
+      val allActions  = allBindings.flatMap(_.values.flatMap(_.asString))
 
       // editor::Copy should appear from cross-editor mappings
       allActions should contain("editor::Copy")
@@ -270,7 +270,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
           |</keymap>""".stripMargin
 
       val inputFile = writeTempFile("keymap-twokey.xml", twoKeyInput)
-      val imported = IdeaSchemeImporter.importFromFile(inputFile)
+      val imported  = IdeaSchemeImporter.importFromFile(inputFile)
 
       imported.bindings should have size 1
       val binding = imported.bindings.head
@@ -280,7 +280,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "handle IDEA bracket key normalization" in {
       val inputFile = writeTempFile("keymap.xml", ideaInput)
-      val imported = IdeaSchemeImporter.importFromFile(inputFile)
+      val imported  = IdeaSchemeImporter.importFromFile(inputFile)
 
       // NextTab uses CLOSE_BRACKET → should normalize to BracketRight
       val nextTab = imported.bindings.find(_.action == "NextTab")
@@ -324,7 +324,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "import Zed keybindings and produce valid scheme YAML" in {
       val inputFile = writeTempFile("keymap.json", zedInput)
-      val imported = ZedSchemeImporter.importFrom(inputFile)
+      val imported  = ZedSchemeImporter.importFrom(inputFile)
 
       imported.source shouldBe ImportSource.Zed
       imported.bindings should not be empty
@@ -337,7 +337,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "preserve Zed context through import" in {
       val inputFile = writeTempFile("keymap.json", zedInput)
-      val imported = ZedSchemeImporter.importFrom(inputFile)
+      val imported  = ZedSchemeImporter.importFrom(inputFile)
 
       val findBinding = imported.bindings.find(_.action == "search::Deploy")
       findBinding shouldBe defined
@@ -350,7 +350,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
     "populate cross-editor mappings for known Zed actions" in {
       val inputFile = writeTempFile("keymap.json", zedInput)
-      val imported = ZedSchemeImporter.importFrom(inputFile)
+      val imported  = ZedSchemeImporter.importFrom(inputFile)
 
       val mappingsDir = tmpDir.resolve("mappings")
       Files.createDirectories(mappingsDir)
@@ -367,10 +367,10 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keymap.json", zedInput, ImportSource.Zed, Platform.Linux)
 
       val rendered = ZedRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       val allBindings = json.flatMap(_("bindings").flatMap(_.asObject))
-      val allActions = allBindings.flatMap(_.values.flatMap(_.asString))
+      val allActions  = allBindings.flatMap(_.values.flatMap(_.asString))
 
       allActions should contain("editor::Copy")
       allActions should contain("editor::Paste")
@@ -380,7 +380,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
       val (mapping, _) = importAndLoad("keymap.json", zedInput, ImportSource.Zed, Platform.Linux)
 
       val rendered = VSCodeRenderer.render(mapping, Platform.Linux)
-      val json = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
+      val json     = parser.parse(rendered).flatMap(_.as[List[JsonObject]]).toOption.get
 
       val commands = json.flatMap(_("command").flatMap(_.asString))
       commands should contain("editor.action.clipboardCopyAction")
@@ -402,7 +402,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
         """[{"bindings": {"cmd-c": "editor::Copy"}}]"""
 
       val inputFile = writeTempFile("keymap-cmd.json", cmdInput)
-      val imported = ZedSchemeImporter.importFrom(inputFile)
+      val imported  = ZedSchemeImporter.importFrom(inputFile)
 
       imported.bindings should have size 1
       val binding = imported.bindings.head
@@ -425,12 +425,12 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
       // Import from each
       val vscodeFile = writeTempFile("vscode.json", vscodeJson)
-      val ideaFile = writeTempFile("idea.xml", ideaXml)
-      val zedFile = writeTempFile("zed.json", zedJson)
+      val ideaFile   = writeTempFile("idea.xml", ideaXml)
+      val zedFile    = writeTempFile("zed.json", zedJson)
 
       val fromVscode = VscodeSchemeImporter.importFrom(vscodeFile)
-      val fromIdea = IdeaSchemeImporter.importFromFile(ideaFile)
-      val fromZed = ZedSchemeImporter.importFrom(zedFile)
+      val fromIdea   = IdeaSchemeImporter.importFromFile(ideaFile)
+      val fromZed    = ZedSchemeImporter.importFrom(zedFile)
 
       // All should produce Ctrl+C chord
       def assertCtrlC(bindings: List[ImportedBinding]): Unit = {
@@ -478,8 +478,8 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
 
   "Special character handling" should {
     "handle bracket keys in VSCode round-trip" in {
-      val input = """[{"key": "ctrl+[", "command": "editor.action.outdentLines"}]"""
-      val file = writeTempFile("brackets.json", input)
+      val input    = """[{"key": "ctrl+[", "command": "editor.action.outdentLines"}]"""
+      val file     = writeTempFile("brackets.json", input)
       val imported = VscodeSchemeImporter.importFrom(file)
 
       imported.bindings should have size 1
@@ -487,8 +487,8 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
     }
 
     "handle slash key in Zed round-trip" in {
-      val input = """[{"context": "Editor", "bindings": {"ctrl-/": "editor::ToggleComments"}}]"""
-      val file = writeTempFile("slash.json", input)
+      val input    = """[{"context": "Editor", "bindings": {"ctrl-/": "editor::ToggleComments"}}]"""
+      val file     = writeTempFile("slash.json", input)
       val imported = ZedSchemeImporter.importFrom(file)
 
       imported.bindings should have size 1
@@ -502,7 +502,7 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
           |  <action id="EditorBackSpace"><keyboard-shortcut first-keystroke="BACK_SPACE" /></action>
           |  <action id="EditorPageDown"><keyboard-shortcut first-keystroke="PAGE_DOWN" /></action>
           |</keymap>""".stripMargin
-      val file = writeTempFile("special.xml", input)
+      val file     = writeTempFile("special.xml", input)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       val backspace = imported.bindings.find(_.action == "EditorBackSpace")
@@ -531,8 +531,8 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
     val inputFile = writeTempFile(fileName, content)
     val imported = source match {
       case ImportSource.VSCode => VscodeSchemeImporter.importFrom(inputFile)
-      case ImportSource.Idea => IdeaSchemeImporter.importFromFile(inputFile)
-      case ImportSource.Zed => ZedSchemeImporter.importFrom(inputFile)
+      case ImportSource.Idea   => IdeaSchemeImporter.importFromFile(inputFile)
+      case ImportSource.Zed    => ZedSchemeImporter.importFrom(inputFile)
     }
 
     val mappingsDir = tmpDir.resolve("mappings")

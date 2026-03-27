@@ -52,50 +52,54 @@ class RendererPlatformTest extends AnyWordSpec with Matchers {
       .get
 
     val allConcepts = raw.mapping.toSeq.flatten
-    val concepts = allConcepts.flatMap { c =>
-      val resolvedBinding = c.binding.resolve(platform)
-      val i = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
-      val v = c.vscode.flatMap(i =>
-        i.action.map { a =>
-          val bindings = i.binding.toList.flatten.map(ShortcutParser.parseUnsafe)
-          VSCodeAction(a, i.context.toList.flatten, bindings)
-        }
-      )
-      val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
+    val concepts = allConcepts.flatMap {
+      c =>
+        val resolvedBinding = c.binding.resolve(platform)
+        val i               = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
+        val v = c.vscode.flatMap(
+          i =>
+            i.action.map {
+              a =>
+                val bindings = i.binding.toList.flatten.map(ShortcutParser.parseUnsafe)
+                VSCodeAction(a, i.context.toList.flatten, bindings)
+            }
+        )
+        val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
 
-      if (resolvedBinding.nonEmpty) {
-        val chord = NEList.unsafeFrom(resolvedBinding).map(ShortcutParser.parseUnsafe)
-        Seq(Concept(c.id, chord, i, v, z))
-      } else {
-        Seq.empty
-      }
+        if (resolvedBinding.nonEmpty) {
+          val chord = NEList.unsafeFrom(resolvedBinding).map(ShortcutParser.parseUnsafe)
+          Seq(Concept(c.id, chord, i, v, z))
+        } else {
+          Seq.empty
+        }
     }
     Mapping(concepts.toList)
   }
 
   private def findVscodeBinding(jsonStr: String, command: String): Option[String] = {
     val arr = jsonParse(jsonStr).flatMap(_.as[List[JsonObject]]).toOption.get
-    arr.find(_.apply("command").flatMap(_.asString).contains(command))
+    arr
+      .find(_.apply("command").flatMap(_.asString).contains(command))
       .flatMap(_.apply("key").flatMap(_.asString))
   }
 
   "VSCodeRenderer" should {
     "render platform-specific bindings for macOS" in {
       val mapping = loadFromYaml(yamlWithPlatformBindings, Platform.MacOS)
-      val result = VSCodeRenderer.render(mapping, Platform.MacOS)
-      val key = findVscodeBinding(result, "editor.action.clipboardPasteAction")
+      val result  = VSCodeRenderer.render(mapping, Platform.MacOS)
+      val key     = findVscodeBinding(result, "editor.action.clipboardPasteAction")
       key shouldBe Some("meta+v")
     }
 
     "render platform-specific bindings for Linux (default fallback)" in {
       val mapping = loadFromYaml(yamlWithPlatformBindings, Platform.Linux)
-      val result = VSCodeRenderer.render(mapping, Platform.Linux)
-      val key = findVscodeBinding(result, "editor.action.clipboardPasteAction")
+      val result  = VSCodeRenderer.render(mapping, Platform.Linux)
+      val key     = findVscodeBinding(result, "editor.action.clipboardPasteAction")
       key shouldBe Some("ctrl+v")
     }
 
     "render universal bindings the same for all platforms" in {
-      val macMapping = loadFromYaml(yamlWithUniversalBindings, Platform.MacOS)
+      val macMapping   = loadFromYaml(yamlWithUniversalBindings, Platform.MacOS)
       val linuxMapping = loadFromYaml(yamlWithUniversalBindings, Platform.Linux)
       val macKey = findVscodeBinding(
         VSCodeRenderer.render(macMapping, Platform.MacOS),
@@ -113,14 +117,14 @@ class RendererPlatformTest extends AnyWordSpec with Matchers {
   "ZedRenderer" should {
     "render platform-specific bindings for macOS" in {
       val mapping = loadFromYaml(yamlWithPlatformBindings, Platform.MacOS)
-      val result = ZedRenderer.render(mapping, Platform.MacOS)
+      val result  = ZedRenderer.render(mapping, Platform.MacOS)
       result should include("cmd-v")
       result should include("editor::Paste")
     }
 
     "render platform-specific bindings for Linux (default fallback)" in {
       val mapping = loadFromYaml(yamlWithPlatformBindings, Platform.Linux)
-      val result = ZedRenderer.render(mapping, Platform.Linux)
+      val result  = ZedRenderer.render(mapping, Platform.Linux)
       result should include("ctrl-v")
       result should include("editor::Paste")
     }
@@ -129,16 +133,16 @@ class RendererPlatformTest extends AnyWordSpec with Matchers {
   "IdeaRenderer" should {
     "render platform-specific bindings for macOS" in {
       val mapping = loadFromYaml(yamlWithPlatformBindings, Platform.MacOS)
-      val params = IdeaParams(List.empty, negate = false, parent = "$default", keymapName = "Test")
-      val result = new IdeaRenderer(params).render(mapping, Platform.MacOS)
+      val params  = IdeaParams(List.empty, negate = false, parent = "$default", keymapName = "Test")
+      val result  = new IdeaRenderer(params).render(mapping, Platform.MacOS)
       result should include("meta v")
       result should include("$Paste")
     }
 
     "render platform-specific bindings for Linux (default fallback)" in {
       val mapping = loadFromYaml(yamlWithPlatformBindings, Platform.Linux)
-      val params = IdeaParams(List.empty, negate = false, parent = "$default", keymapName = "Test")
-      val result = new IdeaRenderer(params).render(mapping, Platform.Linux)
+      val params  = IdeaParams(List.empty, negate = false, parent = "$default", keymapName = "Test")
+      val result  = new IdeaRenderer(params).render(mapping, Platform.Linux)
       result should include("ctrl v")
       result should include("$Paste")
     }

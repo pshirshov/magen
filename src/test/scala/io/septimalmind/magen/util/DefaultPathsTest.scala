@@ -96,9 +96,9 @@ class DefaultPathsTest extends AnyWordSpec with Matchers {
     }
 
     "return distinct paths for each platform" in {
-      val macPath = DefaultPaths.configPath(Platform.MacOS)
+      val macPath   = DefaultPaths.configPath(Platform.MacOS)
       val linuxPath = DefaultPaths.configPath(Platform.Linux)
-      val winPath = DefaultPaths.configPath(Platform.Win)
+      val winPath   = DefaultPaths.configPath(Platform.Win)
       macPath should not equal linuxPath
       macPath should not equal winPath
       linuxPath should not equal winPath

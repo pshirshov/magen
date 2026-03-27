@@ -112,7 +112,7 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
       val tmpDir = Files.createTempDirectory("magen-test-")
       try {
         val schemeDir = tmpDir.resolve("my-scheme")
-        val subDir = schemeDir.resolve("sub")
+        val subDir    = schemeDir.resolve("sub")
         Files.createDirectories(subDir)
         Files.write(schemeDir.resolve("a.yaml"), "mapping: []".getBytes(StandardCharsets.UTF_8))
         Files.write(subDir.resolve("b.yaml"), "mapping: []".getBytes(StandardCharsets.UTF_8))

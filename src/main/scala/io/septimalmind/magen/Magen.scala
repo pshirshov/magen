@@ -48,8 +48,8 @@ object Magen {
 
   private def cmdGenerate(parsed: ParsedArgs): Unit = {
     val hostPlatform = Platform.detect()
-    val config = loadOrCreateConfig(hostPlatform)
-    val platform = parsed.platform.getOrElse(hostPlatform)
+    val config       = loadOrCreateConfig(hostPlatform)
+    val platform     = parsed.platform.getOrElse(hostPlatform)
     val schemeId = parsed.scheme
       .orElse(config.scheme.map(SchemeId.apply))
       .getOrElse(SchemeId.default)
@@ -69,8 +69,8 @@ object Magen {
       new IdeaInstaller(
         IdeaParams(
           DefaultPaths.ideaPaths(hostPlatform, keymapName) ++ config.`installer-paths`.idea,
-          negate = true,
-          parent = "$default",
+          negate     = true,
+          parent     = "$default",
           keymapName = keymapName,
         ),
         platform,
@@ -89,13 +89,14 @@ object Magen {
   // -- render --
 
   private def cmdRender(parsed: ParsedArgs): Unit = {
-    val config = loadOrCreateConfig(Platform.detect())
+    val config   = loadOrCreateConfig(Platform.detect())
     val platform = parsed.platform.getOrElse(Platform.detect())
     val schemeId = parsed.scheme
       .orElse(config.scheme.map(SchemeId.apply))
       .getOrElse(SchemeId.default)
 
-    val outputDir = parsed.positional.headOption.map(Paths.get(_))
+    val outputDir = parsed.positional.headOption
+      .map(Paths.get(_))
       .getOrElse(Paths.get("output"))
 
     Files.createDirectories(outputDir)
@@ -111,7 +112,7 @@ object Magen {
     println(s"  wrote ${outputDir.resolve("keybindings.json")}")
 
     val ideaRenderer = new targets.IdeaRenderer(IdeaParams(List.empty, negate = true, parent = "$default", keymapName = keymapName))
-    val ideaOut = ideaRenderer.render(converted, platform)
+    val ideaOut      = ideaRenderer.render(converted, platform)
     Files.write(outputDir.resolve(s"$keymapName.xml"), ideaOut.getBytes(StandardCharsets.UTF_8))
     println(s"  wrote ${outputDir.resolve(s"$keymapName.xml")}")
 
@@ -139,7 +140,8 @@ object Magen {
     println(s"Scanning for editor keybindings (platform: $platform)\n")
 
     println("VSCode / VSCodium:")
-    val vscodePaths = PathExpander.expandGlobs(DefaultPaths.vscodePaths(platform))
+    val vscodePaths = PathExpander
+      .expandGlobs(DefaultPaths.vscodePaths(platform))
       .filter(p => Files.exists(p) && Files.isRegularFile(p))
     if (vscodePaths.isEmpty) {
       println("  (none found)")
@@ -148,7 +150,8 @@ object Magen {
     }
 
     println("\nZed:")
-    val zedPaths = PathExpander.expandGlobs(DefaultPaths.zedPaths(platform))
+    val zedPaths = PathExpander
+      .expandGlobs(DefaultPaths.zedPaths(platform))
       .filter(p => Files.exists(p) && Files.isRegularFile(p))
     if (zedPaths.isEmpty) {
       println("  (none found)")
@@ -185,8 +188,8 @@ object Magen {
     val subArgs = parsed.copy(positional = parsed.positional.drop(1))
     subcommand match {
       case "vscode" => cmdImportVscode(subArgs)
-      case "idea" => cmdImportIdea(subArgs)
-      case "zed" => cmdImportZed(subArgs)
+      case "idea"   => cmdImportIdea(subArgs)
+      case "zed"    => cmdImportZed(subArgs)
       case unknown =>
         System.err.println(s"Unknown import source: $unknown. Expected: vscode, idea, or zed")
         printUsage()
@@ -201,7 +204,7 @@ object Magen {
     }
     println(s"Importing VSCode keybindings from $source into scheme '${schemeId.name}'")
     val imported = importer.VscodeSchemeImporter.importFrom(source)
-    val out = importer.SchemeWriter.write(schemeId, imported)
+    val out      = importer.SchemeWriter.write(schemeId, imported)
     println(s"Done: $out")
   }
 
@@ -213,29 +216,28 @@ object Magen {
         assert(f.toFile.exists(), s"File not found: $f")
         println(s"Importing IntelliJ keybindings from $f into scheme '${schemeId.name}'")
         val imported = importer.IdeaSchemeImporter.importFromFile(f)
-        val out = importer.SchemeWriter.write(schemeId, imported)
+        val out      = importer.SchemeWriter.write(schemeId, imported)
         println(s"Done: $out")
 
       case (None, Some(id)) =>
         println(s"Looking for keymap '$id'...")
-        val keymaps = importer.IdeaSchemeImporter.listKeymaps()
-        val sources = keymaps.map(_.source).distinct
+        val keymaps  = importer.IdeaSchemeImporter.listKeymaps()
+        val sources  = keymaps.map(_.source).distinct
         val imported = importer.IdeaSchemeImporter.importFrom(id, sources)
-        val out = importer.SchemeWriter.write(schemeId, imported)
+        val out      = importer.SchemeWriter.write(schemeId, imported)
         println(s"Done: $out")
 
       case (None, None) =>
         println("Discovering IDEA keymaps...")
         val keymaps = importer.IdeaSchemeImporter.listKeymaps()
-        val defaultKeymap = keymaps.find(km => km.bundled && km.name == "$default")
-          .getOrElse {
-            val available = keymaps.map(_.name).mkString(", ")
-            throw new AssertionError(s"No $$default keymap found. Available: $available")
-          }
+        val defaultKeymap = keymaps.find(km => km.bundled && km.name == "$default").getOrElse {
+          val available = keymaps.map(_.name).mkString(", ")
+          throw new AssertionError(s"No $$default keymap found. Available: $available")
+        }
         println(s"Using keymap '${defaultKeymap.name}' from ${defaultKeymap.source}")
-        val sources = keymaps.map(_.source).distinct
+        val sources  = keymaps.map(_.source).distinct
         val imported = importer.IdeaSchemeImporter.importFrom(defaultKeymap.name, sources)
-        val out = importer.SchemeWriter.write(schemeId, imported)
+        val out      = importer.SchemeWriter.write(schemeId, imported)
         println(s"Done: $out")
     }
   }
@@ -247,7 +249,7 @@ object Magen {
     }
     println(s"Importing Zed keybindings from $source into scheme '${schemeId.name}'")
     val imported = importer.ZedSchemeImporter.importFrom(source)
-    val out = importer.SchemeWriter.write(schemeId, imported)
+    val out      = importer.SchemeWriter.write(schemeId, imported)
     println(s"Done: $out")
   }
 
@@ -269,7 +271,7 @@ object Magen {
       sys.exit(1)
     }
     subcommand match {
-      case "idea" => cmdImportNegationIdea(parsed, negationsDir)
+      case "idea"   => cmdImportNegationIdea(parsed, negationsDir)
       case "vscode" => cmdImportNegationVscode(parsed, negationsDir)
       case unknown =>
         System.err.println(s"Unknown negation source: $unknown. Expected: idea or vscode")
@@ -447,9 +449,9 @@ object Magen {
   // -- Validation --
 
   private def reportValidation(result: ValidationResult): Unit = {
-    val missing = result.missingBindings
+    val missing      = result.missingBindings
     val ideaWarnings = result.ideaConflicts
-    val errors = result.errors
+    val errors       = result.errors
 
     if (missing.nonEmpty) {
       System.err.println(s"\nMissing platform bindings (${missing.size}):")
@@ -479,14 +481,15 @@ object Magen {
     val schemeFiles = MagenPaths.listSchemeFiles(schemeId.name)
     assert(schemeFiles.nonEmpty, s"Scheme not found or empty: ${schemeId.name}. Available: ${listSchemes().map(_.name).mkString(", ")}")
 
-    val rawMappings = schemeFiles.sorted.map { fileName =>
-      println(s"Reading ${schemeId.name}/$fileName")
-      readMappingFromString(MagenPaths.readSchemeFile(schemeId.name, fileName))
+    val rawMappings = schemeFiles.sorted.map {
+      fileName =>
+        println(s"Reading ${schemeId.name}/$fileName")
+        readMappingFromString(MagenPaths.readSchemeFile(schemeId.name, fileName))
     }
 
     val rawConcepts = rawMappings.flatMap(_.mapping.toSeq.flatten)
-    val mapping = convert(rawMappings, platform)
-    val result = MappingValidator.validate(mapping, rawConcepts, platform)
+    val mapping     = convert(rawMappings, platform)
+    val result      = MappingValidator.validate(mapping, rawConcepts, platform)
     (mapping, result)
   }
 
@@ -500,7 +503,8 @@ object Magen {
     val cfgPath = DefaultPaths.configPath(hostPlatform)
     if (Files.exists(cfgPath)) {
       val content = IzFiles.readString(cfgPath)
-      parser.parse(content)
+      parser
+        .parse(content)
         .flatMap(_.as[MagenConfig])
         .getOrElse {
           println(s"Warning: Failed to parse $cfgPath, using empty config")
@@ -509,7 +513,7 @@ object Magen {
     } else {
       Files.createDirectories(cfgPath.getParent)
       val emptyConfig = MagenConfig.empty
-      val json = emptyConfig.asJson.spaces2
+      val json        = emptyConfig.asJson.spaces2
       Files.write(cfgPath, json.getBytes(StandardCharsets.UTF_8))
       println(s"Created config file: $cfgPath")
       emptyConfig
@@ -520,7 +524,7 @@ object Magen {
 
   private def convert(mapping: List[RawMapping], platform: Platform): Mapping = {
     val allConcepts = mapping.flatMap(_.mapping.toSeq.flatten)
-    val bad = allConcepts.map(m => (m.id, m)).toMultimap.filter(_._2.size > 1)
+    val bad         = allConcepts.map(m => (m.id, m)).toMultimap.filter(_._2.size > 1)
     if (bad.nonEmpty) {
       println(s"Conflicts: ${bad.niceList()}")
       ???
@@ -592,16 +596,16 @@ object Magen {
   ): String = {
     val pattern = """\$\{([^}]+)\}""".r
 
-    var result = template
+    var result    = template
     var iteration = 0
-    var previous = ""
+    var previous  = ""
 
     while (result != previous && iteration < maxIterations) {
       previous = result
       result = pattern.replaceAllIn(
         result,
         m => {
-          val key = m.group(1)
+          val key         = m.group(1)
           val replacement = values.getOrElse(key, m.matched)
           quoteReplacement(replacement)
         },

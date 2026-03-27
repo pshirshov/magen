@@ -33,12 +33,13 @@ class MagenIntegrationTest extends AnyWordSpec with Matchers {
         |      action: "editor::MoveLeft"
         |      context: [ "Editor" ]
         |""".stripMargin
-    ) { path =>
-      val raw = Magen.readMapping(path)
-      raw.mapping.get should have size 1
-      val concept = raw.mapping.get.head
-      concept.id shouldBe "cursorLeft"
-      concept.binding shouldBe PlatformBinding.Universal(List("left"))
+    ) {
+      path =>
+        val raw = Magen.readMapping(path)
+        raw.mapping.get should have size 1
+        val concept = raw.mapping.get.head
+        concept.id shouldBe "cursorLeft"
+        concept.binding shouldBe PlatformBinding.Universal(List("left"))
     }
 
     "parse YAML with platform-specific bindings" in withTempYaml(
@@ -55,15 +56,16 @@ class MagenIntegrationTest extends AnyWordSpec with Matchers {
         |      action: "editor::Paste"
         |      context: [ "Editor" ]
         |""".stripMargin
-    ) { path =>
-      val raw = Magen.readMapping(path)
-      val concept = raw.mapping.get.head
-      concept.binding shouldBe a[PlatformBinding.PerPlatform]
-      val perPlatform = concept.binding.asInstanceOf[PlatformBinding.PerPlatform]
-      perPlatform.macos shouldBe Some(List("meta+[KeyV]"))
-      perPlatform.default shouldBe Some(List("ctrl+[KeyV]"))
-      perPlatform.linux shouldBe None
-      perPlatform.win shouldBe None
+    ) {
+      path =>
+        val raw     = Magen.readMapping(path)
+        val concept = raw.mapping.get.head
+        concept.binding shouldBe a[PlatformBinding.PerPlatform]
+        val perPlatform = concept.binding.asInstanceOf[PlatformBinding.PerPlatform]
+        perPlatform.macos shouldBe Some(List("meta+[KeyV]"))
+        perPlatform.default shouldBe Some(List("ctrl+[KeyV]"))
+        perPlatform.linux shouldBe None
+        perPlatform.win shouldBe None
     }
 
     "parse YAML with single string binding" in withTempYaml(
@@ -77,10 +79,11 @@ class MagenIntegrationTest extends AnyWordSpec with Matchers {
         |    zed:
         |      action: "editor::Test"
         |""".stripMargin
-    ) { path =>
-      val raw = Magen.readMapping(path)
-      val concept = raw.mapping.get.head
-      concept.binding shouldBe PlatformBinding.Universal(List("alt+left"))
+    ) {
+      path =>
+        val raw     = Magen.readMapping(path)
+        val concept = raw.mapping.get.head
+        concept.binding shouldBe PlatformBinding.Universal(List("alt+left"))
     }
 
     "parse YAML with platform-specific list bindings" in withTempYaml(
@@ -99,12 +102,13 @@ class MagenIntegrationTest extends AnyWordSpec with Matchers {
         |    zed:
         |      action: "editor::Copy"
         |""".stripMargin
-    ) { path =>
-      val raw = Magen.readMapping(path)
-      val concept = raw.mapping.get.head
-      val perPlatform = concept.binding.asInstanceOf[PlatformBinding.PerPlatform]
-      perPlatform.macos shouldBe Some(List("meta+[KeyC]", "meta+shift+[KeyC]"))
-      perPlatform.default shouldBe Some(List("ctrl+[KeyC]"))
+    ) {
+      path =>
+        val raw         = Magen.readMapping(path)
+        val concept     = raw.mapping.get.head
+        val perPlatform = concept.binding.asInstanceOf[PlatformBinding.PerPlatform]
+        perPlatform.macos shouldBe Some(List("meta+[KeyC]", "meta+shift+[KeyC]"))
+        perPlatform.default shouldBe Some(List("ctrl+[KeyC]"))
     }
   }
 
@@ -132,38 +136,38 @@ class MagenIntegrationTest extends AnyWordSpec with Matchers {
         |      action: "editor::Paste"
         |      context: [ "Editor" ]
         |""".stripMargin
-    ) { path =>
-      val raw = Magen.readMapping(path)
+    ) {
+      path =>
+        val raw = Magen.readMapping(path)
 
-      import io.septimalmind.magen.targets.*
-      import io.septimalmind.magen.util.ShortcutParser
-      import izumi.fundamentals.collections.nonempty.NEList
+        import io.septimalmind.magen.targets.*
+        import io.septimalmind.magen.util.ShortcutParser
+        import izumi.fundamentals.collections.nonempty.NEList
 
-      def convertForPlatform(platform: Platform): Mapping = {
-        val concepts = raw.mapping.get.flatMap { c =>
-          val resolved = c.binding.resolve(platform)
-          val v = c.vscode.flatMap(i => i.action.map(a =>
-            VSCodeAction(a, i.context.toList.flatten, List.empty)
-          ))
-          val i = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
-          val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
-          if (resolved.nonEmpty) {
-            val chord = NEList.unsafeFrom(resolved).map(ShortcutParser.parseUnsafe)
-            Seq(Concept(c.id, chord, i, v, z))
-          } else Seq.empty
+        def convertForPlatform(platform: Platform): Mapping = {
+          val concepts = raw.mapping.get.flatMap {
+            c =>
+              val resolved = c.binding.resolve(platform)
+              val v        = c.vscode.flatMap(i => i.action.map(a => VSCodeAction(a, i.context.toList.flatten, List.empty)))
+              val i        = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
+              val z        = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
+              if (resolved.nonEmpty) {
+                val chord = NEList.unsafeFrom(resolved).map(ShortcutParser.parseUnsafe)
+                Seq(Concept(c.id, chord, i, v, z))
+              } else Seq.empty
+          }
+          Mapping(concepts)
         }
-        Mapping(concepts)
-      }
 
-      val macMapping = convertForPlatform(Platform.MacOS)
-      val linuxMapping = convertForPlatform(Platform.Linux)
+        val macMapping   = convertForPlatform(Platform.MacOS)
+        val linuxMapping = convertForPlatform(Platform.Linux)
 
-      val macVscode = VSCodeRenderer.render(macMapping, Platform.MacOS)
-      val linuxVscode = VSCodeRenderer.render(linuxMapping, Platform.Linux)
+        val macVscode   = VSCodeRenderer.render(macMapping, Platform.MacOS)
+        val linuxVscode = VSCodeRenderer.render(linuxMapping, Platform.Linux)
 
-      macVscode should include("meta+v")
-      linuxVscode should include("ctrl+v")
-      macVscode should not equal linuxVscode
+        macVscode should include("meta+v")
+        linuxVscode should include("ctrl+v")
+        macVscode should not equal linuxVscode
     }
   }
 }

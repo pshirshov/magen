@@ -41,7 +41,7 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
       (i, m)
     }).groupBy(_._1.action)
 
-    val defined = index.keySet
+    val defined   = index.keySet
     val negations = IdeaRenderer.allIdeaActions().diff(defined).map(n => <action id={n} />)
 
     val mappings = index.view.map {
@@ -57,11 +57,10 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
 
           }
 
-        val bbs = pairs
-          .flatMap {
-            case (_, c) =>
-              c.binding.toList.filter(_.combos.nonEmpty).map(b => (b, c.id))
-          }
+        val bbs = pairs.flatMap {
+          case (_, c) =>
+            c.binding.toList.filter(_.combos.nonEmpty).map(b => (b, c.id))
+        }
           .groupBy(_._1).map {
             case (chord, cs) =>
               Seq(scala.xml.Comment(cs.map(_._2).mkString(", "))) ++
@@ -75,7 +74,7 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
     val full = <keymap version="1" name={params.keymapName} parent={params.parent}>
       {mappings}
     </keymap>
-    val pp = new PrettyPrinter(120, 2)
+    val pp                = new PrettyPrinter(120, 2)
     val prettyXml: String = pp.format(full)
     prettyXml
   }
@@ -97,10 +96,10 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
 
   private def renderCombo(f: KeyCombo): String = {
     val modsStr = f.modifiers.map {
-      case Modifier.Ctrl => "ctrl"
-      case Modifier.Alt => "alt"
+      case Modifier.Ctrl  => "ctrl"
+      case Modifier.Alt   => "alt"
       case Modifier.Shift => "shift"
-      case Modifier.Meta => "meta"
+      case Modifier.Meta  => "meta"
     }
 
     (modsStr :+ renderKey(f.key)).mkString(" ").toLowerCase
@@ -116,26 +115,26 @@ class IdeaRenderer(params: IdeaParams) extends Renderer {
       shortcutMap(shortcut.substring(1, shortcut.length - 1))
     } else {
       shortcut.toUpperCase match {
-        case "SHIFT" => "shift"
-        case "ALT" => "alt"
-        case "CMD" => "meta"
-        case "CTRL" => "ctrl"
-        case "-" => "MINUS"
-        case "=" => "EQUALS"
-        case "BACKSPACE" => "BACK_SPACE"
-        case "," => "COMMA"
-        case ";" => "SEMICOLON"
-        case "." => "PERIOD"
-        case "/" => "SLASH"
-        case "\\" => "BACK_SLASH"
-        case "PAGEDOWN" => "PAGE_DOWN"
-        case "PAGEUP" => "PAGE_UP"
-        case "[" => "OPEN_BRACKET"
-        case "]" => "CLOSE_BRACKET"
-        case "'" => "AMPERSAND"
-        case "BRACKETLEFT" => "OPEN_BRACKET"
+        case "SHIFT"        => "shift"
+        case "ALT"          => "alt"
+        case "CMD"          => "meta"
+        case "CTRL"         => "ctrl"
+        case "-"            => "MINUS"
+        case "="            => "EQUALS"
+        case "BACKSPACE"    => "BACK_SPACE"
+        case ","            => "COMMA"
+        case ";"            => "SEMICOLON"
+        case "."            => "PERIOD"
+        case "/"            => "SLASH"
+        case "\\"           => "BACK_SLASH"
+        case "PAGEDOWN"     => "PAGE_DOWN"
+        case "PAGEUP"       => "PAGE_UP"
+        case "["            => "OPEN_BRACKET"
+        case "]"            => "CLOSE_BRACKET"
+        case "'"            => "AMPERSAND"
+        case "BRACKETLEFT"  => "OPEN_BRACKET"
         case "BRACKETRIGHT" => "CLOSE_BRACKET"
-        case _ => shortcut
+        case _              => shortcut
       }
     }
   }

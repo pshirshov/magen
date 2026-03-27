@@ -30,16 +30,17 @@ object PlatformBinding {
   private val stringOrListDecoder: Decoder[List[String]] =
     Decoder[String].map(List(_)).or(Decoder[List[String]])
 
-  implicit val decoder: Decoder[PlatformBinding] = Decoder.instance { cursor =>
-    cursor.as[String].map(s => Universal(List(s))).orElse {
-      cursor.as[List[String]].map(Universal.apply).orElse {
-        for {
-          default <- cursor.downField("default").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
-          macos   <- cursor.downField("macos").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
-          linux   <- cursor.downField("linux").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
-          win     <- cursor.downField("win").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
-        } yield PerPlatform(default, macos, linux, win)
+  implicit val decoder: Decoder[PlatformBinding] = Decoder.instance {
+    cursor =>
+      cursor.as[String].map(s => Universal(List(s))).orElse {
+        cursor.as[List[String]].map(Universal.apply).orElse {
+          for {
+            default <- cursor.downField("default").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
+            macos   <- cursor.downField("macos").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
+            linux   <- cursor.downField("linux").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
+            win     <- cursor.downField("win").as[Option[List[String]]](Decoder.decodeOption(stringOrListDecoder))
+          } yield PerPlatform(default, macos, linux, win)
+        }
       }
-    }
   }
 }

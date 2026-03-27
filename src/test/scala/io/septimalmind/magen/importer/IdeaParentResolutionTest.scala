@@ -34,7 +34,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("child.xml", xml)
+      val file     = writeTempFile("child.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       // Should have the custom action
@@ -44,9 +44,10 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
       // Should also have inherited $default bindings like $Copy (ctrl C)
       val copy = imported.bindings.filter(_.action == "$Copy")
       copy should not be empty
-      copy.exists { b =>
-        b.chord.combos.head.modifiers.contains(Modifier.Ctrl) &&
-        b.chord.combos.head.key.name == "C"
+      copy.exists {
+        b =>
+          b.chord.combos.head.modifiers.contains(Modifier.Ctrl) &&
+          b.chord.combos.head.key.name == "C"
       } shouldBe true
 
       // Should have many more bindings than just the one defined
@@ -64,7 +65,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("override.xml", xml)
+      val file     = writeTempFile("override.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       val findBindings = imported.bindings.filter(_.action == "Find")
@@ -83,7 +84,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  <action id="EditorScrollUp"/>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("unbind.xml", xml)
+      val file     = writeTempFile("unbind.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       // EditorScrollUp should NOT be in the result (unbound)
@@ -159,7 +160,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("mymac.xml", xml)
+      val file     = writeTempFile("mymac.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       // Custom action present
@@ -189,7 +190,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("mysublime.xml", xml)
+      val file     = writeTempFile("mysublime.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       // Custom action present
@@ -203,7 +204,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
       // Sublime Text (Mac OS X) re-binds it to ctrl alt UP
       val scrollUp = imported.bindings.filter(_.action == "EditorScrollUp")
       scrollUp should have size 1
-      scrollUp.head.chord.combos.head.modifiers should contain allOf(Modifier.Ctrl, Modifier.Alt)
+      scrollUp.head.chord.combos.head.modifiers should contain allOf (Modifier.Ctrl, Modifier.Alt)
     }
 
     "import Default for GNOME with 3-level parent chain" in withTmpDir {
@@ -217,7 +218,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("mygnome.xml", xml)
+      val file     = writeTempFile("mygnome.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       // Custom action
@@ -275,7 +276,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("standalone.xml", xml)
+      val file     = writeTempFile("standalone.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       imported.bindings should have size 2
@@ -293,7 +294,7 @@ class IdeaParentResolutionTest extends AnyWordSpec with Matchers {
           |  </action>
           |</keymap>""".stripMargin
 
-      val file = writeTempFile("replace.xml", xml)
+      val file     = writeTempFile("replace.xml", xml)
       val imported = IdeaSchemeImporter.importFromFile(file)
 
       val copy = imported.bindings.filter(_.action == "$Copy")

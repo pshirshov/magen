@@ -10,24 +10,27 @@ import java.nio.file.Path
 object ZedSchemeImporter {
   def importFrom(source: Path): ImportedScheme = {
     val content = IzFiles.readString(source)
-    val json = parser.parse(content)
+    val json = parser
+      .parse(content)
       .getOrElse(throw new RuntimeException(s"Failed to parse Zed keymap from $source"))
 
     val entries = json.asArray.getOrElse(throw new RuntimeException(s"Expected JSON array in $source"))
 
-    val bindings = entries.flatMap { entry =>
-      val obj = entry.asObject.getOrElse(throw new RuntimeException("Expected JSON object in keymap array"))
-      val context = obj("context").flatMap(_.asString).toList
-      val bindingsObj = obj("bindings").flatMap(_.asObject)
-        .getOrElse(throw new RuntimeException("Missing 'bindings' field in keymap entry"))
+    val bindings = entries.flatMap {
+      entry =>
+        val obj     = entry.asObject.getOrElse(throw new RuntimeException("Expected JSON object in keymap array"))
+        val context = obj("context").flatMap(_.asString).toList
+        val bindingsObj = obj("bindings")
+          .flatMap(_.asObject)
+          .getOrElse(throw new RuntimeException("Missing 'bindings' field in keymap entry"))
 
-      bindingsObj.toList.flatMap {
-        case (key, actionJson) =>
-          val action = actionJson.asString
-            .getOrElse(actionJson.noSpaces) // some actions may be objects
-          val chord = parseZedKey(key)
-          chord.map(c => ImportedBinding(action, c, context))
-      }
+        bindingsObj.toList.flatMap {
+          case (key, actionJson) =>
+            val action = actionJson.asString
+              .getOrElse(actionJson.noSpaces) // some actions may be objects
+            val chord = parseZedKey(key)
+            chord.map(c => ImportedBinding(action, c, context))
+        }
     }
 
     ImportedScheme(ImportSource.Zed, bindings.toList)
@@ -36,7 +39,7 @@ object ZedSchemeImporter {
   private def parseZedKey(key: String): Option[Chord] = {
     // Zed format: "ctrl-shift-k" or "ctrl-k ctrl-shift-v" (space-separated for chords)
     val comboParts = key.split("\\s+").toList
-    val combos = comboParts.map(parseZedCombo)
+    val combos     = comboParts.map(parseZedCombo)
     if (combos.forall(_.isDefined)) {
       Some(Chord(combos.flatten))
     } else {
@@ -56,7 +59,7 @@ object ZedSchemeImporter {
     val modifiers = modParts.map(parseModifier)
     // rejoin remaining parts with "-" in case the key itself contains "-"
     val keyStr = keyParts.mkString("-")
-    val key = normalizeZedKey(keyStr)
+    val key    = normalizeZedKey(keyStr)
     Some(KeyCombo(modifiers, key))
   }
 
@@ -66,25 +69,25 @@ object ZedSchemeImporter {
 
   private def parseModifier(s: String): Modifier = {
     s match {
-      case "ctrl" => Modifier.Ctrl
-      case "alt" => Modifier.Alt
+      case "ctrl"  => Modifier.Ctrl
+      case "alt"   => Modifier.Alt
       case "shift" => Modifier.Shift
-      case "cmd" => Modifier.Meta
-      case other => throw new RuntimeException(s"Unknown Zed modifier: $other")
+      case "cmd"   => Modifier.Meta
+      case other   => throw new RuntimeException(s"Unknown Zed modifier: $other")
     }
   }
 
   private val zedToInternal: Map[String, String] = Map(
-    "[" -> "BracketLeft",
-    "]" -> "BracketRight",
-    "/" -> "Slash",
+    "["  -> "BracketLeft",
+    "]"  -> "BracketRight",
+    "/"  -> "Slash",
     "\\" -> "Backslash",
-    "'" -> "Quote",
-    "`" -> "Backquote",
-    ";" -> "Semicolon",
-    "," -> "Comma",
-    "." -> "Period",
-    "=" -> "Equal",
+    "'"  -> "Quote",
+    "`"  -> "Backquote",
+    ";"  -> "Semicolon",
+    ","  -> "Comma",
+    "."  -> "Period",
+    "="  -> "Equal",
   )
 
   private def normalizeZedKey(key: String): NamedKey = {
@@ -93,7 +96,7 @@ object ZedSchemeImporter {
       case None =>
         key match {
           case s if s.length == 1 && s.head.isLetter => NamedKey(s.toUpperCase)
-          case s if s.length == 1 && s.head.isDigit => NamedKey(s)
+          case s if s.length == 1 && s.head.isDigit  => NamedKey(s)
           // Zed uses lowercase names: "escape", "enter", "tab", etc.
           case s => NamedKey(s)
         }

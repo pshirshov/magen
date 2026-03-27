@@ -32,7 +32,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("$Copy", ctrlC, List.empty)),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-idea"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("idea:")
       content should include("""action: "$Copy"""")
@@ -49,7 +49,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("SomeObscureIdeaAction", ctrlC, List.empty)),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-idea-unmapped"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("""action: "SomeObscureIdeaAction"""")
       content should include("missing: true")
@@ -61,7 +61,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("$Copy", ctrlC, List.empty)),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-idea-ctx"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("""context: ["Editor"]""")
     }
@@ -74,7 +74,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("editor.action.clipboardCopyAction", ctrlC, List.empty)),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-vscode"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("vscode:")
       content should include("""action: "editor.action.clipboardCopyAction"""")
@@ -88,7 +88,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("some.obscure.vscode.action", ctrlC, List.empty)),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-vscode-unmapped"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("""action: "some.obscure.vscode.action"""")
       content should include("missing: true")
@@ -102,7 +102,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("editor::Copy", ctrlC, List("Editor"))),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-zed"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("zed:")
       content should include("""action: "editor::Copy"""")
@@ -116,7 +116,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
         List(ImportedBinding("obscure::ZedAction", ctrlC, List.empty)),
       )
       val outputFile = SchemeWriter.write(SchemeId("test-zed-unmapped"), imported)
-      val content = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
+      val content    = new String(Files.readAllBytes(outputFile), StandardCharsets.UTF_8)
 
       content should include("""action: "obscure::ZedAction"""")
       content should include("missing: true")

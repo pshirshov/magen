@@ -29,7 +29,7 @@ case class IdeaParams(
 class IdeaInstaller(params: IdeaParams, platform: Platform) extends Installer {
   def install(mapping: Mapping): Unit = {
     val rendered = new IdeaRenderer(params).render(mapping, platform)
-    val paths = PathExpander.expandGlobs(params.writeToPatterns)
+    val paths    = PathExpander.expandGlobs(params.writeToPatterns)
     paths.foreach {
       p =>
         println(s"Installing into $p")
@@ -46,7 +46,7 @@ case class VscodeParams(
 class VscodeInstaller(params: VscodeParams, platform: Platform) extends Installer {
   def install(mapping: Mapping): Unit = {
     val rendered = VSCodeRenderer.render(mapping, platform)
-    val paths = PathExpander.expandGlobs(params.writeToPatterns)
+    val paths    = PathExpander.expandGlobs(params.writeToPatterns)
     paths.foreach {
       p =>
         println(s"Installing into $p")
@@ -62,7 +62,7 @@ case class ZedParams(
 class ZedInstaller(params: ZedParams, platform: Platform) extends Installer {
   def install(mapping: Mapping): Unit = {
     val rendered = ZedRenderer.render(mapping, platform)
-    val paths = PathExpander.expandGlobs(params.writeToPatterns)
+    val paths    = PathExpander.expandGlobs(params.writeToPatterns)
     paths.foreach {
       p =>
         println(s"Installing into $p")

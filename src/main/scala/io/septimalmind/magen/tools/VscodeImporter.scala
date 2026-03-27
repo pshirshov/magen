@@ -25,7 +25,7 @@ object VscodeImporter {
       .toMultimap
 
     val processed = scala.collection.mutable.HashSet.empty[String]
-    val sb = new StringBuilder()
+    val sb        = new StringBuilder()
     sb.append("mapping:\n");
     contexts
       .filterNot(_._1.startsWith("-"))
@@ -34,26 +34,26 @@ object VscodeImporter {
       .foreach {
         case (cmd, bbs) =>
           val allbbs = bbs.map(_.key).toList
-          
+
           val secs = allbbs.flatMap {
             b =>
-              val parsed = ShortcutParser.parseUnsafe(b)
+              val parsed   = ShortcutParser.parseUnsafe(b)
               val extended = Aliases.extend(parsed)
-              
-              val all = extended.map(VSCodeRenderer.renderChord).sortBy(_.length)
+
+              val all  = extended.map(VSCodeRenderer.renderChord).sortBy(_.length)
               val secs = all.init
               secs
           }.toSet
-          
+
           val filtered = allbbs.filterNot {
             b =>
               val parsed = ShortcutParser.parseUnsafe(b)
               secs.contains(VSCodeRenderer.renderChord(parsed))
           }
-          
+
           import izumi.fundamentals.platform.strings.IzString.*
-          
-          val b = filtered.map(s => s"\"${s}\"").niceList().shift(5) //if (allbbs.size > 1) s"'${allbbs.head}' # ${allbbs.tail.mkString("; ")}" else s"'${allbbs.head}'"
+
+          val b   = filtered.map(s => s"\"$s\"").niceList().shift(5) // if (allbbs.size > 1) s"'${allbbs.head}' # ${allbbs.tail.mkString("; ")}" else s"'${allbbs.head}'"
           val ccs = bbs.map(_.context)
           val ccsString = ccs.flatten.map(s => s"\"$s\"").mkString("[ ", ", ", " ]").replace("\\", "\\\\")
 
@@ -92,40 +92,40 @@ object VscodeImporter {
     MappingFilter.basicMappings
       .filterNot(a => processed.contains(a._1))
       .foreach {
-      case (k, v) =>
-        val ccs = contexts.get(k).map(_.flatMap(_.context)).getOrElse(Set.empty)
-        
-        val ccsString = ccs.flatten.map(s => s"\"$s\"").mkString("[ ", ", ", " ]")
+        case (k, v) =>
+          val ccs = contexts.get(k).map(_.flatMap(_.context)).getOrElse(Set.empty)
 
-        val b = "'unset'"
-        if (ccs.exists(_.nonEmpty)) {
-          if (ccs.exists(_.isEmpty)) {
-            sb.append(s"""  - id: "$k"
-                         |    binding: 
-                         |      - ${b}
-                         |    vscode:
-                         |      action: '$k'
-                         |      # context: $ccsString""".stripMargin)
+          val ccsString = ccs.flatten.map(s => s"\"$s\"").mkString("[ ", ", ", " ]")
+
+          val b = "'unset'"
+          if (ccs.exists(_.nonEmpty)) {
+            if (ccs.exists(_.isEmpty)) {
+              sb.append(s"""  - id: "$k"
+                           |    binding: 
+                           |      - $b
+                           |    vscode:
+                           |      action: '$k'
+                           |      # context: $ccsString""".stripMargin)
+            } else {
+              sb.append(s"""  - id: "$k"
+                           |    binding: 
+                           |      - $b
+                           |    vscode:
+                           |      action: '$k'
+                           |      context: $ccsString""".stripMargin)
+            }
           } else {
             sb.append(s"""  - id: "$k"
                          |    binding: 
-                         |      - ${b}
+                         |      - $b
                          |    vscode:
-                         |      action: '$k'
-                         |      context: $ccsString""".stripMargin)
+                         |      action: '$k'""".stripMargin)
           }
-        } else {
-          sb.append(s"""  - id: "$k"
-                       |    binding: 
-                       |      - ${b}
-                       |    vscode:
-                       |      action: '$k'""".stripMargin)
-        }
-        sb.append('\n');
-        sb.append(s"""    idea:
-                     |      action: '$v'""".stripMargin)
-      sb.append('\n');
-    }
+          sb.append('\n');
+          sb.append(s"""    idea:
+                       |      action: '$v'""".stripMargin)
+          sb.append('\n');
+      }
 
     Files.write(MagenPaths.writableDir.resolve("vscode-idea-imported.yaml"), sb.toString().getBytes(StandardCharsets.UTF_8))
     ()

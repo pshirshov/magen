@@ -18,11 +18,11 @@ case class EditorEquivalents(
 
 object EditorMappings {
   private val RESOURCE_PREFIX = "editor-mappings"
-  private val EMPTY = EditorEquivalents(None, None, None)
+  private val EMPTY           = EditorEquivalents(None, None, None)
 
-  private lazy val fromIdea: MappingIndex = loadMappingFile("from-idea.json")
+  private lazy val fromIdea: MappingIndex   = loadMappingFile("from-idea.json")
   private lazy val fromVscode: MappingIndex = loadMappingFile("from-vscode.json")
-  private lazy val fromZed: MappingIndex = loadMappingFile("from-zed.json")
+  private lazy val fromZed: MappingIndex    = loadMappingFile("from-zed.json")
 
   def lookupFromIdea(ideaAction: String): EditorEquivalents = {
     fromIdea.lookup(ideaAction, List.empty)
@@ -54,12 +54,14 @@ object EditorMappings {
     def lookup(action: String, context: List[String]): EditorEquivalents = {
       if (context.nonEmpty) {
         val compositeKey = s"$action|${context.mkString(",")}"
-        byKey.get(compositeKey)
+        byKey
+          .get(compositeKey)
           .orElse(byKey.get(action))
           .orElse(byAction.get(action))
           .getOrElse(EMPTY)
       } else {
-        byKey.get(action)
+        byKey
+          .get(action)
           .orElse(byAction.get(action))
           .getOrElse(EMPTY)
       }
@@ -69,10 +71,12 @@ object EditorMappings {
   private def loadMappingFile(fileName: String): MappingIndex = {
     val is = getClass.getClassLoader.getResourceAsStream(s"$RESOURCE_PREFIX/$fileName")
     if (is == null) return MappingIndex(Map.empty, Map.empty)
-    val content = try new String(is.readAllBytes(), StandardCharsets.UTF_8) finally is.close()
+    val content =
+      try new String(is.readAllBytes(), StandardCharsets.UTF_8)
+      finally is.close()
 
     parser.parse(content) match {
-      case Left(_) => MappingIndex(Map.empty, Map.empty)
+      case Left(_)     => MappingIndex(Map.empty, Map.empty)
       case Right(json) => buildIndex(json)
     }
   }
@@ -81,16 +85,18 @@ object EditorMappings {
     json.asObject match {
       case None => MappingIndex(Map.empty, Map.empty)
       case Some(obj) =>
-        val byKey = obj.toMap.map { case (key, value) =>
-          key -> parseEquivalents(value)
+        val byKey = obj.toMap.map {
+          case (key, value) =>
+            key -> parseEquivalents(value)
         }
         // Build action-only fallback: for composite keys "action|context",
         // keep the first entry per action name
         val byAction = byKey.toList.collect {
           case (key, equiv) if key.contains('|') =>
             key.substring(0, key.indexOf('|')) -> equiv
-        }.groupBy(_._1).map { case (action, entries) =>
-          action -> entries.head._2
+        }.groupBy(_._1).map {
+          case (action, entries) =>
+            action -> entries.head._2
         }
         MappingIndex(byKey, byAction)
     }
@@ -99,21 +105,23 @@ object EditorMappings {
   private def parseEquivalents(json: Json): EditorEquivalents = {
     val obj = json.asObject.getOrElse(JsonObject.empty)
     EditorEquivalents(
-      idea = obj("idea").flatMap(parseActionRef),
+      idea   = obj("idea").flatMap(parseActionRef),
       vscode = obj("vscode").flatMap(parseActionRef),
-      zed = obj("zed").flatMap(parseActionRef),
+      zed    = obj("zed").flatMap(parseActionRef),
     )
   }
 
   private def parseActionRef(json: Json): Option[EditorActionRef] = {
-    json.asObject.flatMap { obj =>
-      obj("action").flatMap(_.asString).map { action =>
-        val context = obj("context")
-          .flatMap(_.asArray)
-          .map(_.flatMap(_.asString).toList)
-          .getOrElse(List.empty)
-        EditorActionRef(action, context)
-      }
+    json.asObject.flatMap {
+      obj =>
+        obj("action").flatMap(_.asString).map {
+          action =>
+            val context = obj("context")
+              .flatMap(_.asArray)
+              .map(_.flatMap(_.asString).toList)
+              .getOrElse(List.empty)
+            EditorActionRef(action, context)
+        }
     }
   }
 }

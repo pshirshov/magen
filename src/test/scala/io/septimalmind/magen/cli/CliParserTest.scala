@@ -51,15 +51,24 @@ class CliParserTest extends AnyWordSpec with Matchers {
     }
 
     "parse all flags together" in {
-      val (cmd, parsed) = CliParser.parse(List(
-        "import", "idea",
-        "--mappings", "/m",
-        "--negations", "/n",
-        "--scheme", "test",
-        "--platform", "linux",
-        "--keymap", "/k.xml",
-        "--keymap-id", "Vim",
-      ))
+      val (cmd, parsed) = CliParser.parse(
+        List(
+          "import",
+          "idea",
+          "--mappings",
+          "/m",
+          "--negations",
+          "/n",
+          "--scheme",
+          "test",
+          "--platform",
+          "linux",
+          "--keymap",
+          "/k.xml",
+          "--keymap-id",
+          "Vim",
+        )
+      )
       cmd shouldBe Some("import")
       parsed.mappingsDir shouldBe Some(Paths.get("/m"))
       parsed.negationsDir shouldBe Some(Paths.get("/n"))

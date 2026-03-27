@@ -24,13 +24,15 @@ object MappingExtractor {
     MagenPaths.configure(MappingsSource.Classpath)
     val schemes = List("pshirshov", "idea-macos")
 
-    val allConcepts = schemes.flatMap { scheme =>
-      val files = MagenPaths.listSchemeFiles(scheme)
-      files.flatMap { file =>
-        val content = MagenPaths.readSchemeFile(scheme, file)
-        val parsed = yaml.v12.parser.parse(content).flatMap(_.as[RawMapping]).toOption
-        parsed.toList.flatMap(_.mapping.toList.flatten)
-      }
+    val allConcepts = schemes.flatMap {
+      scheme =>
+        val files = MagenPaths.listSchemeFiles(scheme)
+        files.flatMap {
+          file =>
+            val content = MagenPaths.readSchemeFile(scheme, file)
+            val parsed  = yaml.v12.parser.parse(content).flatMap(_.as[RawMapping]).toOption
+            parsed.toList.flatMap(_.mapping.toList.flatten)
+        }
     }
 
     val entries = allConcepts.flatMap(extractMapping)
@@ -40,9 +42,9 @@ object MappingExtractor {
       .values.map(_.head).toList
       .sortBy(e => (e.idea.map(_.action).getOrElse(""), e.vscode.map(_.action).getOrElse("")))
 
-    val fromIdea = buildFromIdea(unique)
+    val fromIdea   = buildFromIdea(unique)
     val fromVscode = buildFromVscode(unique)
-    val fromZed = buildFromZed(unique)
+    val fromZed    = buildFromZed(unique)
 
     val outDir = Paths.get("src/main/resources/editor-mappings")
     Files.createDirectories(outDir)
@@ -69,17 +71,21 @@ object MappingExtractor {
 
   private def extractMapping(c: RawConcept): Option[MappingEntry] = {
     val idea = c.idea.flatMap(i => i.action.filter(_ => !i.missing.contains(true)).map(a => EditorAction(a, None)))
-    val vscode = c.vscode.flatMap(v =>
-      v.action.filter(_ => !v.missing.contains(true)).map { a =>
-        val ctx = v.context.filter(_.nonEmpty)
-        EditorAction(a, ctx)
-      }
+    val vscode = c.vscode.flatMap(
+      v =>
+        v.action.filter(_ => !v.missing.contains(true)).map {
+          a =>
+            val ctx = v.context.filter(_.nonEmpty)
+            EditorAction(a, ctx)
+        }
     )
-    val zed = c.zed.flatMap(z =>
-      z.action.filter(_ => !z.missing.contains(true)).map { a =>
-        val ctx = z.context.filter(_.nonEmpty)
-        EditorAction(a, ctx)
-      }
+    val zed = c.zed.flatMap(
+      z =>
+        z.action.filter(_ => !z.missing.contains(true)).map {
+          a =>
+            val ctx = z.context.filter(_.nonEmpty)
+            EditorAction(a, ctx)
+        }
     )
 
     val defined = Seq(idea, vscode, zed).count(_.isDefined)
@@ -93,42 +99,45 @@ object MappingExtractor {
   }
 
   private def buildFromIdea(entries: List[MappingEntry]): Json = {
-    val pairs = entries.filter(_.idea.isDefined).map { e =>
-      val targets = List(
-        e.vscode.map(v => "vscode" -> editorActionJson(v)),
-        e.zed.map(z => "zed" -> editorActionJson(z)),
-      ).flatten
-      e.idea.get.action -> Json.fromJsonObject(JsonObject.fromIterable(targets))
+    val pairs = entries.filter(_.idea.isDefined).map {
+      e =>
+        val targets = List(
+          e.vscode.map(v => "vscode" -> editorActionJson(v)),
+          e.zed.map(z => "zed" -> editorActionJson(z)),
+        ).flatten
+        e.idea.get.action -> Json.fromJsonObject(JsonObject.fromIterable(targets))
     }
     Json.fromJsonObject(JsonObject.fromIterable(pairs))
   }
 
   private def buildFromVscode(entries: List[MappingEntry]): Json = {
-    val pairs = entries.filter(_.vscode.isDefined).map { e =>
-      val key = e.vscode.get
-      val keyStr = if (key.context.exists(_.nonEmpty)) {
-        s"${key.action}|${key.context.get.mkString(",")}"
-      } else key.action
-      val targets = List(
-        e.idea.map(i => "idea" -> editorActionJson(i)),
-        e.zed.map(z => "zed" -> editorActionJson(z)),
-      ).flatten
-      keyStr -> Json.fromJsonObject(JsonObject.fromIterable(targets))
+    val pairs = entries.filter(_.vscode.isDefined).map {
+      e =>
+        val key = e.vscode.get
+        val keyStr = if (key.context.exists(_.nonEmpty)) {
+          s"${key.action}|${key.context.get.mkString(",")}"
+        } else key.action
+        val targets = List(
+          e.idea.map(i => "idea" -> editorActionJson(i)),
+          e.zed.map(z => "zed" -> editorActionJson(z)),
+        ).flatten
+        keyStr -> Json.fromJsonObject(JsonObject.fromIterable(targets))
     }
     Json.fromJsonObject(JsonObject.fromIterable(pairs))
   }
 
   private def buildFromZed(entries: List[MappingEntry]): Json = {
-    val pairs = entries.filter(_.zed.isDefined).map { e =>
-      val key = e.zed.get
-      val keyStr = if (key.context.exists(_.nonEmpty)) {
-        s"${key.action}|${key.context.get.mkString(",")}"
-      } else key.action
-      val targets = List(
-        e.idea.map(i => "idea" -> editorActionJson(i)),
-        e.vscode.map(v => "vscode" -> editorActionJson(v)),
-      ).flatten
-      keyStr -> Json.fromJsonObject(JsonObject.fromIterable(targets))
+    val pairs = entries.filter(_.zed.isDefined).map {
+      e =>
+        val key = e.zed.get
+        val keyStr = if (key.context.exists(_.nonEmpty)) {
+          s"${key.action}|${key.context.get.mkString(",")}"
+        } else key.action
+        val targets = List(
+          e.idea.map(i => "idea" -> editorActionJson(i)),
+          e.vscode.map(v => "vscode" -> editorActionJson(v)),
+        ).flatten
+        keyStr -> Json.fromJsonObject(JsonObject.fromIterable(targets))
     }
     Json.fromJsonObject(JsonObject.fromIterable(pairs))
   }
@@ -136,6 +145,6 @@ object MappingExtractor {
   private def writeJson(path: Path, json: Json): Unit = {
     val content = json.printWith(Printer.spaces2)
     Files.write(path, content.getBytes(StandardCharsets.UTF_8))
-    println(s"Wrote ${path}")
+    println(s"Wrote $path")
   }
 }

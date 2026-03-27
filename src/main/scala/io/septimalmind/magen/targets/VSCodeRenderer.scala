@@ -27,7 +27,7 @@ object VSCodeRenderer extends Renderer {
     val combo = binding.combos.map(renderCombo).mkString(" ")
 
     val main = JsonObject(
-      "key" -> Json.fromString(combo),
+      "key"     -> Json.fromString(combo),
       "command" -> Json.fromString(a.action),
     )
 
@@ -47,10 +47,10 @@ object VSCodeRenderer extends Renderer {
 
   def renderCombo(f: KeyCombo): String = {
     val modsStr = f.modifiers.map {
-      case Modifier.Ctrl => "ctrl"
-      case Modifier.Alt => "alt"
+      case Modifier.Ctrl  => "ctrl"
+      case Modifier.Alt   => "alt"
       case Modifier.Shift => "shift"
-      case Modifier.Meta => "meta"
+      case Modifier.Meta  => "meta"
     }
 
     (modsStr :+ renderKey(f.key)).mkString("+")
@@ -58,21 +58,21 @@ object VSCodeRenderer extends Renderer {
 
   private def renderKey(f: NamedKey): String = {
     f.name match {
-      case "BracketLeft" => "["
-      case "BracketRight" => "]"
-      case "Slash" | "DIVIDE" => "/"
+      case "BracketLeft"                 => "["
+      case "BracketRight"                => "]"
+      case "Slash" | "DIVIDE"            => "/"
       case "Backslash" | "IntlBackslash" => "\\"
-      case "Minus" => "-"
-      case "Equal" => "="
-      case "Quote" => "'"
-      case "Backquote" | "BACK_QUOTE" => "`"
-      case "Semicolon" => ";"
-      case "Comma" => ","
-      case "Period" => "."
-      case "MULTIPLY" => "numpad_multiply"
-      case s if s.startsWith("NUMPAD") => s"numpad${s.drop(6).toLowerCase}"
-      case s if s.length == 1 => s.toLowerCase
-      case s => s.toLowerCase
+      case "Minus"                       => "-"
+      case "Equal"                       => "="
+      case "Quote"                       => "'"
+      case "Backquote" | "BACK_QUOTE"    => "`"
+      case "Semicolon"                   => ";"
+      case "Comma"                       => ","
+      case "Period"                      => "."
+      case "MULTIPLY"                    => "numpad_multiply"
+      case s if s.startsWith("NUMPAD")   => s"numpad${s.drop(6).toLowerCase}"
+      case s if s.length == 1            => s.toLowerCase
+      case s                             => s.toLowerCase
     }
   }
 

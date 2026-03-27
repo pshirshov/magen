@@ -1,18 +1,22 @@
 {
   description = "magen - keyboard mapping generator";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/25.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
   inputs.flake-utils.url = "github:numtide/flake-utils";
 
   inputs.squish-find-the-brains.url = "github:7mind/squish-find-the-brains";
   inputs.squish-find-the-brains.inputs.nixpkgs.follows = "nixpkgs";
   inputs.squish-find-the-brains.inputs.flake-utils.follows = "flake-utils";
 
+  inputs.mudyla.url = "github:7mind/mudyla";
+  inputs.mudyla.inputs.nixpkgs.follows = "nixpkgs";
+
   outputs =
     { self
     , nixpkgs
     , flake-utils
     , squish-find-the-brains
+    , mudyla
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -86,7 +90,11 @@
             gitMinimal
             coreutils
             coursier
+
+            nix
+
             squish-find-the-brains.packages.${system}.generate-lockfile
+            mudyla.packages.${system}.default
           ];
 
           JAVA_HOME = jdk;

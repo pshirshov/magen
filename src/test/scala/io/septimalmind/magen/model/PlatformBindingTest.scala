@@ -34,9 +34,9 @@ class PlatformBindingTest extends AnyWordSpec with Matchers {
       )
       result shouldBe PlatformBinding.PerPlatform(
         default = Some(List("ctrl+v")),
-        macos = Some(List("meta+v")),
-        linux = None,
-        win = None,
+        macos   = Some(List("meta+v")),
+        linux   = None,
+        win     = None,
       )
     }
 
@@ -53,9 +53,9 @@ class PlatformBindingTest extends AnyWordSpec with Matchers {
       )
       result shouldBe PlatformBinding.PerPlatform(
         default = Some(List("ctrl+v")),
-        macos = Some(List("meta+v", "meta+shift+v")),
-        linux = Some(List("ctrl+v")),
-        win = None,
+        macos   = Some(List("meta+v", "meta+shift+v")),
+        linux   = Some(List("ctrl+v")),
+        win     = None,
       )
     }
 
@@ -69,9 +69,9 @@ class PlatformBindingTest extends AnyWordSpec with Matchers {
       )
       result shouldBe PlatformBinding.PerPlatform(
         default = Some(List("ctrl+c")),
-        macos = Some(List("meta+c")),
-        linux = Some(List("ctrl+c")),
-        win = Some(List("ctrl+c")),
+        macos   = Some(List("meta+c")),
+        linux   = Some(List("ctrl+c")),
+        win     = Some(List("ctrl+c")),
       )
     }
   }
@@ -87,9 +87,9 @@ class PlatformBindingTest extends AnyWordSpec with Matchers {
     "resolve PerPlatform to platform-specific binding" in {
       val binding = PlatformBinding.PerPlatform(
         default = Some(List("ctrl+v")),
-        macos = Some(List("meta+v")),
-        linux = None,
-        win = Some(List("ctrl+v")),
+        macos   = Some(List("meta+v")),
+        linux   = None,
+        win     = Some(List("ctrl+v")),
       )
       binding.resolve(Platform.MacOS) shouldBe List("meta+v")
       binding.resolve(Platform.Win) shouldBe List("ctrl+v")
@@ -98,9 +98,9 @@ class PlatformBindingTest extends AnyWordSpec with Matchers {
     "fall back to default when platform not specified" in {
       val binding = PlatformBinding.PerPlatform(
         default = Some(List("ctrl+v")),
-        macos = Some(List("meta+v")),
-        linux = None,
-        win = None,
+        macos   = Some(List("meta+v")),
+        linux   = None,
+        win     = None,
       )
       binding.resolve(Platform.Linux) shouldBe List("ctrl+v")
       binding.resolve(Platform.Win) shouldBe List("ctrl+v")
@@ -109,9 +109,9 @@ class PlatformBindingTest extends AnyWordSpec with Matchers {
     "return empty list when no match and no default" in {
       val binding = PlatformBinding.PerPlatform(
         default = None,
-        macos = Some(List("meta+v")),
-        linux = None,
-        win = None,
+        macos   = Some(List("meta+v")),
+        linux   = None,
+        win     = None,
       )
       binding.resolve(Platform.Linux) shouldBe List.empty
       binding.resolve(Platform.Win) shouldBe List.empty

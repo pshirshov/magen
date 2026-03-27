@@ -17,17 +17,18 @@ case class ParsedArgs(
 object CliParser {
 
   /** Splits args into command (first non-flag token) and the rest.
-    * All flags (--mappings, --scheme, etc.) can appear anywhere after the command. */
+    * All flags (--mappings, --scheme, etc.) can appear anywhere after the command.
+    */
   def parse(args: List[String]): (Option[String], ParsedArgs) = {
-    val arr = args.toArray
-    var command: Option[String] = None
-    var mappingsDir: Option[Path] = None
+    val arr                        = args.toArray
+    var command: Option[String]    = None
+    var mappingsDir: Option[Path]  = None
     var negationsDir: Option[Path] = None
-    var scheme: Option[String] = None
-    var platform: Option[String] = None
-    var keymap: Option[Path] = None
-    var keymapId: Option[String] = None
-    val positional = scala.collection.mutable.ListBuffer.empty[String]
+    var scheme: Option[String]     = None
+    var platform: Option[String]   = None
+    var keymap: Option[Path]       = None
+    var keymapId: Option[String]   = None
+    val positional                 = scala.collection.mutable.ListBuffer.empty[String]
 
     var i = 0
     while (i < arr.length) {
@@ -69,13 +70,13 @@ object CliParser {
     }
 
     val parsed = ParsedArgs(
-      mappingsDir = mappingsDir,
+      mappingsDir  = mappingsDir,
       negationsDir = negationsDir,
-      scheme = scheme.map(SchemeId.apply),
-      platform = platform.map(Platform.parse),
-      keymap = keymap,
-      keymapId = keymapId,
-      positional = positional.toList,
+      scheme       = scheme.map(SchemeId.apply),
+      platform     = platform.map(Platform.parse),
+      keymap       = keymap,
+      keymapId     = keymapId,
+      positional   = positional.toList,
     )
     (command, parsed)
   }

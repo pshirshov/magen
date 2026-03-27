@@ -18,7 +18,7 @@ case class BindingConflict(
     val chordStr = chord.combos
       .map(c => (c.modifiers.map(_.toString.toLowerCase) :+ c.key.name).mkString("+"))
       .mkString(" ")
-    val ctx = if (context.nonEmpty) s" (context: $context)" else ""
+    val ctx     = if (context.nonEmpty) s" (context: $context)" else ""
     val details = entries.map(e => s"${e.conceptId} -> ${e.action}").mkString(", ")
     s"[$editor] Binding conflict on '$chordStr'$ctx: $details"
   }
@@ -32,11 +32,12 @@ case class MissingPlatformBinding(
 }
 
 case class ValidationResult(issues: List[ValidationIssue]) {
-  def conflicts: List[BindingConflict] = issues.collect { case c: BindingConflict => c }
+  def conflicts: List[BindingConflict]              = issues.collect { case c: BindingConflict => c }
   def missingBindings: List[MissingPlatformBinding] = issues.collect { case m: MissingPlatformBinding => m }
 
   /** IDEA supports multiple actions per key (resolved at runtime by context),
-    * so IDEA conflicts are warnings, not errors. */
+    * so IDEA conflicts are warnings, not errors.
+    */
   def ideaConflicts: List[BindingConflict] = conflicts.filter(_.editor == "idea")
 
   /** VSCode and Zed conflicts within the same context are real errors. */
@@ -53,32 +54,33 @@ object MappingValidator {
     platform: Platform,
   ): ValidationResult = {
     val conflicts = validateConflicts(mapping)
-    val missing = validateCompleteness(rawConcepts, platform)
+    val missing   = validateCompleteness(rawConcepts, platform)
     ValidationResult(conflicts ++ missing)
   }
 
   def validateConflicts(mapping: Mapping): List[BindingConflict] = {
     validateIdeaConflicts(mapping) ++
-      validateVscodeConflicts(mapping) ++
-      validateZedConflicts(mapping)
+    validateVscodeConflicts(mapping) ++
+    validateZedConflicts(mapping)
   }
 
   def validateCompleteness(
     rawConcepts: List[RawConcept],
     platform: Platform,
   ): List[MissingPlatformBinding] = {
-    rawConcepts.flatMap { c =>
-      if (c.unset.contains(true)) {
-        None
-      } else {
-        val hasEditor = c.idea.nonEmpty || c.vscode.nonEmpty || c.zed.nonEmpty
-        val resolved = c.binding.resolve(platform)
-        if (hasEditor && resolved.isEmpty) {
-          Some(MissingPlatformBinding(c.id, platform))
-        } else {
+    rawConcepts.flatMap {
+      c =>
+        if (c.unset.contains(true)) {
           None
+        } else {
+          val hasEditor = c.idea.nonEmpty || c.vscode.nonEmpty || c.zed.nonEmpty
+          val resolved  = c.binding.resolve(platform)
+          if (hasEditor && resolved.isEmpty) {
+            Some(MissingPlatformBinding(c.id, platform))
+          } else {
+            None
+          }
         }
-      }
     }
   }
 
@@ -95,9 +97,9 @@ object MappingValidator {
 
   private def validateVscodeConflicts(mapping: Mapping): List[BindingConflict] = {
     val entries = for {
-      c <- mapping.mapping
-      a <- c.vscode.toList
-      b <- (c.binding ++ a.binding).toList.flatMap(Aliases.extend)
+      c   <- mapping.mapping
+      a   <- c.vscode.toList
+      b   <- (c.binding ++ a.binding).toList.flatMap(Aliases.extend)
       ctx <- if (a.context.nonEmpty) a.context else List("")
     } yield ((normalizeChord(b), ctx), ConflictEntry(c.id, a.action))
 
@@ -117,9 +119,9 @@ object MappingValidator {
 
   private def validateZedConflicts(mapping: Mapping): List[BindingConflict] = {
     val entries = for {
-      c <- mapping.mapping
-      a <- c.zed.toList
-      b <- c.binding.toList.flatMap(Aliases.extend)
+      c  <- mapping.mapping
+      a  <- c.zed.toList
+      b  <- c.binding.toList.flatMap(Aliases.extend)
       ctx = a.context.sorted.mkString(" || ")
     } yield ((normalizeChord(b), ctx), ConflictEntry(c.id, a.action))
 
@@ -156,10 +158,10 @@ object MappingValidator {
   }
 
   private val modifierOrder: Map[Modifier, Int] = Map(
-    Modifier.Ctrl -> 0,
-    Modifier.Alt -> 1,
+    Modifier.Ctrl  -> 0,
+    Modifier.Alt   -> 1,
     Modifier.Shift -> 2,
-    Modifier.Meta -> 3,
+    Modifier.Meta  -> 3,
   )
 
   private implicit val modifierOrdering: Ordering[Modifier] =

@@ -16,9 +16,9 @@ object Platform {
 
   def parse(value: String): Platform = {
     value.toLowerCase match {
-      case "macos" | "mac"     => MacOS
-      case "linux"             => Linux
-      case "win" | "windows"   => Win
+      case "macos" | "mac"   => MacOS
+      case "linux"           => Linux
+      case "win" | "windows" => Win
       case other =>
         throw new IllegalArgumentException(
           s"Unknown platform: $other. Expected: macos, linux, win"

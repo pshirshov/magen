@@ -10,8 +10,6 @@ import izumi.fundamentals.platform.resources.IzResources
 import java.nio.charset.StandardCharsets
 import java.nio.file.{Files, Paths}
 
-
-
 object MappingFilter {
 
   def sortKeys(json: JsonObject): JsonObject =
@@ -23,7 +21,6 @@ object MappingFilter {
     jv
   }
   def main(args: Array[String]): Unit = {
-
 
     val fv = IzFiles.readString(Paths.get("./junk/vscode-default.json"))
     val pv = parser.parse(fv)

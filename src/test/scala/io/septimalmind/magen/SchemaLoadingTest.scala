@@ -72,7 +72,7 @@ class SchemaLoadingTest extends AnyWordSpec with Matchers with BeforeAndAfterEac
       vscode should include("command")
 
       val ideaRenderer = new targets.IdeaRenderer(
-        targets.IdeaParams(List.empty, negate = true, parent = "$default", keymapName = "Test"),
+        targets.IdeaParams(List.empty, negate = true, parent = "$default", keymapName = "Test")
       )
       val idea = ideaRenderer.render(mapping, Platform.MacOS)
       idea should include("<keymap")

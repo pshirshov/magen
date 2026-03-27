@@ -17,7 +17,7 @@ object SchemeWriter {
       .toList
       .sortBy(_._1)
 
-    var mapped = 0
+    var mapped   = 0
     var unmapped = 0
 
     val sb = new StringBuilder()
@@ -25,19 +25,20 @@ object SchemeWriter {
 
     grouped.foreach {
       case (action, bindings) =>
-        val allChords = bindings.map(_.chord).distinct
+        val allChords   = bindings.map(_.chord).distinct
         val allContexts = bindings.flatMap(_.context).distinct
 
         sb.append(s"""  - id: "$action"\n""")
         sb.append("    binding:\n")
-        allChords.foreach { chord =>
-          sb.append(s"""      - "${renderChord(chord)}"\n""")
+        allChords.foreach {
+          chord =>
+            sb.append(s"""      - "${renderChord(chord)}"\n""")
         }
 
         val equivalents = imported.source match {
-          case ImportSource.Idea => EditorMappings.lookupFromIdea(action)
+          case ImportSource.Idea   => EditorMappings.lookupFromIdea(action)
           case ImportSource.VSCode => EditorMappings.lookupFromVscode(action, allContexts)
-          case ImportSource.Zed => EditorMappings.lookupFromZed(action, allContexts)
+          case ImportSource.Zed    => EditorMappings.lookupFromZed(action, allContexts)
         }
 
         val hasMapped = writeEditorActions(sb, imported.source, action, allContexts, equivalents)
@@ -108,10 +109,10 @@ object SchemeWriter {
 
   private def renderCombo(combo: KeyCombo): String = {
     val modsStr = combo.modifiers.map {
-      case Modifier.Ctrl => "ctrl"
-      case Modifier.Alt => "alt"
+      case Modifier.Ctrl  => "ctrl"
+      case Modifier.Alt   => "alt"
       case Modifier.Shift => "shift"
-      case Modifier.Meta => "meta"
+      case Modifier.Meta  => "meta"
     }
 
     (modsStr :+ renderKey(combo.key)).mkString("+")
@@ -121,7 +122,7 @@ object SchemeWriter {
     key.name match {
       case s if s.length == 1 && s.head.isLetter => s"[Key${s.toUpperCase}]"
       case s if s.length == 1 && s.head.isDigit  => s
-      case s                                      => s"[$s]"
+      case s                                     => s"[$s]"
     }
   }
 }
