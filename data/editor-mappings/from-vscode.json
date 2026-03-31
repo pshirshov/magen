@@ -1,0 +1,1739 @@
+{
+  "acceptRenameInput|editorFocus && renameInputVisible && !isComposing" : {
+    "zed" : {
+      "action" : "editor::ConfirmRename",
+      "context" : [
+        "Editor && renaming"
+      ]
+    }
+  },
+  "acceptSelectedSuggestion|acceptSuggestionOnEnter && suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && suggestionMakesTextEdit && textInputFocus" : {
+    "zed" : {
+      "action" : "editor::ConfirmCompletion",
+      "context" : [
+        "Editor && showing_completions"
+      ]
+    }
+  },
+  "cancelRenameInput|editorFocus && renameInputVisible" : {
+    "zed" : {
+      "action" : "editor::Cancel",
+      "context" : [
+        "Editor && renaming"
+      ]
+    }
+  },
+  "closeFindWidget|editorFocus && findWidgetVisible && !isComposing" : {
+    "zed" : {
+      "action" : "search::Dismiss",
+      "context" : [
+        "BufferSearchBar"
+      ]
+    }
+  },
+  "deleteFile|filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus,filesExplorerFocus && foldersViewVisible && !explorerResourceMoveableToTrash && !explorerResourceReadonly && !inputFocus" : {
+    "zed" : {
+      "action" : "project_panel::Delete",
+      "context" : [
+        "ProjectPanel && not_editing"
+      ]
+    }
+  },
+  "editor.action.nextMatchFindAction|editorFocus && findInputFocussed && !replaceInputFocussed" : {
+    "zed" : {
+      "action" : "search::SelectNextMatch",
+      "context" : [
+        "BufferSearchBar && !in_replace"
+      ]
+    }
+  },
+  "editor.action.previousMatchFindAction|editorFocus && findInputFocussed && !replaceInputFocussed" : {
+    "zed" : {
+      "action" : "search::SelectPreviousMatch",
+      "context" : [
+        "BufferSearchBar && !in_replace"
+      ]
+    }
+  },
+  "editor.action.replaceAll|editorFocus && findWidgetVisible" : {
+    "zed" : {
+      "action" : "search::ReplaceAll",
+      "context" : [
+        "BufferSearchBar && in_replace"
+      ]
+    }
+  },
+  "editor.action.replaceOne|editorFocus && findWidgetVisible && replaceInputFocussed" : {
+    "zed" : {
+      "action" : "search::ReplaceNext",
+      "context" : [
+        "BufferSearchBar && in_replace"
+      ]
+    }
+  },
+  "explorer.openAndPassFocus|filesExplorerFocus && foldersViewVisible && !explorerResourceIsFolder && !inputFocus" : {
+    "zed" : {
+      "action" : "project_panel::Open",
+      "context" : [
+        "ProjectPanel && not_editing"
+      ]
+    }
+  },
+  "hideSuggestWidget|suggestWidgetVisible && textInputFocus" : {
+    "zed" : {
+      "action" : "editor::Cancel",
+      "context" : [
+        "Editor && showing_completions"
+      ]
+    }
+  },
+  "moveFileToTrash|explorerResourceMoveableToTrash && filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus" : {
+    "zed" : {
+      "action" : "project_panel::Trash",
+      "context" : [
+        "ProjectPanel && not_editing"
+      ]
+    }
+  },
+  "removeSecondaryCursors|editorHasMultipleSelections && textInputFocus" : {
+    "zed" : {
+      "action" : "editor::Cancel",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "renameFile|filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus" : {
+    "zed" : {
+      "action" : "project_panel::Rename",
+      "context" : [
+        "ProjectPanel && not_editing"
+      ]
+    }
+  },
+  "selectFirstSuggestion|suggestWidgetVisible" : {
+    "zed" : {
+      "action" : "editor::ContextMenuFirst",
+      "context" : [
+        "Editor && (showing_code_actions || showing_completions)"
+      ]
+    }
+  },
+  "selectLastSuggestion|suggestWidgetVisible" : {
+    "zed" : {
+      "action" : "editor::ContextMenuLast",
+      "context" : [
+        "Editor && (showing_code_actions || showing_completions)"
+      ]
+    }
+  },
+  "selectNextSuggestion|suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" : {
+    "zed" : {
+      "action" : "editor::ContextMenuNext",
+      "context" : [
+        "Editor && (showing_code_actions || showing_completions)"
+      ]
+    }
+  },
+  "selectPrevSuggestion|suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus || suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion" : {
+    "zed" : {
+      "action" : "editor::ContextMenuPrevious",
+      "context" : [
+        "Editor && (showing_code_actions || showing_completions)"
+      ]
+    }
+  },
+  "toggleFindCaseSensitive|editorFocus" : {
+    "zed" : {
+      "action" : "search::ToggleCaseSensitive",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "toggleFindInSelection|editorFocus" : {
+    "zed" : {
+      "action" : "search::ToggleSelection",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "toggleFindRegex|editorFocus" : {
+    "zed" : {
+      "action" : "search::ToggleRegex",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "toggleFindWholeWord|editorFocus" : {
+    "zed" : {
+      "action" : "search::ToggleWholeWord",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "workbench.action.newWindow" : {
+    "zed" : {
+      "action" : "workspace::NewWindow",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "workbench.action.togglePanel" : {
+    "zed" : {
+      "action" : "workspace::ToggleBottomDock",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.clipboardCopyAction" : {
+    "idea" : {
+      "action" : "$Copy"
+    },
+    "zed" : {
+      "action" : "editor::Copy",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.clipboardCutAction" : {
+    "idea" : {
+      "action" : "$Cut"
+    },
+    "zed" : {
+      "action" : "editor::Cut",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "deleteRight|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorDelete"
+    },
+    "zed" : {
+      "action" : "editor::Delete",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.clipboardPasteAction" : {
+    "idea" : {
+      "action" : "$Paste"
+    },
+    "zed" : {
+      "action" : "editor::Paste",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "redo" : {
+    "idea" : {
+      "action" : "$Redo"
+    },
+    "zed" : {
+      "action" : "editor::Redo",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.selectAll" : {
+    "idea" : {
+      "action" : "$SelectAll"
+    },
+    "zed" : {
+      "action" : "editor::SelectAll",
+      "context" : [
+        "Editor",
+        "Terminal"
+      ]
+    }
+  },
+  "undo" : {
+    "idea" : {
+      "action" : "$Undo"
+    },
+    "zed" : {
+      "action" : "editor::Undo",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.view.scm" : {
+    "idea" : {
+      "action" : "ActivateVersionControlToolWindow"
+    }
+  },
+  "workbench.view.debug" : {
+    "idea" : {
+      "action" : "ActivateDebugToolWindow"
+    }
+  },
+  "workbench.view.search" : {
+    "idea" : {
+      "action" : "ActivateFindToolWindow"
+    }
+  },
+  "workbench.actions.view.problems" : {
+    "idea" : {
+      "action" : "ActivateProblemsViewToolWindow"
+    }
+  },
+  "workbench.view.explorer" : {
+    "idea" : {
+      "action" : "ActivateProjectToolWindow"
+    },
+    "zed" : {
+      "action" : "project_panel::ToggleFocus",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "workbench.action.output.toggleOutput" : {
+    "idea" : {
+      "action" : "ActivateRunToolWindow"
+    }
+  },
+  "workbench.action.terminal.toggleTerminal" : {
+    "idea" : {
+      "action" : "ActivateTerminalToolWindow"
+    },
+    "zed" : {
+      "action" : "terminal_panel::Toggle"
+    }
+  },
+  "editor.action.reindentLines" : {
+    "idea" : {
+      "action" : "AutoIndentLines"
+    }
+  },
+  "workbench.action.navigateBack" : {
+    "idea" : {
+      "action" : "Back"
+    },
+    "zed" : {
+      "action" : "pane::GoBack",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "references-view.showCallHierarchy" : {
+    "idea" : {
+      "action" : "CallHierarchy"
+    }
+  },
+  "workbench.action.debug.selectandstart" : {
+    "idea" : {
+      "action" : "ChooseDebugConfiguration"
+    }
+  },
+  "workbench.action.tasks.runTask" : {
+    "idea" : {
+      "action" : "ChooseRunConfiguration"
+    }
+  },
+  "workbench.action.closeActiveEditor" : {
+    "idea" : {
+      "action" : "CloseContent"
+    },
+    "zed" : {
+      "action" : "pane::CloseActiveItem",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "workbench.action.closeAllEditors" : {
+    "idea" : {
+      "action" : "CloseAllEditors"
+    }
+  },
+  "workbench.action.closeOtherEditors" : {
+    "idea" : {
+      "action" : "CloseAllEditorsButActive"
+    },
+    "zed" : {
+      "action" : "pane::CloseOtherItems",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "workbench.action.closeWindow" : {
+    "idea" : {
+      "action" : "CloseProject"
+    },
+    "zed" : {
+      "action" : "workspace::CloseWindow",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.triggerSuggest|editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" : {
+    "idea" : {
+      "action" : "CodeCompletion"
+    },
+    "zed" : {
+      "action" : "editor::ShowCompletions"
+    }
+  },
+  "editor.foldAll" : {
+    "idea" : {
+      "action" : "CollapseAll"
+    }
+  },
+  "editor.fold" : {
+    "idea" : {
+      "action" : "CollapseBlock"
+    }
+  },
+  "editor.foldRecursively" : {
+    "idea" : {
+      "action" : "CollapseRegionRecursively"
+    }
+  },
+  "editor.action.blockComment|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "CommentByBlockComment"
+    },
+    "zed" : {
+      "action" : "editor::ToggleComments",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.commentLine|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "CommentByLineComment"
+    },
+    "zed" : {
+      "action" : "editor::ToggleComments",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.files.action.compareWithClipboard" : {
+    "idea" : {
+      "action" : "CompareClipboardWithSelection"
+    }
+  },
+  "workbench.action.tasks.build" : {
+    "idea" : {
+      "action" : "CompileDirty"
+    }
+  },
+  "copyFilePath" : {
+    "idea" : {
+      "action" : "CopyPaths"
+    },
+    "zed" : {
+      "action" : "editor::CopyPath",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.debug.start" : {
+    "idea" : {
+      "action" : "Debug"
+    }
+  },
+  "workbench.action.compareEditor.nextChange" : {
+    "idea" : {
+      "action" : "Diff.NextChange"
+    }
+  },
+  "workbench.action.compareEditor.previousChange" : {
+    "idea" : {
+      "action" : "PreviousDiff"
+    }
+  },
+  "workbench.action.files.showOpenedFileInNewWindow" : {
+    "idea" : {
+      "action" : "EditSourceInNewWindow"
+    }
+  },
+  "deleteLeft|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorBackSpace"
+    },
+    "zed" : {
+      "action" : "editor::Backspace",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "list.select|listFocus && !inputFocus && !treestickyScrollFocused" : {
+    "idea" : {
+      "action" : "EditorChooseLookupItem"
+    }
+  },
+  "editor.action.insertCursorAbove|editorTextFocus" : {
+    "idea" : {
+      "action" : "EditorCloneCaretAbove"
+    },
+    "zed" : {
+      "action" : "editor::AddSelectionAbove",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.insertCursorBelow|editorTextFocus" : {
+    "idea" : {
+      "action" : "EditorCloneCaretBelow"
+    },
+    "zed" : {
+      "action" : "editor::AddSelectionBelow",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.zoomOut" : {
+    "idea" : {
+      "action" : "ZoomOutIdeAction"
+    },
+    "zed" : {
+      "action" : "zed::DecreaseBufferFontSize",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.deleteLines|textInputFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorDeleteLine"
+    },
+    "zed" : {
+      "action" : "editor::DeleteLine",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "deleteWordRight|textInputFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorDeleteToWordEnd"
+    },
+    "zed" : {
+      "action" : "editor::DeleteToNextWordEnd",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "deleteWordRight" : {
+    "idea" : {
+      "action" : "EditorDeleteToWordEnd"
+    }
+  },
+  "deleteWordLeft|textInputFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorDeleteToWordStart"
+    },
+    "zed" : {
+      "action" : "editor::DeleteToPreviousWordStart",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorDown|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorDown"
+    },
+    "zed" : {
+      "action" : "editor::MoveDown",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorDownSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorDownWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectDown",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.copyLinesDownAction" : {
+    "idea" : {
+      "action" : "EditorDuplicate"
+    }
+  },
+  "editor.action.duplicateSelection|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorDuplicate"
+    },
+    "zed" : {
+      "action" : "editor::DuplicateLineDown",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.zoomIn" : {
+    "idea" : {
+      "action" : "ZoomInIdeAction"
+    },
+    "zed" : {
+      "action" : "zed::IncreaseBufferFontSize",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.indentLines|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorIndentLineOrSelection"
+    },
+    "zed" : {
+      "action" : "editor::Indent",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.joinLines" : {
+    "idea" : {
+      "action" : "EditorJoinLines"
+    },
+    "zed" : {
+      "action" : "editor::JoinLines",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorLeft|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorLeft"
+    },
+    "zed" : {
+      "action" : "editor::MoveLeft",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorLeftSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorLeftWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectLeft",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorEnd|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorLineEnd"
+    },
+    "zed" : {
+      "action" : "editor::MoveToEndOfLine",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorEndSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorLineEndWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectToEndOfLine",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorHome|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorLineStart"
+    },
+    "zed" : {
+      "action" : "editor::MoveToBeginningOfLine",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorHomeSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorLineStartWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectToBeginningOfLine",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "selectNextPageSuggestion|suggestWidgetVisible" : {
+    "idea" : {
+      "action" : "EditorLookupDown"
+    },
+    "zed" : {
+      "action" : "editor::ContextMenuLast",
+      "context" : [
+        "Editor && (showing_code_actions || showing_completions)"
+      ]
+    }
+  },
+  "selectPrevPageSuggestion|suggestWidgetVisible" : {
+    "idea" : {
+      "action" : "EditorLookupUp"
+    },
+    "zed" : {
+      "action" : "editor::ContextMenuFirst",
+      "context" : [
+        "Editor && (showing_code_actions || showing_completions)"
+      ]
+    }
+  },
+  "editor.action.jumpToBracket|editorTextFocus" : {
+    "idea" : {
+      "action" : "EditorMatchBrace"
+    },
+    "zed" : {
+      "action" : "editor::MoveToEnclosingBracket",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorWordEndRight|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorNextWord"
+    },
+    "zed" : {
+      "action" : "editor::MoveToNextWordEnd",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorWordEndRightSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorNextWordWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectToNextWordEnd",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorPageDown|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorPageDown"
+    },
+    "zed" : {
+      "action" : "editor::PageDown",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorPageDownSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorPageDownWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectPageDown",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorPageUp|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorPageUp"
+    },
+    "zed" : {
+      "action" : "editor::PageUp",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorPageUpSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorPageUpWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectPageUp",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorWordLeft|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorPreviousWord"
+    },
+    "zed" : {
+      "action" : "editor::MoveToPreviousWordStart",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorWordLeftSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorPreviousWordWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectToPreviousWordStart",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.zoomReset" : {
+    "idea" : {
+      "action" : "ResetIdeScaleAction"
+    },
+    "zed" : {
+      "action" : "zed::ResetBufferFontSize",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "cursorRight|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorRight"
+    },
+    "zed" : {
+      "action" : "editor::MoveRight",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorRightSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorRightWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectRight",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "scrollLineDown" : {
+    "idea" : {
+      "action" : "EditorScrollDown"
+    }
+  },
+  "scrollLineUp" : {
+    "idea" : {
+      "action" : "EditorScrollUp"
+    }
+  },
+  "editor.action.smartSelect.expand|editorTextFocus" : {
+    "idea" : {
+      "action" : "EditorSelectWord"
+    },
+    "zed" : {
+      "action" : "editor::SelectLargerSyntaxNode",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.insertLineAfter|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorStartNewLine"
+    },
+    "zed" : {
+      "action" : "editor::NewlineBelow",
+      "context" : [
+        "Editor && mode == full"
+      ]
+    }
+  },
+  "editor.action.insertLineBefore|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorStartNewLineBefore"
+    },
+    "zed" : {
+      "action" : "editor::NewlineAbove",
+      "context" : [
+        "Editor && mode == full"
+      ]
+    }
+  },
+  "tab" : {
+    "idea" : {
+      "action" : "EditorTab"
+    }
+  },
+  "cursorBottom|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorTextEnd"
+    },
+    "zed" : {
+      "action" : "editor::MoveToEnd",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorBottomSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorTextEndWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectToEnd",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorTop|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorTextStart"
+    },
+    "zed" : {
+      "action" : "editor::MoveToBeginning",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorTopSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorTextStartWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectToBeginning",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.insertCursorAtEndOfEachLineSelected" : {
+    "idea" : {
+      "action" : "EditorToggleColumnMode"
+    }
+  },
+  "editor.action.toggleOvertypeInsertMode" : {
+    "idea" : {
+      "action" : "EditorToggleInsertState"
+    }
+  },
+  "editor.action.toggleWordWrap" : {
+    "idea" : {
+      "action" : "EditorToggleUseSoftWraps"
+    },
+    "zed" : {
+      "action" : "editor::ToggleSoftWrap",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.smartSelect.shrink|editorTextFocus" : {
+    "idea" : {
+      "action" : "EditorUnSelectWord"
+    },
+    "zed" : {
+      "action" : "editor::SelectSmallerSyntaxNode",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.outdentLines|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "EditorUnindentLineOrSelection"
+    },
+    "zed" : {
+      "action" : "editor::Outdent",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorUp|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorUp"
+    },
+    "zed" : {
+      "action" : "editor::MoveUp",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "cursorUpSelect|textInputFocus" : {
+    "idea" : {
+      "action" : "EditorUpWithSelection"
+    },
+    "zed" : {
+      "action" : "editor::SelectUp",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.quit" : {
+    "idea" : {
+      "action" : "Exit"
+    },
+    "zed" : {
+      "action" : "zed::Quit",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.unfoldAll" : {
+    "idea" : {
+      "action" : "ExpandAllRegions"
+    }
+  },
+  "editor.unfold" : {
+    "idea" : {
+      "action" : "ExpandRegion"
+    }
+  },
+  "editor.unfoldRecursively" : {
+    "idea" : {
+      "action" : "ExpandRegionRecursively"
+    }
+  },
+  "editor.action.showHover|editorTextFocus" : {
+    "idea" : {
+      "action" : "QuickJavaDoc"
+    },
+    "zed" : {
+      "action" : "editor::Hover",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.files.newUntitledFile" : {
+    "idea" : {
+      "action" : "NewScratchFile"
+    },
+    "zed" : {
+      "action" : "workspace::NewFile",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "actions.find|editorFocus || editorIsOpen" : {
+    "idea" : {
+      "action" : "Find"
+    },
+    "zed" : {
+      "action" : "buffer_search::Deploy",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.findInFiles" : {
+    "idea" : {
+      "action" : "FindInPath"
+    },
+    "zed" : {
+      "action" : "pane::DeploySearch",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "editor.action.nextMatchFindAction|editorFocus && findInputFocussed" : {
+    "idea" : {
+      "action" : "FindNext"
+    },
+    "zed" : {
+      "action" : "search::SelectNextMatch",
+      "context" : [
+        "BufferSearchBar"
+      ]
+    }
+  },
+  "editor.action.previousMatchFindAction|editorFocus && findInputFocussed,editorFocus" : {
+    "idea" : {
+      "action" : "FindPrevious"
+    },
+    "zed" : {
+      "action" : "search::SelectPreviousMatch",
+      "context" : [
+        "BufferSearchBar"
+      ]
+    }
+  },
+  "workbench.action.navigateForward" : {
+    "idea" : {
+      "action" : "Forward"
+    },
+    "zed" : {
+      "action" : "pane::GoForward",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "git.pullFrom" : {
+    "idea" : {
+      "action" : "Git.Pull"
+    }
+  },
+  "workbench.action.showCommands" : {
+    "idea" : {
+      "action" : "GotoAction"
+    },
+    "zed" : {
+      "action" : "command_palette::Toggle",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "workbench.action.showAllSymbols" : {
+    "idea" : {
+      "action" : "GotoClass"
+    },
+    "zed" : {
+      "action" : "project_symbols::Toggle",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.goToDeclaration" : {
+    "idea" : {
+      "action" : "GotoDeclaration"
+    },
+    "zed" : {
+      "action" : "editor::GoToDefinition",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.quickOpen" : {
+    "idea" : {
+      "action" : "GotoFile"
+    },
+    "zed" : {
+      "action" : "file_finder::Toggle",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.goToImplementation|editorHasImplementationProvider && editorTextFocus" : {
+    "idea" : {
+      "action" : "GotoImplementation"
+    },
+    "zed" : {
+      "action" : "editor::GoToImplementation",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.gotoLine" : {
+    "idea" : {
+      "action" : "GotoLine"
+    },
+    "zed" : {
+      "action" : "go_to_line::Toggle",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.wordHighlight.next|editorTextFocus" : {
+    "idea" : {
+      "action" : "GotoNextElementUnderCaretUsage"
+    }
+  },
+  "editor.action.marker.nextInFiles|editorFocus" : {
+    "idea" : {
+      "action" : "GotoNextError"
+    }
+  },
+  "editor.action.wordHighlight.prev|editorTextFocus" : {
+    "idea" : {
+      "action" : "GotoPrevElementUnderCaretUsage"
+    }
+  },
+  "editor.action.marker.prevInFiles|editorFocus" : {
+    "idea" : {
+      "action" : "GotoPreviousError"
+    },
+    "zed" : {
+      "action" : "editor::GoToPreviousDiagnostic",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.gotoSymbol" : {
+    "idea" : {
+      "action" : "GotoSymbol"
+    },
+    "zed" : {
+      "action" : "outline::Toggle",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.goToTypeDefinition" : {
+    "idea" : {
+      "action" : "GotoTypeDeclaration"
+    },
+    "zed" : {
+      "action" : "editor::GoToTypeDefinition",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.toggleSidebarVisibility" : {
+    "idea" : {
+      "action" : "HideSideWindows"
+    },
+    "zed" : {
+      "action" : "workspace::ToggleLeftDock",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.insertSnippet|editorTextFocus && !editorTabMovesFocus && !inSnippetMode" : {
+    "idea" : {
+      "action" : "InsertLiveTemplate"
+    }
+  },
+  "workbench.action.navigateToLastEditLocation" : {
+    "idea" : {
+      "action" : "JumpToLastChange"
+    }
+  },
+  "workbench.action.openPreviousRecentlyUsedEditor" : {
+    "idea" : {
+      "action" : "JumpToLastChange"
+    }
+  },
+  "workbench.action.openNextRecentlyUsedEditor" : {
+    "idea" : {
+      "action" : "JumpToNextChange"
+    }
+  },
+  "editor.action.moveLinesDownAction|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "MoveStatementDown"
+    },
+    "zed" : {
+      "action" : "editor::MoveLineDown",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.moveLinesUpAction|editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "MoveStatementUp"
+    },
+    "zed" : {
+      "action" : "editor::MoveLineUp",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.focusNextGroup" : {
+    "idea" : {
+      "action" : "NextSplitter"
+    },
+    "zed" : {
+      "action" : "workspace::ActivateNextPane",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "workbench.action.nextEditor" : {
+    "idea" : {
+      "action" : "NextTab"
+    },
+    "zed" : {
+      "action" : "pane::ActivateNextItem",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "jumpToNextSnippetPlaceholder|hasNextTabstop && inSnippetMode && textInputFocus" : {
+    "idea" : {
+      "action" : "NextTemplateVariable"
+    }
+  },
+  "openReferenceToSide|listFocus && referenceSearchVisible && !inputFocus && !treeElementCanCollapse && !treeElementCanExpand && !treestickyScrollFocused" : {
+    "idea" : {
+      "action" : "OpenInRightSplit"
+    }
+  },
+  "editor.action.organizeImports" : {
+    "idea" : {
+      "action" : "OptimizeImports"
+    },
+    "zed" : {
+      "action" : "editor::OrganizeImports",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.triggerParameterHints|editorHasSignatureHelpProvider && editorTextFocus" : {
+    "idea" : {
+      "action" : "ParameterInfo"
+    },
+    "zed" : {
+      "action" : "editor::ShowSignatureHelp"
+    }
+  },
+  "workbench.action.pinEditor|!activeEditorIsPinned" : {
+    "idea" : {
+      "action" : "PinActiveTab"
+    }
+  },
+  "workbench.action.focusPreviousGroup" : {
+    "idea" : {
+      "action" : "PrevSplitter"
+    },
+    "zed" : {
+      "action" : "workspace::ActivatePreviousPane",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "workbench.action.previousEditor" : {
+    "idea" : {
+      "action" : "PreviousTab"
+    },
+    "zed" : {
+      "action" : "pane::ActivatePreviousItem",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "editor.action.peekDefinition" : {
+    "idea" : {
+      "action" : "QuickImplementations"
+    },
+    "zed" : {
+      "action" : "editor::GoToDefinition",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.openRecent" : {
+    "idea" : {
+      "action" : "RecentFiles"
+    },
+    "zed" : {
+      "action" : "projects::OpenRecent",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.refactor|editorHasCodeActionsProvider && textInputFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "Refactorings.QuickListPopupAction"
+    }
+  },
+  "editor.action.formatDocument|editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly && !inCompositeEditor" : {
+    "idea" : {
+      "action" : "ReformatCode"
+    },
+    "zed" : {
+      "action" : "editor::Format",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.rename|editorHasRenameProvider && editorTextFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "RenameElement"
+    },
+    "zed" : {
+      "action" : "editor::Rename",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.reopenClosedEditor" : {
+    "idea" : {
+      "action" : "ReopenClosedTab"
+    },
+    "zed" : {
+      "action" : "pane::ReopenClosedItem",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "editor.action.startFindReplaceAction|editorFocus || editorIsOpen" : {
+    "idea" : {
+      "action" : "Replace"
+    },
+    "zed" : {
+      "action" : "buffer_search::DeployReplace",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.replaceInFiles" : {
+    "idea" : {
+      "action" : "ReplaceInPath"
+    },
+    "zed" : {
+      "action" : "pane::DeploySearch",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "workbench.action.debug.restart" : {
+    "idea" : {
+      "action" : "Rerun"
+    }
+  },
+  "workbench.action.debug.continue" : {
+    "idea" : {
+      "action" : "Resume"
+    }
+  },
+  "revealFileInOS" : {
+    "idea" : {
+      "action" : "RevealIn"
+    }
+  },
+  "workbench.action.files.revealActiveFileInWindows" : {
+    "idea" : {
+      "action" : "RevealIn"
+    }
+  },
+  "workbench.action.debug.run" : {
+    "idea" : {
+      "action" : "Run"
+    }
+  },
+  "editor.debug.action.runToCursor" : {
+    "idea" : {
+      "action" : "RunToCursor"
+    }
+  },
+  "workbench.action.files.save" : {
+    "idea" : {
+      "action" : "SaveAll"
+    },
+    "zed" : {
+      "action" : "workspace::Save",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "workbench.action.files.saveAll" : {
+    "idea" : {
+      "action" : "SaveAll"
+    },
+    "zed" : {
+      "action" : "workspace::SaveAll",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "scrollPageDown" : {
+    "idea" : {
+      "action" : "ScrollPane-scrollDown"
+    }
+  },
+  "scrollPageUp" : {
+    "idea" : {
+      "action" : "ScrollPane-scrollUp"
+    }
+  },
+  "editor.action.selectAllMatches|editorFocus && findWidgetVisible" : {
+    "idea" : {
+      "action" : "SelectAllOccurrences"
+    },
+    "zed" : {
+      "action" : "search::SelectAllMatches",
+      "context" : [
+        "BufferSearchBar"
+      ]
+    }
+  },
+  "editor.action.selectHighlights|editorFocus && !findWidgetVisible" : {
+    "idea" : {
+      "action" : "SelectAllOccurrences"
+    },
+    "zed" : {
+      "action" : "search::SelectAllMatches",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "editor.action.addSelectionToNextFindMatch" : {
+    "idea" : {
+      "action" : "SelectNextOccurrence"
+    }
+  },
+  "editor.action.quickFix|editorHasCodeActionsProvider && textInputFocus && !editorReadonly" : {
+    "idea" : {
+      "action" : "ShowIntentionActions"
+    },
+    "zed" : {
+      "action" : "editor::ToggleCodeActions"
+    }
+  },
+  "workbench.action.openSettings" : {
+    "idea" : {
+      "action" : "ShowSettings"
+    },
+    "zed" : {
+      "action" : "zed::OpenSettings",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.action.goToReferences|editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor" : {
+    "idea" : {
+      "action" : "ShowUsages"
+    },
+    "zed" : {
+      "action" : "editor::FindAllReferences",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.splitEditor" : {
+    "idea" : {
+      "action" : "SplitVertically"
+    }
+  },
+  "workbench.action.splitEditorRight" : {
+    "idea" : {
+      "action" : "SplitVertically"
+    },
+    "zed" : {
+      "action" : "pane::SplitRight",
+      "context" : [
+        "Pane"
+      ]
+    }
+  },
+  "workbench.action.debug.stepInto" : {
+    "idea" : {
+      "action" : "StepInto"
+    }
+  },
+  "workbench.action.debug.stepOut" : {
+    "idea" : {
+      "action" : "StepOut"
+    }
+  },
+  "workbench.action.debug.stepOver" : {
+    "idea" : {
+      "action" : "StepOver"
+    }
+  },
+  "workbench.action.debug.stop" : {
+    "idea" : {
+      "action" : "Stop"
+    }
+  },
+  "workbench.action.terminal.copySelection|terminalTextSelectedInFocused || terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected || terminalFocus && terminalTextSelected && terminalTextSelectedInFocused || terminalHasBeenCreated && terminalTextSelected && terminalTextSelectedInFocused || terminalProcessSupported && terminalTextSelected && terminalTextSelectedInFocused" : {
+    "idea" : {
+      "action" : "Terminal.CopySelectedText"
+    },
+    "zed" : {
+      "action" : "terminal::Copy",
+      "context" : [
+        "Terminal"
+      ]
+    }
+  },
+  "workbench.action.terminal.new|terminalFocus" : {
+    "idea" : {
+      "action" : "Terminal.NewTab"
+    },
+    "zed" : {
+      "action" : "workspace::NewTerminal",
+      "context" : [
+        "Terminal"
+      ]
+    }
+  },
+  "workbench.action.terminal.paste|terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported" : {
+    "idea" : {
+      "action" : "Terminal.Paste"
+    },
+    "zed" : {
+      "action" : "terminal::Paste",
+      "context" : [
+        "Terminal"
+      ]
+    }
+  },
+  "workbench.action.toggleZenMode" : {
+    "idea" : {
+      "action" : "ToggleDistractionFreeMode"
+    }
+  },
+  "workbench.action.toggleFullScreen" : {
+    "idea" : {
+      "action" : "ToggleFullScreen"
+    },
+    "zed" : {
+      "action" : "zed::ToggleFullScreen",
+      "context" : [
+        "Workspace"
+      ]
+    }
+  },
+  "editor.debug.action.toggleBreakpoint" : {
+    "idea" : {
+      "action" : "ToggleLineBreakpoint"
+    }
+  },
+  "editor.showTypeHierarchy" : {
+    "idea" : {
+      "action" : "TypeHierarchy"
+    }
+  },
+  "cursorUndo" : {
+    "idea" : {
+      "action" : "UnselectPreviousOccurrence"
+    }
+  },
+  "editor.action.marker.next|editorFocus" : {
+    "idea" : {
+      "action" : "VcsShowNextChangeMarker"
+    },
+    "zed" : {
+      "action" : "editor::GoToDiagnostic",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.editor.nextChange" : {
+    "idea" : {
+      "action" : "VcsShowNextChangeMarker"
+    },
+    "zed" : {
+      "action" : "editor::GoToHunk",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.marker.prev|editorFocus" : {
+    "idea" : {
+      "action" : "VcsShowPrevChangeMarker"
+    },
+    "zed" : {
+      "action" : "editor::GoToPreviousDiagnostic",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "workbench.action.editor.previousChange" : {
+    "idea" : {
+      "action" : "VcsShowPrevChangeMarker"
+    },
+    "zed" : {
+      "action" : "editor::GoToPreviousHunk",
+      "context" : [
+        "Editor"
+      ]
+    }
+  },
+  "editor.action.inlineSuggest.commit" : {
+    "idea" : {
+      "action" : "com.github.continuedev.continueintellijextension.autocomplete.AcceptAutocompleteAction"
+    }
+  },
+  "continue.acceptDiff" : {
+    "idea" : {
+      "action" : "continue.acceptDiff"
+    }
+  },
+  "continue.focusContinueInput" : {
+    "idea" : {
+      "action" : "continue.focusContinueInput"
+    }
+  },
+  "continue.focusContinueInputWithoutClear" : {
+    "idea" : {
+      "action" : "continue.focusContinueInputWithoutClear"
+    }
+  },
+  "continue.quickEdit" : {
+    "idea" : {
+      "action" : "continue.inlineEdit"
+    }
+  },
+  "continue.newSession" : {
+    "idea" : {
+      "action" : "continue.newContinueSession"
+    }
+  },
+  "continue.rejectDiff" : {
+    "idea" : {
+      "action" : "continue.rejectDiff"
+    }
+  }
+}

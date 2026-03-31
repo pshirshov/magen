@@ -1,0 +1,49 @@
+mapping:
+  - id: "cursorColumnSelectDown"
+    binding:
+      - "shift+down"
+    vscode:
+      action: 'cursorColumnSelectDown'
+      context: [ "editorColumnSelection && textInputFocus" ]
+    idea:
+      missing: true
+  - id: "cursorColumnSelectLeft"
+    binding:
+      - "shift+left"
+    vscode:
+      action: 'cursorColumnSelectLeft'
+      context: [ "editorColumnSelection && textInputFocus" ]
+    idea:
+      missing: true
+  - id: "cursorColumnSelectPageDown"
+    binding:
+      - "shift+pagedown"
+    vscode:
+      action: 'cursorColumnSelectPageDown'
+      context: [ "editorColumnSelection && textInputFocus" ]
+    idea:
+      missing: true
+  - id: "cursorColumnSelectPageUp"
+    binding:
+      - "shift+pageup"
+    vscode:
+      action: 'cursorColumnSelectPageUp'
+      context: [ "editorColumnSelection && textInputFocus" ]
+    idea:
+      missing: true
+  - id: "cursorColumnSelectRight"
+    binding:
+      - "shift+right"
+    vscode:
+      action: 'cursorColumnSelectRight'
+      context: [ "editorColumnSelection && textInputFocus" ]
+    idea:
+      missing: true
+  - id: "cursorColumnSelectUp"
+    binding:
+      - "shift+up"
+    vscode:
+      action: 'cursorColumnSelectUp'
+      context: [ "editorColumnSelection && textInputFocus" ]
+    idea:
+      missing: true

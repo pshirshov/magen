@@ -1,0 +1,9 @@
+mapping:
+  - id: "git.pullFrom"
+    binding:
+      - "ctrl+[KeyU] ctrl+[KeyP]"
+    vscode:
+      action: 'git.pullFrom'
+    idea:
+      action: 'Git.Pull'
+  

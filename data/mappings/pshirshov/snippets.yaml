@@ -1,0 +1,9 @@
+mapping:
+  - id: "insertSnippet"
+    binding:
+      - "ctrl-l"
+    vscode:
+      action: "editor.action.insertSnippet"
+      context: [ "editorTextFocus && !editorTabMovesFocus && !inSnippetMode" ]
+    idea:
+      action: "InsertLiveTemplate"

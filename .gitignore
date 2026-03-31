@@ -4,6 +4,7 @@
 .direnv
 result
 output/
+native/
 
 ### VisualStudioCode template
 .vscode/*

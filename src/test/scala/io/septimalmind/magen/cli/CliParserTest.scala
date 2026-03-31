@@ -151,25 +151,25 @@ class CliParserTest extends AnyWordSpec with Matchers {
     }
 
     "use MAGEN_MAPPINGS_PATH env var when --mappings not provided" in {
-      val env    = Map("MAGEN_MAPPINGS_PATH" -> "/env/mappings")
+      val env         = Map("MAGEN_MAPPINGS_PATH" -> "/env/mappings")
       val (_, parsed) = CliParser.parse(List("generate"), env)
       parsed.mappingsDir shouldBe Some(Paths.get("/env/mappings"))
     }
 
     "use MAGEN_NEGATIONS_PATH env var when --negations not provided" in {
-      val env    = Map("MAGEN_NEGATIONS_PATH" -> "/env/negations")
+      val env         = Map("MAGEN_NEGATIONS_PATH" -> "/env/negations")
       val (_, parsed) = CliParser.parse(List("generate"), env)
       parsed.negationsDir shouldBe Some(Paths.get("/env/negations"))
     }
 
     "CLI --mappings overrides MAGEN_MAPPINGS_PATH env var" in {
-      val env    = Map("MAGEN_MAPPINGS_PATH" -> "/env/mappings")
+      val env         = Map("MAGEN_MAPPINGS_PATH" -> "/env/mappings")
       val (_, parsed) = CliParser.parse(List("generate", "--mappings", "/cli/mappings"), env)
       parsed.mappingsDir shouldBe Some(Paths.get("/cli/mappings"))
     }
 
     "CLI --negations overrides MAGEN_NEGATIONS_PATH env var" in {
-      val env    = Map("MAGEN_NEGATIONS_PATH" -> "/env/negations")
+      val env         = Map("MAGEN_NEGATIONS_PATH" -> "/env/negations")
       val (_, parsed) = CliParser.parse(List("generate", "--negations", "/cli/negations"), env)
       parsed.negationsDir shouldBe Some(Paths.get("/cli/negations"))
     }
@@ -182,6 +182,41 @@ class CliParserTest extends AnyWordSpec with Matchers {
     "negationsDir is None when neither CLI nor env var is set" in {
       val (_, parsed) = CliParser.parse(List("generate"), Map.empty)
       parsed.negationsDir shouldBe None
+    }
+
+    "parse --data-dir" in {
+      val (cmd, parsed) = CliParser.parse(List("generate", "--data-dir", "/opt/magen/data"))
+      cmd shouldBe Some("generate")
+      parsed.dataDir shouldBe Some(Paths.get("/opt/magen/data"))
+    }
+
+    "use MAGEN_DATA_DIR env var when --data-dir not provided" in {
+      val env         = Map("MAGEN_DATA_DIR" -> "/env/data")
+      val (_, parsed) = CliParser.parse(List("generate"), env)
+      parsed.dataDir shouldBe Some(Paths.get("/env/data"))
+    }
+
+    "CLI --data-dir overrides MAGEN_DATA_DIR env var" in {
+      val env         = Map("MAGEN_DATA_DIR" -> "/env/data")
+      val (_, parsed) = CliParser.parse(List("generate", "--data-dir", "/cli/data"), env)
+      parsed.dataDir shouldBe Some(Paths.get("/cli/data"))
+    }
+
+    "dataDir is None when neither CLI nor env var is set" in {
+      val (_, parsed) = CliParser.parse(List("generate"), Map.empty)
+      parsed.dataDir shouldBe None
+    }
+
+    "throw when --data-dir has no value" in {
+      an[AssertionError] should be thrownBy {
+        CliParser.parse(List("generate", "--data-dir"))
+      }
+    }
+
+    "parse gui command" in {
+      val (cmd, parsed) = CliParser.parse(List("gui", "--scheme", "test"))
+      cmd shouldBe Some("gui")
+      parsed.scheme shouldBe Some(SchemeId("test"))
     }
   }
 }

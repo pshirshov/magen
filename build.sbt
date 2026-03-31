@@ -22,8 +22,14 @@ lazy val root = (project in file("."))
     Compile / mainClass := Some("io.septimalmind.magen.Magen"),
     graalVMNativeImageOptions ++= Seq(
       "--no-fallback",
-      "--initialize-at-build-time",
+      // Only initialize app and dependency packages at build time.
+      // JDK classes (especially AWT) stay at default runtime init.
+      "--initialize-at-build-time=scala,io.septimalmind,io.circe,cats,shapeless,izumi,org.snakeyaml,org.yaml,org.typelevel,jawn,macrocompat,io.github",
       "-H:+ReportExceptionStackTraces",
+      "-H:+AddAllCharsets",
+      "--enable-url-protocols=jar",
+      // Exclude bundled resources from native image - they ship as a separate zip
+      "--exclude-config", ".*", "META-INF/native-image/resource-config\\.json",
     ),
     libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.3.0",
     libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.4.0",
@@ -67,3 +73,52 @@ lazy val root = (project in file("."))
       "-Vtype-diffs",
     ),
   )
+
+// Task to package bundled data resources into a zip file
+lazy val packageDataZip = taskKey[File]("Package bundled data resources into magen-data.zip")
+packageDataZip := {
+  val resourceDir = (Compile / resourceDirectory).value
+  val targetDir   = target.value
+  val zipFile     = targetDir / "magen-data.zip"
+  val log         = streams.value.log
+
+  val dataDirs = Seq("mappings", "negations", "editor-mappings", "idea-keymaps")
+  val dataFiles = Seq("idea-vscode-mapping.json")
+
+  val entries = scala.collection.mutable.ListBuffer.empty[(java.io.File, String)]
+
+  dataDirs.foreach { dir =>
+    val base = resourceDir / dir
+    if (base.exists()) {
+      val files = (base ** "*").get.filter(_.isFile)
+      files.foreach { f =>
+        val relative = base.toPath.getParent.relativize(f.toPath).toString
+        entries += ((f, relative))
+      }
+    }
+  }
+
+  dataFiles.foreach { name =>
+    val f = resourceDir / name
+    if (f.exists()) {
+      entries += ((f, name))
+    }
+  }
+
+  log.info(s"Packaging ${entries.size} data files into $zipFile")
+
+  val zipOut = new java.util.zip.ZipOutputStream(new java.io.FileOutputStream(zipFile))
+  try {
+    entries.foreach { case (file, entryName) =>
+      zipOut.putNextEntry(new java.util.zip.ZipEntry(entryName))
+      val bytes = java.nio.file.Files.readAllBytes(file.toPath)
+      zipOut.write(bytes)
+      zipOut.closeEntry()
+    }
+  } finally {
+    zipOut.close()
+  }
+
+  log.info(s"Created $zipFile")
+  zipFile
+}

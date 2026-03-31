@@ -1,0 +1,77 @@
+mapping:
+  - id: "quickInput.acceptInBackground"
+    binding:
+      - "right"
+    vscode:
+      action: 'quickInput.acceptInBackground'
+      context: [ "cursorAtEndOfQuickInputBox && inQuickInput && quickInputType == 'quickPick' || inQuickInput && !inputFocus && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.first"
+    binding:
+      macos:
+        - "home"
+        - "meta+[ArrowLeft]"
+      default:
+        - "home"
+        - "ctrl+[ArrowLeft]"
+    vscode:
+      action: 'quickInput.first'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.last"
+    binding:
+      macos:
+        - "end"
+        - "meta+[ArrowRight]"
+      default:
+        - "end"
+        - "ctrl+[ArrowRight]"
+    vscode:
+      action: 'quickInput.last'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.next"
+    binding:
+      - "down"
+    vscode:
+      action: 'quickInput.next'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.pageNext"
+    binding:
+      macos:
+        - "pagedown"
+        - "meta+[ArrowDown]"
+      default:
+        - "pagedown"
+        - "ctrl+[ArrowDown]"
+    vscode:
+      action: 'quickInput.pageNext'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.pagePrevious"
+    binding:
+      macos:
+        - "meta+[ArrowUp]"
+        - "pageup"
+      default:
+        - "ctrl+[ArrowUp]"
+        - "pageup"
+    vscode:
+      action: 'quickInput.pagePrevious'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true
+  - id: "quickInput.previous"
+    binding:
+      - "up"
+    vscode:
+      action: 'quickInput.previous'
+      context: [ "inQuickInput && quickInputType == 'quickPick'" ]
+    idea:
+      missing: true

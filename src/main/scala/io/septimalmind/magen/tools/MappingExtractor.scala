@@ -21,7 +21,7 @@ object MappingExtractor {
   )
 
   def main(args: Array[String]): Unit = {
-    MagenPaths.configure(MappingsSource.Classpath)
+    MagenPaths.configure(MappingsSource.Bundled)
     val schemes = List("pshirshov", "idea-macos")
 
     val allConcepts = schemes.flatMap {

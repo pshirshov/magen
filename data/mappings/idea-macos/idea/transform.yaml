@@ -1,0 +1,10 @@
+mapping:
+  - id: "ToggleRenderedDocPresentation"
+    binding:
+      - "ctrl+alt+[KeyQ]"
+    idea:
+      action: "ToggleRenderedDocPresentation"
+    vscode:
+      missing: true
+    zed:
+      missing: true

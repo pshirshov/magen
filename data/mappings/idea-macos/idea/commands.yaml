@@ -1,0 +1,122 @@
+mapping:
+  - id: "FileChooser.GoToParent"
+    binding:
+      macos: "meta+[up]"
+      default: "ctrl+[up]"
+    idea:
+      action: "FileChooser.GoToParent"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "FileChooser.GoToRoot"
+    binding:
+      macos: "meta+[Slash]"
+      default: "ctrl+[Slash]"
+    idea:
+      action: "FileChooser.GoToRoot"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "FileChooser.TogglePathBar"
+    binding:
+      macos: "meta+[KeyP]"
+      default: "ctrl+[KeyP]"
+    idea:
+      action: "FileChooser.TogglePathBar"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "ForceRefresh"
+    binding:
+      macos: "meta+alt+shift+[KeyR]"
+      default: "ctrl+alt+shift+[KeyR]"
+    idea:
+      action: "ForceRefresh"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "Generate"
+    binding:
+      macos:
+        - "meta+[KeyN]"
+        - "ctrl+[enter]"
+      default:
+        - "ctrl+[KeyN]"
+        - "ctrl+[enter]"
+    idea:
+      action: "Generate"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "NewElement"
+    binding:
+      macos:
+        - "meta+[KeyN]"
+        - "ctrl+[enter]"
+      default:
+        - "ctrl+[KeyN]"
+        - "ctrl+[enter]"
+    idea:
+      action: "NewElement"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "NewElementSamePlace"
+    binding:
+      - "ctrl+alt+[KeyN]"
+    idea:
+      action: "NewElementSamePlace"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "Refresh"
+    binding:
+      macos: "meta+[KeyR]"
+      default: "ctrl+[KeyR]"
+    idea:
+      action: "Refresh"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "RerunTests"
+    binding:
+      macos:
+        - "ctrl+meta+[KeyR]"
+        - "shift+alt+[KeyR]"
+      default:
+        - "ctrl+alt+[KeyR]"
+        - "shift+alt+[KeyR]"
+    idea:
+      action: "RerunTests"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "RunClass"
+    binding:
+      - "ctrl+shift+[F10]"
+      - "ctrl+shift+[KeyR]"
+    idea:
+      action: "RunClass"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "SafeDelete"
+    binding:
+      macos: "meta+[delete]"
+      default: "ctrl+[delete]"
+    idea:
+      action: "SafeDelete"
+    vscode:
+      missing: true
+    zed:
+      missing: true

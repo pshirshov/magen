@@ -2,7 +2,7 @@ package io.septimalmind.magen.importer
 
 import io.septimalmind.magen.model.Key.{KeyCombo, NamedKey}
 import io.septimalmind.magen.model.{Chord, Modifier, Platform}
-import io.septimalmind.magen.util.{DefaultPaths, PathExpander}
+import io.septimalmind.magen.util.{BundledData, DefaultPaths, PathExpander}
 
 import java.io.BufferedInputStream
 import java.nio.file.{Path, Paths}
@@ -139,14 +139,7 @@ object IdeaSchemeImporter {
   // -- Bundled keymap resources --
 
   private def loadBundledKeymapResource(name: String): Option[Elem] = {
-    val resourcePath = s"/$BUNDLED_RESOURCE_PREFIX/$name.xml"
-    Option(getClass.getResourceAsStream(resourcePath)).map {
-      is =>
-        Using(new BufferedInputStream(is)) {
-          bis =>
-            XML.load(bis)
-        }.get
-    }
+    BundledData.loadXml(s"$BUNDLED_RESOURCE_PREFIX/$name.xml")
   }
 
   // IntelliJ format: "ctrl shift K" or "ctrl alt BACK_SPACE"

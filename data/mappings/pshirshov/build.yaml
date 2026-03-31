@@ -1,0 +1,50 @@
+mapping:
+  - id: "workbench.action.tasks.build"
+    binding:
+      - "${group.build} ${group.build}"
+    vscode:
+      action: 'workbench.action.tasks.build'
+    idea:
+      action: 'CompileDirty'
+      
+  - id: "rider:workbench.action.tasks.build"
+    binding:
+      - "${group.build} ${group.build}"
+    vscode:
+      missing: true
+    idea:
+      action: 'BuildWholeSolutionAction'      
+      
+
+  - id: "rider:build.rebuild"
+    binding:
+      - "${group.build} ctrl+[KeyP]"
+    vscode:
+      missing: true
+    idea:
+      action: 'RebuildSolutionAction'
+
+  
+  - id: "build.rebuild"
+    binding:
+      - "${group.build} ctrl+[KeyP]"
+    vscode:
+      missing: true
+    idea:
+      action: 'CompileProject'
+
+  - id: "build.file"
+    binding:
+      - "${group.build} ctrl+[KeyF]"
+    vscode:
+      missing: true
+    idea:
+      action: 'Compile'
+
+  - id: "build.reimport"
+    binding:
+      - "${group.build} ctrl+[KeyI]"
+    vscode:
+      missing: true
+    idea:
+      action: 'ExternalSystem.RefreshAllProjects'

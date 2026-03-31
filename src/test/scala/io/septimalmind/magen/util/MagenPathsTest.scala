@@ -10,13 +10,13 @@ import java.nio.file.{Files, Path}
 class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
 
   override def afterEach(): Unit = {
-    MagenPaths.configure(MappingsSource.Classpath)
-    MagenPaths.configureNegations(NegationsSource.Classpath)
+    MagenPaths.configure(MappingsSource.Bundled)
+    MagenPaths.configureNegations(NegationsSource.Bundled)
   }
 
   "MagenPaths in Classpath mode" should {
     "list bundled schemes" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       val schemes = MagenPaths.listSchemes()
       schemes should contain("pshirshov")
       schemes should contain("idea-macos")
@@ -24,7 +24,7 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
     }
 
     "list scheme files for a bundled scheme" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       val files = MagenPaths.listSchemeFiles("pshirshov")
       files should not be empty
       files should contain("search.yaml")
@@ -33,7 +33,7 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
     }
 
     "list scheme files including subdirectories" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       val files = MagenPaths.listSchemeFiles("idea-macos")
       files should not be empty
       files.exists(_.contains("idea/")) shouldBe true
@@ -42,48 +42,48 @@ class MagenPathsTest extends AnyWordSpec with Matchers with BeforeAndAfterEach {
     }
 
     "read a scheme file" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       val content = MagenPaths.readSchemeFile("pshirshov", "search.yaml")
       content should include("mapping:")
       content should include("actions.find")
     }
 
     "read a negation file" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       val content = MagenPaths.readNegationFile("idea/idea-all-actions.json")
       content should include("[")
       content.length should be > 100
     }
 
     "read vscode negation files" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       val content = MagenPaths.readNegationFile("vscode/vscode-keymap-linux-!negate-all.json")
       content should include("[")
     }
 
     "fail on missing resource" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       an[AssertionError] should be thrownBy {
         MagenPaths.readMappingFile("nonexistent/file.yaml")
       }
     }
 
     "fail on missing scheme" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       an[AssertionError] should be thrownBy {
         MagenPaths.listSchemeFiles("nonexistent-scheme")
       }
     }
 
     "fail on writableDir in classpath mode" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       an[AssertionError] should be thrownBy {
         MagenPaths.writableDir
       }
     }
 
     "fail on missing negation file" in {
-      MagenPaths.configure(MappingsSource.Classpath)
+      MagenPaths.configure(MappingsSource.Bundled)
       an[AssertionError] should be thrownBy {
         MagenPaths.readNegationFile("nonexistent/file.json")
       }

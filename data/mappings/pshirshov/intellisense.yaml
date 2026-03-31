@@ -1,0 +1,134 @@
+mapping:
+  - id: "editor.action.autoFix"
+    binding:
+      - "ctrl+shift+."
+    vscode:
+      action: 'editor.action.autoFix'
+      context: [ "textInputFocus && !editorReadonly && supportedCodeAction =~ /(\\s|^)quickfix\\b/" ]
+    idea:
+      missing: true
+  - id: "editor.action.quickFix"
+    binding:
+      - "ctrl+."
+    vscode:
+      action: 'editor.action.quickFix'
+      context: [ "editorHasCodeActionsProvider && textInputFocus && !editorReadonly" ]
+    idea:
+      action: 'ShowIntentionActions' # 'QuickActionPopup'
+    zed:
+      action: 'editor::ToggleCodeActions'
+  - id: "editor.action.triggerParameterHints"
+    binding:
+      - "${group.info} ctrl+[KeyP]"
+    vscode:
+      action: 'editor.action.triggerParameterHints'
+      context: [ "editorHasSignatureHelpProvider && editorTextFocus" ]
+    idea:
+      action: 'ParameterInfo'
+    zed:
+      action: 'editor::ShowSignatureHelp'
+  - id: "editor.action.triggerSuggest"
+    binding:
+      - "ctrl+space"
+    vscode:
+      action: 'editor.action.triggerSuggest'
+      context: [ "editorHasCompletionItemProvider && textInputFocus && !editorReadonly && !suggestWidgetVisible" ]
+    idea:
+      action: 'CodeCompletion'
+    zed:
+      action: 'editor::ShowCompletions'
+  # Completion menu navigation
+  - id: "zed.completionConfirm"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ConfirmCompletion'
+      context: [ "Editor && showing_completions" ]
+    idea:
+      missing: true
+  - id: "zed.completionMenuNext"
+    binding:
+      - "down"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ContextMenuNext'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "zed.completionMenuPrevious"
+    binding:
+      - "up"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ContextMenuPrevious'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "completionMenuFirst"
+    binding:
+      - "pageup"
+    vscode:
+      action: 'selectPrevPageSuggestion'
+      context: [ "suggestWidgetVisible" ]
+    zed:
+      action: 'editor::ContextMenuFirst'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      action: 'EditorLookupUp'
+  - id: "completionMenuLast"
+    binding:
+      - "pagedown"
+    vscode:
+      action: 'selectNextPageSuggestion'
+      context: [ "suggestWidgetVisible" ]
+    zed:
+      action: 'editor::ContextMenuLast'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      action: 'EditorLookupDown'
+  - id: "completionMenuHome"
+    binding:
+      - "home"
+    vscode:
+      action: 'selectFirstSuggestion'
+      context: [ "suggestWidgetVisible" ]
+    zed:
+      action: 'editor::ContextMenuFirst'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "completionMenuEnd"
+    binding:
+      - "end"
+    vscode:
+      action: 'selectLastSuggestion'
+      context: [ "suggestWidgetVisible" ]
+    zed:
+      action: 'editor::ContextMenuLast'
+      context: [ "Editor && (showing_code_actions || showing_completions)" ]
+    idea:
+      missing: true
+  - id: "zed.codeActionConfirm"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ConfirmCodeAction'
+      context: [ "Editor && showing_code_actions" ]
+    idea:
+      missing: true
+  - id: "zed.renameConfirm"
+    binding:
+      - "enter"
+    vscode:
+      missing: true
+    zed:
+      action: 'editor::ConfirmRename'
+      context: [ "Editor && renaming" ]
+    idea:
+      missing: true

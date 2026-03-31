@@ -19,7 +19,7 @@ class SchemeWriterTest extends AnyWordSpec with Matchers with BeforeAndAfterEach
   }
 
   override def afterEach(): Unit = {
-    MagenPaths.configure(MappingsSource.Classpath)
+    MagenPaths.configure(MappingsSource.Bundled)
     deleteRecursive(tmpDir)
   }
 

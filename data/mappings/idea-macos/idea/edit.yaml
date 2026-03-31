@@ -1,0 +1,19 @@
+mapping:
+  - id: "EditorChooseLookupItemDot"
+    binding:
+      - "ctrl+[Period]"
+    idea:
+      action: "EditorChooseLookupItemDot"
+    vscode:
+      missing: true
+    zed:
+      missing: true
+  - id: "EditorCutLineEnd"
+    binding:
+      - "ctrl+[KeyK]"
+    idea:
+      action: "EditorCutLineEnd"
+    vscode:
+      missing: true
+    zed:
+      missing: true

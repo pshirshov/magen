@@ -21,8 +21,8 @@ class ImportExportRoundTripTest extends AnyWordSpec with Matchers with BeforeAnd
   }
 
   override def afterEach(): Unit = {
-    MagenPaths.configure(MappingsSource.Classpath)
-    MagenPaths.configureNegations(NegationsSource.Classpath)
+    MagenPaths.configure(MappingsSource.Bundled)
+    MagenPaths.configureNegations(NegationsSource.Bundled)
     deleteRecursive(tmpDir)
   }
 

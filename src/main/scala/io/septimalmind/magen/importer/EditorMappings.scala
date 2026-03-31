@@ -2,8 +2,7 @@ package io.septimalmind.magen.importer
 
 import io.circe.*
 import io.circe.parser
-
-import java.nio.charset.StandardCharsets
+import io.septimalmind.magen.util.BundledData
 
 case class EditorActionRef(
   action: String,
@@ -69,15 +68,14 @@ object EditorMappings {
   }
 
   private def loadMappingFile(fileName: String): MappingIndex = {
-    val is = getClass.getClassLoader.getResourceAsStream(s"$RESOURCE_PREFIX/$fileName")
-    if (is == null) return MappingIndex(Map.empty, Map.empty)
-    val content =
-      try new String(is.readAllBytes(), StandardCharsets.UTF_8)
-      finally is.close()
-
-    parser.parse(content) match {
-      case Left(_)     => MappingIndex(Map.empty, Map.empty)
-      case Right(json) => buildIndex(json)
+    val content = BundledData.readFileOpt(s"$RESOURCE_PREFIX/$fileName")
+    content match {
+      case None => MappingIndex(Map.empty, Map.empty)
+      case Some(text) =>
+        parser.parse(text) match {
+          case Left(_)     => MappingIndex(Map.empty, Map.empty)
+          case Right(json) => buildIndex(json)
+        }
     }
   }
 

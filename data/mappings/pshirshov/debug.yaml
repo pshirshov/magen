@@ -1,0 +1,81 @@
+mapping:
+  - id: "workbench.action.debug.run"
+    binding: 
+      - "${group.debug} ctrl+[KeyE]"
+    vscode:
+      action: 'workbench.action.debug.run'
+    idea:
+      action: 'Run'
+  - id: "workbench.action.tasks.runTask"
+    binding:
+      - "${group.debug} ctrl+[KeyR]"
+    vscode:
+      action: 'workbench.action.tasks.runTask'
+    idea:
+      action: 'ChooseRunConfiguration'
+      
+  - id: "workbench.action.debug.start"
+    binding:
+      - "${group.debug} ctrl+[KeyS]"
+    vscode:
+      action: 'workbench.action.debug.start'
+    idea:
+      action: 'Debug'    
+  - id: "workbench.action.debug.selectandstart"
+    binding:
+      - "${group.debug} ctrl+[KeyD]"
+    vscode:
+      action: 'workbench.action.debug.selectandstart'
+    idea:
+      action: 'ChooseDebugConfiguration'
+      
+  - id: "workbench.action.debug.stepOut"
+    binding: ["shift+f11"]
+    vscode:
+      action: 'workbench.action.debug.stepOut'
+    idea:
+      action: 'StepOut'
+  - id: "editor.debug.action.toggleBreakpoint"
+    binding: ["f9"]
+    vscode:
+      action: 'editor.debug.action.toggleBreakpoint'
+    idea:
+      action: 'ToggleLineBreakpoint'      
+  - id: "workbench.action.debug.continue"
+    binding: ["f5"]
+    vscode:
+      action: 'workbench.action.debug.continue'
+    idea:
+      action: 'Resume'
+  - id: "workbench.action.debug.stop"
+    binding: ["shift+f5"]
+    vscode:
+      action: 'workbench.action.debug.stop'
+    idea:
+      action: 'Stop'
+  - id: "workbench.action.debug.restart"
+    binding: ["ctrl+shift+f5"]
+    vscode:
+      action: 'workbench.action.debug.restart'
+    idea:
+      action: 'Rerun'
+  - id: "workbench.view.debug"
+    binding: ["ctrl+shift+d"]
+    vscode:
+      action: 'workbench.view.debug'
+    idea:
+      action: 'ActivateDebugToolWindow'
+  - id: "workbench.action.debug.stepOver"
+    binding: ["f10"]
+    vscode:
+      action: 'workbench.action.debug.stepOver'
+    idea:
+      action: 'StepOver'
+
+  - id: "workbench.action.debug.stepInto"
+    binding: ["ctrl+f11"]
+    vscode:
+      action: 'workbench.action.debug.stepInto'
+    idea:
+      action: 'StepInto'
+        

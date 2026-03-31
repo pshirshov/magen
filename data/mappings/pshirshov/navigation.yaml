@@ -1,0 +1,275 @@
+mapping:
+  - id: "editor.action.jumpToBracket"
+    binding:
+      - "${group.navigate} ctrl+[KeyB]"
+    vscode:
+      action: "editor.action.jumpToBracket"
+      context: ["editorTextFocus"]
+    idea:
+      action: "EditorMatchBrace"
+    zed:
+      action: "editor::MoveToEnclosingBracket"
+      context: ["Editor"]
+  - id: "workbench.action.gotoLine"
+    binding:
+      - "${group.navigate} ctrl+[KeyL]"
+    vscode:
+      action: "workbench.action.gotoLine"
+    idea:
+      action: "GotoLine"
+    zed:
+      action: "go_to_line::Toggle"
+      context: ["Editor"]
+  #
+  #there is also workbench.action.navigateBackInEditLocations, etc
+  - id: "workbench.action.openNextRecentlyUsedEditor"
+    unset: true
+    binding: []
+    vscode:
+      action: "workbench.action.openNextRecentlyUsedEditor"
+    idea:
+      action: "JumpToNextChange"
+  - id: "workbench.action.openPreviousRecentlyUsedEditor"
+    unset: true
+    binding: []
+    vscode:
+      action: "workbench.action.openPreviousRecentlyUsedEditor"
+    idea:
+      action: "JumpToLastChange"
+  #
+
+  - id: "workbench.action.navigateForward"
+    binding:
+      - "ctrl+[BracketRight]"
+    vscode:
+      action: "workbench.action.navigateForward"
+    idea:
+      action: "Forward"
+    zed:
+      action: "pane::GoForward"
+      context: ["Pane"]
+  - id: "workbench.action.navigateBack"
+    binding:
+      - "ctrl+[BracketLeft]"
+    vscode:
+      action: "workbench.action.navigateBack"
+    idea:
+      action: "Back"
+    zed:
+      action: "pane::GoBack"
+      context: ["Pane"]
+
+  - id: "workbench.action.nextEditor"
+    binding:
+      - "meta+[BracketRight]"
+    vscode:
+      action: "workbench.action.nextEditor"
+    idea:
+      action: "NextTab"
+    zed:
+      action: "pane::ActivateNextItem"
+      context: ["Pane"]
+  - id: "workbench.action.previousEditor"
+    binding:
+      - "meta+[BracketLeft]"
+    vscode:
+      action: "workbench.action.previousEditor"
+    idea:
+      action: "PreviousTab"
+    zed:
+      action: "pane::ActivatePreviousItem"
+      context: ["Pane"]
+
+  #
+  - id: "workbench.action.quickOpen"
+    binding:
+      - "${group.navigate} ctrl+[KeyF]"
+    vscode:
+      action: "workbench.action.quickOpen"
+    idea:
+      action: "GotoFile"
+    zed:
+      action: "file_finder::Toggle"
+      context: ["Workspace"]
+  - id: "workbench.action.openRecent"
+    binding:
+      - "${group.navigate} ctrl+[KeyR]"
+    vscode:
+      action: "workbench.action.openRecent"
+    idea:
+      action: "RecentFiles"
+    zed:
+      action: "projects::OpenRecent"
+      context: ["Workspace"]
+  - id: "workbench.action.showAllEditors"
+    binding:
+      - "${group.navigate} ctrl+[KeyE]"
+    vscode:
+      action: "workbench.action.showAllEditors"
+    idea:
+      missing: true
+  - id: "workbench.action.showAllSymbols"
+    binding:
+      - "${group.navigate} ctrl+[KeyG]"
+    vscode:
+      action: "workbench.action.showAllSymbols"
+    idea:
+      action: "GotoClass"
+    zed:
+      action: "project_symbols::Toggle"
+      context: ["Workspace"]
+  - id: "workbench.action.showCommands"
+    binding:
+      - "${group.navigate} ctrl+[KeyN]"
+      - "meta+shift+[KeyP]"
+    vscode:
+      action: "workbench.action.showCommands"
+    idea:
+      action: "GotoAction"
+    zed:
+      action: "command_palette::Toggle"
+      context: ["Workspace"]
+
+  # structure
+  - id: "workbench.action.gotoSymbol"
+    binding:
+      - "${group.navigate} ctrl+[KeyS]"
+    vscode:
+      action: "workbench.action.gotoSymbol"
+    idea:
+      action: "GotoSymbol"
+    zed:
+      action: "outline::Toggle"
+      context: ["Workspace"]
+
+  - id: "workbench.action.navigateToLastEditLocation"
+    binding:
+      - "${group.navigate} ctrl+[KeyP]"
+    vscode:
+      action: "workbench.action.navigateToLastEditLocation"
+    idea:
+      action: "JumpToLastChange"
+  - id: "editor.action.goToDeclaration"
+    binding:
+      - "${group.navigate} shift+[KeyD]"
+    vscode:
+      action: "editor.action.goToDeclaration"
+    idea:
+      action: "GotoDeclaration"
+      mouse:
+        - "ctrl button1"
+    zed:
+      action: "editor::GoToDefinition"
+      context: ["Editor"]
+  - id: "editor.action.revealDefinition"
+    binding:
+      - "${group.navigate} ctrl+[KeyD]"
+    vscode:
+      action: "editor.action.revealDefinition"
+      context: ["editorHasDefinitionProvider && editorTextFocus"]
+    idea:
+      missing: true
+
+  - id: "editor.action.goToTypeDefinition"
+    binding:
+      - "${group.navigate} ctrl+[KeyT]"
+    vscode:
+      action: "editor.action.goToTypeDefinition"
+    idea:
+      action: "GotoTypeDeclaration"
+      mouse:
+        - "ctrl shift button1"
+    zed:
+      action: "editor::GoToTypeDefinition"
+      context: ["Editor"]
+  - id: "editor.action.goToImplementation"
+    binding:
+      - "${group.navigate} ctrl+[KeyI]"
+    vscode:
+      action: "editor.action.goToImplementation"
+      context: ["editorHasImplementationProvider && editorTextFocus"]
+    idea:
+      action: "GotoImplementation"
+      mouse:
+        - "ctrl alt button1"
+    zed:
+      action: "editor::GoToImplementation"
+      context: ["Editor"]
+  - id: "editor.action.goToReferences"
+    binding:
+      - "${group.navigate} ctrl+[KeyU]" # "Usages"
+    vscode:
+      action: "editor.action.goToReferences"
+      context:
+        [
+          "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor",
+        ]
+    idea:
+      action: "ShowUsages"
+    zed:
+      action: "editor::FindAllReferences"
+      context: ["Editor"]
+
+  - id: "editor.action.peekDefinition"
+    binding:
+      - "${group.navigate} ctrl+[KeyD]"
+    vscode:
+      action: "editor.action.peekDefinition"
+    idea:
+      action: "QuickImplementations"
+    zed:
+      action: "editor::GoToDefinition"
+      context: ["Editor"]
+
+  - id: "editor.action.revealDefinitionAside"
+    binding:
+      - "${group.command} ctrl+[KeyD]"
+    vscode:
+      action: "editor.action.revealDefinitionAside"
+      context:
+        [
+          "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor",
+        ]
+    idea:
+      missing: true
+
+  # changes
+  - id: "editor.action.marker.next"
+    binding:
+      - "alt+[KeyN]"
+    vscode:
+      action: "editor.action.marker.next"
+      context: ["editorFocus"]
+    idea:
+      action: "VcsShowNextChangeMarker"
+    zed:
+      action: "editor::GoToDiagnostic"
+      context: ["Editor"]
+  - id: "editor.action.marker.prev"
+    binding:
+      - "alt+[KeyP]"
+    vscode:
+      action: "editor.action.marker.prev"
+      context: ["editorFocus"]
+    idea:
+      action: "VcsShowPrevChangeMarker"
+    zed:
+      action: "editor::GoToPreviousDiagnostic"
+      context: ["Editor"]
+  # issues
+  - id: "editor.action.marker.nextInFiles"
+    binding:
+      - "alt+shift+[KeyN]"
+    vscode:
+      action: "editor.action.marker.nextInFiles"
+      context: ["editorFocus"]
+    idea:
+      action: "GotoNextError"
+  - id: "editor.action.marker.prevInFiles"
+    binding:
+      - "alt+shift+[KeyP]"
+    vscode:
+      action: "editor.action.marker.prevInFiles"
+      context: ["editorFocus"]
+    idea:
+      action: "GotoPreviousError"

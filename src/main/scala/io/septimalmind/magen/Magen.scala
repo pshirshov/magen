@@ -8,7 +8,7 @@ import io.septimalmind.magen.cli.{CliParser, ParsedArgs}
 import io.septimalmind.magen.config.MagenConfig
 import io.septimalmind.magen.model.*
 import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, VscodeInstaller, VscodeParams, ZedInstaller, ZedParams}
-import io.septimalmind.magen.util.{DefaultPaths, MagenPaths, MappingsSource, NegationsSource, PathExpander, ShortcutParser}
+import io.septimalmind.magen.util.{BundledData, DataSource, DefaultPaths, MagenPaths, MappingsSource, NegationsSource, PathExpander, ShortcutParser}
 import izumi.fundamentals.collections.IzCollections.*
 import izumi.fundamentals.collections.nonempty.NEList
 import izumi.fundamentals.platform.files.IzFiles
@@ -21,6 +21,11 @@ import scala.util.matching.Regex.quoteReplacement
 object Magen {
   def main(args: Array[String]): Unit = {
     val (command, parsed) = CliParser.parse(args.toList)
+
+    // Configure bundled data source
+    parsed.dataDir.foreach(p => BundledData.configure(DataSource.Dir(p)))
+    BundledData.autoDetect()
+
     parsed.mappingsDir.foreach(p => MagenPaths.configure(MappingsSource.Filesystem(p)))
     parsed.negationsDir.foreach(p => MagenPaths.configureNegations(NegationsSource.Filesystem(p)))
 
@@ -37,11 +42,19 @@ object Magen {
         cmdImport(parsed)
       case Some("import-negation") =>
         cmdImportNegation(parsed)
+      case Some("gui") =>
+        cmdGui(parsed)
       case Some(unknown) =>
         System.err.println(s"Unknown command: $unknown")
         printUsage()
         sys.exit(1)
     }
+  }
+
+  // -- gui --
+
+  private def cmdGui(parsed: ParsedArgs): Unit = {
+    gui.MagenGui.launch(parsed)
   }
 
   // -- generate --
@@ -359,12 +372,16 @@ object Magen {
         |All options can appear anywhere after the command.
         |
         |Global Options:
+        |  --data-dir DIR       Directory containing bundled data files (mappings, negations,
+        |                       editor-mappings, idea-keymaps). Used with native-image builds.
+        |                       Default: $MAGEN_DATA_DIR env var, then auto-detected relative
+        |                       to the binary, then classpath resources.
         |  --mappings DIR       Directory with scheme mappings (YAML files organized by scheme).
-        |                       Default: $MAGEN_MAPPINGS_PATH env var, then bundled classpath resources.
+        |                       Default: $MAGEN_MAPPINGS_PATH env var, then bundled data.
         |  --negations DIR      Directory with negation files (editor action lists for unbinding).
-        |                       Default: $MAGEN_NEGATIONS_PATH env var, then bundled classpath resources.
-        |                       When set, filesystem is checked first, falling back to classpath
-        |                       if a file is missing.
+        |                       Default: $MAGEN_NEGATIONS_PATH env var, then bundled data.
+        |                       When set, filesystem is checked first, falling back to bundled
+        |                       data if a file is missing.
         |  --scheme NAME        Scheme name to use.
         |                       Default: value from config file, or "pshirshov" if not configured.
         |  --platform PLATFORM  Target platform for keybinding generation: macos, linux, win.
@@ -375,6 +392,9 @@ object Magen {
         |                       Default: "$default" when auto-discovering.
         |
         |Commands:
+        |
+        |  gui [--scheme NAME] [--platform PLATFORM]
+        |      Launch the graphical user interface.
         |
         |  generate [--scheme NAME] [--platform PLATFORM] [--mappings DIR] [--negations DIR]
         |      Generate keybindings and install them into all supported editors.

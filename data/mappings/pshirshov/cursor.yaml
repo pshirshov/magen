@@ -1,0 +1,189 @@
+mapping:
+  # basic movement
+  - id: "cursorLeft"
+    binding:
+      - "left"
+    vscode:
+      action: 'cursorLeft'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveLeft"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorLeft'
+  - id: "cursorDown"
+    binding:
+      - "down"
+    vscode:
+      action: 'cursorDown'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveDown"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorDown'
+  - id: "cursorRight"
+    binding:
+      - "right"
+    vscode:
+      action: 'cursorRight'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveRight"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorRight'
+  - id: "cursorUp"
+    binding:
+      - "up"
+    vscode:
+      action: 'cursorUp'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveUp"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorUp'
+      
+  # jump movement
+  - id: "cursorWordLeft"
+    binding:
+      - "ctrl+left"
+      - "alt+left"
+    vscode:
+      action: 'cursorWordLeft'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToPreviousWordStart"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorPreviousWord'
+  - id: "cursorWordEndRight"
+    binding:
+      - "ctrl+right"
+      - "alt+right"
+    vscode:
+      action: 'cursorWordEndRight'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToNextWordEnd"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorNextWord'
+  - id: "cursorHome"
+    binding:
+      - "ctrl+[KeyA]"
+      - "home"
+    vscode:
+      action: 'cursorHome'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToBeginningOfLine"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorLineStart'
+  - id: "cursorEnd"
+    binding:
+      - "end"
+      - "ctrl+[KeyE]"
+    vscode:
+      action: 'cursorEnd'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToEndOfLine"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorLineEnd'
+  - id: "cursorPageDown"
+    binding:
+      - "meta+[ArrowDown]"
+      - "pagedown"
+    vscode:
+      action: 'cursorPageDown'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::PageDown"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorPageDown'
+  - id: "cursorPageUp"
+    binding:
+      - "meta+[ArrowUp]"
+      - "pageup"
+    vscode:
+      action: 'cursorPageUp'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::PageUp"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorPageUp'
+  - id: "cursorTop"
+    binding:
+      - "ctrl+home"
+    vscode:
+      action: 'cursorTop'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToBeginning"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorTextStart'
+  - id: "cursorBottom"
+    binding:
+      - "ctrl+end"
+    vscode:
+      action: 'cursorBottom'
+      context: [ "textInputFocus" ]
+    zed:
+      action: "editor::MoveToEnd"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorTextEnd'
+  # multi-cursors
+  - id: "editor.action.insertCursorAbove"
+    binding:
+      - "ctrl+shift+up"
+    vscode:
+      action: 'editor.action.insertCursorAbove'
+      context: [ "editorTextFocus" ]
+    zed:
+      action: "editor::AddSelectionAbove"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorCloneCaretAbove'
+  - id: "editor.action.insertCursorBelow"
+    binding:
+      - "ctrl+shift+down"
+    vscode:
+      action: 'editor.action.insertCursorBelow'
+      context: [ "editorTextFocus" ]
+    zed:
+      action: "editor::AddSelectionBelow"
+      context: [ "Editor" ]
+    idea:
+      action: 'EditorCloneCaretBelow'
+  - id: "removeSecondaryCursors"
+    binding:
+      - "shift+escape"
+      - "escape"
+    vscode:
+      action: 'removeSecondaryCursors'
+      context: [ "editorHasMultipleSelections && textInputFocus" ]
+    zed:
+      action: "editor::Cancel"
+      context: [ "Editor" ]
+    idea:
+      missing: true
+
+      
+
+      
+
+      
+
+
+
+  
+
+   

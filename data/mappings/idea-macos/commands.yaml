@@ -1,0 +1,118 @@
+mapping:
+  - id: "CloseActiveTab"
+    binding:
+      - "ctrl+shift+[F4]"
+    idea:
+      action: "CloseActiveTab"
+    vscode:
+      action: "workbench.action.closeActiveEditor"
+    zed:
+      action: "pane::CloseActiveItem"
+      context: ["Pane"]
+  - id: "CloseContent"
+    binding:
+      macos: "meta+[KeyW]"
+      default: "ctrl+[KeyW]"
+    idea:
+      action: "CloseContent"
+    vscode:
+      action: "workbench.action.closeActiveEditor"
+    zed:
+      action: "pane::CloseActiveItem"
+      context: ["Pane"]
+  - id: "Exit"
+    binding:
+      macos: "meta+[KeyQ]"
+      default: "ctrl+[KeyQ]"
+    idea:
+      action: "Exit"
+    vscode:
+      action: "workbench.action.quit"
+    zed:
+      action: "zed::Quit"
+      context: ["Workspace"]
+  - id: "NewScratchFile"
+    binding:
+      macos: "meta+shift+[KeyN]"
+      default: "ctrl+shift+[KeyN]"
+    idea:
+      action: "NewScratchFile"
+    vscode:
+      action: "workbench.action.files.newUntitledFile"
+    zed:
+      action: "workspace::NewFile"
+      context: ["Workspace"]
+  - id: "Rerun"
+    binding:
+      macos: "meta+[KeyR]"
+      default: "ctrl+[KeyR]"
+    idea:
+      action: "Rerun"
+    vscode:
+      action: "workbench.action.debug.restart"
+    zed:
+      missing: true
+  - id: "Run"
+    binding:
+      macos: "ctrl+[KeyR]"
+    idea:
+      action: "Run"
+    vscode:
+      action: "workbench.action.debug.run"
+    zed:
+      missing: true
+  - id: "SaveAll"
+    binding:
+      macos: "meta+[KeyS]"
+      default: "ctrl+[KeyS]"
+    idea:
+      action: "SaveAll"
+    vscode:
+      action: "workbench.action.files.save"
+    zed:
+      action: "workspace::Save"
+      context: ["Workspace"]
+  - id: "SaveAllFiles"
+    binding:
+      macos: "meta+shift+[KeyS]"
+      default: "ctrl+shift+[KeyS]"
+    idea:
+      action: "SaveAll"
+    vscode:
+      action: "workbench.action.files.saveAll"
+    zed:
+      action: "workspace::SaveAll"
+      context: ["Workspace"]
+  - id: "CloseProject"
+    binding:
+      macos: "meta+shift+alt+[KeyW]"
+      default: "ctrl+shift+alt+[KeyW]"
+    idea:
+      action: "CloseProject"
+    vscode:
+      action: "workbench.action.closeWindow"
+    zed:
+      action: "workspace::CloseWindow"
+      context: ["Workspace"]
+  - id: "ReopenClosedTab"
+    binding:
+      macos: "meta+shift+[KeyT]"
+      default: "ctrl+shift+[KeyT]"
+    idea:
+      action: "ReopenClosedTab"
+    vscode:
+      action: "workbench.action.reopenClosedEditor"
+    zed:
+      action: "pane::ReopenClosedItem"
+      context: ["Pane"]
+  - id: "CloseAllEditorsButActive"
+    binding:
+      macos: "meta+alt+[KeyW]"
+      default: "ctrl+alt+[KeyW]"
+    idea:
+      action: "CloseAllEditorsButActive"
+    vscode:
+      action: "workbench.action.closeOtherEditors"
+    zed:
+      action: "pane::CloseOtherItems"
+      context: ["Pane"]

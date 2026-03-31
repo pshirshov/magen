@@ -5,6 +5,7 @@ import io.septimalmind.magen.model.{Platform, SchemeId}
 import java.nio.file.{Path, Paths}
 
 case class ParsedArgs(
+  dataDir: Option[Path],
   mappingsDir: Option[Path],
   negationsDir: Option[Path],
   scheme: Option[SchemeId],
@@ -17,11 +18,12 @@ case class ParsedArgs(
 object CliParser {
 
   /** Splits args into command (first non-flag token) and the rest.
-    * All flags (--mappings, --scheme, etc.) can appear anywhere after the command.
+    * All flags (--data-dir, --mappings, --scheme, etc.) can appear anywhere after the command.
     */
   def parse(args: List[String], env: Map[String, String] = sys.env): (Option[String], ParsedArgs) = {
     val arr                        = args.toArray
     var command: Option[String]    = None
+    var dataDir: Option[Path]      = None
     var mappingsDir: Option[Path]  = None
     var negationsDir: Option[Path] = None
     var scheme: Option[String]     = None
@@ -33,6 +35,10 @@ object CliParser {
     var i = 0
     while (i < arr.length) {
       arr(i) match {
+        case "--data-dir" =>
+          assert(i + 1 < arr.length, "--data-dir requires a value")
+          dataDir = Some(Paths.get(arr(i + 1)))
+          i += 2
         case "--mappings" =>
           assert(i + 1 < arr.length, "--mappings requires a value")
           mappingsDir = Some(Paths.get(arr(i + 1)))
@@ -70,6 +76,7 @@ object CliParser {
     }
 
     val parsed = ParsedArgs(
+      dataDir      = dataDir.orElse(env.get("MAGEN_DATA_DIR").map(Paths.get(_))),
       mappingsDir  = mappingsDir.orElse(env.get("MAGEN_MAPPINGS_PATH").map(Paths.get(_))),
       negationsDir = negationsDir.orElse(env.get("MAGEN_NEGATIONS_PATH").map(Paths.get(_))),
       scheme       = scheme.map(SchemeId.apply),
