@@ -6,7 +6,7 @@ import io.septimalmind.magen.model.{Mapping, Platform, SchemeId}
 import io.septimalmind.magen.targets.{IdeaInstaller, IdeaParams, IdeaRenderer, VSCodeRenderer, VscodeInstaller, VscodeParams, ZedInstaller, ZedParams, ZedRenderer}
 import io.septimalmind.magen.util.{DefaultPaths, PathExpander}
 
-import java.awt.{BorderLayout, Button, Choice, Color, EventQueue, FileDialog, FlowLayout, Font, Frame, Label, Panel, TextArea}
+import java.awt.{BorderLayout, Button, Choice, EventQueue, FileDialog, FlowLayout, Frame, Label, Panel, TextArea}
 import java.awt.event.{ActionEvent, ActionListener, WindowAdapter, WindowEvent}
 import java.io.{OutputStream, PrintStream}
 import java.nio.charset.StandardCharsets
@@ -41,8 +41,9 @@ class MagenFrame(parsed: ParsedArgs) extends Frame("Magen - Keyboard Mapping Gen
   private val renderBtn      = new Button("Render...")
   private val scanBtn        = new Button("Scan")
   private val loadBtn        = new Button("Load")
-  private val bindingsArea   = new TextArea("", 30, 100, TextArea.SCROLLBARS_BOTH)
-  private val logArea        = new TextArea("", 8, 100, TextArea.SCROLLBARS_VERTICAL_ONLY)
+  private val bindingTable   = new BindingTable()
+  private val detailPanel    = new BindingDetailPanel()
+  private val logArea        = new TextArea("", 6, 80, TextArea.SCROLLBARS_VERTICAL_ONLY)
   private val statusLabel    = new Label("Ready")
 
   @scala.annotation.nowarn("msg=never used")
@@ -93,27 +94,30 @@ class MagenFrame(parsed: ParsedArgs) extends Frame("Magen - Keyboard Mapping Gen
 
     add(controlPanel, BorderLayout.NORTH)
 
-    // -- Center: bindings display --
-    bindingsArea.setEditable(false)
-    bindingsArea.setFont(theme.monoFont(13))
-    bindingsArea.setBackground(theme.surface)
-    bindingsArea.setForeground(theme.foreground)
-    add(bindingsArea, BorderLayout.CENTER)
+    // -- Center: binding table --
+    bindingTable.setSelectionListener(c => detailPanel.showConcept(c))
+    add(bindingTable, BorderLayout.CENTER)
 
-    // -- Bottom panel: log + status --
+    // -- Bottom: detail panel + log + status --
     val bottomPanel = new Panel(new BorderLayout(gap, theme.scaled(2)))
     bottomPanel.setBackground(theme.background)
 
+    bottomPanel.add(detailPanel, BorderLayout.NORTH)
+
+    val logPanel = new Panel(new BorderLayout(gap, 0))
+    logPanel.setBackground(theme.background)
     val logLabel = new Label("Log:")
     logLabel.setFont(theme.sansBold(12))
     logLabel.setForeground(theme.foreground)
-    bottomPanel.add(logLabel, BorderLayout.NORTH)
+    logPanel.add(logLabel, BorderLayout.NORTH)
 
     logArea.setEditable(false)
-    logArea.setFont(theme.monoFont(12))
+    logArea.setFont(theme.monoFont(11))
     logArea.setBackground(theme.surfaceAlt)
     logArea.setForeground(theme.foreground)
-    bottomPanel.add(logArea, BorderLayout.CENTER)
+    logPanel.add(logArea, BorderLayout.CENTER)
+
+    bottomPanel.add(logPanel, BorderLayout.CENTER)
 
     statusLabel.setFont(theme.sansFont(12))
     statusLabel.setBackground(theme.statusBg)
@@ -147,7 +151,7 @@ class MagenFrame(parsed: ParsedArgs) extends Frame("Magen - Keyboard Mapping Gen
     })
 
     // -- Size and position --
-    setSize(theme.scaled(1000), theme.scaled(700))
+    setSize(theme.scaled(1100), theme.scaled(750))
     setLocationRelativeTo(null)
   }
 
@@ -222,27 +226,23 @@ class MagenFrame(parsed: ParsedArgs) extends Frame("Magen - Keyboard Mapping Gen
 
     setStatus(s"Loading ${scheme.name} ($platform)...")
     logArea.setText("")
-    bindingsArea.setText("")
+    detailPanel.clear()
 
     runAsync {
       withCapturedOutput {
         val (mapping, validation) = Magen.loadAndValidate(scheme, platform)
         currentMapping = Some(mapping)
 
-        val sb = new StringBuilder
-        sb.append(formatBindingsTable(mapping, platform))
-
-        if (validation.errors.nonEmpty || validation.ideaConflicts.nonEmpty || validation.missingBindings.nonEmpty) {
-          sb.append("\n\n--- Validation ---\n")
-          validation.missingBindings.foreach(m => sb.append(s"  MISSING: ${m.message}\n"))
-          validation.ideaConflicts.foreach(c => sb.append(s"  IDEA CONFLICT (warn): ${c.message}\n"))
-          validation.errors.foreach(c => sb.append(s"  ERROR: ${c.message}\n"))
-        }
-
         EventQueue.invokeLater {
           () =>
-            bindingsArea.setText(sb.toString())
-            bindingsArea.setCaretPosition(0)
+            bindingTable.setData(mapping)
+
+            if (validation.errors.nonEmpty || validation.ideaConflicts.nonEmpty || validation.missingBindings.nonEmpty) {
+              validation.missingBindings.foreach(m => log(s"MISSING: ${m.message}"))
+              validation.ideaConflicts.foreach(c => log(s"IDEA CONFLICT (warn): ${c.message}"))
+              validation.errors.foreach(c => log(s"ERROR: ${c.message}"))
+            }
+
             setStatus(s"Loaded ${scheme.name}: ${mapping.mapping.size} bindings")
         }
       }
@@ -345,89 +345,50 @@ class MagenFrame(parsed: ParsedArgs) extends Frame("Magen - Keyboard Mapping Gen
 
   private def doScan(): Unit = {
     setStatus("Scanning for editors...")
-    bindingsArea.setText("")
+    logArea.setText("")
 
     runAsync {
-      val sb = new StringBuilder
+      val lines = new StringBuilder
 
-      sb.append(s"Platform: $hostPlatform\n\n")
+      lines.append(s"Platform: $hostPlatform\n\n")
 
-      sb.append("=== VSCode / VSCodium ===\n")
+      lines.append("=== VSCode / VSCodium ===\n")
       val vscodePaths = PathExpander
         .expandGlobs(DefaultPaths.vscodePaths(hostPlatform))
         .filter(p => Files.exists(p) && Files.isRegularFile(p))
-      if (vscodePaths.isEmpty) {
-        sb.append("  (none found)\n")
-      } else {
-        vscodePaths.foreach(p => sb.append(s"  $p\n"))
-      }
+      if (vscodePaths.isEmpty) lines.append("  (none found)\n")
+      else vscodePaths.foreach(p => lines.append(s"  $p\n"))
 
-      sb.append("\n=== Zed ===\n")
+      lines.append("\n=== Zed ===\n")
       val zedPaths = PathExpander
         .expandGlobs(DefaultPaths.zedPaths(hostPlatform))
         .filter(p => Files.exists(p) && Files.isRegularFile(p))
-      if (zedPaths.isEmpty) {
-        sb.append("  (none found)\n")
-      } else {
-        zedPaths.foreach(p => sb.append(s"  $p\n"))
-      }
+      if (zedPaths.isEmpty) lines.append("  (none found)\n")
+      else zedPaths.foreach(p => lines.append(s"  $p\n"))
 
-      sb.append("\n=== IntelliJ IDEA ===\n")
+      lines.append("\n=== IntelliJ IDEA ===\n")
       val keymaps = io.septimalmind.magen.importer.IdeaSchemeImporter.listKeymaps()
       if (keymaps.isEmpty) {
-        sb.append("  (none found)\n")
+        lines.append("  (none found)\n")
       } else {
         val (user, bundled) = keymaps.partition(!_.bundled)
         if (user.nonEmpty) {
-          sb.append("  User keymaps:\n")
-          user.foreach(km => sb.append(s"    ${km.name} (parent: ${km.parent}, source: ${km.source})\n"))
+          lines.append("  User keymaps:\n")
+          user.foreach(km => lines.append(s"    ${km.name} (parent: ${km.parent}, source: ${km.source})\n"))
         }
         if (bundled.nonEmpty) {
-          sb.append("  Bundled keymaps:\n")
-          bundled.foreach(km => sb.append(s"    ${km.name} (parent: ${km.parent}, source: ${km.source})\n"))
+          lines.append("  Bundled keymaps:\n")
+          bundled.foreach(km => lines.append(s"    ${km.name} (parent: ${km.parent}, source: ${km.source})\n"))
         }
       }
 
       EventQueue.invokeLater {
         () =>
-          bindingsArea.setText(sb.toString())
-          bindingsArea.setCaretPosition(0)
+          logArea.setText(lines.toString())
+          logArea.setCaretPosition(0)
           setStatus("Scan complete")
       }
     }
-  }
-
-  private def formatBindingsTable(mapping: Mapping, platform: Platform): String = {
-    val sb = new StringBuilder
-
-    val header    = f"${"Concept"}%-40s ${"Binding"}%-30s ${"IDEA"}%-35s ${"VSCode"}%-35s ${"Zed"}%-30s"
-    val separator = "-" * header.length
-
-    sb.append(s"Scheme: ${schemeChoice.getSelectedItem} | Platform: $platform | ${mapping.mapping.size} bindings\n\n")
-    sb.append(header + "\n")
-    sb.append(separator + "\n")
-
-    mapping.mapping.foreach {
-      c =>
-        val binding = c.binding.toList.map(chord => chord.combos.map(formatCombo).mkString(" ")).mkString(" / ")
-        val idea    = c.idea.map(_.action).getOrElse("-")
-        val vscode  = c.vscode.map(_.action).getOrElse("-")
-        val zed     = c.zed.map(_.action).getOrElse("-")
-
-        sb.append(f"${c.id}%-40s $binding%-30s $idea%-35s $vscode%-35s $zed%-30s\n")
-    }
-
-    sb.toString()
-  }
-
-  private def formatCombo(combo: io.septimalmind.magen.model.Key.KeyCombo): String = {
-    val mods = combo.modifiers.map {
-      case io.septimalmind.magen.model.Modifier.Ctrl  => "ctrl"
-      case io.septimalmind.magen.model.Modifier.Alt   => "alt"
-      case io.septimalmind.magen.model.Modifier.Shift => "shift"
-      case io.septimalmind.magen.model.Modifier.Meta  => "meta"
-    }
-    (mods :+ combo.key.name).mkString("+")
   }
 
   private def runAsync(task: => Unit): Unit = {

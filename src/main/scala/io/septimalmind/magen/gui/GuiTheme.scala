@@ -9,7 +9,7 @@ import java.nio.file.{Files, Paths}
   */
 object GuiTheme {
   lazy val isDark: Boolean = detectDarkMode()
-  lazy val uiScale: Double = Math.min(4.0, detectScale())
+  lazy val uiScale: Double = Math.min(4.0, Math.ceil(detectScale()))
 
   // -- Colors (lazy to stay out of native-image build-time heap) --
   lazy val background: Color    = if (isDark) new Color(0x2B, 0x2B, 0x2B) else new Color(0xF0, 0xF0, 0xF0)
@@ -43,7 +43,7 @@ object GuiTheme {
       try {
         val content = new String(Files.readAllBytes(gtkSettings)).toLowerCase
         if (content.contains("prefer-dark") || content.contains("gtk-application-prefer-dark-theme=true")
-          || content.contains("gtk-theme-name") && content.contains("dark")) {
+            || content.contains("gtk-theme-name") && content.contains("dark")) {
           return true
         }
       } catch {
@@ -55,11 +55,16 @@ object GuiTheme {
   }
 
   private def detectScale(): Double = {
+    def found(method: String, value: Double): Double = {
+      System.err.println(s"GuiTheme: scale detected via $method: $value")
+      value
+    }
+
     // 1. Explicit sun.java2d.uiScale property (highest priority)
-    sysPropDouble("sun.java2d.uiScale").foreach(s => return s)
+    sysPropDouble("sun.java2d.uiScale").foreach(s => return found("sun.java2d.uiScale", s))
 
     // 2. GDK_SCALE env var
-    envDouble("GDK_SCALE").foreach(s => return s)
+    envDouble("GDK_SCALE").foreach(s => return found("GDK_SCALE", s))
 
     // 3. Java2D graphics transform (works when JVM-level scaling is active)
     try {
@@ -67,47 +72,77 @@ object GuiTheme {
       val gd        = ge.getDefaultScreenDevice
       val transform = gd.getDefaultConfiguration.getDefaultTransform
       val scaleX    = transform.getScaleX
-      if (scaleX > 1.0) return scaleX
+      if (scaleX > 1.0) return found("GraphicsConfig.transform", scaleX)
     } catch {
       case _: Exception =>
     }
 
-    // 4. GNOME Mutter scale via gdbus (works with fractional scaling on Wayland)
-    detectMutterScale().foreach(s => return s)
+    // 4. GNOME monitors.xml (most reliable for fractional scaling on Wayland)
+    detectGnomeMonitorsXml().foreach(s => return found("monitors.xml", s))
 
-    // 5. GNOME scaling-factor (integer scaling)
+    // 5. GNOME Mutter scale via gdbus
+    detectMutterScale().foreach(s => return found("Mutter D-Bus", s))
+
+    // 7. GNOME scaling-factor (integer scaling)
     runCommand("gsettings", "get", "org.gnome.desktop.interface", "scaling-factor")
       .flatMap(parseUintFromGsettings)
       .filter(_ > 1)
-      .foreach(s => return s.toDouble)
+      .foreach(s => return found("gsettings scaling-factor", s.toDouble))
 
-    // 6. Xft.dpi from X resources
-    runCommand("xrdb", "-query").foreach { output =>
-      val pattern = """Xft\.dpi:\s*(\d+)""".r
-      pattern.findFirstMatchIn(output).foreach { m =>
-        val dpi = m.group(1).toInt
-        if (dpi > 120) return dpi.toDouble / 96.0
-      }
+    // 8. Xft.dpi from X resources
+    runCommand("xrdb", "-query").foreach {
+      output =>
+        val pattern = """Xft\.dpi:\s*(\d+)""".r
+        pattern.findFirstMatchIn(output).foreach {
+          m =>
+            val dpi = m.group(1).toInt
+            if (dpi > 120) return found(s"Xft.dpi=$dpi", dpi.toDouble / 96.0)
+        }
     }
 
-    // 7. GNOME text-scaling-factor
+    // 9. GNOME text-scaling-factor
     runCommand("gsettings", "get", "org.gnome.desktop.interface", "text-scaling-factor")
-      .flatMap(s => try Some(s.trim.toDouble) catch { case _: Exception => None })
+      .flatMap(
+        s =>
+          try Some(s.trim.toDouble)
+          catch { case _: Exception => None }
+      )
       .filter(_ > 1.0)
-      .foreach(s => return s)
+      .foreach(s => return found("gsettings text-scaling-factor", s))
 
-    // 8. Physical DPI from xrandr (4K on 32" = ~137 DPI)
-    detectXrandrScale().foreach(s => return s)
+    // 10. Physical DPI from xrandr
+    detectXrandrScale().foreach(s => return found("xrandr physical DPI", s))
 
-    // 9. Toolkit DPI (often lies on XWayland, but last resort)
+    // 11. Toolkit DPI (often lies on XWayland, but last resort)
     try {
       val dpi = Toolkit.getDefaultToolkit.getScreenResolution
-      if (dpi > 120) return dpi.toDouble / 96.0
+      if (dpi > 120) return found(s"Toolkit.screenResolution=$dpi", dpi.toDouble / 96.0)
     } catch {
       case _: Exception =>
     }
 
+    System.err.println("GuiTheme: no scale detected, using 1.0")
     1.0
+  }
+
+  /** Read the active monitor scale from GNOME's ~/.config/monitors.xml.
+    * This is the most reliable source for fractional scaling on GNOME Wayland.
+    */
+  private def detectGnomeMonitorsXml(): Option[Double] = {
+    try {
+      val configFile = Paths.get(System.getProperty("user.home", ""), ".config", "monitors.xml")
+      if (!Files.exists(configFile)) return None
+
+      val content = new String(Files.readAllBytes(configFile))
+      // Extract <scale>N.N</scale> from the configuration
+      val scalePattern = """<scale>(\d+\.?\d*)</scale>""".r
+      val scales = scalePattern.findAllMatchIn(content).map(_.group(1).toDouble).toList
+
+      // Return the first scale > 1.0 (the primary/active monitor)
+      scales.find(s => s > 1.0 && s <= 4.0)
+    } catch {
+      case _: Exception => None
+    }
   }
 
   /** Query Mutter's DisplayConfig D-Bus API for the monitor scale. */
@@ -142,14 +177,15 @@ object GuiTheme {
       val output = runCommand("xrandr").getOrElse(return None)
       // Match lines like: "3840x2160+0+0 ... 697mm x 392mm"
       val pattern = """(\d{3,5})x(\d{3,5})\+\d+\+\d+.*?(\d+)mm\s*x\s*(\d+)mm""".r
-      pattern.findFirstMatchIn(output).flatMap { m =>
-        val pxW = m.group(1).toDouble
-        val mmW = m.group(3).toDouble
-        if (mmW > 0) {
-          val dpi = pxW / (mmW / 25.4)
-          if (dpi > 120) Some(dpi / 96.0)
-          else None
-        } else None
+      pattern.findFirstMatchIn(output).flatMap {
+        m =>
+          val pxW = m.group(1).toDouble
+          val mmW = m.group(3).toDouble
+          if (mmW > 0) {
+            val dpi = pxW / (mmW / 25.4)
+            if (dpi > 120) Some(dpi / 96.0)
+            else None
+          } else None
       }
     } catch {
       case _: Exception => None
@@ -157,8 +193,8 @@ object GuiTheme {
   }
 
   private def parseUintFromGsettings(s: String): Option[Int] = {
-    // gsettings outputs "uint32 2" or just "2"
-    val pattern = """(\d+)""".r
+    // gsettings outputs "uint32 2" or just "2" - extract the LAST number
+    val pattern = """(\d+)\s*$""".r
     pattern.findFirstMatchIn(s.trim).map(_.group(1).toInt)
   }
 
@@ -176,15 +212,17 @@ object GuiTheme {
 
   private def sysPropDouble(key: String): Option[Double] = {
     val v = System.getProperty(key)
-    if (v != null) try Some(v.toDouble)
-    catch { case _: NumberFormatException => None }
+    if (v != null)
+      try Some(v.toDouble)
+      catch { case _: NumberFormatException => None }
     else None
   }
 
   private def envDouble(key: String): Option[Double] = {
     val v = System.getenv(key)
-    if (v != null) try Some(v.toDouble)
-    catch { case _: NumberFormatException => None }
+    if (v != null)
+      try Some(v.toDouble)
+      catch { case _: NumberFormatException => None }
     else None
   }
 }
