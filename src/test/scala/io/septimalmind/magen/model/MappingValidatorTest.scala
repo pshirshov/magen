@@ -18,15 +18,15 @@ class MappingValidatorTest extends AnyWordSpec with Matchers {
             "copy",
             chords("ctrl+[KeyC]"),
             idea   = Some(IdeaAction("$Copy", List.empty)),
-            vscode = Some(VSCodeAction("editor.copy", List.empty, List.empty)),
-            zed    = Some(ZedAction("editor::Copy", List("Editor"))),
+            vscode = Some(VSCodeAction("editor.copy", None, List.empty, List.empty)),
+            zed    = Some(ZedAction("editor::Copy", None, List("Editor"))),
           ),
           Concept(
             "paste",
             chords("ctrl+[KeyV]"),
             idea   = Some(IdeaAction("$Paste", List.empty)),
-            vscode = Some(VSCodeAction("editor.paste", List.empty, List.empty)),
-            zed    = Some(ZedAction("editor::Paste", List("Editor"))),
+            vscode = Some(VSCodeAction("editor.paste", None, List.empty, List.empty)),
+            zed    = Some(ZedAction("editor::Paste", None, List("Editor"))),
           ),
         )
       )
@@ -53,8 +53,8 @@ class MappingValidatorTest extends AnyWordSpec with Matchers {
     "detect VSCode binding conflict within same context" in {
       val mapping = Mapping(
         List(
-          Concept("actionA", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("findAction", List("editorFocus"), List.empty)), zed   = None),
-          Concept("actionB", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("formatAction", List("editorFocus"), List.empty)), zed = None),
+          Concept("actionA", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("findAction", None, List("editorFocus"), List.empty)), zed   = None),
+          Concept("actionB", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("formatAction", None, List("editorFocus"), List.empty)), zed = None),
         )
       )
 
@@ -67,8 +67,8 @@ class MappingValidatorTest extends AnyWordSpec with Matchers {
     "not flag VSCode bindings in different contexts as conflict" in {
       val mapping = Mapping(
         List(
-          Concept("actionA", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("findInEditor", List("editorFocus"), List.empty)), zed     = None),
-          Concept("actionB", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("findInTerminal", List("terminalFocus"), List.empty)), zed = None),
+          Concept("actionA", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("findInEditor", None, List("editorFocus"), List.empty)), zed     = None),
+          Concept("actionB", chords("ctrl+[KeyF]"), idea = None, vscode = Some(VSCodeAction("findInTerminal", None, List("terminalFocus"), List.empty)), zed = None),
         )
       )
 
@@ -80,8 +80,8 @@ class MappingValidatorTest extends AnyWordSpec with Matchers {
     "detect Zed binding conflict within same context" in {
       val mapping = Mapping(
         List(
-          Concept("actionA", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Run", List("Editor")))),
-          Concept("actionB", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Refresh", List("Editor")))),
+          Concept("actionA", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Run", None, List("Editor")))),
+          Concept("actionB", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Refresh", None, List("Editor")))),
         )
       )
 
@@ -239,8 +239,8 @@ class MappingValidatorTest extends AnyWordSpec with Matchers {
     "treat VSCode conflicts as errors" in {
       val mapping = Mapping(
         List(
-          Concept("actionA", chords("ctrl+[KeyW]"), idea = None, zed = None, vscode = Some(VSCodeAction("closeWindow", List.empty, List.empty))),
-          Concept("actionB", chords("ctrl+[KeyW]"), idea = None, zed = None, vscode = Some(VSCodeAction("toggleWrap", List.empty, List.empty))),
+          Concept("actionA", chords("ctrl+[KeyW]"), idea = None, zed = None, vscode = Some(VSCodeAction("closeWindow", None, List.empty, List.empty))),
+          Concept("actionB", chords("ctrl+[KeyW]"), idea = None, zed = None, vscode = Some(VSCodeAction("toggleWrap", None, List.empty, List.empty))),
         )
       )
 
@@ -252,8 +252,8 @@ class MappingValidatorTest extends AnyWordSpec with Matchers {
     "treat Zed conflicts as errors" in {
       val mapping = Mapping(
         List(
-          Concept("actionA", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Run", List("Editor")))),
-          Concept("actionB", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Refresh", List("Editor")))),
+          Concept("actionA", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Run", None, List("Editor")))),
+          Concept("actionB", chords("ctrl+[KeyR]"), idea = None, vscode = None, zed = Some(ZedAction("editor::Refresh", None, List("Editor")))),
         )
       )
 

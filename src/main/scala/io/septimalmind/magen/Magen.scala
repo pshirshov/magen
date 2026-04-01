@@ -553,10 +553,10 @@ object Magen {
               a =>
                 val bindings = i.binding.toList.flatten.map(expandTemplate(_, vars)).map(ShortcutParser.parseUnsafe)
 
-                VSCodeAction(a, i.context.toList.flatten, bindings)
+                VSCodeAction(a, i.args, i.context.toList.flatten, bindings)
             }
         )
-        val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
+        val z = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.args, i.context.toList.flatten)))
 
         if (i.isEmpty && !c.idea.exists(_.missing.contains(true))) {
           println(s"${c.id}: not defined for IDEA")

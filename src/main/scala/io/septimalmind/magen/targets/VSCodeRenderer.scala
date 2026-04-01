@@ -26,10 +26,15 @@ object VSCodeRenderer extends Renderer {
   private def format(a: VSCodeAction, binding: Chord): Seq[JsonObject] = {
     val combo = binding.combos.map(renderCombo).mkString(" ")
 
-    val main = JsonObject(
+    val base = JsonObject(
       "key"     -> Json.fromString(combo),
       "command" -> Json.fromString(a.action),
     )
+
+    val main = a.args match {
+      case Some(args) => base.add("args", args)
+      case None       => base
+    }
 
     if (a.context.nonEmpty) {
       a.context.map {

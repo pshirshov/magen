@@ -90,13 +90,11 @@ object ZedRenderer extends Renderer {
   private def format(a: ZedAction, binding: Chord): ZedBinding = {
     val combo = renderChord(binding)
 
-    val actionJson = a.action match {
-      case s if s.contains("::") && !s.contains(" ") =>
-        // Simple action without parameters
-        Json.fromString(s)
-      case s =>
-        // Action that might need parameters - for now treat as string
-        Json.fromString(s)
+    val actionJson = a.args match {
+      case Some(args) =>
+        Json.arr(Json.fromString(a.action), args)
+      case None =>
+        Json.fromString(a.action)
     }
 
     ZedBinding(a.context, combo, actionJson)

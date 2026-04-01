@@ -1,5 +1,6 @@
 package io.septimalmind.magen.model
 
+import io.circe.Json
 import izumi.fundamentals.collections.nonempty.NEList
 
 case class RawIdeaAction(
@@ -9,12 +10,14 @@ case class RawIdeaAction(
 )
 case class RawVSCodeAction(
   action: Option[String],
+  args: Option[Json],
   context: Option[List[String]],
   binding: Option[List[String]],
   missing: Option[Boolean],
 )
 case class RawZedAction(
   action: Option[String],
+  args: Option[Json],
   context: Option[List[String]],
   missing: Option[Boolean],
 )
@@ -40,11 +43,13 @@ case class IdeaAction(
 
 case class VSCodeAction(
   action: String,
+  args: Option[Json],
   context: List[String],
   binding: List[Chord],
 )
 case class ZedAction(
   action: String,
+  args: Option[Json],
   context: List[String],
 )
 

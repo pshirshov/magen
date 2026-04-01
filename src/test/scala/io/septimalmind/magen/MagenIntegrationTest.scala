@@ -148,9 +148,9 @@ class MagenIntegrationTest extends AnyWordSpec with Matchers {
           val concepts = raw.mapping.get.flatMap {
             c =>
               val resolved = c.binding.resolve(platform)
-              val v        = c.vscode.flatMap(i => i.action.map(a => VSCodeAction(a, i.context.toList.flatten, List.empty)))
+              val v        = c.vscode.flatMap(i => i.action.map(a => VSCodeAction(a, i.args, i.context.toList.flatten, List.empty)))
               val i        = c.idea.flatMap(i => i.action.map(a => IdeaAction(a, i.mouse.toList.flatten)))
-              val z        = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.context.toList.flatten)))
+              val z        = c.zed.flatMap(i => i.action.map(a => ZedAction(a, i.args, i.context.toList.flatten)))
               if (resolved.nonEmpty) {
                 val chord = NEList.unsafeFrom(resolved).map(ShortcutParser.parseUnsafe)
                 Seq(Concept(c.id, chord, i, v, z))
